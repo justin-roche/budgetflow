@@ -1,0 +1,35 @@
+{
+  "name": "aurelia-todo",
+  "description": "Simple todo application using Aurelia, typescript and webpack",
+  "author": "Alexander Logvinenko <lexdevel@gmail.com>",
+  "repository": "https://github.com/lexdevel/aurelia-todo.git",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --inline --port 3000"
+  },
+  "dependencies": {
+    "aurelia-bootstrap": "^0.1.20",
+    "aurelia-bootstrapper-webpack": "^1.1.0",
+    "aurelia-event-aggregator": "^1.0.1",
+    "aurelia-framework": "^1.0.8",
+    "aurelia-history-browser": "^1.0.0",
+    "aurelia-loader-webpack": "^2.0.0",
+    "aurelia-logging-console": "^1.0.0",
+    "aurelia-templating-binding": "^1.2.0",
+    "aurelia-templating-resources": "^1.2.0",
+    "aurelia-templating-router": "^1.0.1",
+    "sigma": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.28",
+    "aurelia-webpack2-plugin": "^1.0.0-beta.1.0.1",
+    "css-loader": "^0.28.7",
+    "html-loader": "^0.4.4",
+    "ts-loader": "^2.0.0",
+    "typescript": "^2.1.6",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
+  }
+}
