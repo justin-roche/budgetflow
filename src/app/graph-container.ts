@@ -1,19 +1,34 @@
+import { GraphService } from './../services/graphService';
+import { NodeEditor } from './nodeEditor';
 import { inject } from 'aurelia-framework';
-import { GraphService } from '../services/graphService';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(GraphService)
+@inject(EventAggregator, GraphService)
 export class GraphContainer {
     sigma;
     Sigma;
+    dragging = false;
+    nodeEditor;
+    gs;
+    ea;
 
-    constructor(private gs: GraphService) {
-
+    constructor(EventAggregator, GraphService) {
+        this.gs = GraphService;
+        this.ea = EventAggregator
+        console.log('gs', this.gs)
+        this.ea.subscribe('saveNode',(n)=>{
+            console.log('received saveNode event', n);
+            this.refresh();
+        });
     }
 
     attached() {
         this.Sigma = window['sigma'];
-        
         this.graph();
+    }
+
+    nodeEdit(n, c) {
+        this.nodeEditor.show(n, c.clientX, c.clientY);
     }
 
     graph() {
@@ -29,6 +44,7 @@ export class GraphContainer {
                 }
               ],
             settings: {
+                doubleClickZoomingRatio: 1,
                 maxNodeSize: 16,
                 minNodeSize: 45,
                 minEdgeSize: 5,
@@ -37,39 +53,81 @@ export class GraphContainer {
                 enableEdgeHovering: true,
             }
         });
-        this.sigma.renderers.def = this.sigma.renderers.canvas
-        
+       
         this.addListeners();
-        //this.sigma.refresh();
+        this.sigma.refresh();
 
     }
 
     addListeners() {
-        let dragListener = this.Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
-        
+        let self = this;
+    
         this.sigma.bind("clickNode", function () { 
-            console.log(arguments[0].data.node);
+            let n = arguments[0].data.node
+            self.link(n);
         });
 
-        this.sigma.bind("overNode", function () { 
-            console.log(arguments[0].data.node);
+        this.sigma.bind("doubleClickNode", function () { 
+            let n = arguments[0].data.node
+            let c = arguments[0].data.captor;
+            console.log('captor', c);
+            console.log('clicked', arguments);
+            
+            self.nodeEdit(n, c);
         });
 
-        // this.sigma.bind("clickEdge", function () { 
-        //     console.log('clicked');
+        this.sigma.bind("doubleClickEdge", function () { 
+            let e = arguments[0].data.edge
+            console.log('clicked', e);
+            self.setActiveEdge(e);
+        });
+
+        let dragNodes = this.Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
+               
+        this.addDeleteListener();
+       
+        
+
+        
+
+        // this.sigma.bind("overEdge", function () { 
+        //     //console.log('over');
         // });
 
-        // this.sigma.bind("clickEdges", function () { 
-        //     console.log(arguments[0].data);
-        // });
+         // dragNodes.bind('startdrag', () => {
+        //     console.log('startdrag')
+        //     self.dragging = true;
+        // })
 
-        this.sigma.bind("overEdge", function () { 
-            console.log('over');
-        });
+        // this.sigma.bind('dragend', () => {
+        //     self.dragging = false;
+        // })
+
+        // this.sigma.bind("overNode", function () { 
+        //     //console.log(arguments[0].data.node);
+        // });
 
         // this.sigma.bind("overEdges", function () { 
         //     console.log(arguments[0].data);
         // });
+    }
+
+    addDeleteListener() {
+        let self = this;
+        document.addEventListener("keydown", keyDownTextField, false);
+        
+        function keyDownTextField(e) {
+        var keyCode = e.keyCode;
+        console.log(keyCode)
+          if(keyCode==8) {
+            if(self.sigma.graph.activeNode){
+                self.removeNode(self.sigma.graph.activeNode);
+            }
+            if(self.sigma.graph.activeEdge){
+                self.removeEdge(self.sigma.graph.activeEdge);
+            }
+          } 
+        }
     }
 
     log() {
@@ -82,12 +140,85 @@ export class GraphContainer {
     }
 
     add() {
-        this.sigma.graph.addNode(this.gs.generateRandomNode())
+        this.sigma.graph.addNode(this.generateRandomNode())
         this.sigma.refresh();
+    }
+
+    removeNode(n) {
+        this.sigma.graph.activeNode = null;
+        this.sigma.graph.dropNode(n.id);
+        this.sigma.refresh()
+    }
+
+    removeEdge(e) {
+        this.sigma.graph.activeEdge = null;
+        this.sigma.graph.dropEdge(e.id);
+        this.sigma.refresh()
     }
 
     addEdge() {
 
+    }
+
+    refresh() {
+        this.sigma.refresh();
+    }
+
+    setActiveEdge(e) {
+        this.setActiveNodeToNull();
+        this.sigma.graph.activeEdge = e; 
+        e.color = 'green';
+        this.sigma.refresh();
+    }
+
+    setActiveEdgeToNull() {
+        if(this.sigma.graph.activeEdge) this.sigma.graph.activeEdge.color = 'black';
+        this.sigma.graph.activeEdge = null;
+    }
+
+    setActiveNodeToNull() {
+        if(this.sigma.graph.activeNode) this.sigma.graph.activeNode.color = 'gray';
+        this.sigma.graph.activeNode = null;
+    }
+
+    link(node) {
+        
+        if(!this.sigma.graph.activeNode) {
+            this.sigma.graph.activeNode = node;
+            this.setActiveEdgeToNull();
+            node.color = 'green';
+        } else if(this.sigma.graph.activeNode === node){
+            this.sigma.graph.activeNode = null;
+            node.color = 'gray';
+        } else {
+            this.sigma.graph.addEdge({
+                id: 'e' + this.sigma.graph.activeNode.id + node.id,
+                source: this.sigma.graph.activeNode.id,
+                target: node.id,
+                size: 50,
+                color: 'green',
+                type: 'arrow'
+            });
+            this.sigma.graph.activeNode.color = 'blue';
+            this.sigma.graph.activeNode = null;
+        }
+        console.log(this.sigma.graph.edges())
+        this.sigma.refresh();
+    }
+
+    generateRandomNode() {
+        return {
+            id: 'n' + this.sigma.graph.nodes().length,
+            label: 'n'+this.sigma.graph.nodes().length,
+            x: Math.random(),
+            y: Math.random(),
+            size: Math.random(),
+            color: '#666'
+        }
+    }
+
+    force() {
+        this.sigma.startForceAtlas2({worker: true, barnesHutOptimize: false});
     }
 
 }

@@ -5,12 +5,7 @@
                 <a class="btn btn-default ${row.isActive ? 'btn-primary' : ''}" href.bind="row.href">${row.title}</a>
               </span>
             <span class="pull-right">
-                <button class="btn ${loggedIn ? 'btn-success' : 'btn-danger'}" click.delegate="toggleLogin()">
-                  Toggle Login
-                </button>
               </span>
-        </div>
-
         </div>
     </nav>
 </template>
