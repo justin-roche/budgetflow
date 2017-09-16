@@ -1,7 +1,8 @@
-import { GraphService } from './../services/graphService';
+import { GraphService } from './services/graphService';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-require('jquery');
+// require('jquery-ui')
+declare var $;
 
 @inject(EventAggregator, GraphService)
 export class NodeEditor {
@@ -23,13 +24,16 @@ export class NodeEditor {
     }
 
     initializeData() {
+        this.clearData();
         this.data.adjacentNodes = this.gs.getAdjacentNodes(this.nodeModel);
         console.log('adjacent nodes data', this.data.adjacentNodes);
         console.log(Array.isArray(this.data.adjacentNodes.outEdges));
-        for(let prop of Object.keys(this.data.adjacentNodes.outEdges)) {
-            this.data.outNodes.push(prop);
-        }
+        this.data.outNodes = Object.keys(this.data.adjacentNodes.outEdges).map(n => n);
         console.log('outNodes', this.data.adjacentNodes.outNodes)
+    }
+
+    clearData() {
+        this.data.outNodes = [];
     }
 
     log() {
@@ -37,18 +41,18 @@ export class NodeEditor {
     }
 
     showModal(clientX, clientY) {
-        let $ = window['$']
+       
         $('#myModal')
-        .css({
-            left: clientX+'px',
-            top: clientY+'px'
-        })
+        // .css({
+        //     left: clientX+'px',
+        //     top: clientY+'px'
+        // })
         .modal({ 
             backdrop: false,
         })
-        .draggable({
-            handle: ".modal-header"
-        })
+        // .draggable({
+        //     handle: ".modal-header"
+        // })
         .show(); 
     }
     

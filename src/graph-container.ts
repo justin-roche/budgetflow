@@ -1,12 +1,13 @@
-import { GraphService } from './../services/graphService';
+import { GraphService } from './services/graphService';
 import { NodeEditor } from './nodeEditor';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js')
+declare var Sigma;
 
 @inject(EventAggregator, GraphService)
 export class GraphContainer {
     sigma;
-    Sigma;
     dragging = false;
     nodeEditor;
     gs;
@@ -39,19 +40,47 @@ export class GraphContainer {
     }
 
     attached() {
-        this.Sigma = window['sigma'];
+        console.log('sigma', Sigma);
+        console.log('sigma classes', Sigma.classes)
+        console.log('sigma plugins', Sigma.plugins)
+        // console.log('jquery', $);
         this.addMethods();
-        this.graph();
+         this.graph();
     }
 
-    nodeEdit(n, c) {
-        this.nodeEditor.show(n, c.clientX, c.clientY);
+    addMethods() {
+        Sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+            var k,
+                neighbors = {},
+                index = this.allNeighborsIndex[nodeId] || {};
+        
+            for (k in index) {
+                neighbors[k] = this.nodesIndex[k];
+            }
+            return neighbors;
+        });
+
+        Sigma.classes.graph.addMethod('neighboringEdges', function(nodeId) {
+            var k,
+                edges = {},
+                index = this.allNeighborsIndex[nodeId] || {};
+        
+            return index;
+        });
+
+        Sigma.classes.graph.addMethod('outNeighboringEdges', function(nodeId) {
+            var k,
+                edges = {},
+                index = this.outNeighborsIndex[nodeId] || {};
+        
+            return index;
+        });
     }
 
     graph() {
         let g = this.gs.generateRandom(5);
         
-        this.sigma = new this.Sigma({
+        this.sigma = new Sigma({
             graph: g,
             renderers: [
                 {
@@ -69,33 +98,8 @@ export class GraphContainer {
         this.sigma.refresh();
     }
 
-    addMethods() {
-        this.Sigma.classes.graph.addMethod('neighbors', function(nodeId) {
-            var k,
-                neighbors = {},
-                index = this.allNeighborsIndex[nodeId] || {};
-        
-            for (k in index) {
-                neighbors[k] = this.nodesIndex[k];
-            }
-            return neighbors;
-        });
-
-        this.Sigma.classes.graph.addMethod('neighboringEdges', function(nodeId) {
-            var k,
-                edges = {},
-                index = this.allNeighborsIndex[nodeId] || {};
-        
-            return index;
-        });
-
-        this.Sigma.classes.graph.addMethod('outNeighboringEdges', function(nodeId) {
-            var k,
-                edges = {},
-                index = this.outNeighborsIndex[nodeId] || {};
-        
-            return index;
-        });
+    nodeEdit(n, c) {
+        this.nodeEditor.show(n, c.clientX, c.clientY);
     }
 
     addListeners() {
@@ -141,12 +145,13 @@ export class GraphContainer {
     }
 
     addDragListeners() {
-        let dragNodes = this.Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
-        // dragNodes.bind('drop', (d) => {
-        //     console.log('end of drag', d)
-        //     let n = d.data.node
-        //     this.link(n);
-        // })
+        // console.log('drag listeners', Sigma.plugins.dragNodes);
+        let dragNodes = Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
+        dragNodes.bind('drop', (d) => {
+            console.log('end of drag', d)
+            let n = d.data.node
+            this.link(n);
+        })
     }
 
     addKeyListeners() {
@@ -274,7 +279,6 @@ export class GraphContainer {
         console.log('sigma graph', this.sigma.graph)
         console.log('nodes', this.sigma.graph.nodes())
         console.log('edges', this.sigma.graph.edges())
-        
     }
 
 }

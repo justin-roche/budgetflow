@@ -1,25 +1,20 @@
 {
-    "compilerOptions": {
-        "outDir": "./built",
-        "target": "es5",
-        "module": "commonjs",
-        "allowJs": true,
-        "experimentalDecorators": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "types": [
-            // add node as an option
-            "node"
-         ],
-         // typeRoots option has been previously configured
-         "typeRoots": [
-            // add path to @types
-            "node_modules/@types"
-         ]
-    },
-    "exclude": [
-        "node_modules"
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "sourceRoot": "src",
+    "allowJs": true,
+    "baseUrl": "src",
+    "lib": [
+      "es2017", "dom"
     ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "static"
+  ]
 }
