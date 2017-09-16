@@ -1,0 +1,52 @@
+<template>
+    <div style="height:100px; border: 1px solid red">
+    </div>
+    <div>
+            <h4>Simplest Typeahead</h4>
+            <div class="row">
+              <div class="col-xs-6">
+                <aubs-typeahead data.bind="daysOfTheWeek" value.bind="dayOfTheWeek" placeholder="Node Type"></aubs-typeahead>
+              </div>
+              <div class="col-xs-6">
+                <label>Selected Day:  </label> ${dayOfTheWeek}
+              </div>
+            </div>
+    
+            <h4>With Objects</h4>
+            <div class="row">
+              <div class="col-xs-6">
+                <aubs-typeahead data.bind="monthsOfTheYear" value.bind="monthOfTheYear" placeholder="Months of the year"
+                                open-on-focus.bind="true" on-select.call="monthSelected(item)"></aubs-typeahead>
+              </div>
+              <div class="col-xs-6">
+                <label>Selected Month:  </label> ${monthOfTheYear.name} - ${monthOfTheYear.short} - ${monthOfTheYear.number}
+              </div>
+            </div>
+    
+            <h4>Allow Custom Entry</h4>
+            <div class="row">
+              <div class="col-xs-6">
+                <aubs-typeahead data.bind="fruits" value.bind="fruit" custom-entry.bind="true" placeholder="Enter your fruit"
+                                open-on-focus.bind="true" debounce.bind="0"></aubs-typeahead>
+              </div>
+              <div class="col-xs-6">
+                <label>Selected Fruit:  </label> ${fruit}
+              </div>
+            </div>
+    
+            <h4>Async Data</h4>
+            <div class="row">
+              <div class="col-xs-6">
+                <aubs-typeahead data.call="getStates(filter, limit)" value.bind="state" debounce.bind="350" placeholder="States"
+                                open-on-focus.bind="true" key="state" results-limit.bind="10" select-single-result.bind="true">
+                </aubs-typeahead>
+                <br/>
+                <button class="btn btn-default" click.delegate="state = null" disabled.bind="!state">Clear State</button>
+              </div>
+              <div class="col-xs-6">
+                <label>Selected State:  </label> ${state.short}
+              </div>
+            </div>
+    </div>
+  
+</template>

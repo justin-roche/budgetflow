@@ -38,7 +38,7 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
   devtool: production ? 'source-map' : 'cheap-module-eval-source-map',
   entry: {
     app: ['aurelia-bootstrapper'],
-    vendor: ['bluebird', 'jquery', 'bootstrap', 'sigma', 'jquery-ui'],
+    // vendor: ['bluebird', 'jquery'],
   },
   output: {
     path: outDir,
@@ -78,11 +78,11 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
       // use Bluebird as the global Promise implementation:
       { test: /[\/\\]node_modules[\/\\]bluebird[\/\\].+\.js$/, loader: 'expose-loader?Promise' },
       // exposes jQuery globally as $ and as jQuery:
-      { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
-      { test: require.resolve('sigma'), loader: 'expose-loader?$!expose-loader?sigma' },
+       { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
+       { test: require.resolve('sigma'), loader: 'expose-loader?$!expose-loader?sigma' },
       //{ test: 'node_modules/sigma/plugins'},
       // 
-
+      
       //{ test: require.resolve('sigma/plugins')}
       // embed small images and fonts as Data Urls and larger ones as files:
       { test: /\.(png|gif|jpg|cur)$/i, loader: 'url-loader', options: { limit: 8192 } },
@@ -95,16 +95,23 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
         include: srcDir, exclude: [/\.{spec,test}\.[jt]s$/i],
         enforce: 'post', options: { esModules: true },
       })
-    ]
+    ],
+    loaders: [
+      // { test: /bootstrap.+\.(jsx|js)$/, loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window' },    
+      // { test: /jquery-ui.+\.(jsx|js)$/, loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window' }    
+      
+    ],
   },
+  
   plugins: [
     new AureliaPlugin(),
-    new ProvidePlugin({
-      'Promise': 'bluebird',
-      'Sigma': 'sigma',
-      '$': 'jquery',
-      'jQuery': 'jquery',
-      'window.jQuery': 'jquery',
+    new ProvidePlugin({ // exposed at runtime, lifted from required file scope
+      // 'Promise': 'bluebird',
+        '$': 'jquery',
+        'jquery': 'jquery',
+       'jQuery': 'jquery',
+       'window.jQuery': 'jquery',
+       'sigma': 'sigma',
     }),
     new TsConfigPathsPlugin(),
     new CheckerPlugin(),

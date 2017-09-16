@@ -1,8 +1,8 @@
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { GraphService } from './../services/graphService';
+import $ from 'jquery'; // the ts import
 
-@inject(EventAggregator, GraphService)
+@inject(EventAggregator)
 export class ModalWrapper {
 
     attached() {
@@ -10,11 +10,11 @@ export class ModalWrapper {
     }
 
     showModal(clientX, clientY) {
-        let $ = window['$']
+        
         $('#myModal')
         .css({
-            left: clientX+'px',
-            top: clientY+'px'
+            // left: clientX+'px',
+            // top: clientY+'px'
         })
         .modal({ 
             backdrop: false,
@@ -23,6 +23,11 @@ export class ModalWrapper {
             handle: ".modal-header"
         })
         .show(); 
+
+        // $('#myModal')
+        
+
+        $( "#draggable" ).draggable();
     }
 
 }
