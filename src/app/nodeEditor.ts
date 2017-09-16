@@ -1,22 +1,43 @@
+import { GraphService } from './../services/graphService';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 require('jquery');
 
-@inject(EventAggregator)
+@inject(EventAggregator, GraphService)
 export class NodeEditor {
 
     nodeModel;
+    data = {
+        adjacentNodes: null,
+        outNodes: [],
+    }
 
-    constructor(private ea: EventAggregator) {
+    constructor(private ea: EventAggregator, private gs: GraphService) {
 
     }
 
     show(node, clientX, clientY) {
-        //node.label = 'r'
         this.nodeModel = node; //JSON.parse(JSON.stringify(node));
-        console.log('nodemodel', this.nodeModel)
+        this.initializeData();
+        this.showModal(clientX, clientY);
+    }
+
+    initializeData() {
+        this.data.adjacentNodes = this.gs.getAdjacentNodes(this.nodeModel);
+        console.log('adjacent nodes data', this.data.adjacentNodes);
+        console.log(Array.isArray(this.data.adjacentNodes.outEdges));
+        for(let prop of Object.keys(this.data.adjacentNodes.outEdges)) {
+            this.data.outNodes.push(prop);
+        }
+        console.log('outNodes', this.data.adjacentNodes.outNodes)
+    }
+
+    log() {
+        console.log('nodemodel', this.nodeModel);
+    }
+
+    showModal(clientX, clientY) {
         let $ = window['$']
-        console.log('setting clientX', clientX);
         $('#myModal')
         .css({
             left: clientX+'px',
@@ -29,9 +50,8 @@ export class NodeEditor {
             handle: ".modal-header"
         })
         .show(); 
-
     }
-
+    
     attached(){
        
     }
@@ -43,3 +63,10 @@ export class NodeEditor {
     }
    
 }
+
+export class KeysValueConverter {
+    toView(obj) {
+        console.log(obj);
+      return Reflect.ownKeys(obj);
+    }
+  }

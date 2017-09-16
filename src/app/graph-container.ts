@@ -15,9 +15,7 @@ export class GraphContainer {
     constructor(EventAggregator, GraphService) {
         this.gs = GraphService;
         this.ea = EventAggregator
-        console.log('gs', this.gs)
         this.ea.subscribe('saveNode',(n)=>{
-            console.log('received saveNode event', n);
             this.refresh();
         });
     }
@@ -34,6 +32,39 @@ export class GraphContainer {
     graph() {
         let g = this.gs.generateRandom(5);
        
+        this.Sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+            var k,
+                neighbors = {},
+                index = this.allNeighborsIndex[nodeId] || {};
+        
+            for (k in index) {
+                neighbors[k] = this.nodesIndex[k];
+            }
+            return neighbors;
+        });
+
+        this.Sigma.classes.graph.addMethod('neighboringEdges', function(nodeId) {
+            var k,
+                edges = {},
+                index = this.allNeighborsIndex[nodeId] || {};
+        
+            // for (k in index) {
+            //     edges[k] = this.edgesIndex[k];
+            // }
+            return index;
+        });
+
+        this.Sigma.classes.graph.addMethod('outNeighboringEdges', function(nodeId) {
+            var k,
+                edges = {},
+                index = this.outNeighborsIndex[nodeId] || {};
+        
+            // for (k in index) {
+            //     edges[k] = this.edgesIndex[k];
+            // }
+            return index;
+        });
+
         this.sigma = new this.Sigma({
             graph: g,
             //container: ,
@@ -53,7 +84,10 @@ export class GraphContainer {
                 enableEdgeHovering: true,
             }
         });
-       
+
+        
+
+        this.gs.graph = this.sigma.graph;
         this.addListeners();
         this.sigma.refresh();
 
@@ -70,25 +104,18 @@ export class GraphContainer {
         this.sigma.bind("doubleClickNode", function () { 
             let n = arguments[0].data.node
             let c = arguments[0].data.captor;
-            console.log('captor', c);
-            console.log('clicked', arguments);
-            
             self.nodeEdit(n, c);
         });
 
         this.sigma.bind("doubleClickEdge", function () { 
             let e = arguments[0].data.edge
-            console.log('clicked', e);
+            console.log('clicked edge', e);
             self.setActiveEdge(e);
         });
 
         let dragNodes = this.Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
                
         this.addDeleteListener();
-       
-        
-
-        
 
         // this.sigma.bind("overEdge", function () { 
         //     //console.log('over');
@@ -128,10 +155,6 @@ export class GraphContainer {
             }
           } 
         }
-    }
-
-    log() {
-        console.log(this.sigma, this.sigma.graph.nodes().length)        
     }
 
     clear() {
@@ -202,7 +225,6 @@ export class GraphContainer {
             this.sigma.graph.activeNode.color = 'blue';
             this.sigma.graph.activeNode = null;
         }
-        console.log(this.sigma.graph.edges())
         this.sigma.refresh();
     }
 
@@ -219,6 +241,13 @@ export class GraphContainer {
 
     force() {
         this.sigma.startForceAtlas2({worker: true, barnesHutOptimize: false});
+    }
+
+    log() {
+        console.log('sigma graph', this.sigma.graph)
+        console.log('nodes', this.sigma.graph.nodes())
+        console.log('edges', this.sigma.graph.edges())
+        
     }
 
 }

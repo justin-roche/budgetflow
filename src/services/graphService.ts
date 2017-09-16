@@ -1,20 +1,20 @@
 
 export class GraphService {
 
-    graph: any = {};
+    graph;
 
     generateRandom(n) {
 
         let i;
         let s;
         let E = n;
-        this.graph = {
+        let graph = {
             nodes: [],
             edges: []
         };
 
         for (i = 0; i < n; i++)
-            this.graph.nodes.push({
+            graph.nodes.push({
                 id: 'n' + i,
                 label: 'n'+i,
                 x: Math.random(),
@@ -24,7 +24,7 @@ export class GraphService {
             });
 
         for (i = 0; i < E; i++)
-            this.graph.edges.push({
+            graph.edges.push({
                 id: 'e' + i,
                 source: 'n' + (Math.random() * n | 0), //source by id
                 target: 'n' + (Math.random() * n | 0),
@@ -33,7 +33,23 @@ export class GraphService {
                 type: 'arrow'
             });
 
-        return this.graph;
+        return graph;
+    }
+
+    getAdjacentNodes(n) {
+        console.log('graph service graph', this.graph);
+        let neighbors = this.graph.neighbors(n.id);
+        let edges = this.graph.neighboringEdges(n.id);
+        let outEdges = this.graph.outNeighboringEdges(n.id);
+        console.log('neighbors', neighbors);
+        console.log('out neighbors', outEdges);
+        console.log('edges', edges);
+        return {
+            neighbors,
+            edges,
+            outEdges
+        };
+        
     }
 
     
