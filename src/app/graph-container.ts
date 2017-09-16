@@ -12,6 +12,24 @@ export class GraphContainer {
     gs;
     ea;
 
+    public displaySettings = {
+        defaultEdgeColor: 'black',
+        defaultNodeColor: 'gray',
+        activeNodeColor: 'green',
+        activeEdgeColor: 'green',
+        defaultNodeSize: 50,
+    }
+
+    public sigmaSettings = {
+        doubleClickZoomingRatio: 1,
+        maxNodeSize: 16,
+        minNodeSize: 45,
+        minEdgeSize: 5,
+        maxEdgeSize: 5,
+        minArrowSize: 25,
+        enableEdgeHovering: true,
+    };
+
     constructor(EventAggregator, GraphService) {
         this.gs = GraphService;
         this.ea = EventAggregator
@@ -22,6 +40,7 @@ export class GraphContainer {
 
     attached() {
         this.Sigma = window['sigma'];
+        this.addMethods();
         this.graph();
     }
 
@@ -31,7 +50,26 @@ export class GraphContainer {
 
     graph() {
         let g = this.gs.generateRandom(5);
-       
+        
+        this.sigma = new this.Sigma({
+            graph: g,
+            renderers: [
+                {
+                  container: document.getElementById('container'),
+                  type: 'canvas' // sigma.renderers.canvas works as well
+                }
+              ],
+            settings: this.sigmaSettings
+        });
+
+        this.gs.graph = this.sigma.graph;
+        g.activeNode = null;
+        g.activeEdge = null;
+        this.addListeners();
+        this.sigma.refresh();
+    }
+
+    addMethods() {
         this.Sigma.classes.graph.addMethod('neighbors', function(nodeId) {
             var k,
                 neighbors = {},
@@ -48,9 +86,6 @@ export class GraphContainer {
                 edges = {},
                 index = this.allNeighborsIndex[nodeId] || {};
         
-            // for (k in index) {
-            //     edges[k] = this.edgesIndex[k];
-            // }
             return index;
         });
 
@@ -59,63 +94,14 @@ export class GraphContainer {
                 edges = {},
                 index = this.outNeighborsIndex[nodeId] || {};
         
-            // for (k in index) {
-            //     edges[k] = this.edgesIndex[k];
-            // }
             return index;
         });
-
-        this.sigma = new this.Sigma({
-            graph: g,
-            //container: ,
-            renderers: [
-                {
-                  container: document.getElementById('container'),
-                  type: 'canvas' // sigma.renderers.canvas works as well
-                }
-              ],
-            settings: {
-                doubleClickZoomingRatio: 1,
-                maxNodeSize: 16,
-                minNodeSize: 45,
-                minEdgeSize: 5,
-                maxEdgeSize: 5,
-                minArrowSize: 25,
-                enableEdgeHovering: true,
-            }
-        });
-
-        
-
-        this.gs.graph = this.sigma.graph;
-        this.addListeners();
-        this.sigma.refresh();
-
     }
 
     addListeners() {
-        let self = this;
-    
-        this.sigma.bind("clickNode", function () { 
-            let n = arguments[0].data.node
-            self.link(n);
-        });
-
-        this.sigma.bind("doubleClickNode", function () { 
-            let n = arguments[0].data.node
-            let c = arguments[0].data.captor;
-            self.nodeEdit(n, c);
-        });
-
-        this.sigma.bind("doubleClickEdge", function () { 
-            let e = arguments[0].data.edge
-            console.log('clicked edge', e);
-            self.setActiveEdge(e);
-        });
-
-        let dragNodes = this.Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
-               
-        this.addDeleteListener();
+        this.addClickListeners()
+        this.addDragListeners();
+        this.addKeyListeners();
 
         // this.sigma.bind("overEdge", function () { 
         //     //console.log('over');
@@ -124,10 +110,6 @@ export class GraphContainer {
          // dragNodes.bind('startdrag', () => {
         //     console.log('startdrag')
         //     self.dragging = true;
-        // })
-
-        // this.sigma.bind('dragend', () => {
-        //     self.dragging = false;
         // })
 
         // this.sigma.bind("overNode", function () { 
@@ -139,7 +121,35 @@ export class GraphContainer {
         // });
     }
 
-    addDeleteListener() {
+    addClickListeners() {
+
+        this.sigma.bind("clickNode", (d) => { 
+            let n = d.data.node
+            this.link(n);
+        });
+
+        this.sigma.bind("doubleClickNode", (d) => { 
+            let n = d.data.node
+            let c = d.data.captor;
+            this.nodeEdit(n, c);
+        });
+
+        this.sigma.bind("clickEdge", (d) => { 
+            let e = d.data.edge
+            this.setActiveEdge(e);
+        });
+    }
+
+    addDragListeners() {
+        let dragNodes = this.Sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
+        // dragNodes.bind('drop', (d) => {
+        //     console.log('end of drag', d)
+        //     let n = d.data.node
+        //     this.link(n);
+        // })
+    }
+
+    addKeyListeners() {
         let self = this;
         document.addEventListener("keydown", keyDownTextField, false);
         
@@ -155,6 +165,10 @@ export class GraphContainer {
             }
           } 
         }
+    }
+
+    refresh() {
+        this.sigma.refresh();
     }
 
     clear() {
@@ -183,49 +197,62 @@ export class GraphContainer {
 
     }
 
-    refresh() {
+    setActiveEdge(e) {
+        this.setActiveNodeToNull();
+        console.log('this', this, this.sigma.graph)
+        if(e === this.sigma.graph.activeEdge) {
+            e.color = this.displaySettings.defaultEdgeColor;
+            this.sigma.graph.activeEdge = null;
+        } else {
+            this.sigma.graph.activeEdge = e;
+            e.color = this.displaySettings.activeEdgeColor;
+        }
+        
         this.sigma.refresh();
     }
 
-    setActiveEdge(e) {
-        this.setActiveNodeToNull();
-        this.sigma.graph.activeEdge = e; 
-        e.color = 'green';
+    setActiveNode(n) {
+        this.setActiveEdgeToNull();
+        if(n === this.sigma.graph.activeNode) {
+            n.color = this.displaySettings.defaultNodeColor;
+            this.sigma.graph.activeNode = null;
+        } else {
+            this.sigma.graph.activeNode = n;
+            n.color = this.displaySettings.activeNodeColor;
+        }
+        this.sigma.refresh();
+    }
+
+    link(node) {
+        let fromNode = this.sigma.graph.activeNode; 
+        this.setActiveNode(node);
+        let toNode = this.sigma.graph.activeNode;
+        if (fromNode && toNode && (toNode !== fromNode)){
+            let newEdge = {
+                id: 'e' + fromNode.id + toNode.id,
+                source: fromNode.id,
+                target: toNode.id,
+                size: this.displaySettings.defaultNodeSize,
+                color: this.displaySettings.activeEdgeColor,
+                type: 'arrow'
+            }
+            this.sigma.graph.addEdge(newEdge);
+            fromNode.color = this.displaySettings.defaultNodeColor;
+            toNode.color = this.displaySettings.defaultNodeColor;
+            this.setActiveNodeToNull();
+        }
+        
         this.sigma.refresh();
     }
 
     setActiveEdgeToNull() {
-        if(this.sigma.graph.activeEdge) this.sigma.graph.activeEdge.color = 'black';
+        if(this.sigma.graph.activeEdge) this.sigma.graph.activeEdge.color = this.displaySettings.defaultEdgeColor;
         this.sigma.graph.activeEdge = null;
     }
 
     setActiveNodeToNull() {
-        if(this.sigma.graph.activeNode) this.sigma.graph.activeNode.color = 'gray';
+        if(this.sigma.graph.activeNode) this.sigma.graph.activeNode.color = this.displaySettings.defaultNodeColor;
         this.sigma.graph.activeNode = null;
-    }
-
-    link(node) {
-        
-        if(!this.sigma.graph.activeNode) {
-            this.sigma.graph.activeNode = node;
-            this.setActiveEdgeToNull();
-            node.color = 'green';
-        } else if(this.sigma.graph.activeNode === node){
-            this.sigma.graph.activeNode = null;
-            node.color = 'gray';
-        } else {
-            this.sigma.graph.addEdge({
-                id: 'e' + this.sigma.graph.activeNode.id + node.id,
-                source: this.sigma.graph.activeNode.id,
-                target: node.id,
-                size: 50,
-                color: 'green',
-                type: 'arrow'
-            });
-            this.sigma.graph.activeNode.color = 'blue';
-            this.sigma.graph.activeNode = null;
-        }
-        this.sigma.refresh();
     }
 
     generateRandomNode() {
