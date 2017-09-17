@@ -2,6 +2,7 @@ import { GraphService } from '../graph/graphService';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import $ from 'jquery'
+import {ModalSettings} from '../common/modalWrapper'
 
 @inject(EventAggregator, GraphService)
 export class NodeEditor {
@@ -14,12 +15,14 @@ export class NodeEditor {
         outNodes: [],
     }
 
-    modalViewModel = {
-        title: 'Node Edit',
-        id: 'node-edit-modal',
+    modalSettings : ModalSettings = 
+        {title: 'Node Edit',
+        id: 'node-edit',
         x: 0,
-        y: 0
-    }
+        y: 0,
+        show: false
+    };
+
 
     constructor(private ea: EventAggregator, 
         private gs: GraphService) {
@@ -38,7 +41,6 @@ export class NodeEditor {
     initializeData() {
         this.clearData();
         this.data.adjacentNodes = this.gs.getAdjacentNodes(this.nodeModel);
-        console.log('adjacent nodes data', this.data.adjacentNodes);
         this.data.outNodes = Object.keys(this.data.adjacentNodes.outEdges).map(n => n);
     }
 
@@ -48,20 +50,14 @@ export class NodeEditor {
 
     log() {
         console.log('nodemodel', this.nodeModel);
-
     }
 
     showModal(e) {
-        this.modalViewModel.x = e.x;
-        this.modalViewModel.y = e.y;
-        this.active = true;
-        console.log('active.showEditModal')
-        console.log(this.modalViewModel)
+        this.modalSettings.x = e.x;
+        this.modalSettings.y = e.y;
+        this.modalSettings.show = true;
     }
 
-    attached() {
-        $('#thisModal').draggable();
-    }
 
     save() {
         // ('#myModal').hide();

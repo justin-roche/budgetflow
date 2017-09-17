@@ -84,6 +84,7 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
        { test: require.resolve('sigma/plugins/sigma.layout.forceAtlas2/worker.js'), loader: 'imports-loader?sigma=sigma,Sigma=sigma,this=>window' },
        { test: require.resolve('sigma/plugins/sigma.layout.forceAtlas2/supervisor.js'), loader: 'imports-loader?sigma=sigma,Sigma=sigma,this=>window' },
        { test: require.resolve('bootstrap-slider'), loader: 'imports-loader?this=>window' },
+      // { test: require.resolve('aurelia-async'), alias: 'imports-loader?this=>window' },
        //{ test: 'node_modules/sigma/plugins'},
       // 
       

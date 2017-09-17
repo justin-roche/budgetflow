@@ -1,6 +1,6 @@
 <template>
     <require from="../common/modalWrapper"></require>
-    <modal-wrapper active.bind="true" settings.bind="{title: 'Scenario Edit', id: 'scenario-edit-modal'}">
+    <modal-wrapper settings.bind="modalSettings">
         <div slot="modalbody">
             <div class="btn-group-vertical" role="group" aria-label="Basic example">
                 <button click.trigger="ea.publish('graph.create')" type="button" class="btn btn-secondary">Graph</button>
