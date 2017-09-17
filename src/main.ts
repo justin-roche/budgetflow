@@ -13,8 +13,15 @@ import * as Bluebird from 'bluebird';
 //  require('bootstrap'); // reference window.jQuery
  require('sigma')
  require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js');
- 
-// remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
+ require('sigma/plugins/sigma.layout.forceAtlas2/worker.js')
+ require('sigma/plugins/sigma.layout.forceAtlas2/supervisor.js')
+  
+//  (<any>require).context(
+//   "sigma/plugins", // context folder
+//   true, // include subdirectories
+//   /.*/ // RegExp
+// );
+ // remove out if you don't want a Promise polyfill (remove also from webpack.config.js)
 Bluebird.config({ warnings: { wForgottenReturn: false } });
 
 export async function configure(aurelia: Aurelia) {
