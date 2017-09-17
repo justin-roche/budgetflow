@@ -1,0 +1,45 @@
+<template>
+    <require from="../common/modalWrapper"></require>
+    <modal-wrapper active.bind="active" settings.bind="{title: 'Node Edit', id: 'node-edit-modal'}">
+        <div slot="modalbody">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                </li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Out</a>
+                </li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">In</a>
+                </li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <label>label</label><input class="form-control" type="text" value.bind="nodeModel.label" placeholder="label">
+                    <label>type</label><input class="form-control" type="text" value.bind="nodeModel.type" placeholder="type">
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Label</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="nodeName of data.outNodes">
+                                <th scope="row">1</th>
+                                <td>${nodeName}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">Message</div>
+                <div role="tabpanel" class="tab-pane" id="settings">Settings</div>
+            </div>
+            tabs here
+
+    </modal-wrapper>
+</template>

@@ -100,6 +100,7 @@
   "dependencies": {
     "aurelia-bootstrap": "^0.1.20",
     "aurelia-bootstrapper": "2.1.1",
+    "aurelia-dialog": "^1.0.0-rc.1.0.3",
     "aurelia-fetch-client": "1.1.2",
     "aurelia-framework": "1.1.4",
     "aurelia-history-browser": "1.0.0",
@@ -116,8 +117,9 @@
     "bootstrap": "^3.3.7",
     "font-awesome": "4.7.0",
     "imports-loader": "^0.7.1",
+    "interact.js": "^1.2.8",
     "isomorphic-fetch": "2.2.1",
-    "jquery": "3.2.1",
+    "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
     "sigma": "^1.2.0"
   }

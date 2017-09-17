@@ -101,6 +101,9 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
       // { test: /jquery-ui.+\.(jsx|js)$/, loader: 'imports-loader?jQuery=jquery,$=jquery,this=>window' }    
       
     ],
+    // externals: {
+    //   jquery: 'jQuery'
+    // }
   },
   
   plugins: [
@@ -109,9 +112,9 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
       // 'Promise': 'bluebird',
         '$': 'jquery',
         'jquery': 'jquery',
-       'jQuery': 'jquery',
-       'window.jQuery': 'jquery',
-       'sigma': 'sigma',
+        'jQuery': 'jquery',
+        'window.jQuery': 'jquery',
+        'sigma': 'sigma',
     }),
     new TsConfigPathsPlugin(),
     new CheckerPlugin(),

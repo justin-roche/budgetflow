@@ -1,0 +1,20 @@
+<template>
+    <div show.bind="active" class="draggable" id.bind="settings.id">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div dblClick.trigger="collapsed = !collapsed" class="modal-header">
+                    <button type="button" class="close" aria-hidden="true" click.trigger="active = false">&times;</button>
+                    <h4 class="modal-title">${settings.title || 'Generic Modal'}</h4>
+                </div>
+                <div  show.bind="!collapsed" class="modal-body">
+                    slot goes here
+                    <slot name="modalbody"></slot>   
+                </div>
+                <div if.bind="!collapsed" class="modal-footer">
+                    <button type="button" class="btn btn-default" click.trigger="close()">Cancel</button>
+                    <button type="button" click.trigger="save()" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,10 +1,12 @@
-import { GraphService } from './services/graphService';
+import { GraphService } from '../graph/graphService';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-
+import $ from 'jquery'
 
 @inject(EventAggregator, GraphService)
 export class NodeEditor {
+    active;
+    collapsed = false;
 
     nodeModel;
     data = {
@@ -13,7 +15,9 @@ export class NodeEditor {
     }
 
     constructor(private ea: EventAggregator, private gs: GraphService) {
-
+        ea.subscribe('show.node.editor', (n, x, y) => {
+            this.show(n, x, y);
+        })
     }
 
     show(node, clientX, clientY) {
@@ -35,28 +39,15 @@ export class NodeEditor {
 
     log() {
         console.log('nodemodel', this.nodeModel);
+       
     }
 
     showModal(clientX, clientY) {
-       
-        // ('#myModal')
-        // .css({
-        //     left: clientX+'px',
-        //     top: clientY+'px'
-        // })
-        // .modal({ 
-        //     backdrop: false,
-        // })
-        // .show();
-        
-        // ('.modal-dialog')
-        // .draggable({
-        //     handle: ".modal-header"
-        // })
+       this.active = true;
     }
     
     attached(){
-       
+        $('#thisModal').draggable();
     }
 
     save() {
