@@ -1,6 +1,6 @@
 <template>
     <require from="../common/modalWrapper"></require>
-    <modal-wrapper active.bind="active" settings.bind="{title: 'Node Edit', id: 'node-edit-modal'}">
+    <modal-wrapper active.bind="active" settings.bind="modalViewModel">
         <div slot="modalbody">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>

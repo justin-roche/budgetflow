@@ -2,10 +2,17 @@
     <require from="../common/modalWrapper"></require>
     <modal-wrapper active.bind="true" settings.bind="{title: 'Scenario Edit', id: 'scenario-edit-modal'}">
         <div slot="modalbody">
-            <button click.trigger="ea.publish('graph.create')">Graph</button>
-            <button click.trigger="ea.publish('graph.clear')">Clear</button>
-            <button click.trigger="ea.publish('graph.add')">Add</button>
-            <button click.trigger="ea.publish('graph.force')">Force</button>
+            <div class="btn-group-vertical" role="group" aria-label="Basic example">
+                <button click.trigger="ea.publish('graph.create')" type="button" class="btn btn-secondary">Graph</button>
+                <button click.trigger="ea.publish('graph.clear')" type="button" class="btn btn-secondary">Clear</button>
+                <button click.trigger="ea.publish('graph.add')" type="button" class="btn btn-secondary">Add</button>
+                <button click.trigger="ea.publish('graph.force')" type="button" class="btn btn-secondary">Force</button>
+            </div>
+            <div>
+                <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"
+                />
+            </div>
         </div>
     </modal-wrapper>
+
 </template>

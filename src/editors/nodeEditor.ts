@@ -14,16 +14,24 @@ export class NodeEditor {
         outNodes: [],
     }
 
+    modalViewModel = {
+        title: 'Node Edit',
+        id: 'node-edit-modal',
+        x: 0,
+        y: 0
+    }
+
     constructor(private ea: EventAggregator, private gs: GraphService) {
-        ea.subscribe('show.node.editor', (n, x, y) => {
-            this.show(n, x, y);
+        ea.subscribe('show.node.editor', (e) => {
+            console.log('e', e)
+            this.show(e);
         })
     }
 
-    show(node, clientX, clientY) {
-        this.nodeModel = node; //JSON.parse(JSON.stringify(node));
+    show(e) {
+        this.nodeModel = e.n; //JSON.parse(JSON.stringify(node));
         this.initializeData();
-        this.showModal(clientX, clientY);
+        this.showModal(e);
     }
 
     initializeData() {
@@ -39,14 +47,17 @@ export class NodeEditor {
 
     log() {
         console.log('nodemodel', this.nodeModel);
-       
+
     }
 
-    showModal(clientX, clientY) {
-       this.active = true;
+    showModal(e) {
+        this.modalViewModel.x = e.x;
+        this.modalViewModel.y = e.y;
+        this.active = true;
+        console.log(this.modalViewModel)
     }
-    
-    attached(){
+
+    attached() {
         $('#thisModal').draggable();
     }
 
@@ -54,12 +65,12 @@ export class NodeEditor {
         // ('#myModal').hide();
         // this.ea.publish('saveNode', this.nodeModel);
     }
-   
+
 }
 
 export class KeysValueConverter {
     toView(obj) {
         console.log(obj);
-      return Reflect.ownKeys(obj);
+        return Reflect.ownKeys(obj);
     }
-  }
+}

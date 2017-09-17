@@ -37,13 +37,10 @@ export class GraphService {
     }
 
     getAdjacentNodes(n) {
-        console.log('graph service graph', this.graph);
         let neighbors = this.graph.neighbors(n.id);
         let edges = this.graph.neighboringEdges(n.id);
         let outEdges = this.graph.outNeighboringEdges(n.id);
-        console.log('neighbors', neighbors);
-        console.log('out neighbors', outEdges);
-        console.log('edges', edges);
+       
         return {
             neighbors,
             edges,

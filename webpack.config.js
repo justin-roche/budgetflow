@@ -79,10 +79,12 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
       { test: /[\/\\]node_modules[\/\\]bluebird[\/\\].+\.js$/, loader: 'expose-loader?Promise' },
       // exposes jQuery globally as $ and as jQuery:
        { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
+       { test: require.resolve('jquery-ui-dist/jquery-ui.js'), loader: 'imports-loader?this=>window' },
        { test: require.resolve('sigma'), loader: 'imports-loader?this=>window' },
        { test: require.resolve('sigma/plugins/sigma.layout.forceAtlas2/worker.js'), loader: 'imports-loader?sigma=sigma,Sigma=sigma,this=>window' },
        { test: require.resolve('sigma/plugins/sigma.layout.forceAtlas2/supervisor.js'), loader: 'imports-loader?sigma=sigma,Sigma=sigma,this=>window' },
-      //{ test: 'node_modules/sigma/plugins'},
+       { test: require.resolve('bootstrap-slider'), loader: 'imports-loader?this=>window' },
+       //{ test: 'node_modules/sigma/plugins'},
       // 
       
       //{ test: require.resolve('sigma/plugins')}

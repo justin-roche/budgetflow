@@ -5,7 +5,7 @@ import $ from 'jquery'
 @inject(EventAggregator)
 export class ModalWrapper {
     collapsed = false;
-
+    modal;
     @bindable settings: any = {};
     @bindable active; //bindable for use with class-type components
     constructor(private ea: EventAggregator) {
@@ -13,12 +13,21 @@ export class ModalWrapper {
     }
 
     attached() {
-        $(`#${this.settings.id}`)
-        .draggable()
+        console.log('modal attached settings', this.settings)
+       
+        $(this.modal)
+        .draggable({
+            handle: '.modal-header'
+        })
+        .resizable({
+            handles: "s, e"
+        })
         .css({'z-index': 3000,
             left: this.settings.x+'px',
             top: this.settings.y+'px'
         });
+
+        //$('resizeme').resizable();
     }
 
     close() {

@@ -93,7 +93,7 @@ export class GraphContainer {
     }
 
     nodeEdit(n, c) {
-        this.ea.publish('show.node.editor', n, c.clientX, c.clientY);
+        this.ea.publish('show.node.editor', {n, x: c.clientX, y: c.clientY});
     }
 
     addListeners() {
@@ -170,7 +170,7 @@ export class GraphContainer {
     addEaListeners() {
         this.ea.subscribe('graph.create',this.graph.bind(this));
         this.ea.subscribe('graph.add',this.add.bind(this));
-        this.ea.subscribe('graph.force',this.force.bind(this));
+        this.ea.subscribe('graph.force',this.toggleForceAtlas.bind(this));
         this.ea.subscribe('graph.clear',this.clear.bind(this));
     }
 
@@ -273,8 +273,10 @@ export class GraphContainer {
         }
     }
 
-    force() {
-        this.sigma.startForceAtlas2({worker: true, barnesHutOptimize: false});
+    toggleForceAtlas() {
+        if(this.sigma.isForceAtlas2Running()){
+            this.sigma.stopForceAtlas2();
+        }else this.sigma.startForceAtlas2({worker: true, barnesHutOptimize: false});
     }
 
     log() {
