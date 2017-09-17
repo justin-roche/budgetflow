@@ -21,9 +21,10 @@ export class NodeEditor {
         y: 0
     }
 
-    constructor(private ea: EventAggregator, private gs: GraphService) {
+    constructor(private ea: EventAggregator, 
+        private gs: GraphService) {
         ea.subscribe('show.node.editor', (e) => {
-            console.log('e', e)
+            console.log('show.node.editor.event', e)
             this.show(e);
         })
     }
@@ -54,6 +55,7 @@ export class NodeEditor {
         this.modalViewModel.x = e.x;
         this.modalViewModel.y = e.y;
         this.active = true;
+        console.log('active.showEditModal')
         console.log(this.modalViewModel)
     }
 

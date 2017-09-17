@@ -72,7 +72,7 @@ export class GraphContainer {
     }
 
     graph() {
-        let g = this.gs.generateRandom(5);
+        let g = this.gs.generateSimple();
         
         this.sigma = new sigma({
             graph: g,
@@ -172,10 +172,16 @@ export class GraphContainer {
         this.ea.subscribe('graph.add',this.add.bind(this));
         this.ea.subscribe('graph.force',this.toggleForceAtlas.bind(this));
         this.ea.subscribe('graph.clear',this.clear.bind(this));
+        this.ea.subscribe('graph.step', this.graphStep.bind(this));
     }
 
     refresh() {
         this.sigma.refresh();
+    }
+
+    graphStep(step) {
+        this.gs.applyStep(step);
+        this.refresh();
     }
 
     clear() {
@@ -184,7 +190,7 @@ export class GraphContainer {
     }
 
     add() {
-        this.sigma.graph.addNode(this.generateRandomNode())
+        this.sigma.graph.addNode(this.gs.generateRandomNode())
         this.sigma.refresh();
     }
 
@@ -260,17 +266,6 @@ export class GraphContainer {
     setActiveNodeToNull() {
         if(this.sigma.graph.activeNode) this.sigma.graph.activeNode.color = this.displaySettings.defaultNodeColor;
         this.sigma.graph.activeNode = null;
-    }
-
-    generateRandomNode() {
-        return {
-            id: 'n' + this.sigma.graph.nodes().length,
-            label: 'n'+this.sigma.graph.nodes().length,
-            x: Math.random(),
-            y: Math.random(),
-            size: Math.random(),
-            color: '#666'
-        }
     }
 
     toggleForceAtlas() {

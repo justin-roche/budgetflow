@@ -10,6 +10,10 @@ export class ScenarioEditor {
     $("#ex8").bootstrapSlider({
       tooltip: 'always'
     });
+
+    $('#ex8').on('slideStop', (v) => {
+      this.ea.publish('graph.step', Number(v.target.value));
+    })
    
   }
   activate() {

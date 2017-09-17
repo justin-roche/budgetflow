@@ -8,12 +8,12 @@ export class ModalWrapper {
     modal;
     @bindable settings: any = {};
     @bindable active; //bindable for use with class-type components
+    
     constructor(private ea: EventAggregator) {
 
     }
 
     attached() {
-        console.log('modal attached settings', this.settings)
        
         $(this.modal)
         .draggable({
@@ -27,7 +27,6 @@ export class ModalWrapper {
             top: this.settings.y+'px'
         });
 
-        //$('resizeme').resizable();
     }
 
     close() {

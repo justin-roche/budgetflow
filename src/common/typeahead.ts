@@ -1,4 +1,4 @@
-export class Test {
+export class TypeAhead {
 
     daysOfTheWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     

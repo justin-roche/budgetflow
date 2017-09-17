@@ -1,9 +1,10 @@
 <template>
     <require from="../common/modalWrapper"></require>
+    <require from="../common/typeAhead"></require>
     <modal-wrapper active.bind="active" settings.bind="modalViewModel">
         <div slot="modalbody">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a>
                 </li>
                 <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Out</a>
                 </li>
@@ -17,6 +18,7 @@
                 <div role="tabpanel" class="tab-pane active" id="home">
                     <label>label</label><input class="form-control" type="text" value.bind="nodeModel.label" placeholder="label">
                     <label>type</label><input class="form-control" type="text" value.bind="nodeModel.type" placeholder="type">
+                    <label>step function</label><type-ahead></type-ahead>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="profile">
                     <table class="table">
