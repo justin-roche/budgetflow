@@ -38,12 +38,8 @@ export class GraphContainer {
     }
 
     attached() {
-        console.log('sigma', sigma);
-        console.log('sigma classes', sigma.classes)
-        console.log('sigma plugins', sigma.plugins)
-        // console.log('jquery');
         this.addMethods();
-         this.graph();
+        this.graph();
     }
 
     addMethods() {
@@ -104,6 +100,7 @@ export class GraphContainer {
         this.addClickListeners()
         this.addDragListeners();
         this.addKeyListeners();
+        this.addEaListeners();
 
         // this.sigma.bind("overEdge", function () { 
         //     //console.log('over');
@@ -168,6 +165,13 @@ export class GraphContainer {
             }
           } 
         }
+    }
+
+    addEaListeners() {
+        this.ea.subscribe('graph.create',this.graph.bind(this));
+        this.ea.subscribe('graph.add',this.add.bind(this));
+        this.ea.subscribe('graph.force',this.force.bind(this));
+        this.ea.subscribe('graph.clear',this.clear.bind(this));
     }
 
     refresh() {

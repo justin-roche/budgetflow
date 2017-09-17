@@ -9,29 +9,16 @@ export class ModalWrapper {
     @bindable settings: any = {};
     @bindable active; //bindable for use with class-type components
     constructor(private ea: EventAggregator) {
-        // this.active = true;
-    }
 
-    show(node, clientX, clientY) {
-        this.showModal(clientX, clientY);
-
-    }
-
-
-    log() {
-
-    }
-
-    showModal(clientX, clientY) {
-        this.active = true;
     }
 
     attached() {
-        //$('#thisModal').draggable();
-        console.log('settings id', this.settings.id);
         $(`#${this.settings.id}`)
         .draggable()
-        .css('z-index', 3000);
+        .css({'z-index': 3000,
+            left: this.settings.x+'px',
+            top: this.settings.y+'px'
+        });
     }
 
     close() {

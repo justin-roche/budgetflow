@@ -1,6 +1,6 @@
 <template>
-    <div show.bind="active" class="draggable" id.bind="settings.id">
-        <div class="modal-dialog" >
+    <div show.bind="active" >
+        <div class="modal-dialog" id.bind="settings.id" >
             <div class="modal-content">
                 <div dblClick.trigger="collapsed = !collapsed" class="modal-header">
                     <button type="button" class="close" aria-hidden="true" click.trigger="active = false">&times;</button>
