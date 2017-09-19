@@ -110,7 +110,7 @@ export class GraphService {
     getAdjacentNodes(n) {
         let neighbors = this.graph.neighbors(n.id);
         let edges = this.graph.neighboringEdges(n.id);
-        let outEdges = this.graph.outNeighboringEdges(n.id);
+        let outEdges = this.graph.outEdges(n.id);
        
         return {
             neighbors,
