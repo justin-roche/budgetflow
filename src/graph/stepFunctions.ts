@@ -6,6 +6,13 @@ export class NodeFunctions {
         },
         equal: function(value, node) {
             node.data.value = value;
+        },
+        activate: function(node, value) {
+            if(node.data.value >= value) {
+                node.data.active = true;
+            } else {
+                node.data.active = false;
+            }
         }
     }
 
