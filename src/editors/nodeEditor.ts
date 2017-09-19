@@ -1,11 +1,13 @@
+import { ComponentBase } from './../common/componentBase';
 import { GraphService } from '../graph/graphService';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import $ from 'jquery'
 import {ModalSettings} from '../common/modalWrapper'
+import * as Rx from 'rxjs';
 
 @inject(EventAggregator, GraphService)
-export class NodeEditor {
+export class NodeEditor extends ComponentBase{
     active;
     collapsed = false;
 
@@ -15,27 +17,34 @@ export class NodeEditor {
         outNodes: [],
     }
 
-    modalSettings : ModalSettings = 
+    modalSettings = new Rx.BehaviorSubject<ModalSettings>( 
         {title: 'Node Edit',
         id: 'node-edit',
         x: 0,
         y: 0,
         show: false
-    };
-
+      });
 
     constructor(private ea: EventAggregator, 
         private gs: GraphService) {
+        super()
         ea.subscribe('show.node.editor', (e) => {
-            console.log('show.node.editor.event', e)
             this.show(e);
         })
+    }
+
+    settingsChanged() {
+        console.log('settings changed', this.settings)
     }
 
     show(e) {
         this.nodeModel = e.n; //JSON.parse(JSON.stringify(node));
         this.initializeData();
-        this.showModal(e);
+        this.emitChildSettings(this.modalSettings, {
+            x: e.x,
+            y: e.y,
+            show: true
+        })
     }
 
     initializeData() {
@@ -51,13 +60,6 @@ export class NodeEditor {
     log() {
         console.log('nodemodel', this.nodeModel);
     }
-
-    showModal(e) {
-        this.modalSettings.x = e.x;
-        this.modalSettings.y = e.y;
-        this.modalSettings.show = true;
-    }
-
 
     save() {
         // ('#myModal').hide();

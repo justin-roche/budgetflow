@@ -13,7 +13,7 @@ export interface ModalSettings {
 }
 
 export class ModalWrapper extends ComponentBase {
-    @bindable settings: Rx.BehaviorSubject<ModalSettings>;
+    @bindable $settings: Rx.BehaviorSubject<ModalSettings>;
     modalRef;
 
     constructor() {
@@ -26,24 +26,30 @@ export class ModalWrapper extends ComponentBase {
     }
 
     createModal() {
+        // $(this.modalRef)
+        //     .resizable({
+        //         handles: "s, e"
+        //     })
+           
+    }
 
-        $(this.modalRef)
-            .draggable({
-                handle: '.modal-header'
-            })
-            .resizable({
-                handles: "s, e"
-            })
-            .css({
-                'z-index': 3000,
-                left: this._settings.x + 'px',
-                top: this._settings.y + 'px'
+    afterSettingsChanged(v) {
+        console.log('settings changed', v)
+        if(v.x || v.y) {
+            $(this.modalRef).css({
+                'z-index': Math.random()*1000,
+                left: this.settings.x + 'px',
+                top: this.settings.y + 'px'
             });
-
+        }
+        if(v.show) {
+            console.log('modals', $('.modal-dialog'))
+        }
+        
     }
 
     close() {
-
+        this.emitSettings({show: false});
     }
 
     save() {

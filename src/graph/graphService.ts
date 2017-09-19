@@ -10,15 +10,6 @@ export class GraphService {
 
     }
 
-    stepFunctions = {
-        increment: function(value, node) {
-            return value+1;
-        },
-        equal: function(value, node) {
-            return value;
-        }
-    }
-
     generateRandom(n) {
 
         let i;
@@ -60,7 +51,7 @@ export class GraphService {
 
         graph.nodes.push({
             data: {
-                value: 0,
+                value: 10,
                 stepFunction: ['equal']
             },
             id: 'n' + 1,
@@ -87,7 +78,10 @@ export class GraphService {
         });
 
         graph.edges.push({
-            id: 'e1',
+            data: {
+                linkFunction: 'transfer'
+            },
+            id: 'en1n2',
             source: 'n1', 
             target: 'n2', 
             size: 50,
@@ -101,12 +95,15 @@ export class GraphService {
 
     generateRandomNode() {
         return {
-            id: 'n' + this.graph.nodes().length,
-            label: 'n'+this.graph.nodes().length,
+            id: 'n' + (this.graph.nodes().length+1),
+            label: 'n'+(this.graph.nodes().length+1),
             x: Math.random(),
             y: Math.random(),
             size: Math.random(),
-            color: '#666'
+            color: '#666',
+            data: {
+                
+            }
         }
     }
 
@@ -125,21 +122,66 @@ export class GraphService {
 
     /* calculations */
 
-    applyStep(step) {
-        this.traverseOnce((node)=>{
-            if(node.data.stepFunction) {
-                node.data.value = this.nf.stepFunctions[node.data.stepFunction](step,node);
-                node.size = node.data.value*10;
-            }
-        });
+    setStart() {
         console.log(this.graph.nodes());
+
     }
 
-    traverseOnce(fn) {
+    applySimulation(step) {
+        
+        // this.iterateAllNodes((node)=>{
+            
+        //     if(node.data.stepFunction) {
+        //         this.nf.stepFunctions[node.data.stepFunction](step,node);
+        //         node.size = node.data.value*10;                
+        //     }
+        // });
+        let numberOfCycles = this.timeToCycles(step);
+        // if(numberOfCycles = 0) {
+        //     this.resetNodeValues();
+        // }
+        for(let c = 0; c<numberOfCycles; c++) {
+            this.breadthTraverse(node => {
+                
+            });
+        }
+        
+        console.log('nodes after traversal', this.graph.nodes()[0].data.value, this.graph.nodes()[1].data.value)
+        
+    }
+
+    runLinkFunction(source, target) {
+        let edge = this.graph.getEdgeById('e'+source.id+target.id);
+        console.log('foudn edge', edge);
+        this.nf.linkFunctions[edge.data.linkFunction](source, target, 1);
+    }
+
+    iterateAllNodes(fn) {
         this.graph.nodes()
         .forEach(node => {
             fn(node);
         });
+    }
+
+    timeToCycles(step) {
+        return step;
+    }
+
+    resetNodeValues() {
+        this.graph.nodes()[0].data.value = 0;
+    }
+
+    breadthTraverse(fn) {
+        var stack=[this.graph.nodes()[0]];
+        while(stack.length>0) {
+          let n = stack.pop();
+          fn(n);
+          let neighborsArray = this.graph.outNodes(n.id);
+          neighborsArray.forEach(_n => {
+             this.runLinkFunction(n, _n)
+             stack.unshift(_n);
+          });
+        }
     }
 
     

@@ -1,7 +1,7 @@
 <template>
     <require from="../common/modalWrapper"></require>
     <require from="../common/typeAhead"></require>
-    <modal-wrapper settings.bind="modalSettings">
+    <modal-wrapper $settings.bind="modalSettings">
         <div slot="modalbody">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a>
@@ -33,6 +33,8 @@
                             <tr repeat.for="nodeName of data.outNodes">
                                 <th scope="row">1</th>
                                 <td>${nodeName}</td>
+                                <td><label>link function</label><type-ahead></type-ahead>
+</td>
                             </tr>
                         </tbody>
                     </table>

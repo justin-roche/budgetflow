@@ -1,10 +1,11 @@
 <template>
-    <div show.bind="_settings.show">
-        <div class="modal-dialog" ref="modalRef">
+    <require from="./draggable"></require>
+    <div show.bind="settings.show">
+        <div draggable class="modal-dialog" ref="modalRef">
             <div class="modal-content">
                 <div dblClick.trigger="collapsed = !collapsed" class="modal-header">
-                    <button type="button" class="close" aria-hidden="true" >&times;</button>
-                    <h4 class="modal-title">${_settings.title}</h4>
+                    <button type="button" class="close" aria-hidden="true" click.trigger="close()" >&times;</button>
+                    <h4 class="modal-title">${settings.title}</h4>
                 </div>
                 <div  show.bind="!collapsed" class="modal-body">
                     <slot name="modalbody"></slot>   

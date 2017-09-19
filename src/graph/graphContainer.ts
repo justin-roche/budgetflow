@@ -54,6 +54,18 @@ export class GraphContainer {
             return neighbors;
         });
 
+        sigma.classes.graph.addMethod('neighborsArray', function(nodeId) {
+            var k,
+                neighbors = [],
+                index = this.allNeighborsIndex[nodeId] || {};
+                console.log('index', index);
+        
+            for (k in index) {
+                neighbors.push(this.nodesIndex[k]);
+            }
+            return neighbors;
+        });
+
         sigma.classes.graph.addMethod('neighboringEdges', function(nodeId) {
             var k,
                 edges = {},
@@ -62,12 +74,33 @@ export class GraphContainer {
             return index;
         });
 
-        sigma.classes.graph.addMethod('outNeighboringEdges', function(nodeId) {
+        sigma.classes.graph.addMethod('outEdges', function(nodeId) {
             var k,
-                edges = {},
-                index = this.outNeighborsIndex[nodeId] || {};
+                outEdges = [],
+                edgesObject = this.outNeighborsIndex[nodeId] || {};
         
-            return index;
+                for (let nodeName in edgesObject) {
+                    for(let edgeName in edgesObject[nodeName]) {
+                        outEdges.push(edgesObject[nodeName][edgeName]);
+                    }
+
+                }
+            return outEdges;
+        });
+
+        sigma.classes.graph.addMethod('getEdgeById', function(edgeId) {
+            return this.edgesIndex[edgeId];
+        });
+
+        sigma.classes.graph.addMethod('outNodes', function(nodeId) {
+            var k,
+                edgesObject = this.outNeighborsIndex[nodeId] || {};
+            let outNodes = [];
+
+                for (let nodeName in edgesObject) {
+                    outNodes.push(this.nodesIndex[nodeName]);
+                }
+            return outNodes;
         });
     }
 
@@ -173,14 +206,19 @@ export class GraphContainer {
         this.ea.subscribe('graph.force',this.toggleForceAtlas.bind(this));
         this.ea.subscribe('graph.clear',this.clear.bind(this));
         this.ea.subscribe('graph.step', this.graphStep.bind(this));
+        this.ea.subscribe('graph.setStart', this.setStart.bind(this));
     }
 
     refresh() {
         this.sigma.refresh();
     }
 
-    graphStep(step) {
-        this.gs.applyStep(step);
+    setStart() {
+        this.gs.setStart()
+    }
+
+    graphStep(time) {
+        this.gs.applySimulation(time);
         this.refresh();
     }
 
