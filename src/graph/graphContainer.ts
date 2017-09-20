@@ -1,182 +1,102 @@
+import { GraphGenerator } from './graphGenerator';
 import { GraphService } from './graphService';
-import { inject } from 'aurelia-framework';
+import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+
 declare var sigma;
 
-@inject(EventAggregator, GraphService)
+@inject(EventAggregator, GraphService, GraphGenerator)
 export class GraphContainer {
-    sigma;
+    @bindable settings;
     dragging = false;
     nodeEditor;
-    gs;
-    ea;
+    containerRef;
+    
+    sigmaInstance;
+    displaySettings;
+    sigmaSettings;
 
-    public displaySettings = {
-        defaultEdgeColor: 'black',
-        defaultNodeColor: 'gray',
-        activeNodeColor: 'green',
-        activeEdgeColor: 'green',
-        defaultNodeSize: 50,
-    }
+    g;
 
-    public sigmaSettings = {
-        doubleClickZoomingRatio: 1,
-        maxNodeSize: 16,
-        minNodeSize: 45,
-        minEdgeSize: 5,
-        maxEdgeSize: 5,
-        minArrowSize: 25,
-        enableEdgeHovering: true,
-    };
-
-    constructor(EventAggregator, GraphService) {
-        this.gs = GraphService;
-        this.ea = EventAggregator
-        this.ea.subscribe('saveNode',(n)=>{
-            this.refresh();
-        });
+    constructor(private ea: EventAggregator, private gs: GraphService, private gg: GraphGenerator) {
+        
     }
 
     attached() {
-        this.addMethods();
+        this.displaySettings = this.settings.displaySettings;
+        this.sigmaSettings = this.settings.sigmaSettings;
+
+        this.createSigmaInstance();
         this.graph();
+        this.addListeners();
+        this.sigmaInstance.refresh();
+        
     }
 
-    addMethods() {
-        sigma.classes.graph.addMethod('neighbors', function(nodeId) {
-            var k,
-                neighbors = {},
-                index = this.allNeighborsIndex[nodeId] || {};
-        
-            for (k in index) {
-                neighbors[k] = this.nodesIndex[k];
-            }
-            return neighbors;
-        });
-
-        sigma.classes.graph.addMethod('neighborsArray', function(nodeId) {
-            var k,
-                neighbors = [],
-                index = this.allNeighborsIndex[nodeId] || {};
-                console.log('index', index);
-        
-            for (k in index) {
-                neighbors.push(this.nodesIndex[k]);
-            }
-            return neighbors;
-        });
-
-        sigma.classes.graph.addMethod('neighboringEdges', function(nodeId) {
-            var k,
-                edges = {},
-                index = this.allNeighborsIndex[nodeId] || {};
-        
-            return index;
-        });
-
-        sigma.classes.graph.addMethod('outEdges', function(nodeId) {
-            var k,
-                outEdges = [],
-                edgesObject = this.outNeighborsIndex[nodeId] || {};
-        
-                for (let nodeName in edgesObject) {
-                    for(let edgeName in edgesObject[nodeName]) {
-                        outEdges.push(edgesObject[nodeName][edgeName]);
-                    }
-
+    createSigmaInstance() {
+        this.sigmaInstance = new sigma({
+            graph: this.settings.graph,
+            renderers: [
+                {
+                    container: this.containerRef,
+                    type: 'canvas' // sigma.renderers.canvas works as well
                 }
-            return outEdges;
-        });
-
-        sigma.classes.graph.addMethod('getEdgeById', function(edgeId) {
-            return this.edgesIndex[edgeId];
-        });
-
-        sigma.classes.graph.addMethod('outNodes', function(nodeId) {
-            var k,
-                edgesObject = this.outNeighborsIndex[nodeId] || {};
-            let outNodes = [];
-
-                for (let nodeName in edgesObject) {
-                    outNodes.push(this.nodesIndex[nodeName]);
-                }
-            return outNodes;
+            ],
+            settings: this.sigmaSettings
         });
     }
 
     graph() {
-        let g = this.gs.generateSimple();
         
-        this.sigma = new sigma({
-            graph: g,
-            renderers: [
-                {
-                  container: document.getElementById('container'),
-                  type: 'canvas' // sigma.renderers.canvas works as well
-                }
-              ],
-            settings: this.sigmaSettings
-        });
-
-        this.gs.graph = this.sigma.graph;
-        g.activeNode = null;
-        g.activeEdge = null;
-        this.addListeners();
-        this.sigma.refresh();
-    }
-
-    nodeEdit(n, c) {
-        this.ea.publish('show.node.editor', {n, x: c.clientX, y: c.clientY});
+        this.g = this.sigmaInstance.graph;
+        console.log('sigma instance', this.sigmaInstance, 'nodes',this.sigmaInstance.graph.nodes());
+        this.gs.graph = this.sigmaInstance.graph;
+        this.g.activeNode = null;
+        this.g.activeEdge = null;
+        
     }
 
     addListeners() {
+        this.addEaListeners();
         this.addClickListeners()
         this.addDragListeners();
-        this.addKeyListeners();
-        this.addEaListeners();
+        // this.addKeyListeners();
+    }
 
-        // this.sigma.bind("overEdge", function () { 
-        //     //console.log('over');
-        // });
-
-         // dragNodes.bind('startdrag', () => {
-        //     console.log('startdrag')
-        //     self.dragging = true;
-        // })
-
-        // this.sigma.bind("overNode", function () { 
-        //     //console.log(arguments[0].data.node);
-        // });
-
-        // this.sigma.bind("overEdges", function () { 
-        //     console.log(arguments[0].data);
-        // });
+    addEaListeners() {
+        this.ea.subscribe('saveNode',(n)=>{
+            this.refresh();
+        });
+        this.ea.subscribe('graph.create',this.graph.bind(this));
+        this.ea.subscribe('graph.add',this.add.bind(this));
+        this.ea.subscribe('graph.force',this.toggleForceAtlas.bind(this));
+        this.ea.subscribe('graph.clear',this.clear.bind(this));
+        this.ea.subscribe('graph.step', this.graphStep.bind(this));
+        this.ea.subscribe('graph.setStart', this.setStart.bind(this));
     }
 
     addClickListeners() {
 
-        this.sigma.bind("clickNode", (d) => { 
+        this.sigmaInstance.bind("clickNode", (d) => { 
             let n = d.data.node
             this.link(n);
         });
 
-        this.sigma.bind("doubleClickNode", (d) => { 
+        this.sigmaInstance.bind("doubleClickNode", (d) => { 
             let n = d.data.node
             let c = d.data.captor;
             this.nodeEdit(n, c);
         });
 
-        this.sigma.bind("clickEdge", (d) => { 
+        this.sigmaInstance.bind("clickEdge", (d) => { 
             let e = d.data.edge
             this.setActiveEdge(e);
         });
     }
 
     addDragListeners() {
-        // console.log('drag listeners', Sigma.plugins.dragNodes);
-        let dragNodes = sigma.plugins.dragNodes(this.sigma, this.sigma.renderers[0]);
-        dragNodes.bind('drop', (d) => {
-            console.log('end of drag', d)
+        sigma.plugins.dragNodes(this.sigmaInstance, this.sigmaInstance.renderers[0])
+        .bind('drop', (d) => {
             let n = d.data.node
             this.link(n);
         })
@@ -190,27 +110,28 @@ export class GraphContainer {
         var keyCode = e.keyCode;
         console.log(keyCode)
           if(keyCode==8) {
-            if(self.sigma.graph.activeNode){
-                self.removeNode(self.sigma.graph.activeNode);
+            if(self.sigmaInstance.graph.activeNode){
+                self.removeNode(self.sigmaInstance.graph.activeNode);
             }
-            if(self.sigma.graph.activeEdge){
-                self.removeEdge(self.sigma.graph.activeEdge);
+            if(self.sigmaInstance.graph.activeEdge){
+                self.removeEdge(self.sigmaInstance.graph.activeEdge);
             }
           } 
         }
     }
 
-    addEaListeners() {
-        this.ea.subscribe('graph.create',this.graph.bind(this));
-        this.ea.subscribe('graph.add',this.add.bind(this));
-        this.ea.subscribe('graph.force',this.toggleForceAtlas.bind(this));
-        this.ea.subscribe('graph.clear',this.clear.bind(this));
-        this.ea.subscribe('graph.step', this.graphStep.bind(this));
-        this.ea.subscribe('graph.setStart', this.setStart.bind(this));
+
+    /* graph modification */
+
+    
+    nodeEdit(n, c) {
+        this.ea.publish('show.node.editor', {n, x: c.clientX, y: c.clientY});
     }
 
+    
+
     refresh() {
-        this.sigma.refresh();
+        this.sigmaInstance.refresh();
     }
 
     setStart() {
@@ -223,25 +144,25 @@ export class GraphContainer {
     }
 
     clear() {
-        this.sigma.graph.clear();
-        this.sigma.refresh();
+        this.sigmaInstance.graph.clear();
+        this.sigmaInstance.refresh();
     }
 
     add() {
-        this.sigma.graph.addNode(this.gs.generateRandomNode())
-        this.sigma.refresh();
+        this.sigmaInstance.graph.addNode(this.gg.generateRandomNode())
+        this.sigmaInstance.refresh();
     }
 
     removeNode(n) {
-        this.sigma.graph.activeNode = null;
-        this.sigma.graph.dropNode(n.id);
-        this.sigma.refresh()
+        this.sigmaInstance.graph.activeNode = null;
+        this.sigmaInstance.graph.dropNode(n.id);
+        this.sigmaInstance.refresh()
     }
 
     removeEdge(e) {
-        this.sigma.graph.activeEdge = null;
-        this.sigma.graph.dropEdge(e.id);
-        this.sigma.refresh()
+        this.sigmaInstance.graph.activeEdge = null;
+        this.sigmaInstance.graph.dropEdge(e.id);
+        this.sigmaInstance.refresh()
     }
 
     addEdge() {
@@ -250,34 +171,34 @@ export class GraphContainer {
 
     setActiveEdge(e) {
         this.setActiveNodeToNull();
-        console.log('this', this, this.sigma.graph)
-        if(e === this.sigma.graph.activeEdge) {
+        console.log('this', this, this.sigmaInstance.graph)
+        if(e === this.sigmaInstance.graph.activeEdge) {
             e.color = this.displaySettings.defaultEdgeColor;
-            this.sigma.graph.activeEdge = null;
+            this.sigmaInstance.graph.activeEdge = null;
         } else {
-            this.sigma.graph.activeEdge = e;
+            this.sigmaInstance.graph.activeEdge = e;
             e.color = this.displaySettings.activeEdgeColor;
         }
         
-        this.sigma.refresh();
+        this.sigmaInstance.refresh();
     }
 
     setActiveNode(n) {
         this.setActiveEdgeToNull();
-        if(n === this.sigma.graph.activeNode) {
+        if(n === this.sigmaInstance.graph.activeNode) {
             n.color = this.displaySettings.defaultNodeColor;
-            this.sigma.graph.activeNode = null;
+            this.sigmaInstance.graph.activeNode = null;
         } else {
-            this.sigma.graph.activeNode = n;
+            this.sigmaInstance.graph.activeNode = n;
             n.color = this.displaySettings.activeNodeColor;
         }
-        this.sigma.refresh();
+        this.sigmaInstance.refresh();
     }
 
     link(node) {
-        let fromNode = this.sigma.graph.activeNode; 
+        let fromNode = this.sigmaInstance.graph.activeNode; 
         this.setActiveNode(node);
-        let toNode = this.sigma.graph.activeNode;
+        let toNode = this.sigmaInstance.graph.activeNode;
         if (fromNode && toNode && (toNode !== fromNode)){
             let newEdge = {
                 id: 'e' + fromNode.id + toNode.id,
@@ -287,35 +208,35 @@ export class GraphContainer {
                 color: this.displaySettings.activeEdgeColor,
                 type: 'arrow'
             }
-            this.sigma.graph.addEdge(newEdge);
+            this.sigmaInstance.graph.addEdge(newEdge);
             fromNode.color = this.displaySettings.defaultNodeColor;
             toNode.color = this.displaySettings.defaultNodeColor;
             this.setActiveNodeToNull();
         }
         
-        this.sigma.refresh();
+        this.sigmaInstance.refresh();
     }
 
     setActiveEdgeToNull() {
-        if(this.sigma.graph.activeEdge) this.sigma.graph.activeEdge.color = this.displaySettings.defaultEdgeColor;
-        this.sigma.graph.activeEdge = null;
+        if(this.sigmaInstance.graph.activeEdge) this.sigmaInstance.graph.activeEdge.color = this.displaySettings.defaultEdgeColor;
+        this.sigmaInstance.graph.activeEdge = null;
     }
 
     setActiveNodeToNull() {
-        if(this.sigma.graph.activeNode) this.sigma.graph.activeNode.color = this.displaySettings.defaultNodeColor;
-        this.sigma.graph.activeNode = null;
+        if(this.sigmaInstance.graph.activeNode) this.sigmaInstance.graph.activeNode.color = this.displaySettings.defaultNodeColor;
+        this.sigmaInstance.graph.activeNode = null;
     }
 
     toggleForceAtlas() {
-        if(this.sigma.isForceAtlas2Running()){
-            this.sigma.stopForceAtlas2();
-        }else this.sigma.startForceAtlas2({worker: true, barnesHutOptimize: false});
+        if(this.sigmaInstance.isForceAtlas2Running()){
+            this.sigmaInstance.stopForceAtlas2();
+        }else this.sigmaInstance.startForceAtlas2({worker: true, barnesHutOptimize: false});
     }
 
     log() {
-        console.log('sigma graph', this.sigma.graph)
-        console.log('nodes', this.sigma.graph.nodes())
-        console.log('edges', this.sigma.graph.edges())
+        console.log('sigmaInstance graph', this.sigmaInstance.graph)
+        console.log('nodes', this.sigmaInstance.graph.nodes())
+        console.log('edges', this.sigmaInstance.graph.edges())
     }
 
 }
