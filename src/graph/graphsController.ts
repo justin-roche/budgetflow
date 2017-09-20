@@ -19,8 +19,8 @@ export class GraphsController {
 
     public sigmaSettings = {
         doubleClickZoomingRatio: 1,
-        maxNodeSize: 16,
-        minNodeSize: 45,
+        maxNodeSize: 50,
+        minNodeSize: 1,
         minEdgeSize: 5,
         maxEdgeSize: 5,
         minArrowSize: 25,
@@ -121,5 +121,17 @@ export class GraphsController {
             }
             return outNodes;
         });
+
+        sigma.classes.graph.addMethod('breadthTraverse', function(fn) {
+            let stack = [this.nodes()[0]];
+            while (stack.length > 0) {
+                let n = stack.pop();
+                let neighborsArray = this.outNodes(n.id);
+                neighborsArray.forEach(_n => {
+                    if (fn(n, _n)) stack.unshift(_n);
+                });
+            }
+        });
+        
     }
 }

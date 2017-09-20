@@ -45,21 +45,24 @@ export class GraphGenerator {
                 data: {
                     active: true,
                     value: 10,
-                    stepFunctions: []
+                    stepFunctions: [],
+                    displayFunctions: ['toggle', 'sizeByValue'],
                 },
             },
             {
                 data: {
                     active: false,
                     value: 0,
-                    stepFunctions: [{ name: 'activate', argument: 5 }]
+                    stepFunctions: [{ name: 'activate', argument: 5 }],
+                    displayFunctions: ['toggle','sizeByValue'],
                 }
             },
             {
                 data: {
                     active: false,
                     value: 0,
-                    stepFunctions: []
+                    stepFunctions: [],
+                    displayFunctions: ['toggle','sizeByValue'],
                 }
             }];
 

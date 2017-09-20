@@ -47,13 +47,9 @@ export class GraphContainer {
     }
 
     graph() {
-        
         this.g = this.sigmaInstance.graph;
-        console.log('sigma instance', this.sigmaInstance, 'nodes',this.sigmaInstance.graph.nodes());
-        this.gs.graph = this.sigmaInstance.graph;
         this.g.activeNode = null;
         this.g.activeEdge = null;
-        
     }
 
     addListeners() {
@@ -64,9 +60,7 @@ export class GraphContainer {
     }
 
     addEaListeners() {
-        this.ea.subscribe('saveNode',(n)=>{
-            this.refresh();
-        });
+        this.ea.subscribe('saveNode',this.refresh.bind(this));
         this.ea.subscribe('graph.create',this.graph.bind(this));
         this.ea.subscribe('graph.add',this.add.bind(this));
         this.ea.subscribe('graph.force',this.toggleForceAtlas.bind(this));
@@ -128,8 +122,6 @@ export class GraphContainer {
         this.ea.publish('show.node.editor', {n, x: c.clientX, y: c.clientY});
     }
 
-    
-
     refresh() {
         this.sigmaInstance.refresh();
     }
@@ -139,6 +131,7 @@ export class GraphContainer {
     }
 
     graphStep(time) {
+        this.gs.graph = this.g;
         this.gs.applySimulation(time);
         this.refresh();
     }

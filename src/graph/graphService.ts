@@ -10,24 +10,35 @@ export class GraphService {
 
     }
 
-     /* calculations */
+    /* calculations */
 
-     setStart() {
+    setStart() {
         console.log(this.graph.nodes());
+    }
+
+    timeToCycles(step) {
+        return step;
     }
 
     applySimulation(step) {
 
         let numberOfCycles = this.timeToCycles(step);
-       
-        for (let c = 0; c < numberOfCycles; c++) {
-            this.breadthTraverse(node => {
 
-            });
+        for (let c = 0; c < numberOfCycles; c++) {
+            this.graph.breadthTraverse(this.simulateNode.bind(this));
         }
 
         console.log('nodes after traversal', this.graph.nodes()[0].data.value, this.graph.nodes()[1].data.value, this.graph.nodes()[1].data.active)
 
+    }
+
+    simulateNode(source, target) {
+        this.runLinkFunction(source, target);
+        this.runStepFunction(target);
+        this.runDisplayUpdateFunction(target);
+        if (target.data.active) {
+            return true;
+        }
     }
 
     runLinkFunction(source, target) {
@@ -41,13 +52,14 @@ export class GraphService {
         });
     }
 
-    updateDisplayProperties(node) {
-        node.size = 1/node.data.value;
-        if(node.data.active) {
-            node.color = 'black';
-        } else {
-            node.color = 'gray';
-        }
+    runDisplayUpdateFunction(target) {
+        target.data.displayFunctions.forEach(fnName => {
+            this.nf.displayFunctions[fnName](target);
+        });
+    }
+
+    resetNodeValues() {
+        this.graph.nodes()[0].data.value = 0;
     }
 
     iterateAllNodes(fn) {
@@ -55,31 +67,6 @@ export class GraphService {
             .forEach(node => {
                 fn(node);
             });
-    }
-
-    timeToCycles(step) {
-        return step;
-    }
-
-    resetNodeValues() {
-        this.graph.nodes()[0].data.value = 0;
-    }
-
-    breadthTraverse(fn) {
-        let stack = [this.graph.nodes()[0]];
-        while (stack.length > 0) {
-            let n = stack.pop();
-            fn(n);
-            let neighborsArray = this.graph.outNodes(n.id);
-            neighborsArray.forEach(_n => {
-                this.runLinkFunction(n, _n);
-                this.runStepFunction(_n);
-                this.updateDisplayProperties(_n);
-                if (_n.data.active) {
-                    stack.unshift(_n);
-                }
-            });
-        }
     }
 
     getAdjacentNodes(n) {
@@ -95,7 +82,7 @@ export class GraphService {
 
     }
 
-   
+
 
 
 
