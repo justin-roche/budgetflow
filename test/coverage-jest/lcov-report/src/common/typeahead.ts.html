@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/common/typeahead.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/common</a> typeahead.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/13</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export class <span class="cstat-no" title="statement not covered" >TypeAhead {<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    daysOfTheWee<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >k </span>= ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];</span>
+    <span class="fstat-no" title="function not covered" ></span>
+      mo<span class="cstat-no" title="statement not covered" >nthsOfTheYear = [</span>
+<span class="cstat-no" title="statement not covered" >        {name: 'January', short: 'Jan', number: 1},</span>
+        {name: 'February', short: 'Feb', number: 2},
+        {name: 'March', short: 'Mar', number: 3},
+        {name: 'April', short: 'Apr', number: 4},
+        {name: 'May', short: 'May', number: 5},
+        {name: 'June', short: 'Jun', number: 6},
+        {name: 'July', short: 'Jul', number: 7},
+        {name: 'August', short: 'Aug', number: 8},
+        {name: 'September', short: 'Sep', number: 9},
+        {name: 'October', short: 'Oct', number: 10},
+        {name: 'November', short: 'Nov', number: 11},
+        {name: 'December', short: 'Dec', number: 12}
+      ];
+    
+      fr<span class="cstat-no" title="statement not covered" >uits = ['Apple', 'Orange', 'Grapes', 'Pineaple', 'Peach', 'Bananas'];</span>
+    
+    
+<span class="cstat-no" title="statement not covered" >      constructor(httpClient) {<span class="fstat-no" title="function not covered" ></span></span>
+        //this.httpClient = httpClient;
+      }
+    
+      getStates(filter, limit) {
+        // let promise = this.httpClient.fetch('states.json')
+        //   .then(response =&gt; {
+        //     return response.json();
+        //   })
+<span class="cstat-no" title="statement not covered" >        //   .then(states =&gt; filter.leng<span class="fstat-no" title="function not covered" >th</span> &gt; 0 ? states.filter(item =&gt; item.state.toLowerCase().indexOf(filter.toLowerCase()) &gt; -1) : states)</span>
+<span class="cstat-no" title="statement not covered" >        //   .then(states =&gt; limit ? states.splice(0, limit) : states);</span>
+    <span class="cstat-no" title="statement not covered" ></span>
+        // return Promise.delay(500, promise);
+      }
+    <span class="cstat-no" title="statement not covered" ></span>
+      monthSelected(item) {
+        if (item) {
+<span class="cstat-no" title="statement not covered" >          console.log(</span>'Month Selected: ' + item.short);
+        } else {
+<span class="cstat-no" title="statement not covered" >          console.log('Month cl</span>eared');
+        }
+      }
+&nbsp;
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Sep 20 2017 21:57:30 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

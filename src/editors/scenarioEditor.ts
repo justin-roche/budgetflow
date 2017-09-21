@@ -16,6 +16,10 @@ export class ScenarioEditor {
   });
 
   constructor(private ea: EventAggregator) {
+    this.ea.subscribe('graphs.select',this.selectGraph.bind(this))
+  }
+
+  selectGraph() {
     
   }
 

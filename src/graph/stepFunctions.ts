@@ -35,6 +35,19 @@ export class NodeFunctions {
         
         sizeByValue: function(node) {
             node.size = node.data.value;
+        },
+
+        labelById: function(node) {
+            node.label = node.id;
+        },
+
+        randomPosition: function(node) {
+            node.x = Math.random();
+            node.y = Math.random();
+        },
+
+        idByIndex: function(node,i){
+            node.index = 'n'+i;
         }
     }
 
