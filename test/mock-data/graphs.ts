@@ -17,12 +17,13 @@ let simple = {
     },
     graph: {
         data: {
-            nodesInitial: {
-                displayFunctions: ['idByIndex', 'toggle', 'sizeByValue', 'labelById', 'randomPosition'],
-            }
+            // nodesInitial: {
+            //     displayFunctions: ['toggle', 'sizeByValue', 'labelById'],
+            // }
         },
         nodes: [
             {
+                id: 'n1', x: Math.random(), y: Math.random(),
                 data: {
                     active: true,
                     value: 10,
@@ -31,6 +32,7 @@ let simple = {
                 },
             },
             {
+                id: 'n2', x: Math.random(), y: Math.random(),
                 data: {
                     active: false,
                     value: 0,
@@ -39,6 +41,7 @@ let simple = {
                 }
             },
             {
+                id: 'n3',  x: Math.random(), y: Math.random(),
                 data: {
                     active: false,
                     value: 0,
@@ -49,20 +52,28 @@ let simple = {
 
         edges: [
             {
+                id: 'e1',
                 data: {
                     linkFunction: 'transfer',
                     stepFunctions: null,
                 },
                 source: 'n1',
                 target: 'n2',
+                color: 'black',
+                size: 50,
+                type: 'arrow'
             },
             {
+                id: 'e2',
                 data: {
                     linkFunction: 'transfer',
                     stepFunctions: null,
                 },
                 source: 'n2',
                 target: 'n3',
+                color: 'black',
+                size: 50,
+                type: 'arrow'
             }
         ]
     }

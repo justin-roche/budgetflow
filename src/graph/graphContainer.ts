@@ -133,7 +133,7 @@ export class GraphContainer {
     }
 
     add() {
-        this.sigmaInstance.graph.addNode(this.gg.generateRandomNode())
+        // this.sigmaInstance.graph.addNode(this.gg.generateRandomNode())
         this.sigmaInstance.refresh();
     }
 

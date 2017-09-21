@@ -60,6 +60,20 @@ export class GraphService {
             return this.edgesIndex[edgeId];
         });
 
+        this.sigma.classes.graph.attach('addEdge', '', function(e){
+            console.log('calling addEdge', arguments);
+            let source = this.nodesIndex[e.source];
+            let target = this.nodesIndex[e.target];
+            
+            source._outNodes? source._outNodes.push(target) : source._outNodes = [target];
+            source._outEdges? source._outEdges.push(e) : source._outEdges = [e];
+            
+            target._inNodes? target._inNodes.push(source) : target._inNodes = [source];
+            target._inEdges? target._inEdges.push(e) : target._inEdges = [e];
+            
+            
+        });
+
         this.sigma.classes.graph.addMethod('outNodes', function (nodeId) {
             var k,
                 edgesObject = this.outNeighborsIndex[nodeId] || {};
@@ -93,27 +107,10 @@ export class GraphService {
     }
 
     getSigmaInstance(data) {
-
-            data.graph.nodes.forEach((node, i) => {
-                /* todo: move id into graph class */
-                node.id = 'n' + (i + 1);
-                node.x = Math.random(),
-                node.y = Math.random()
-            });
-    
-            data.graph.edges.forEach((edge, i) => {
-                edge.id = 'e' + edge.source + edge.target;
-                edge.color = 'black';
-                edge.size = 50;
-                edge.type = 'arrow'
-            });
-
             let instance = new this.sigma({
                 graph: data.graph,
             });
-
             return instance;
-
     }
 
     /* simulation */
@@ -122,20 +119,20 @@ export class GraphService {
         console.log(this.graph.nodes());
     }
 
-    timeToCycles(step) {
+    convertTimeToCycles(step) {
         return step;
     }
 
-    initialize(graph) {
+    initialize(graph) { // initialize description-dependent derived properties
         graph.iterationTraverse((node) => {
             this.runDisplayUpdateFunction(node);
             return true;
         });
-        console.log(graph.nodes());
+        console.log('nodes after initialization', graph.nodes());
     }
 
-    applySimulation(step) {
-        let numberOfCycles = this.timeToCycles(step);
+    applySimulation(time) {
+        let numberOfCycles = this.convertTimeToCycles(time);
         for (let c = 0; c < numberOfCycles; c++) {
             this.graph.breadthTraverse(this.simulateNode.bind(this));
         }
