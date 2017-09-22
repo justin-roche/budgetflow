@@ -7,45 +7,60 @@ import { Store, select } from 'aurelia-redux-plugin';
 
 declare var sigma;
 
-@inject(GraphService,  Store)
+@inject(EventAggregator, GraphService, Store)
 export class GraphContainer {
-    @bindable settings;
-    @select('graphContainerSettings')
-    mySettings;
-
+    
     dragging = false;
     nodeEditor;
     containerRef;
 
     sigmaInstance;
-    displaySettings;
+
     sigmaSettings;
+    settings;
+    graph;
 
     g;
 
-    constructor(private gs: GraphService, private store: Store<any>) {
-       this.store.dispatch({ type: 'GRAPH_CONTAINER_SET', payload: 'Jimmy Joe Joe' });
+    constructor(private ea: EventAggregator, private gs: GraphService, private store: Store<any>) {
+        select('graph', {subscribe: true})(this, 'graph');
+        select('ui.graphContainerSettings')(this, 'settings');
+        select('ui.sigmaSettings')(this, 'sigmaSettings');
+    }
+
+    graphChanged(newValue, oldValue) {
+        console.log('new graph', this.graph, this.settings, this.sigmaSettings);        
+        this.render();
+    }
+
+    settingsChanged(newValue, oldValue) {
+
     }
 
     attached() {
-        this.displaySettings = simple.displaySettings;
-        this.sigmaInstance = this.gs.getSigmaInstance(simple);
-        this.gs.initialize(this.sigmaInstance.graph)
-        this.sigmaInstance.addRenderer({
-            container: this.containerRef,
-            type: 'canvas', 
-            settings: simple.sigmaSettings
-         });
-        // this.graph();
-        this.addListeners();
-        // this.gs.initialize();
-        this.sigmaInstance.refresh();
+        // this.ea.subscribe('graph.create', this.graph.bind(this));
     }
 
-    graph() {
-        this.g = this.sigmaInstance.graph;
-        this.g.activeNode = null;
-        this.g.activeEdge = null;
+    render() {
+        if(this.sigmaInstance) {
+            this.sigmaInstance.kill();
+        }
+        this.sigmaInstance = this.gs.getSigmaInstance(this.graph);
+        this.gs.initialize(this.sigmaInstance.graph)
+        
+        this.sigmaInstance.addRenderer({
+            container: this.containerRef,
+            type: 'canvas',
+            settings: this.settings
+        });
+        
+        // this.g = this.sigmaInstance.graph;
+
+        // this.g.activeNode = null;
+        // this.g.activeEdge = null;
+
+        this.addListeners();
+        this.sigmaInstance.refresh();
     }
 
     addListeners() {
@@ -57,7 +72,6 @@ export class GraphContainer {
 
     addEaListeners() {
         // this.ea.subscribe('saveNode', this.refresh.bind(this));
-        // this.ea.subscribe('graph.create', this.graph.bind(this));
         // this.ea.subscribe('graph.add', this.add.bind(this));
         // this.ea.subscribe('graph.force', this.toggleForceAtlas.bind(this));
         // this.ea.subscribe('graph.clear', this.clear.bind(this));
@@ -161,11 +175,11 @@ export class GraphContainer {
         this.setActiveNodeToNull();
         console.log('this', this, this.sigmaInstance.graph)
         if (e === this.sigmaInstance.graph.activeEdge) {
-            e.color = this.displaySettings.defaultEdgeColor;
+            e.color = this.settings.defaultEdgeColor;
             this.sigmaInstance.graph.activeEdge = null;
         } else {
             this.sigmaInstance.graph.activeEdge = e;
-            e.color = this.displaySettings.activeEdgeColor;
+            e.color = this.settings.activeEdgeColor;
         }
 
         this.sigmaInstance.refresh();
@@ -174,11 +188,11 @@ export class GraphContainer {
     setActiveNode(n) {
         this.setActiveEdgeToNull();
         if (n === this.sigmaInstance.graph.activeNode) {
-            n.color = this.displaySettings.defaultNodeColor;
+            n.color = this.settings.defaultNodeColor;
             this.sigmaInstance.graph.activeNode = null;
         } else {
             this.sigmaInstance.graph.activeNode = n;
-            n.color = this.displaySettings.activeNodeColor;
+            n.color = this.settings.activeNodeColor;
         }
         this.sigmaInstance.refresh();
     }
@@ -192,13 +206,13 @@ export class GraphContainer {
                 id: 'e' + fromNode.id + toNode.id,
                 source: fromNode.id,
                 target: toNode.id,
-                size: this.displaySettings.defaultNodeSize,
-                color: this.displaySettings.activeEdgeColor,
+                size: this.settings.defaultNodeSize,
+                color: this.settings.activeEdgeColor,
                 type: 'arrow'
             }
             this.sigmaInstance.graph.addEdge(newEdge);
-            fromNode.color = this.displaySettings.defaultNodeColor;
-            toNode.color = this.displaySettings.defaultNodeColor;
+            fromNode.color = this.settings.defaultNodeColor;
+            toNode.color = this.settings.defaultNodeColor;
             this.setActiveNodeToNull();
         }
 
@@ -206,12 +220,12 @@ export class GraphContainer {
     }
 
     setActiveEdgeToNull() {
-        if (this.sigmaInstance.graph.activeEdge) this.sigmaInstance.graph.activeEdge.color = this.displaySettings.defaultEdgeColor;
+        if (this.sigmaInstance.graph.activeEdge) this.sigmaInstance.graph.activeEdge.color = this.settings.defaultEdgeColor;
         this.sigmaInstance.graph.activeEdge = null;
     }
 
     setActiveNodeToNull() {
-        if (this.sigmaInstance.graph.activeNode) this.sigmaInstance.graph.activeNode.color = this.displaySettings.defaultNodeColor;
+        if (this.sigmaInstance.graph.activeNode) this.sigmaInstance.graph.activeNode.color = this.settings.defaultNodeColor;
         this.sigmaInstance.graph.activeNode = null;
     }
 

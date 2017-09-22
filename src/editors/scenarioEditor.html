@@ -20,10 +20,12 @@
                     </div>
                 </aubs-tab>
                 <aubs-tab header="My Graphs">
-                        <div>
-                            
-                        </div>
-                    </aubs-tab>
+                    <div>
+                        <ul class="list-group">
+                            <li click.trigger="selectGraph(graph)" repeat.for="graph of graphs" class="list-group-item">${graph.data.name}</li>
+                        </ul>
+                    </div>
+                </aubs-tab>
             </aubs-tabset>
         </div>
     </modal-wrapper>

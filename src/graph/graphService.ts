@@ -46,7 +46,7 @@ export class GraphService {
 
     getSigmaInstance(data) {
             let instance = new this.sigma({
-                graph: data.graph,
+                graph: data,
             });
             return instance;
     }

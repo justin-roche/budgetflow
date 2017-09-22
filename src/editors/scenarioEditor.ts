@@ -1,11 +1,18 @@
+import { select, Store } from 'aurelia-redux-plugin';
 import { ModalSettings } from './../common/modalWrapper';
 import *  as Rx from 'rxjs';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import $ from 'jquery';
 
-@inject(EventAggregator)
+@inject(EventAggregator, Store)
 export class ScenarioEditor {
+  @select('graphs', {subscribe: true})
+  graphs;
+
+  graphsChanged() {
+    console.log('graphs changed');
+  }
 
   modalSettings = new Rx.BehaviorSubject<ModalSettings>( 
     {title: 'Scenario Edit',
@@ -15,16 +22,15 @@ export class ScenarioEditor {
     show: true
   });
 
-  constructor(private ea: EventAggregator) {
-    this.ea.subscribe('graphs.select',this.selectGraph.bind(this))
+  constructor(private ea: EventAggregator, private store: Store<any>) {
+
   }
 
-  selectGraph() {
-    
+  selectGraph(selectedGraph) {
+    this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
   }
 
   attached() {
-    //this.modalSettings.next(Object.assign(this.modalSettings.getValue(), {show: true}));
     
     $("#ex8").bootstrapSlider({
       tooltip: 'always'
