@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Aurelia } from 'aurelia-framework';
 import { PLATFORM } from 'aurelia-pal';
 import * as Bluebird from 'bluebird';
-
+import { rootReducer } from './reducers/root';
+import { createStore } from 'redux';
 
 //  require('jquery-ui/ui/widgets/draggable.js');
 //  require('jquery-ui/ui/widgets/resizable.js');
@@ -39,12 +40,11 @@ export async function configure(aurelia: Aurelia) {
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));
   // if the css animator is enabled, add swap-order="after" to all router-view elements
 
-  // Anyone wanting to use HTMLImports to load views, will need to install the following plugin.
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-bootstrap'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-dialog'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-binding-functions'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-async')); 
-
+  aurelia.use.plugin(PLATFORM.moduleName('aurelia-redux-plugin'));
   await aurelia.start();
   await aurelia.setRoot(PLATFORM.moduleName('app'));
 }

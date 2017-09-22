@@ -12,56 +12,9 @@ export class GraphService {
     }
 
     addSigmaClassMethods() {
-        this.sigma.classes.graph.addMethod('neighbors', function (nodeId) {
-            var k,
-                neighbors = {},
-                index = this.allNeighborsIndex[nodeId] || {};
-
-            for (k in index) {
-                neighbors[k] = this.nodesIndex[k];
-            }
-            return neighbors;
-        });
-
-        this.sigma.classes.graph.addMethod('neighborsArray', function (nodeId) {
-            var k,
-                neighbors = [],
-                index = this.allNeighborsIndex[nodeId] || {};
-
-            for (k in index) {
-                neighbors.push(this.nodesIndex[k]);
-            }
-            return neighbors;
-        });
-
-        this.sigma.classes.graph.addMethod('neighboringEdges', function (nodeId) {
-            var k,
-                edges = {},
-                index = this.allNeighborsIndex[nodeId] || {};
-
-            return index;
-        });
-
-        this.sigma.classes.graph.addMethod('outEdges', function (nodeId) {
-            var k,
-                outEdges = [],
-                edgesObject = this.outNeighborsIndex[nodeId] || {};
-
-            for (let nodeName in edgesObject) {
-                for (let edgeName in edgesObject[nodeName]) {
-                    outEdges.push(edgesObject[nodeName][edgeName]);
-                }
-
-            }
-            return outEdges;
-        });
-
-        this.sigma.classes.graph.addMethod('getEdgeById', function (edgeId) {
-            return this.edgesIndex[edgeId];
-        });
-
+    
+        /* not serializable */
         this.sigma.classes.graph.attach('addEdge', '', function(e){
-            console.log('calling addEdge', arguments);
             let source = this.nodesIndex[e.source];
             let target = this.nodesIndex[e.target];
             
@@ -70,28 +23,13 @@ export class GraphService {
             
             target._inNodes? target._inNodes.push(source) : target._inNodes = [source];
             target._inEdges? target._inEdges.push(e) : target._inEdges = [e];
-            
-            
-        });
-
-        this.sigma.classes.graph.addMethod('outNodes', function (nodeId) {
-            var k,
-                edgesObject = this.outNeighborsIndex[nodeId] || {};
-            let outNodes = [];
-
-            /* todo: cache this on the node add */
-            for (let nodeName in edgesObject) {
-                outNodes.push(this.nodesIndex[nodeName]);
-            }
-            return outNodes;
         });
 
         this.sigma.classes.graph.addMethod('breadthTraverse', function (fn) {
             let stack = [this.nodes()[0]];
             while (stack.length > 0) {
                 let n = stack.pop();
-                let neighborsArray = this.outNodes(n.id);
-                neighborsArray.forEach(_n => {
+                n._outNodes.forEach(_n => {
                     if (fn(n, _n)) stack.unshift(_n);
                 });
             }
@@ -170,15 +108,7 @@ export class GraphService {
     }
 
     getAdjacentNodes(n) {
-        let neighbors = this.graph.neighbors(n.id);
-        let edges = this.graph.neighboringEdges(n.id);
-        let outEdges = this.graph.outEdges(n.id);
-
-        return {
-            neighbors,
-            edges,
-            outEdges
-        };
+        
 
     }
 

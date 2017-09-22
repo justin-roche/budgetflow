@@ -3,12 +3,16 @@ import { GraphService } from './graphService';
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { simple } from './../../test/mock-data/graphs';
+import { Store, select } from 'aurelia-redux-plugin';
 
 declare var sigma;
 
-@inject(EventAggregator, GraphService, GraphGenerator)
+@inject(GraphService,  Store)
 export class GraphContainer {
     @bindable settings;
+    @select('graphContainerSettings')
+    mySettings;
+
     dragging = false;
     nodeEditor;
     containerRef;
@@ -19,13 +23,13 @@ export class GraphContainer {
 
     g;
 
-    constructor(private ea: EventAggregator, private gs: GraphService) {
-
+    constructor(private gs: GraphService, private store: Store<any>) {
+       this.store.dispatch({ type: 'GRAPH_CONTAINER_SET', payload: 'Jimmy Joe Joe' });
     }
 
     attached() {
+        this.displaySettings = simple.displaySettings;
         this.sigmaInstance = this.gs.getSigmaInstance(simple);
-        console.log(this.sigmaInstance)
         this.gs.initialize(this.sigmaInstance.graph)
         this.sigmaInstance.addRenderer({
             container: this.containerRef,
@@ -33,7 +37,7 @@ export class GraphContainer {
             settings: simple.sigmaSettings
          });
         // this.graph();
-        // this.addListeners();
+        this.addListeners();
         // this.gs.initialize();
         this.sigmaInstance.refresh();
     }
@@ -52,13 +56,13 @@ export class GraphContainer {
     }
 
     addEaListeners() {
-        this.ea.subscribe('saveNode', this.refresh.bind(this));
-        this.ea.subscribe('graph.create', this.graph.bind(this));
-        this.ea.subscribe('graph.add', this.add.bind(this));
-        this.ea.subscribe('graph.force', this.toggleForceAtlas.bind(this));
-        this.ea.subscribe('graph.clear', this.clear.bind(this));
-        this.ea.subscribe('graph.step', this.graphStep.bind(this));
-        this.ea.subscribe('graph.setStart', this.setStart.bind(this));
+        // this.ea.subscribe('saveNode', this.refresh.bind(this));
+        // this.ea.subscribe('graph.create', this.graph.bind(this));
+        // this.ea.subscribe('graph.add', this.add.bind(this));
+        // this.ea.subscribe('graph.force', this.toggleForceAtlas.bind(this));
+        // this.ea.subscribe('graph.clear', this.clear.bind(this));
+        // this.ea.subscribe('graph.step', this.graphStep.bind(this));
+        // this.ea.subscribe('graph.setStart', this.setStart.bind(this));
     }
 
     addClickListeners() {

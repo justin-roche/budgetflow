@@ -1,9 +1,17 @@
-import {Aurelia} from 'aurelia-framework';
+import { Store } from 'aurelia-redux-plugin';
+import { Aurelia, inject } from 'aurelia-framework';
 import {Router, RouterConfiguration} from 'aurelia-router';
 import {PLATFORM} from 'aurelia-pal';
+import { createStore } from 'redux';
+import { rootReducer } from './reducers/root';
 
+@inject(Store)
 export class App {
   router: Router;
+
+  constructor(store: Store) {
+    store.provideStore(createStore(rootReducer));
+  }
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Aurelia';
