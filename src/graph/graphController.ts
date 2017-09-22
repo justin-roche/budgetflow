@@ -1,17 +1,14 @@
-import { GraphGenerator } from './graphGenerator';
 import { GraphService } from './graphService';
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { simple } from './../../test/mock-data/graphs';
 import { Store, select } from 'aurelia-redux-plugin';
 
-declare var sigma;
-
 @inject(EventAggregator, GraphService, Store)
-export class GraphContainer {
+export class GraphController {
+    sigma = window['sigma'];
     
     dragging = false;
-    nodeEditor;
     containerRef;
 
     sigmaInstance;
@@ -42,11 +39,12 @@ export class GraphContainer {
     }
 
     render() {
-        if(this.sigmaInstance) {
-            this.sigmaInstance.kill();
-        }
-        this.sigmaInstance = this.gs.getSigmaInstance(this.graph);
-        this.gs.initialize(this.sigmaInstance.graph)
+        // if(this.sigmaInstance) {
+        //     this.sigmaInstance.kill();
+        // }
+        this.sigmaInstance = new this.sigma({
+            graph: this.graph,
+        });
         
         this.sigmaInstance.addRenderer({
             container: this.containerRef,
@@ -59,7 +57,7 @@ export class GraphContainer {
         // this.g.activeNode = null;
         // this.g.activeEdge = null;
 
-        this.addListeners();
+        //this.addListeners();
         this.sigmaInstance.refresh();
     }
 
@@ -127,7 +125,6 @@ export class GraphContainer {
 
     /* graph modification */
 
-
     nodeEdit(n, c) {
         this.ea.publish('show.node.editor', { n, x: c.clientX, y: c.clientY });
     }
@@ -137,11 +134,11 @@ export class GraphContainer {
     }
 
     setStart() {
-        this.gs.setStart()
+        //this.gs.setStart()
     }
 
     graphStep(time) {
-        this.gs.applySimulation(time);
+       // this.gs.applySimulation(time);
         this.refresh();
     }
 

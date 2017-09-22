@@ -17,6 +17,10 @@ let simple = {
             minArrowSize: 25,
             enableEdgeHovering: true,
         },
+        interactivity: {
+            selectedNode: null,
+            selectedEdge: null,
+        }
     },
     graphs: [{
         data: {
@@ -44,7 +48,7 @@ let simple = {
                     displayFunctions: ['toggle', 'sizeByValue'],
                 }
             },
-            ],
+        ],
 
         edges: [
             {
@@ -52,6 +56,8 @@ let simple = {
                 data: {
                     linkFunction: 'transfer',
                     stepFunctions: null,
+                    feedback: 'exponentialIncrease',
+                    feedbackArgument: .50,
                 },
                 source: 'n1',
                 target: 'n2',
@@ -83,7 +89,11 @@ let simple = {
                 data: {
                     active: false,
                     value: 0,
-                    stepFunctions: [{ name: 'activate', argument: 5 }],
+                    stepFunctions: [{
+                        name: 'activate',
+                        argument: 5,
+                       
+                    }],
                     displayFunctions: ['toggle', 'sizeByValue'],
                 }
             },

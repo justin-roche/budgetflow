@@ -1,5 +1,5 @@
 
-export class NodeFunctions {
+export class SimulationFunctions {
 
     stepFunctions = {
         increment: function(value, node) {
@@ -59,5 +59,13 @@ export class NodeFunctions {
 
     informationFunctions = {
 
+    }
+
+    quantifiers: {
+        ifAnywhere: {
+
+
+        }
+        
     }
 }
