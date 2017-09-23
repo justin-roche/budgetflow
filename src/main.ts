@@ -36,10 +36,6 @@ export async function configure(aurelia: Aurelia) {
     .standardConfiguration()
     .developmentLogging();
 
-  // Uncomment the line below to enable animation.
-  // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));
-  // if the css animator is enabled, add swap-order="after" to all router-view elements
-
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-bootstrap'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-dialog'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-binding-functions'));

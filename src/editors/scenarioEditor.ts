@@ -11,7 +11,7 @@ export class ScenarioEditor {
   graphs;
 
   graphsChanged() {
-    console.log('graphs changed');
+
   }
 
   modalSettings = new Rx.BehaviorSubject<ModalSettings>( 
@@ -27,7 +27,12 @@ export class ScenarioEditor {
   }
 
   selectGraph(selectedGraph) {
+    console.log('scenario export')
     this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
+  }
+
+  selectSimulationTime(t) {
+    this.store.dispatch({type: 'UI_SIMULATION_TIME_SET', payload: t});
   }
 
   attached() {
@@ -37,7 +42,7 @@ export class ScenarioEditor {
     });
 
     $('#ex8').on('slideStop', (v) => {
-      this.ea.publish('graph.step', Number(v.target.value));
+      this.selectSimulationTime(Number(v.target.value));
     })
    
   }

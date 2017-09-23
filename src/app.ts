@@ -2,16 +2,25 @@ import { Store } from 'aurelia-redux-plugin';
 import { Aurelia, inject } from 'aurelia-framework';
 import {Router, RouterConfiguration} from 'aurelia-router';
 import {PLATFORM} from 'aurelia-pal';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
+import { state } from '../test/mock-data/state';
+import logger from 'redux-logger'
 
 @inject(Store)
 export class App {
   router: Router;
 
-  constructor(store: Store) {
-    store.provideStore(createStore(rootReducer));
+  constructor(private store: (Store<any>)) {
+    store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
+    this.hydrateInitial();
   }
+
+  hydrateInitial() {
+    this.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});
+    this.store.dispatch({type: 'UI_SET', payload: state.ui});
+    console.log('store hydrated', this.store.getState())
+}
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'Aurelia';

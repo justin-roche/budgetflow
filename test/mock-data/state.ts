@@ -1,4 +1,4 @@
-let simple = {
+let state = {
 
     ui: {
         graphContainer: {
@@ -11,7 +11,7 @@ let simple = {
         sigma: {
             doubleClickZoomingRatio: 1,
             maxNodeSize: 50,
-            minNodeSize: 10,
+            minNodeSize: 0,
             minEdgeSize: 5,
             maxEdgeSize: 5,
             minArrowSize: 25,
@@ -20,11 +20,35 @@ let simple = {
         interactivity: {
             selectedNode: null,
             selectedEdge: null,
-        }
+        },
+        simulation: {
+            time: null,
+        },
     },
-    graphs: [{
+    graphs: [
+        {
+            data: {
+                currentStep: 0,
+                name: '1 node',
+                displayFunctions: {nodes: ['labelById', 'sizeByValue']}
+            },
+            nodes: [
+                {
+                    id: 'n1', x: Math.random(), y: Math.random(),
+                    data: {
+                        active: true,
+                        value: 10,
+                        stepFunctions: ['increment'],
+                        displayFunctions: ['toggle', ,],
+                    },
+                }
+            ]
+        },
+        {
         data: {
-            name: 'linear 2x'
+            currentStep: 0,
+            name: 'linear 2x',
+            displayFunctions: {nodes: ['labelById', 'sizeByValue']}
             // nodesInitial: {
             //     displayFunctions: ['toggle', 'sizeByValue', 'labelById'],
             // }
@@ -36,7 +60,7 @@ let simple = {
                     active: true,
                     value: 10,
                     stepFunctions: [],
-                    displayFunctions: ['toggle', 'sizeByValue',],
+                    displayFunctions: ['toggle', ,],
                 },
             },
             {
@@ -45,7 +69,7 @@ let simple = {
                     active: false,
                     value: 0,
                     stepFunctions: [{ name: 'activate', argument: 5 }],
-                    displayFunctions: ['toggle', 'sizeByValue'],
+                    displayFunctions: ['toggle'],
                 }
             },
         ],
@@ -69,7 +93,9 @@ let simple = {
     },
     {
         data: {
-            name: 'linear 3x'
+            name: 'linear 3x',
+            displayFunctions: {nodes: ['labelById', 'sizeByValue']}
+            
             // nodesInitial: {
             //     displayFunctions: ['toggle', 'sizeByValue', 'labelById'],
             // }
@@ -80,8 +106,8 @@ let simple = {
                 data: {
                     active: true,
                     value: 10,
-                    stepFunctions: [],
-                    displayFunctions: ['toggle', 'sizeByValue',],
+                    stepFunctions: ['increment'],
+                    displayFunctions: ['toggle', 'sizeByValue'],
                 },
             },
             {
@@ -137,4 +163,4 @@ let simple = {
     ],
 }
 
-export { simple };
+export { state };

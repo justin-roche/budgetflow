@@ -34,7 +34,7 @@ export class ModalWrapper extends ComponentBase {
     }
 
     afterSettingsChanged(v) {
-        console.log('settings changed', v)
+
         if(v.x || v.y) {
             $(this.modalRef).css({
                 'z-index': Math.random()*1000,
@@ -43,7 +43,7 @@ export class ModalWrapper extends ComponentBase {
             });
         }
         if(v.show) {
-            console.log('modals', $('.modal-dialog'))
+
         }
         
     }

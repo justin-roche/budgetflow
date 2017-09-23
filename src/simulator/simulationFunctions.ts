@@ -25,6 +25,10 @@ export class SimulationFunctions {
     }
 
     displayFunctions = {
+        idByIndex: function(node,i){
+            node.index = 'n'+i;
+        },
+
         toggle: function(node) {
             if (node.data.active) {
                 node.color = 'black';
@@ -46,9 +50,7 @@ export class SimulationFunctions {
             node.y = Math.random();
         },
 
-        idByIndex: function(node,i){
-            node.index = 'n'+i;
-        }
+        
     }
 
     stockFunctions = {

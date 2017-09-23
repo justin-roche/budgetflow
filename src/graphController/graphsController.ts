@@ -1,16 +1,13 @@
-import { GraphService } from './graphService';
-import { GraphGenerator } from './graphGenerator';
 import { inject, bindable } from 'aurelia-framework';
 import {simple} from './../../test/mock-data/graphs';
 
-@inject(GraphService)
+@inject()
 export class GraphsController {
 
     childSettings = [];
-    sigma = window['sigma'];
 
-    constructor(private gs: GraphService) {
-
+    constructor() {
+        console.log('graphs controller')
     }
 
     attached() {

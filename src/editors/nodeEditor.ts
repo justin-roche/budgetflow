@@ -34,7 +34,7 @@ export class NodeEditor extends ComponentBase{
     }
 
     settingsChanged() {
-        console.log('settings changed', this.settings)
+
     }
 
     show(e) {
