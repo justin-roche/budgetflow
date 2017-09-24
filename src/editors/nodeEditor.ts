@@ -1,5 +1,5 @@
 import { ComponentBase } from './../common/componentBase';
-import { GraphService } from '../graph/graphService';
+import { GraphService } from '../services/graphService';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import $ from 'jquery'
@@ -48,9 +48,9 @@ export class NodeEditor extends ComponentBase{
     }
 
     initializeData() {
-        this.clearData();
-        this.data.adjacentNodes = this.gs.getAdjacentNodes(this.nodeModel);
-        this.data.outNodes = Object.keys(this.data.adjacentNodes.outEdges).map(n => n);
+        // this.clearData();
+        // this.data.adjacentNodes = this.gs.getAdjacentNodes(this.nodeModel);
+        // this.data.outNodes = Object.keys(this.data.adjacentNodes.outEdges).map(n => n);
     }
 
     clearData() {

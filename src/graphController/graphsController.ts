@@ -1,5 +1,4 @@
 import { inject, bindable } from 'aurelia-framework';
-import {simple} from './../../test/mock-data/graphs';
 
 @inject()
 export class GraphsController {

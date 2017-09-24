@@ -1,8 +1,9 @@
+import { GraphService } from './../services/graphService';
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Store, select } from 'aurelia-redux-plugin';
 
-@inject(EventAggregator, Store)
+@inject(EventAggregator, Store, GraphService)
 export class GraphController {
     sigma = window['sigma'];
 
@@ -17,55 +18,22 @@ export class GraphController {
     graphName;
     g;
 
-    constructor(private ea: EventAggregator, private store: Store<any>) {
-        select('graph', { subscribe: true })(this, 'graph');
-        // select('graph',{ subscribe: true })(this, 'graph');
-        select('graph.data.currentStep', { subscribe: true })(this, 'currentStep');
-
-        this.sigmaInstance = new this.sigma();
+    constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
+        // this.sigmaInstance = gs.sigmaInstance;
+        // gs.sigmaEvents.subscribe(e => {
+        //     if(e.type === 'render') {
+        //         this.render();
+        //     }
+        // })
     }
 
     attached() {
-        this.sigmaInstance.addRenderer({
-            container: this.containerRef,
-            type: 'canvas',
-            settings: this.sigmaSettings
-        });
+        // this.sigmaInstance.addRenderer({
+        //     container: this.containerRef,
+        //     type: 'canvas',
+        //     settings: this.sigmaSettings
+        // });
     }
-
-    currentStepChanged(newValue, oldValue) {
-        if (newValue !== null) {
-            console.log('rendering step')
-            // this.import();
-            // this.render();
-        }
-    }
-
-    graphChanged(newValue, oldValue) {
-        if (!oldValue || newValue.data.name !== oldValue.data.name) {
-            console.log('rendering new graph')
-            this.import();
-            this.render();
-        }
-
-    }
-
-    import() {
-        this.sigmaInstance.graph.clear();
-        this.sigmaInstance.graph.addNode({id: 'x'});
-        // if (this.graph.nodes) {
-        //     this.graph.nodes.forEach(node => {
-        //         this.sigmaInstance.graph.addNode(Object.assign({}, node));
-        //     });
-        //     this.graph.edges.forEach(edge => {
-        //         this.sigmaInstance.graph.addEdge(Object.assign({}, edge));
-        //     })
-        // }
-    }
-
-    // settingsChanged(newValue, oldValue) {
-
-    // }
 
     render() {
         this.sigmaInstance.refresh();

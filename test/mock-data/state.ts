@@ -25,6 +25,11 @@ let state = {
             time: null,
         },
     },
+    sigma: {
+        newNode: null,
+        changedNode: null,
+        
+    },
     graphs: [
         {
             data: {
