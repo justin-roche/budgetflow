@@ -15,8 +15,9 @@ export class GraphService {
     constructor(private store: Store<any>, private sd: SigmaDecorator) {
         console.log('constructing graph service')
 
-        this.addSigmaClassMethods();
+        
         this.sigma = window['sigma'];
+        this.addSigmaClassMethods();
         this.sigmaEvents = new BehaviorSubject({});
         select('graph.data.name', { subscribe: true })(this, 'graphName');
         select('graph')(this, 'graph');

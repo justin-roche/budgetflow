@@ -39,7 +39,9 @@ let state = {
             },
             nodes: [
                 {
-                    id: 'n1', x: Math.random(), y: Math.random(),
+                    id: 'n1', 
+                    x: Math.random(), 
+                    y: Math.random(),
                     data: {
                         active: true,
                         value: 10,

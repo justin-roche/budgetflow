@@ -12,7 +12,7 @@ export class App {
   router: Router;
 
   constructor(private store: (Store<any>)) {
-    store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
+    store.provideStore(createStore(rootReducer, applyMiddleware()));
     this.hydrateInitial();
   }
 

@@ -52,3 +52,7 @@ body {
 .slider-selection {
 	background: #BABABA;
 }
+
+svg {
+  background-color: grey;
+}

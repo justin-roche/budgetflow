@@ -120,6 +120,7 @@
     "bluebird": "3.5.0",
     "bootstrap": "^3.3.7",
     "bootstrap-slider": "^9.8.1",
+    "d3": "^4.10.2",
     "font-awesome": "4.7.0",
     "imports-loader": "^0.7.1",
     "interact.js": "^1.2.8",
