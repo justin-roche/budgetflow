@@ -24,7 +24,6 @@ require('bootstrap-slider')
 require('aurelia-async')
 //require('d3');
 
-console.log('d3', window['d3'])
 //  (<any>require).context(
 //   "sigma/plugins", // context folder
 //   true, // include subdirectories

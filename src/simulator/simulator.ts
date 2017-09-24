@@ -23,14 +23,46 @@ export class Simulator {
 
     g;
 
-    constructor(private store: Store<any>, private sf: SimulationFunctions, private gs: GraphService) {
-        // // select('ui.simulation.time', { subscribe: true })(this, 'simulationTime');
-        // this.sigmaInstance = gs.sigmaInstance;
-        // console.log('created sim with instance', this.sigmaInstance)
-        // gs.sigmaEvents.subscribe(e => {
-        //     if(e.type === 'initialize') {
-        //         this.initialize();
-        //     }
+    constructor(private store: Store<any>, private sf: SimulationFunctions) {
+        // // select('ui.simulation.time', { subscribe: true })(this, 'simulationTime');        
+       // this.test();
+    }
+
+    test() {
+        function getData(rows, columns, offset) {
+            let nodes = {};
+            let edges = [];
+
+            for (let i = 0; i < rows; i++) {
+                for (let ii = 0; ii < columns; ii++) {
+                   nodes[`n${i}_${ii}`]= {x: offset+ (i * 50), y: offset+(ii * 50) };
+                    if (i > 0 && ii>0) {
+                        edges.push({ sourceId: `n${i}_${ii}`, targetId: `n${i-1}_${ii-1}` });
+                    }
+                }
+
+            }
+            return { nodes, edges };
+            //  console.log(myNodes, edges);
+
+        }
+        let c = 50;
+
+       
+        setInterval(function(){
+            let data = getData(5,5, 50+c);
+            c++;
+            console.log('dispatching')
+            //this.store.dispatch({type: 'GRAPH_SET', payload: data});
+            this.store.dispatch({type: 'NODES_SET', payload: data.nodes});
+        }.bind(this), 100)
+
+         // this.onSimulate.skip(1).subscribe((x)=>{
+        //     console.log('on simulate')
+        //     let data = getData(10,10, c);
+        //     c= c++;
+        //     this.newGraph.next(data);
+        //     // this.store.dispatch({type: 'GRAPH_SET', payload: data});
         // })
     }
 
@@ -39,7 +71,7 @@ export class Simulator {
             this.runDisplayUpdateFunction(node);
             return true;
         });
-        console.log('sim export: initial')
+        // console.log('sim export: initial')
     }
 
     simulationTimeChanged(current, last) {

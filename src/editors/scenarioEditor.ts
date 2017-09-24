@@ -27,7 +27,6 @@ export class ScenarioEditor {
   }
 
   selectGraph(selectedGraph) {
-    console.log('scenario export')
     this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
   }
 

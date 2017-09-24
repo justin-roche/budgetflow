@@ -70,7 +70,6 @@ export class NodeEditor extends ComponentBase{
 
 export class KeysValueConverter {
     toView(obj) {
-        console.log(obj);
         return Reflect.ownKeys(obj);
     }
 }

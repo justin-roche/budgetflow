@@ -6,7 +6,7 @@ export class GraphsController {
     childSettings = [];
 
     constructor() {
-        console.log('graphs controller')
+
     }
 
     attached() {

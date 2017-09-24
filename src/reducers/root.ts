@@ -85,6 +85,9 @@ function graphReducer(state = {}, action) {
         case 'GRAPH_SET': {
             return action.payload ;
         }
+        case 'NODES_SET': {
+            return {...state, nodes: action.payload} ;
+        }
         default: 
             return state;
     }
