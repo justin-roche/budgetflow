@@ -1,4 +1,4 @@
-import { Store } from 'aurelia-redux-plugin';
+import { Store } from './services/reduxStore';
 import { Aurelia, inject } from 'aurelia-framework';
 import {Router, RouterConfiguration} from 'aurelia-router';
 import {PLATFORM} from 'aurelia-pal';
@@ -17,9 +17,10 @@ export class App {
   }
 
   hydrateInitial() {
-    this.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});
-    this.store.dispatch({type: 'UI_SET', payload: state.ui});
-    console.log('store hydrated', this.store.getState())
+    this.store.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});
+    this.store.store.dispatch({type: 'GRAPH_SET', payload: state.graph});
+    this.store.store.dispatch({type: 'UI_SET', payload: state.ui});
+    this.store.store.dispatch({type: 'SIMULATION_SET', payload: state.simulation});
 }
 
   configureRouter(config: RouterConfiguration, router: Router) {

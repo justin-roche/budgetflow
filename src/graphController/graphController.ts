@@ -3,16 +3,13 @@ import * as Rx from
 import { GraphService } from './../services/graphService';
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { Store, select } from 'aurelia-redux-plugin';
+import { Store } from '../services/reduxStore';
 import { createSelector } from '../reducers/selectors';
 
 const selectGraph = state => state.graph;
 
 @inject(EventAggregator, Store, GraphService)
 export class GraphController {
-
-    // @select('graph.nodes', {subscribe: true})
-    // graph;
 
     d3 = window['d3'];
 
@@ -24,12 +21,14 @@ export class GraphController {
 
     constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
         let previousValue;
-        select('graph', { subscribe: true })(this, 'graph');
+        this.$graph = this.store.select('graph');   
+        this.$graph.subscribe(d => {
+            this.refresh(d);
+        })
     }
 
     graphChanged(current, last) {
-        console.log('grpah changed', current, last);
-        this.refresh(current);
+
     }
 
     getCurrentGraph(s) {
@@ -46,7 +45,6 @@ export class GraphController {
     }
 
     refresh(data) {
-        console.log('rendering data', data);
         let d3 = this.d3;
         let svg = d3.select('svg');
         let nodesArray = Object.keys(data.nodes).map(key => { return data.nodes[key] });
@@ -72,16 +70,12 @@ export class GraphController {
         nodes = svg.selectAll(".node")
             .data(nodesArray);
 
-        console.log('join', nodes);
-
-
         nodes.exit().remove();
 
         nodes.enter()
             .append("circle")
             .attr("class", "node")
             .attr("cx", function (d) {
-                console.log('new x', d.x)
                 return d.x
             })
             .attr("cy", function (d) {
@@ -112,8 +106,8 @@ export class GraphController {
         links = svg.selectAll(".link")
             .data(edgesArray || [])
 
-
-        console.log('join', links);
+        links.exit().remove();
+        // console.log('join', links);
 
         //add
         links.enter()

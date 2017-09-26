@@ -1,7 +1,6 @@
 <template>
     <require from="./draggable"></require>
-    <div show.bind="settings.show">
-        <div draggable class="modal-dialog" ref="modalRef">
+        <div show.bind="settings.show" draggable class="modal-dialog" ref="modalRef">
             <div class="modal-content">
                 <div dblClick.trigger="collapsed = !collapsed" class="modal-header">
                     <button type="button" class="close" aria-hidden="true" click.trigger="close()" >&times;</button>
@@ -16,5 +15,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>

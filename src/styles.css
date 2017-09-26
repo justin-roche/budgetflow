@@ -7,8 +7,6 @@ body {
 }
 .graph-container {
   position: relative;
-  width: 700px;
-  min-height: 400px;
   margin-top: 2%;
   margin-left: auto;
   margin-right: auto;
@@ -44,14 +42,19 @@ body {
   height: 500px;
 }
 
+
 .modal-dialog{
     margin-right: 0;
     margin-left: 0;
+    z-index:     2000;
+    position: absolute;
 }
 
 .slider-selection {
 	background: #BABABA;
 }
+
+
 
 svg {
   background-color: grey;

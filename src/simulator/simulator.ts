@@ -1,14 +1,17 @@
-import { SimulationFunctions } from './simulationFunctions';
+import { BehaviorSubject } from 'rxjs';
 import { GraphService } from './../services/graphService';
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { Store, select } from 'aurelia-redux-plugin';
+import { Store } from '../services/reduxStore';
+import {createSelector} from '../reducers/selectors';
+import { _ } from 'underscore';
 
-@inject(Store, SimulationFunctions, GraphService)
+@inject(Store, GraphService)
 export class Simulator {
-    // @select('graph', {subscribe: true})
+    t = new BehaviorSubject(null);
+    //@select(createSelector('ui.simulation.time', t), {subscribe: true})
+    $time;
 
-    // sigma = window['sigma'];
 
     dragging = false;
     containerRef;
@@ -23,9 +26,27 @@ export class Simulator {
 
     g;
 
-    constructor(private store: Store<any>, private sf: SimulationFunctions) {
-        // // select('ui.simulation.time', { subscribe: true })(this, 'simulationTime');        
+    constructor(private store: Store<any>) {
+        // // select('ui.simulation.time', { subscribe: true })(this, 'simulationTime');   
+       // this.$time = this.store.select('ui.simulation.time');   
+        // this.$time.subscribe(d => {
+        //     console.log('received from time', d);
+        // })
+        this.$step = this.store.select('simulation.step');   
+        this.$step.subscribe(d => {
+            this.store.dispatch({type: 'BREADTH_TRAVERSE'})
+
+            //let g = this.store.getState().graph;
+
+            
+
+            //console.log(recurse([g.nodesData['n1']]));
+        })
        // this.test();
+    }
+
+    timeChanged(current, last) {
+       // this.store.dispatch({type: 'BREADTH_TRAVERSE', payload: {}})
     }
 
     test() {

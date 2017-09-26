@@ -41,7 +41,7 @@ export async function configure(aurelia: Aurelia) {
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-dialog'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-binding-functions'));
   aurelia.use.plugin(PLATFORM.moduleName('aurelia-async')); 
-  aurelia.use.plugin(PLATFORM.moduleName('aurelia-redux-plugin'));
+  // aurelia.use.plugin(PLATFORM.moduleName('aurelia-redux-plugin'));
   await aurelia.start();
   await aurelia.setRoot(PLATFORM.moduleName('app'));
 }

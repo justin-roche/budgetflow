@@ -1,6 +1,6 @@
 import { SigmaDecorator } from './sigmaDecorator';
 import { inject } from 'aurelia-framework';
-import { Store, select } from 'aurelia-redux-plugin';
+import { Store } from './reduxStore';
 import { Observable, BehaviorSubject } from 'rxjs'
 
 @inject(Store, SigmaDecorator)

@@ -1,12 +1,12 @@
 
-export class SimulationFunctions {
+let SimulationFunctions = {
 
-    stepFunctions = {
-        increment: function(value, node) {
-            node.data.value = node.data.value + value;
+    stepFunctions: {
+        increment: function(nodeData, argument) {
+            return {value: nodeData.value + argument}
         },
         equal: function(value, node) {
-            node.data.value = value;
+            return value;
         },
         activate: function(node, value) {
             if(node.data.value >= value) {
@@ -15,16 +15,16 @@ export class SimulationFunctions {
                 node.data.active = false;
             }
         }
-    }
+    },
 
-    linkFunctions = {
+    linkFunctions: {
         transfer: function(sourceNode, targetNode, value) {
             sourceNode.data.value = sourceNode.data.value - value;
             targetNode.data.value = targetNode.data.value + value;
         }
-    }
+    },
 
-    displayFunctions = {
+    displayFunctions: {
         idByIndex: function(node,i){
             node.index = 'n'+i;
         },
@@ -51,17 +51,17 @@ export class SimulationFunctions {
         },
 
         
-    }
+    },
 
-    stockFunctions = {
+    stockFunctions: {
         add: function(value, sourceNode, targetNode) {
 
         }
-    }
+    },
 
-    informationFunctions = {
+    informationFunctions: {
 
-    }
+    },
 
     quantifiers: {
         ifAnywhere: {
@@ -71,3 +71,5 @@ export class SimulationFunctions {
         
     }
 }
+
+export { SimulationFunctions}

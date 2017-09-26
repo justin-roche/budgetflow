@@ -1,4 +1,4 @@
-import { select, Store } from 'aurelia-redux-plugin';
+import { Store } from '../services/reduxStore';
 import { ModalSettings } from './../common/modalWrapper';
 import *  as Rx from 'rxjs';
 import { inject } from 'aurelia-framework';
@@ -7,7 +7,6 @@ import $ from 'jquery';
 
 @inject(EventAggregator, Store)
 export class ScenarioEditor {
-  @select('graphs', {subscribe: true})
   graphs;
 
   graphsChanged() {
@@ -23,7 +22,14 @@ export class ScenarioEditor {
   });
 
   constructor(private ea: EventAggregator, private store: Store<any>) {
+    this.$graphs = this.store.select('graphs');   
+    this.$graphs.subscribe(d => {
+        this.graphs = d;
+    })
+  }
 
+  onStep() {
+    this.store.dispatch({type: 'STEP_INCREMENT'});
   }
 
   selectGraph(selectedGraph) {
