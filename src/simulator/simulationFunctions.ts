@@ -18,9 +18,9 @@ let SimulationFunctions = {
     },
 
     linkFunctions: {
-        transfer: function(sourceNode, targetNode, value) {
-            sourceNode.data.value = sourceNode.data.value - value;
-            targetNode.data.value = targetNode.data.value + value;
+        transfer: function(sourceNode, targetNode, amount) {
+            return {source: {...sourceNode, value: sourceNode.value - amount},
+                    target: {...targetNode, value: targetNode.value + amount}};
         }
     },
 

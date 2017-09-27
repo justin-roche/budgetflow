@@ -21,10 +21,16 @@ export class GraphController {
 
     constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
         let previousValue;
-        this.$graph = this.store.select('graph');   
-        this.$graph.subscribe(d => {
-            this.refresh(d);
-        })
+        // this.store.select('graph')
+        // .first()
+        // .map(_ => {
+            this.$graph = this.store.select('graph');   
+            this.$graph.subscribe(d => {
+                this.refresh(d);
+            })
+        // })
+        // .subscribe();
+        
     }
 
     graphChanged(current, last) {
