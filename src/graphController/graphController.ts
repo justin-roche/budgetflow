@@ -21,16 +21,11 @@ export class GraphController {
 
     constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
         let previousValue;
-        // this.store.select('graph')
-        // .first()
-        // .map(_ => {
-            this.$graph = this.store.select('graph');   
-            this.$graph.subscribe(d => {
-                this.refresh(d);
-            })
-        // })
-        // .subscribe();
-        
+        this.$graph = this.store.select('graph');
+        this.$graph.subscribe(d => {
+            this.refresh(d);
+        })
+
     }
 
     graphChanged(current, last) {
@@ -53,109 +48,109 @@ export class GraphController {
     refresh(data) {
         let d3 = this.d3;
         let svg = d3.select('svg');
-        let nodesArray = Object.keys(data.nodes).map(key => { return data.nodes[key] });
-        let edgesArray = Object.keys(data.edges).map(key => { return data.edges[key] });
         let links, nodes;
 
-        let drag = d3.drag()
-            .on("drag", function (d, i) {
-                d.x += d3.event.dx
-                d.y += d3.event.dy
-                d3.select(this).attr("cx", d.x).attr("cy", d.y);
-                links = svg.selectAll(".link");
-                links.each(function (l, li) {
-                    if (l.sourceId == d.id) {
-                        d3.select(this).attr("x1", d.x).attr("y1", d.y);
-                    } else if (l.targetId == d.id) {
-                        d3.select(this).attr("x2", d.x).attr("y2", d.y);
-                    }
-                });
-            });
+        
+        
+        let nodesArray = Object.keys(data.nodes).map(key => { return data.nodes[key] });        
+        nodes = svg.selectAll(".node").data(nodesArray);
 
-        // console.warn('update data', nodesArray)
-        nodes = svg.selectAll(".node")
-            .data(nodesArray);
-
+        /* nodes */
         nodes.exit().remove();
 
-        nodes.enter()
-            .append("circle")
-            .attr("class", "node")
-            .attr("cx", function (d) {
-                return d.x
-            })
-            .attr("cy", function (d) {
-                return d.y
-            })
-            .attr("r", 20)
-            .attr("fill", function (d, i) {
-                //return c10(i);
-            })
-            .call(drag);
+        let newGroups = nodes.enter().append("g")
+        let newCircles = newGroups.append("circle")
+        newCircles = this.renderCircle(newGroups);
+        
+        // newNodes.append("text")
+        // .attr("dx", 12)
+        // .attr("dy", ".35em")
+        // .attr('color', 'black')
+        // .text(function(d) { 
+        //     console.log(d.id);
+        //     return d.id });
 
+        // let oldNodes = nodes.attr("class", "node")
+        // this.renderNode(oldNodes);
 
-        //update
-        nodes.attr("class", "node")
-            .attr("cx", function (d) {
-                //console.log('new x in update', d.x)
-                return d.x
-            })
-            .attr("cy", function (d) {
-                return d.y
-            })
-            .attr("r", 20)
-            .attr("fill", function (d, i) {
-                //return c10(i);
-            })
-            .call(drag);
+        // /* edges */
 
-        links = svg.selectAll(".link")
-            .data(edgesArray || [])
+        // let edgesArray = Object.keys(data.edges).map(key => { return data.edges[key] });        
+        // links = svg.selectAll(".link").data(edgesArray || [])
+        
+        // links.exit().remove();
 
-        links.exit().remove();
-        // console.log('join', links);
+        // let newLinks = links.enter().append("line")
+        // this.renderLinks(newLinks, data)
 
-        //add
-        links.enter()
-            .append("line")
-            .attr("class", "link")
-            .attr("x1", function (l) {
-                var sourceNode = data.nodes[l.sourceId];
-                d3.select(this).attr("y1", sourceNode.y);
-                return sourceNode.x
-            })
-            .attr("x2", function (l) {
-                var targetNode = data.nodes[l.targetId];
-                d3.select(this).attr("y2", targetNode.y);
-                return targetNode.x
-            })
-            .attr('id', function (d) {
-                return d.id;
-            })
-            .attr("fill", "none")
-            .attr("stroke", "white")
-            .call(drag);
-
-        // update
-        links.attr("class", "link")
-            .attr("x1", function (l) {
-                var sourceNode = data.nodes[l.sourceId];
-                d3.select(this).attr("y1", sourceNode.y);
-                return sourceNode.x
-            })
-            .attr("x2", function (l) {
-                var targetNode = data.nodes[l.targetId];
-                d3.select(this).attr("y2", targetNode.y);
-                return targetNode.x
-            })
-            .attr("fill", "none")
-            .attr("stroke", "white");
-
-
-
+        // let oldLinks = links.attr("class", "link");
+        // this.renderLinks(oldLinks, data)
     }
 
+    renderCircle(selection) {
+        let drag = this.onDrag();
 
+        return selection
+        .selectAll("circle")
+        .attr("class", "node")
+        .attr("cx", function (d) {
+            return d.x
+        })
+        .attr("cy", function (d) {
+            return d.y
+        })
+        .attr("r", 20)
+        .attr("fill", function (d, i) {
+            return 'blue';
+        })
+        .call(drag)
+        
+        
+    }
+
+    renderLinks(selection, data) {
+        let d3 = this.d3;
+        let drag = this.onDrag();
+
+        return selection.attr("class", "link")
+        .attr("x1", function (l) {
+            var sourceNode = data.nodes[l.sourceId];
+            d3.select(this).attr("y1", sourceNode.y);
+            return sourceNode.x
+        })
+        .attr("x2", function (l) {
+            var targetNode = data.nodes[l.targetId];
+            d3.select(this).attr("y2", targetNode.y);
+            return targetNode.x
+        })
+        .attr("fill", "none")
+        .attr("stroke", "white")
+        .attr('id', function (d) {
+            return d.id;
+        })
+        .call(drag);
+    }
+
+    onDrag() {
+        let d3 = this.d3;
+        let svg = this.d3.select('svg');
+        
+        return d3.drag()
+        .on("drag", function (d, i) {
+            /*mutates state */
+            d.x += d3.event.dx
+            d.y += d3.event.dy
+            d3.select(this).attr("cx", d.x).attr("cy", d.y);
+            let links = svg.selectAll(".link");
+            links.each(function (l, li) {
+                if (l.sourceId == d.id) {
+                    d3.select(this).attr("x1", d.x).attr("y1", d.y);
+                } else if (l.targetId == d.id) {
+                    d3.select(this).attr("x2", d.x).attr("y2", d.y);
+                }
+            });
+        });
+    }
 
     render() {
         // this.sigmaInstance.refresh();
