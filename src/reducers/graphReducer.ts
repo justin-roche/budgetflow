@@ -8,6 +8,9 @@ function graphReducer(state = null, action) {
         case 'NODES_SET': {
             return { ...state, nodes: action.payload };
         }
+        case 'ADD_NODE': {
+            return { ...state, ...addNewNode(state, action.payload)};
+        }
         case 'BREADTH_TRAVERSE': {
             let sources = getSources(ArrayById(state.nodesData));
             let newNodesDataArray = recurseNodes(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
@@ -21,6 +24,16 @@ function graphReducer(state = null, action) {
             return state;
     }
 
+}
+
+function addNewNode(g, nd) {
+    let index = Object.keys(g.nodes).length;
+    let id = 'n'+index; 
+    let nodeDescription = {...nd, ...{id: id, outEdges:[], inEdges: []}};
+    let nodeData = {id: id, type: 'sink', displayFunctions: [], stepFunctions: [], value: 0}
+    return {...g, 
+            nodes: {...g.nodes, [id]: nodeDescription},
+            nodesData: {...g.nodesData, [id]: nodeData}}
 }
 
 function getSources(g) {

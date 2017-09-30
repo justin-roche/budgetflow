@@ -80,10 +80,10 @@ fdescribe('graph reducer', () => {
             expect(s2.nodesData['n6'].value).toBe(1);
         });
 
-        fit('applies step function to all nodes',()=>{
-            g.nodesData = g.nodesData.map(nd => {
-                return {...nd, stepFunctions: [{name: 'increment', arguments: [1]}]}
-            })
+        it('applies step function to all nodes',()=>{
+            for(let nd in g.nodesData) {
+                g.nodesData[nd] = {...g.nodesData[nd], stepFunctions: [{name: 'increment', arguments: [1]}]}
+            }
             let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });            
             expect(s2.nodesData['n0'].value).toBe(45);
             expect(s2.nodesData['n1'].value).toBe(2);
@@ -94,7 +94,7 @@ fdescribe('graph reducer', () => {
             expect(s2.nodesData['n6'].value).toBe(2);
         });
 
-        fit('tree traversal is pure',()=>{
+        it('tree traversal is pure',()=>{
             let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });
             expect(s2 !== g);
             expect(s2.nodesData !== g.nodesData);

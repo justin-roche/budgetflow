@@ -150,48 +150,44 @@ let state: any = {
             nodes: {
                 'n1': {
                     id: 'n1',
-                    x: 100,
-                    y: 100,
-                    outEdges: ['e1']
+                    outEdges: ['e1'],
+                    inEdges: [],
                 },
                 'n2': {
                     id: 'n2',
-                    x: 200,
-                    y: 200,
-                    outEdges: ['e2']
+                    outEdges: ['e2'],
+                    inEdges: ['e1']
                 },
                 'n3': {
                     id: 'n3',
-                    x: 150,
-                    y: 150,
-                    outEdges: []
+                    outEdges: [],
+                    inEdges: ['e2']
                 }
             },
             nodesData: {
                 'n1': {
                     id: 'n1',
+                    type: 'source',
                     active: true,
                     value: 10,
-                    stepFunctions: ['increment'],
-                    displayFunctions: ['toggle', 'sizeByValue'],
+                    stepFunctions: [],
+                    displayFunctions: [],
                 },
                 'n2': {
                     id: 'n2',
+                    type: 'sink',
                     active: false,
-                    value: 11,
-                    stepFunctions: [{
-                        name: 'activate',
-                        argument: 5,
-
-                    }],
-                    displayFunctions: ['toggle', 'sizeByValue'],
+                    value: 0,
+                    stepFunctions: [],
+                    displayFunctions: [],
                 },
                 'n3': {
                     id: 'n3',
+                    type: 'sink',
                     active: false,
-                    value: 12,
+                    value: 0,
                     stepFunctions: [],
-                    displayFunctions: ['toggle', 'sizeByValue'],
+                    displayFunctions: [],
                 }
             },
             edges: {
@@ -214,12 +210,12 @@ let state: any = {
             },
             edgesData: {
                 'e1': {
-                    linkFunction: 'transfer',
+                    linkFunctions: [{name: 'transfer', arguments: [1]}],
                     stepFunctions: null,
                 },
 
                 'e2': {
-                    linkFunction: 'transfer',
+                    linkFunctions: [{name: 'transfer', arguments: [1]}],
                     stepFunctions: null,
                 },
             }
