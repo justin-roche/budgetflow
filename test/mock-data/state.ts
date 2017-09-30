@@ -91,17 +91,19 @@ let state: any = {
             nodes: {
                 'n1': {
                     id: 'n1',
-                    x: 300,
-                    y:300,
+                    // x: 300,
+                    // y:300,
                     outEdges: ['e1'],
                     inEdges: [],
+                  //  group: 0,
                 },
                 'n2': {
                     id: 'n2',
-                    x: 400,
-                    y: 400,
+                    // x: 400,
+                    // y: 400,
                     inEdges: ['e1'],
                     outEdges: [],
+                   // group: 0
                 },
             },
             nodesData: {
@@ -125,10 +127,10 @@ let state: any = {
             edges: {
                 'e1': {
                     id: 'e1',
-                    sourceId: 'n1',
-                    targetId: 'n2',
-                    color: 'black',
-                    size: 50,
+                    source: 'n1',
+                    target: 'n2',
+                    // color: 'black',
+                    // size: 50,
                     type: 'arrow'
                 },
             },
@@ -195,16 +197,16 @@ let state: any = {
             edges: {
                 'e1': {
                     id: 'e1',
-                    sourceId: 'n1',
-                    targetId: 'n2',
+                    source: 'n1',
+                    target: 'n2',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e2': {
                     id: 'e2',
-                    sourceId: 'n2',
-                    targetId: 'n3',
+                    source: 'n2',
+                    target: 'n3',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
@@ -301,16 +303,16 @@ let state: any = {
             edges: {
                 'e1': {
                     id: 'e1',
-                    sourceId: 'n1',
-                    targetId: 'n2',
+                    source: 'n1',
+                    target: 'n2',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e2': {
                     id: 'e2',
-                    sourceId: 'n3',
-                    targetId: 'n4',
+                    source: 'n3',
+                    target: 'n4',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
@@ -401,16 +403,16 @@ let state: any = {
             edges: {
                 'e1': {
                     id: 'e1',
-                    sourceId: 'n1',
-                    targetId: 'n2',
+                    source: 'n1',
+                    target: 'n2',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e2': {
                     id: 'e2',
-                    sourceId: 'n3',
-                    targetId: 'n4',
+                    source: 'n3',
+                    target: 'n4',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
@@ -532,32 +534,32 @@ let state: any = {
             edges: {
                 'e1': {
                     id: 'e1',
-                    sourceId: 'n1',
-                    targetId: 'n2',
+                    source: 'n1',
+                    target: 'n2',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e2': {
                     id: 'e2',
-                    sourceId: 'n1',
-                    targetId: 'n3',
+                    source: 'n1',
+                    target: 'n3',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e3': {
                     id: 'e3',
-                    sourceId: 'n4',
-                    targetId: 'n5',
+                    source: 'n4',
+                    target: 'n5',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e4': {
                     id: 'e2',
-                    sourceId: 'n4',
-                    targetId: 'n6',
+                    source: 'n4',
+                    target: 'n6',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
@@ -717,48 +719,48 @@ let state: any = {
             edges: {
                 'e0': {
                     id: 'e0',
-                    sourceId: 'n0',
-                    targetId: 'n1',
+                    source: 'n0',
+                    target: 'n1',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e00': {
                     id: 'e00',
-                    sourceId: 'n0',
-                    targetId: 'n4',
+                    source: 'n0',
+                    target: 'n4',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e1': {
                     id: 'e1',
-                    sourceId: 'n1',
-                    targetId: 'n2',
+                    source: 'n1',
+                    target: 'n2',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e2': {
                     id: 'e2',
-                    sourceId: 'n1',
-                    targetId: 'n3',
+                    source: 'n1',
+                    target: 'n3',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e3': {
                     id: 'e3',
-                    sourceId: 'n4',
-                    targetId: 'n5',
+                    source: 'n4',
+                    target: 'n5',
                     color: 'black',
                     size: 50,
                     type: 'arrow'
                 },
                 'e4': {
-                    id: 'e2',
-                    sourceId: 'n4',
-                    targetId: 'n6',
+                    id: 'e4',
+                    source: 'n4',
+                    target: 'n6',
                     color: 'black',
                     size: 50,
                     type: 'arrow'

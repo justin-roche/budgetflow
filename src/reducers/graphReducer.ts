@@ -72,7 +72,7 @@ function getOutNodes(nodeData, g) {
             return g.edges[edgeName]
         })
         .map(edge => {
-            return g.nodes[edge.targetId]
+            return g.nodes[edge.target]
         })
         .map(outNode => {
             return g.nodesData[outNode.id]
@@ -81,7 +81,7 @@ function getOutNodes(nodeData, g) {
 
 function getEdge(source, target, g) {
     return g.nodes[source.id].outEdges.map(edge => g.edges[edge])
-        .filter(g => g.targetId === target.id)
+        .filter(g => g.target === target.id)
         .map(edgeDescription => g.edgesData[edgeDescription.id])
         .pop();
 }
