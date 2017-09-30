@@ -1,16 +1,14 @@
-import { ComponentBase } from './../common/componentBase';
-import { GraphService } from '../services/graphService';
 import { inject } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
 import $ from 'jquery'
 import {ModalSettings} from '../common/modalWrapper'
 import * as Rx from 'rxjs';
+import { Store } from '../services/reduxStore';
 
-@inject(EventAggregator, GraphService)
-export class NodeEditor extends ComponentBase{
+@inject(Store)
+export class NodeEditor {
     active;
     collapsed = false;
-
+    $nodeId;
     nodeModel;
     data = {
         adjacentNodes: null,
@@ -25,16 +23,15 @@ export class NodeEditor extends ComponentBase{
         show: false
       });
 
-    constructor(private ea: EventAggregator, 
-        private gs: GraphService) {
-        super()
-        ea.subscribe('show.node.editor', (e) => {
-            this.show(e);
+    constructor(private store: Store){
+        this.$nodeId = this.store.select('ui.graphController.selectedNodeId');
+        this.$nodeId.subscribe(d => {
+            this.refresh(d);
         })
     }
 
-    settingsChanged() {
-
+    refresh(){
+        console.log('new node');
     }
 
     show(e) {
@@ -47,23 +44,14 @@ export class NodeEditor extends ComponentBase{
         })
     }
 
-    initializeData() {
-        // this.clearData();
-        // this.data.adjacentNodes = this.gs.getAdjacentNodes(this.nodeModel);
-        // this.data.outNodes = Object.keys(this.data.adjacentNodes.outEdges).map(n => n);
-    }
-
-    clearData() {
-        this.data.outNodes = [];
-    }
+   
 
     log() {
-        console.log('nodemodel', this.nodeModel);
+        console.log('nodemodel', this.node);
     }
 
     save() {
-        // ('#myModal').hide();
-        // this.ea.publish('saveNode', this.nodeModel);
+        
     }
 
 }

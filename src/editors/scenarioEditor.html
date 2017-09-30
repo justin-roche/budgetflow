@@ -3,6 +3,13 @@
     <modal-wrapper $settings.bind="modalSettings">
         <div slot="modalbody">
             <aubs-tabset>
+                <aubs-tab header="My Graphs">
+                    <div>
+                        <ul class="list-group">
+                            <li click.trigger="selectGraph(graph)" repeat.for="graph of graphs" class="list-group-item">${graph.data.name}</li>
+                        </ul>
+                    </div>
+                </aubs-tab>
                 <aubs-tab header="Graph">
                     <div class="btn-group-vertical" role="group" aria-label="Basic example">
                         <button click.trigger="ea.publish('graph.create')" type="button" class="btn btn-secondary">Graph</button>
@@ -14,25 +21,19 @@
 
                 <aubs-tab header="Simulation">
                     <div>
-                        <div> 
+                        <div>
                             <button click.trigger="ea.publish('graph.setStart')" type="button" class="btn btn-secondary">Set Start</button>
                         </div>
                         <div>
-                        <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="0"
-                        />
-                        <div>
-                            <button click.trigger="onStep()">Step</button>     
+                            <input id="ex8" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="0"
+                            />
+                            <div>
+                                <button click.trigger="onStep()">Step</button>
+                            </div>
                         </div>
                     </div>
-                    </div>
                 </aubs-tab>
-                <aubs-tab header="My Graphs">
-                    <div>
-                        <ul class="list-group">
-                            <li click.trigger="selectGraph(graph)" repeat.for="graph of graphs" class="list-group-item">${graph.data.name}</li>
-                        </ul>
-                    </div>
-                </aubs-tab>
+
             </aubs-tabset>
         </div>
     </modal-wrapper>

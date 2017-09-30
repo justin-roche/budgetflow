@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/graphReducer.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">src</a> graphReducer.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">87.3% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>55/63</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.43% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>10/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">95.45% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>21/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.21% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>50/58</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import {SimulationFunctions} from '../simulator/simulationFunctions';
+&nbsp;
+function graphReducer(<span class="missing-if-branch" title="if path not taken" >I</span>state = null, action) {
+    switch (action.type) {
+<span class="branch-0 cbranch-no" title="branch not covered" >        case 'GRAPH_SET': {</span>
+<span class="cstat-no" title="statement not covered" >            return action.p</span>ayload;
+        }
+<span class="branch-1 cbranch-no" title="branch not covered" >        case 'NODES_SET': {</span>
+<span class="cstat-no" title="statement not covered" >            return { ...state, nodes: action.p</span>ayload };
+        }
+        case 'BREADTH_TRAVERSE': {
+            let sources = getSources(ArrayById(state.nodesData));
+            let newNodesDataArray = recurseNodes(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
+            let newNodesDataObject = newNodesDataArray.reduce((acc, item) =&gt; {
+                return { ...acc, [item.id]: item };
+            }, {});
+            // console.log('new nodes  data', newNodesDataObject);
+            return { ...state, nodesData: newNodesDataObject };
+        }
+<span class="branch-3 cbranch-no" title="branch not covered" >        default:</span>
+<span class="cstat-no" title="statement not covered" >        console.log('</span>default case')
+<span class="cstat-no" title="statement not covered" >            return s</span>tate;
+    }
+&nbsp;
+}
+&nbsp;
+function getSources(g) {
+    return g.filter(n =&gt; n.type === 'source');
+}
+&nbsp;
+function ArrayById(o) {
+    return Object.keys(o).map(k =&gt; o[k]);
+}
+&nbsp;
+function applyStepFunction(nodeData) {
+    let <span class="fstat-no" title="function not covered" >update = nodeData.</span>stepFunctions.reduce((acc, functionSettings) =&gt; {
+        let <span class="cstat-no" title="statement not covered" >fn = SimulationFunctions.</span>stepFunctions[functionSettings.name];
+        let <span class="cstat-no" title="statement not covered" >newSlice = f</span>n(nodeData, ...functionSettings.arguments);
+        let <span class="cstat-no" title="statement not covered" >updated = { ...</span>acc, ...newSlice };
+<span class="cstat-no" title="statement not covered" >        return u</span>pdated;
+    }, { ...nodeData });
+&nbsp;
+    return update;
+}
+&nbsp;
+function applyLinkFunction(targets, source, g, i) {
+    if (i === null) {
+        i = 0;
+    }
+    let edge = getEdge(source, targets[i], g);
+    let target = targets[i];
+&nbsp;
+    let Result = edge.linkFunctions.reduce((acc, functionSettings) =&gt; {
+        let fn = SimulationFunctions.linkFunctions[functionSettings.name];
+        let result = fn(acc.source, target, ...functionSettings.arguments);
+        return { source: result.source, target: result.target };
+    }, { source: { ...source }, target: { ...target } });
+&nbsp;
+    let linkedSource = Result.source;
+    let linkedTarget = Result.target;
+&nbsp;
+    if (i === targets.length - 1) {
+        return [[linkedTarget], [linkedSource]];
+    } else {
+        let [returnedLinkedTargets, returnedLinkedSource] = applyLinkFunction(targets, linkedSource, g, i + 1);
+        return [[linkedTarget].concat(returnedLinkedTargets), returnedLinkedSource]      // n
+    }
+}
+&nbsp;
+function getOutNodes(nodeData, g) {
+    return g.nodes[nodeData.id].outEdges
+        .map(edgeName =&gt; {
+            return g.edges[edgeName]
+        })
+        .map(edge =&gt; {
+            return g.nodes[edge.targetId]
+        })
+        .map(outNode =&gt; {
+            return g.nodesData[outNode.id]
+        });
+}
+&nbsp;
+function getEdge(source, target, g) {
+    return g.nodes[source.id].outEdges.map(edge =&gt; g.edges[edge])
+        .filter(g =&gt; g.targetId === target.id)
+        .map(edgeDescription =&gt; g.edgesData[edgeDescription.id])
+        .pop();
+}
+&nbsp;
+function recurseNodes(last, fns, g) {
+&nbsp;
+    let nextNodesData = last.map(nodeData =&gt; { // n
+        return getOutNodes(nodeData, g);
+    });
+&nbsp;
+    /* apply step function */
+    let steppedSources = last.map((nodeData, i) =&gt; {
+        return { ...nodeData, ...fns.step(nodeData, g) };
+    })
+&nbsp;
+    /* apply link function */
+    let linkedTargets = [];
+    let linkedSources = [];
+    let x = steppedSources.reduce(function (acc, sourceNodeData, i) {
+        let outNodes = nextNodesData[i];
+        if (outNodes.length &gt; 0) {
+            let [_linkedTargets, _linkedSource] = applyLinkFunction(outNodes, sourceNodeData, g, null);
+            return [acc[0].concat(_linkedTargets), acc[1].concat(_linkedSource)]
+        } else {
+            return [acc[0], acc[1].concat(sourceNodeData)];
+        }
+&nbsp;
+    }, [[], []]);
+    linkedTargets = x[0];
+    linkedSources = x[1];
+&nbsp;
+    if (linkedTargets.length === 0) {
+        return linkedSources;
+    } else {
+        return linkedSources.concat(recurseNodes(linkedTargets, fns, g));      // n
+    }
+&nbsp;
+}
+&nbsp;
+export { graphReducer}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Sep 28 2017 20:31:39 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

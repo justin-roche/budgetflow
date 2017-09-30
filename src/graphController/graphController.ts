@@ -38,7 +38,7 @@ export class GraphController {
 
     attached() {
         let svg = this.d3.select('svg');
-
+        // this.appendDefs(svg);
         //var c10 = d3.scale.category10();
         svg
             .attr("width", 1200)
@@ -48,109 +48,229 @@ export class GraphController {
     refresh(data) {
         let d3 = this.d3;
         let svg = d3.select('svg');
-        let links, nodes;
+        let drag = this.onDrag();
 
-        
-        
-        let nodesArray = Object.keys(data.nodes).map(key => { return data.nodes[key] });        
-        nodes = svg.selectAll(".node").data(nodesArray);
+        let links, nodes;
+        let self = this;
 
         /* nodes */
-        nodes.exit().remove();
-
-        let newGroups = nodes.enter().append("g")
-        let newCircles = newGroups.append("circle")
-        newCircles = this.renderCircle(newGroups);
+        let nodesArray = Object.keys(data.nodes).map(key => { return {...data.nodes[key], key: data.id+data.nodes[key].id }});
+        let nodeGroups = svg.selectAll(".nodeGroup").data(nodesArray, function(d){
+            return d.key;
+        });
+        nodeGroups.exit().remove();
         
-        // newNodes.append("text")
-        // .attr("dx", 12)
-        // .attr("dy", ".35em")
-        // .attr('color', 'black')
-        // .text(function(d) { 
-        //     console.log(d.id);
-        //     return d.id });
+        let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup")
+        newGroups.append("circle")
+        newGroups.append("text")
+        this.renderNodes(newGroups, data);
+        newGroups .on('click', function(d){
+            self.onClick(d)
+        })
+        newGroups.call(drag);       
 
-        // let oldNodes = nodes.attr("class", "node")
-        // this.renderNode(oldNodes);
+         let oldNodes = nodeGroups.attr("class", "nodeGroup")
+         this.renderNodes(oldNodes, data);
 
-        // /* edges */
+        /* edges */
+        let edgesArray = Object.keys(data.edges).map(key => { return {...data.edges[key], key: data.id+data.edges[key].id }});
+        links = svg.selectAll(".link").data(edgesArray || [])
+        console.log('edges', links);
 
-        // let edgesArray = Object.keys(data.edges).map(key => { return data.edges[key] });        
-        // links = svg.selectAll(".link").data(edgesArray || [])
-        
-        // links.exit().remove();
+        links.exit().remove();
 
-        // let newLinks = links.enter().append("line")
-        // this.renderLinks(newLinks, data)
+        let newLinks = links.enter().append("line")
+        this.renderLinks(newLinks, data)
 
-        // let oldLinks = links.attr("class", "link");
+        let oldLinks = links.attr("class", "link");
         // this.renderLinks(oldLinks, data)
     }
 
-    renderCircle(selection) {
-        let drag = this.onDrag();
-
-        return selection
-        .selectAll("circle")
-        .attr("class", "node")
-        .attr("cx", function (d) {
-            return d.x
-        })
-        .attr("cy", function (d) {
-            return d.y
-        })
-        .attr("r", 20)
-        .attr("fill", function (d, i) {
-            return 'blue';
-        })
-        .call(drag)
-        
-        
-    }
-
-    renderLinks(selection, data) {
+    renderNodes(selection, data) {
         let d3 = this.d3;
         let drag = this.onDrag();
 
+        selection.
+            selectAll("text")
+            .attr("x", function (d) {
+                return d.x
+            })
+            .attr("y", function (d) {
+                return d.y
+            })
+            .attr('fill', 'white')
+            .text(function (d) {
+                console.log(d.id);
+                return d.id + ':' + data.nodesData[d.id].value;
+            })
+
+        return selection
+            .selectAll("circle")
+            .attr("class", "node")
+            .attr("x", function (d) {
+                return d.x
+            })
+            .attr("y", function (d) {
+                return d.y
+            })
+            .attr("cx", function (d) {
+                return d.x
+            })
+            .attr("cy", function (d) {
+                return d.y
+            })
+            .attr("r", 20)
+            .attr("fill", function (d, i) {
+                return 'blue';
+            })
+            
+        //.call(drag)
+
+    }
+
+    renderLinks(selection, data) {
+
+
+        let d3 = this.d3;
+
         return selection.attr("class", "link")
-        .attr("x1", function (l) {
-            var sourceNode = data.nodes[l.sourceId];
-            d3.select(this).attr("y1", sourceNode.y);
-            return sourceNode.x
-        })
-        .attr("x2", function (l) {
-            var targetNode = data.nodes[l.targetId];
-            d3.select(this).attr("y2", targetNode.y);
-            return targetNode.x
-        })
-        .attr("fill", "none")
-        .attr("stroke", "white")
-        .attr('id', function (d) {
-            return d.id;
-        })
-        .call(drag);
+            .attr("x1", function (l) {
+                var sourceNode = data.nodes[l.sourceId];
+                d3.select(this).attr("y1", sourceNode.y);
+                return sourceNode.x
+            })
+            .attr("x2", function (l) {
+                var targetNode = data.nodes[l.targetId];
+                d3.select(this).attr("y2", targetNode.y);
+                return targetNode.x
+            })
+            .attr("fill", "none")
+            .attr("stroke", "white")
+            .attr("stroke-width", 1)
+            .attr('id', function (d) {
+                return d.id;
+            })
+            .attr('marker-end',"url(#arrow)")
+            
+          
     }
 
     onDrag() {
         let d3 = this.d3;
         let svg = this.d3.select('svg');
-        
+
         return d3.drag()
-        .on("drag", function (d, i) {
-            /*mutates state */
-            d.x += d3.event.dx
-            d.y += d3.event.dy
-            d3.select(this).attr("cx", d.x).attr("cy", d.y);
-            let links = svg.selectAll(".link");
-            links.each(function (l, li) {
-                if (l.sourceId == d.id) {
-                    d3.select(this).attr("x1", d.x).attr("y1", d.y);
-                } else if (l.targetId == d.id) {
-                    d3.select(this).attr("x2", d.x).attr("y2", d.y);
-                }
-            });
-        });
+            .on("start", function () { })
+            .on("drag", function (n, i) {
+                let nodeDescription = n; //nd.x is the original origin
+                let group = this;
+                group.x = group.x || 0 // group.x is the accumulated transformation
+                group.y = group.y || 0
+
+                group.x += d3.event.dx; //d.x is the instance transformation
+                group.y += d3.event.dy;
+                d3.select(this).attr("transform", "translate(" + group.x + "," + group.y + ")");
+                // d3.select(this).attr("cx", 100).attr("cy", 100);
+                
+                let links = svg.selectAll(".link");
+
+                links.each(function (l, li) {
+                    if (l.sourceId == nodeDescription.id) {
+                        d3.select(this).attr("x1", nodeDescription.x + group.x).attr("y1", nodeDescription.y + group.y);
+                    } else if (l.targetId == nodeDescription.id) {
+                        d3.select(this).attr("x2", nodeDescription.x + group.x).attr("y2", nodeDescription.y + group.y);
+                    }
+
+                });
+            })
+            .on("end", function () { });
     }
+
+    appendDefs(svg) {
+        let d3 = this.d3;
+        var data = [
+            { id: 0, name: 'circle', path: 'M 0, 0  m -5, 0  a 5,5 0 1,0 10,0  a 5,5 0 1,0 -10,0', viewbox: '-6 -6 12 12' }
+          , { id: 1, name: 'square', path: 'M 0,0 m -5,-5 L 5,-5 L 5,5 L -5,5 Z', viewbox: '-5 -5 10 10' }
+          , { id: 2, name: 'arrow', path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-5 -5 10 10' }
+          , { id: 2, name: 'stub', path: 'M 0,0 m -1,-5 L 1,-5 L 1,5 L -1,5 Z', viewbox: '-1 -5 2 10' }
+          ]
+        
+          //var color = d3.scale.category10(),
+           var   color = 'black',
+                    margin = {top: 50, right: 20, bottom: 30, left: 40},
+              width = 960 - margin.left - margin.right,
+              height = 500 - margin.top - margin.bottom;
+        
+          var svg = d3.select('svg')
+        //   .append('svg:svg')
+        //     .attr('width', width + margin.left + margin.right)
+        //     .attr('height', height + margin.top + margin.bottom);
+        
+          var defs = svg.append('svg:defs')
+        
+          var paths = svg.append('svg:g')
+            .attr('id', 'markers')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        
+          var marker = defs.selectAll('marker')
+            .data(data)
+            .enter()
+            .append('svg:marker')
+              .attr('id', function(d){ return 'marker_' + d.name})
+              .attr('markerHeight', 5)
+              .attr('markerWidth', 5)
+              .attr('markerUnits', 'strokeWidth')
+              .attr('orient', 'auto')
+              .attr('refX', 0)
+              .attr('refY', 0)
+              .attr('viewBox', function(d){ return d.viewbox })
+              .append('svg:path')
+                .attr('d', function(d){ return d.path })
+                .attr('fill', function(d,i) { return 'black'});
+        
+          var path = paths.selectAll('path')
+            .data(data)
+            .enter()
+            .append('svg:path')
+              .attr('d', function(d,i){ return 'M 0,' + (i * 100) + ' L ' + (width - margin.right) + ',' + (i * 100) + '' })
+              .attr('stroke', function(d,i) { return 'black'})
+              .attr('stroke-width', 5)
+              .attr('stroke-linecap', 'round')
+              .attr('marker-start', function(d,i){ return 'url(#marker_' + d.name + ')' })
+              .attr('marker-end', function(d,i){ return 'url(#marker_' + d.name  + ')' })
+
+          
+    }
+
+    onClick(d) {
+        this.store.dispatch({type: 'SELECT_NODE', payload: d.id});
+    }
+
+    // var dragTarget = d3.select(this);
+    // dragTarget
+    //   .attr('cx', function() {
+    //     return e.dx + parseInt(dragTarget.attr('cx'))
+    //   })
+    //   .attr('cy', function() {
+    //     return e.dy + parseInt(dragTarget.attr('cy'))
+    //   })
+    // return d3.drag()
+    // .on("drag", function (d, i) {
+    //     /*mutates state */
+    //     d.x += d3.event.dx
+    //     d.y += d3.event.dy
+    //     d3.select(this).attr("cx", d.x).attr("cy", d.y);
+    //     let links = svg.selectAll(".link");
+    //     links.each(function (l, li) {
+    //         if (l.sourceId == d.id) {
+    //             d3.select(this).attr("x1", d.x).attr("y1", d.y);
+    //         } else if (l.targetId == d.id) {
+    //             d3.select(this).attr("x2", d.x).attr("y2", d.y);
+    //         }
+    //     });
+
+    // });
+
 
     render() {
         // this.sigmaInstance.refresh();
