@@ -98,7 +98,6 @@ export class GraphController {
             this.simulation.alpha(1).restart();
         } else {
             this.createSimulation(nodesArray, edgesArray);
-            //this.renderForce(nodesArray, edgesArray);
         }
 
         // this.addDragListener();
@@ -202,28 +201,43 @@ export class GraphController {
 
     /* simuluation */
 
-    createSimulation(nodes, links) {
+    createSimulation(_nodes, _links) {
         let d3 = this.d3;
         var svg = d3.select("svg"),
             width = +svg.attr("width"),
             height = +svg.attr("height");
 
-        this.simulation = d3.forceSimulation(nodes)
+            let labels = svg.selectAll('.label');
+            
+                    
+
+        this.simulation = d3.forceSimulation(_nodes)
             .force("charge", d3.forceManyBody().strength(-1000))
-            .force("link", d3.forceLink(links).id(function(d){return d.id}).distance(200))
+            .force("link", d3.forceLink(_links).id(function(d){return d.id}).distance(200))
             .force("x", d3.forceX())
             .force("y", d3.forceY())
             .alphaTarget(1)
             .on("tick", ticked);
 
-        let labels = svg.selectAll('.label');
+        
 
         function ticked() {
+            let nodes = svg.selectAll('.node');
+            let links = svg.selectAll('.link')
+
             links
-                .attr("x1", function (d) { return d.source.x; })
-                .attr("y1", function (d) { return d.source.y; })
-                .attr("x2", function (d) { return d.target.x; })
-                .attr("y2", function (d) { return d.target.y; });
+                .attr("x1", function (d) { 
+                    return d.source.x; 
+                })
+                .attr("y1", function (d) { 
+                    return d.source.y; 
+                })
+                .attr("x2", function (d) { 
+                    return d.target.x; 
+                })
+                .attr("y2", function (d) { 
+                    return d.target.y; 
+                });
 
             nodes.each(function (d) {
                 if (d.shape === 'square') {
@@ -251,8 +265,7 @@ export class GraphController {
         let d3 = this.d3;
         let svg = this.svg;
 
-        let nodes = svg.selectAll('.node');
-        let links = svg.selectAll('.link')
+       
 
         // this.simulation
         //     .nodes(_nodes)
