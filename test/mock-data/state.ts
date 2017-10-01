@@ -804,6 +804,205 @@ let state: any = {
                     feedbackArgument: .50,
                 },
             }
+        },
+
+
+        {
+            id: 'g7',
+            data: {
+                currentStep: 0,
+                name: '1-2-3',
+                displayFunctions: { nodes: [{name: 'sizeByValue', arguments: [1]] }
+            },
+            nodes: {
+                'n0': {
+                    id: 'n0',
+                    x: 300,
+                    y: 50,
+                    shape: 'square',
+                    outEdges: ['e0', 'e00'],
+                    inEdges: [],
+                },
+                'n1': {
+                    id: 'n1',
+                    x: 200,
+                    y: 100,
+                    inEdges: ['e0'],
+                    outEdges: ['e1', 'e2'],
+                },
+                'n2': {
+                    id: 'n2',
+                    x: 100,
+                    y: 200,
+                    inEdges: ['e1'],
+                    outEdges: [],
+                },
+                'n3': {
+                    id: 'n3',
+                    x: 300,
+                    y: 200,
+                    inEdges: ['e2'],
+                    outEdges: [],
+                },
+                'n4': {
+                    id: 'n4',
+                    x: 500,
+                    y: 100,
+                    inEdges: ['e00'],
+                    outEdges: ['e3'],
+                },
+                'n5': {
+                    id: 'n5',
+                    x: 400,
+                    y: 200,
+                    outEdges: [],
+                    inEdges: ['e3'],
+                },
+            },
+            nodesData: {
+                'n0': {
+                    id: 'n0',
+                    type: 'source',
+                    active: true,
+                    value: 50,
+                    stepFunctions: [],
+                    displayFunctions: ['toggle'],
+                },
+                'n1': {
+                    id: 'n1',
+                    type: 'sink',
+                    active: true,
+                    value: 0,
+                    stepFunctions: [],
+                    displayFunctions: ['toggle'],
+                },
+                'n2': {
+                    id: 'n2',
+                    type: 'sink',
+                    active: false,
+                    value: 0,
+                    stepFunctions: [],
+                    displayFunctions: ['toggle'],
+                },
+                'n3': {
+                    type: 'sink',
+                    id: 'n3',
+                    active: true,
+                    value: 0,
+                    stepFunctions: [],
+                    displayFunctions: ['toggle'],
+                },
+                'n4': {
+                    type: 'sink',
+                    id: 'n4',
+                    active: false,
+                    value: 0,
+                    stepFunctions: [],
+                    displayFunctions: ['toggle'],
+                },
+                'n5': {
+                    id: 'n5',
+                    type: 'sink',
+                    active: false,
+                    value: 0,
+                    stepFunctions: [],
+                    displayFunctions: ['toggle'],
+                },
+            },
+            edges: {
+                'e0': {
+                    id: 'e0',
+                    source: 'n0',
+                    target: 'n1',
+                    color: 'black',
+                    size: 50,
+                    type: 'arrow'
+                },
+                'e00': {
+                    id: 'e00',
+                    source: 'n0',
+                    target: 'n4',
+                    color: 'black',
+                    size: 50,
+                    type: 'arrow'
+                },
+                'e1': {
+                    id: 'e1',
+                    source: 'n1',
+                    target: 'n2',
+                    color: 'black',
+                    size: 50,
+                    type: 'arrow'
+                },
+                'e2': {
+                    id: 'e2',
+                    source: 'n1',
+                    target: 'n3',
+                    color: 'black',
+                    size: 50,
+                    type: 'arrow'
+                },
+                'e3': {
+                    id: 'e3',
+                    source: 'n4',
+                    target: 'n5',
+                    color: 'black',
+                    size: 50,
+                    type: 'arrow'
+                },
+                // 'e4': {
+                //     id: 'e4',
+                //     source: 'n4',
+                //     target: 'n6',
+                //     color: 'black',
+                //     size: 50,
+                //     type: 'arrow'
+                // },
+            },
+            edgesData: {
+                'e0': {
+                    id: 'e0',
+                    linkFunctions: [{name: 'transfer', arguments: 3}],
+                    stepFunctions: null,
+                    feedback: 'exponentialIncrease',
+                    feedbackArgument: .50,
+                },
+                'e00': {
+                    id: 'e00',
+                    linkFunctions: [{name: 'transfer', arguments: 3}],
+                    stepFunctions: null,
+                    feedback: 'exponentialIncrease',
+                    feedbackArgument: .50,
+                },
+                'e1': {
+                    id: 'e1',
+                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    stepFunctions: null,
+                    feedback: 'exponentialIncrease',
+                    feedbackArgument: .50,
+                },
+                'e2': {
+                    id: 'e2',
+                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    stepFunctions: null,
+                    feedback: 'exponentialIncrease',
+                    feedbackArgument: .50,
+                },
+                'e3': {
+                    id: 'e3',
+                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    stepFunctions: null,
+                    feedback: 'exponentialIncrease',
+                    feedbackArgument: .50,
+                },
+                // 'e4': {
+                //     id: 'e4',
+                //     linkFunctions: [{name: 'transfer', arguments: 1}],
+                //     stepFunctions: null,
+                //     feedback: 'exponentialIncrease',
+                //     feedbackArgument: .50,
+                // },
+            }
         }
     ],
 }

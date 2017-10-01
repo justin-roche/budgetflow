@@ -10,6 +10,9 @@ function graphReducer(state = null, action) {
         }
         case 'ADD_NODE': {
             return { ...state, ...addNewNode(state, action.payload)};
+        },
+        case 'ADD_EDGE': {
+            return { ...state, ...addNewEdge(state, action.payload)};
         }
         case 'BREADTH_TRAVERSE': {
             let sources = getSources(ArrayById(state.nodesData));
@@ -36,6 +39,16 @@ function addNewNode(g, nd) {
     return {...g, 
             nodes: {...g.nodes, [id]: nodeDescription},
             nodesData: {...g.nodesData, [id]: nodeData}}
+}
+
+function addNewEdge(g, ed) {
+    let index = Object.keys(g.edges).length;
+    let id = 'e'+index; 
+    let edgeDescription = {...ed, ...{id: id}};
+    let edgeData = {id: id, type: 'sink', linkFunctions: []}
+    return {...g, 
+            edges: {...g.edges, [id]: edgeDescription},
+            edgeData: {...g.edgesData, [id]: edgeData}}
 }
 
 function getSources(g) {
