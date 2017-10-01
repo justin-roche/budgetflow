@@ -34,8 +34,8 @@ export class Simulator {
         // })
         this.$step = this.store.select('simulation.step');   
         this.$step.subscribe(d => {
-            this.store.dispatch({type: 'BREADTH_TRAVERSE'})
-           // this.store.dispatch({type: 'UPDATE_DISPLAY_FUNCTIONS'})
+           // this.store.dispatch({type: 'BREADTH_TRAVERSE'})
+            this.store.dispatch({type: 'UPDATE_DISPLAY_FUNCTIONS'})
             //let g = this.store.getState().graph;
 
             
