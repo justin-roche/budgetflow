@@ -80,7 +80,7 @@ let state: any = {
 
         {
             id: 'g2',
-            data: {
+            graphData: {
                 currentStep: 0,
                 name: 'linear 2x',
                 displayFunctions: { nodes: ['labelById', 'sizeByValue'] }
@@ -598,10 +598,7 @@ let state: any = {
             data: {
                 currentStep: 0,
                 name: '1-2-3',
-                displayFunctions: { nodes: ['labelById', 'sizeByValue'] }
-                // nodesInitial: {
-                //     displayFunctions: ['toggle', 'sizeByValue', 'labelById'],
-                // }
+                displayFunctions: { nodes: [{name: 'sizeByValue', arguments: [1]] }
             },
             nodes: {
                 'n0': {

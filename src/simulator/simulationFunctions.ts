@@ -37,8 +37,12 @@ let SimulationFunctions = {
             }
         },
         
-        sizeByValue: function(node) {
-            node.size = node.data.value;
+        sizeByValue: function(node, nodeData, multiplier) {
+            let newSize = nodeData.value * multiplier;
+            if(newSize <10) {
+                newSize = 10;
+            }
+            return {...node, r: newSize};
         },
 
         labelById: function(node) {

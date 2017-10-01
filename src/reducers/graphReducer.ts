@@ -17,8 +17,10 @@ function graphReducer(state = null, action) {
             let newNodesDataObject = newNodesDataArray.reduce((acc, item) => {
                 return { ...acc, [item.id]: item };
             }, {});
-            // console.log('new nodes  data', newNodesDataObject);
             return { ...state, nodesData: newNodesDataObject };
+        },
+        case 'UPDATE_DISPLAY_FUNCTIONS': {
+            return {...state, nodes: applyDisplayFunctions(state)}
         }
         default:
             return state;
@@ -42,6 +44,35 @@ function getSources(g) {
 
 function ArrayById(o) {
     return Object.keys(o).map(k => o[k]);
+}
+
+function ArrayToObject(a) {
+    return a.reduce((acc, n) => {
+        return {...acc, [n.id]: n};
+    },{});
+}
+
+function applyDisplayFunctions(g) {
+    let nodesArr = ArrayById(g.nodes);
+    let displayFns = g.data.displayFunctions.nodes;
+
+    let update = displayFns.reduce((nodesArr,functionSettings) => {
+        /* for each display function */
+        let fn = SimulationFunctions.displayFunctions[functionSettings.name];
+ 
+        /* reduce the nodesArray */
+        let updatedNodesArr = nodesArr.reduce((acc, node) => {
+            let nodeData = g.nodesData[node.id]
+            let newNodeData = fn(node, nodeData, ...functionSettings.arguments);
+            return acc.concat([{...node, ...newNodeData}]);
+        },[]);
+        
+        return updatedNodesArr;
+
+    }, nodesArr);
+
+    /* convert back to object type */
+    return ArrayToObject(update);
 }
 
 function applyStepFunction(nodeData) {

@@ -1,13 +1,13 @@
 import { BehaviorSubject } from 'rxjs';
 import * as Rx from 
-import { GraphService } from './../services/graphService';
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Store } from '../services/reduxStore';
+import {SimulationFunctions} from '../simulator/simulationFunctions';
 
 const selectGraph = state => state.graph;
 
-@inject(EventAggregator, Store, GraphService)
+@inject(EventAggregator, Store)
 export class GraphController {
 
     d3 = window['d3'];
@@ -20,7 +20,7 @@ export class GraphController {
     settings;
     newGraph: BehaviorSubject<any> = new BehaviorSubject(null);
 
-    constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
+    constructor(private ea: EventAggregator, private store: Store<any>) {
         let previousValue;
         this.$graph = this.store.select('graph');
         this.$graph.subscribe(d => {
@@ -66,6 +66,7 @@ export class GraphController {
         /* nodes */
         this.addNodes(nodesArray, data);
         this.renderNodes(data);
+        
 
         this.createSimulation();
         this.renderForce(nodesArray, edgesArray);
@@ -86,8 +87,12 @@ export class GraphController {
         });
         nodeGroups.exit().remove();
 
+        /* propagate data down */
+        //nodeGroups.select('circle')
+        //nodeGroups.select('text')
+
         let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup")
-        let newCircles = newGroups.append("circle")
+        let newCircles = newGroups.append("circle");
         newGroups.append("text")
         this.addDragListener();
         this.addMouseOverListener();
@@ -103,7 +108,7 @@ export class GraphController {
             })
 
         this.svg
-            .selectAll("circle")
+             .selectAll("circle")
             .attr("class", "node")
             .attr("x", function (d) {
                 return d.x
@@ -117,7 +122,9 @@ export class GraphController {
             .attr("cy", function (d) {
                 return d.y
             })
-            .attr("r", 20)
+            .attr("r", function(d) {
+                return 20;  
+            })
             .attr('stroke', 'white')
             .attr('stroke-width', 3)
             .attr("fill", function (d, i) {
