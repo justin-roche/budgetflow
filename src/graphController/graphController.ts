@@ -14,6 +14,7 @@ export class GraphController {
     svg;
 
     dragging = false;
+    ui;
     containerRef;
     container;
     simulation;
@@ -22,9 +23,17 @@ export class GraphController {
 
     constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
         let previousValue;
+        let self = this;
         this.$graph = this.store.select('graph');
         this.$graph.subscribe(d => {
             this.refresh(d);
+        })
+        this.$ui = this.store.select('ui.graphContainer');
+        this.$ui.subscribe(d => {
+            self.ui = d;
+            if(this.container) {
+                this.refresh(this.store.getState().graph);
+            }
         })
 
     }
@@ -39,6 +48,8 @@ export class GraphController {
             .attr("width", 1200)
             .attr("height", 800);
     }
+
+    /* state join */
 
     getNodesArray(nodesObj, data) {
         return Object.keys(data.nodes).map(key => { return { ...data.nodes[key], key: data.id + data.nodes[key].id } });
@@ -67,6 +78,7 @@ export class GraphController {
         return base;
     }
 
+    /* refresh */
 
     refresh(data) {
         let nodesArray, edgesArray;
@@ -100,8 +112,9 @@ export class GraphController {
             this.createSimulation(nodesArray, edgesArray);
         }
 
-         this.addDragListener();
-        this.addMouseOverListener();
+        this.addDragListener();
+        // this.addMouseOverListener();
+        this.addClickListener();
     }
 
     addLinks(edgesArray, data) {
@@ -139,21 +152,14 @@ export class GraphController {
 
             })
 
-
-        //.append("circle")
-
-        //.append('path')
-        //.attr("d", d3.symbol('circle').size(30)) 
-        //.type('square')
-        //.size(100) 
-
         newGroups.append("text")
 
     }
 
     renderNodes(data) {
         let d3 = this.d3;
-
+        let selectedNodeId = this.store.getState().ui.graphContainer.selectedNodeId;
+        
         this.svg.
             selectAll("text")
             .attr('class', 'label')
@@ -180,12 +186,19 @@ export class GraphController {
                         .attr("cy", d.y)
                         .attr("r", 20)
                 }
+
+                if(selectedNodeId === d.id){
+                    d3.select(this).classed('selected-node', true);
+                } else {
+                    d3.select(this).classed('selected-node', false);
+                }
             })
             .attr('stroke', 'white')
             .attr('stroke-width', 3)
             .attr("fill", function (d, i) {
                 return 'blue';
             })
+           
 
     }
 
@@ -207,40 +220,33 @@ export class GraphController {
             width = +svg.attr("width"),
             height = +svg.attr("height");
 
-            let labels = svg.selectAll('.label');
-            
-                    
+        let labels = svg.selectAll('.label');
 
         this.simulation = d3.forceSimulation(_nodes)
-        //this.simulation = d3.forceSimulation()
-        .force("link", d3.forceLink(_links).id(function (d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-100))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-            // .force("charge", d3.forceManyBody().strength(-1000))
-            // .force("link", d3.forceLink(_links).id(function(d){return d.id}).distance(200))
-            // .force("x", d3.forceX())
-            // .force("y", d3.forceY())
+            .force("link", d3.forceLink(_links).id(function (d) { return d.id; }))
+            .force("charge", d3.forceManyBody().strength(-1000))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .velocityDecay(0.9)
             .alphaTarget(1)
             .on("tick", ticked);
-
-        
 
         function ticked() {
             let nodes = svg.selectAll('.node');
             let links = svg.selectAll('.link')
+            let labels = svg.selectAll('.label')
 
             links
-                .attr("x1", function (d) { 
-                    return d.source.x; 
+                .attr("x1", function (d) {
+                    return d.source.x;
                 })
-                .attr("y1", function (d) { 
-                    return d.source.y; 
+                .attr("y1", function (d) {
+                    return d.source.y;
                 })
-                .attr("x2", function (d) { 
-                    return d.target.x; 
+                .attr("x2", function (d) {
+                    return d.target.x;
                 })
-                .attr("y2", function (d) { 
-                    return d.target.y; 
+                .attr("y2", function (d) {
+                    return d.target.y;
                 });
 
             nodes.each(function (d) {
@@ -269,16 +275,6 @@ export class GraphController {
         let d3 = this.d3;
         let svg = this.svg;
 
-       
-
-        // this.simulation
-        //     .nodes(_nodes)
-        //     .on("tick", ticked);
-
-        // this.simulation.force("link")
-        //     .links(edges);
-
-
     }
 
     addZoomListener() {
@@ -296,40 +292,23 @@ export class GraphController {
         }
     }
 
-
     addMouseOverListener() {
         let node = this.svg.selectAll('.node');
         let link = this.svg.selectAll('line');
         let self = this;
         node.on("mouseover", function (d) {
 
-            // node.classed("node-active", function (o) {
-            //     this.setAttribute('fill-opacity', o);
-            //     return true;
-            // });
-
-            // link.classed("link-active", function (o) {
-            //     return true
-            // });
-
-            // self.d3.select(this).classed("node-active", .5);
+           
             self.d3.select(this)
                 .attr('class', 'selected-node')
-            // .transition()
-            // .duration(750)
-            // .attr("r", 50);
+           
         })
 
             .on("mouseout", function (d) {
 
-                //node.classed("node-active", false);
-                // link.classed("link-active", false);
-
                 self.d3.select(this)
                     .attr('class', 'node')
-                // .transition()
-                // .duration(750)
-                // .attr("r", 20);
+             
             });
     }
 
@@ -340,17 +319,10 @@ export class GraphController {
 
         circles.on('mousedown.drag', null);
 
-        console.log('adding listener to', circles)
         circles.call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended));
-
-        circles.on('click', function (d) {
-            console.log("clicked", d);
-            d3.event.preventDefault();
-            d3.event.stopPropagation();
-        })
 
         function dragstarted(d) {
             self.simulation.alphaTarget(0.3).restart();
@@ -370,15 +342,35 @@ export class GraphController {
         }
     }
 
-    onClick(d) {
-        console.log('node click', d);
-        //        this.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
+    addClickListener() {
+        let d3 = this.d3;
+        let nodes = this.container.selectAll('.node')
+        let self = this;
+        nodes.on('click', function (d) {
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+            let previous = self.ui.selectedNodeId; 
+
+            if(previous) {
+                if(previous === d.id) {
+                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+                } 
+                if(previous !== d.id) {
+                    self.store.dispatch({ type: 'ADD_EDGE', payload: { source: previous, target: d.id } });
+                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+                }
+            }
+            else {
+                self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
+            }
+            
+            
+        })
+        
     }
 
     onBackgroundClick(e) {
         console.log('background dlick')
-        // this.simulation.alphaTarget(0);
-        // this.simulation.force("charge", this.d3.forceManyBody().strength(0))
         this.store.dispatch({ type: 'ADD_NODE', payload: { x: e.offsetX, y: e.offsetY } });
     }
 
@@ -386,6 +378,4 @@ export class GraphController {
         this.store.dispatch({ type: 'ADD_EDGE', payload: { source: 'n6', target: 'n7' } });
     }
 
-    force2(nodes, links) {
-
-    }
+}

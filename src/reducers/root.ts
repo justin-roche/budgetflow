@@ -68,7 +68,8 @@ function uiReducer(state = null, action) {
         case 'UI_SET':
             return action.payload;
         case 'SELECT_NODE': {
-            return Object.assign(state, {selectedNodeId: action.payload});
+            console.log('reducing')
+            return {...state, graphContainer: {...state.graphContainer, selectedNodeId: action.payload}};
         }
         case 'GRAPH_CONTAINER_SETTINGS_SET': {
             return Object.assign(state, { graphContainerSettings: action.payload });
