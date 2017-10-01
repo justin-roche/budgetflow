@@ -53,8 +53,10 @@ export class GraphController {
             this.svg = this.d3.select('svg');
             this.container = this.svg.append('g');
             this.addZoomListener();
-        } else {
+        } 
 
+        if(this.simulation) {
+            
         }
         let nodesArray = this.getNodesArray(data.nodes, data);
         let edgesArray = this.getEdgesArray(data.edges, data);
@@ -81,19 +83,44 @@ export class GraphController {
     }
 
     addNodes(nodesArray, data) {
+        let self = this;
+        let d3 = this.d3;
+
         let nodeGroups = this.container.selectAll(".nodeGroup").data(nodesArray, function (d) {
             return d.key;
         });
         nodeGroups.exit().remove();
 
         let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup")
-        let newCircles = newGroups.append("circle")
+        console.log(newGroups);
+       
+        let newCircles = newGroups
+        .each(function(d,i,groups){
+            if(d.shape === 'square') {
+                d3.select(this).append("rect")
+                .attr('class', 'node')
+            } else {
+                d3.select(this).append("circle")
+                .attr('class', 'node')
+            }
+            
+        })
+        
+        
+        //.append("circle")
+        
+         //.append('path')
+        //.attr("d", d3.symbol('circle').size(30)) 
+        //.type('square')
+        //.size(100) 
+
         newGroups.append("text")
         this.addDragListener();
         this.addMouseOverListener();
     }
 
     renderNodes(data) {
+        let d3 = this.d3;
 
         this.svg.
             selectAll("text")
@@ -103,23 +130,24 @@ export class GraphController {
             })
 
         this.svg
-            .selectAll("circle")
-            .attr("class", "node")
-            .attr("x", function (d) {
-                return d.x
-            })
-            .attr("y", function (d) {
-                return d.y
-            })
-            .attr("cx", function (d) {
-                return d.x
-            })
-            .attr("cy", function (d) {
-                return d.y
-            })
-            .attr("r", function(d) {
-                // return data.nodes[d.id].r || 20;
-                return 20;
+            .selectAll(".node")
+            .each(function(d){
+                if(d.shape === 'square'){
+                    d3.select(this)
+                     .attr("x", d.x)
+                     .attr("y", d.y)
+                    //  .attr("rx", d.x)
+                    //  .attr("ry", d.y)
+                    .attr("height", 20)
+                    .attr('width', 20)
+                } else {
+                    d3.select(this)
+                    .attr("x", d.x)
+                    .attr("y",  d.y)
+                    .attr("cx", d.x)
+                    .attr("cy", d.y)
+                    .attr("r", 20)
+                }
             })
             .attr('stroke', 'white')
             .attr('stroke-width', 3)
@@ -133,14 +161,13 @@ export class GraphController {
 
         this.container.selectAll('line')
             .attr("class", "link")
-            .attr("fill", "none")
-            .attr("stroke", "white")
-            .attr("stroke-width", 1)
             .attr('id', function (d) {
                 return d.id;
             })
-            .attr('marker-end', "url(#arrow)")
+            //.attr('marker-end', "url(#arrow)")
     }
+
+    /* simuluation */
 
     createSimulation() {
         let d3 = this.d3;
@@ -149,20 +176,20 @@ export class GraphController {
             height = +svg.attr("height");
         this.simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function (d) { return d.id; }))
-            .force("charge", d3.forceManyBody().strength(-100))
+            .force("charge", d3.forceManyBody().strength(-500))
             .force("center", d3.forceCenter(width / 2, height / 2));
     }
 
-    renderForce(nodes, edges) {
+    renderForce(_nodes, edges) {
         let d3 = this.d3;
         let svg = this.svg;
 
-        let circles = svg.selectAll('circle');
+        let nodes = svg.selectAll('.node');
         let links = svg.selectAll('.link')
         let labels = svg.selectAll('.label');
 
         this.simulation
-            .nodes(nodes)
+            .nodes(_nodes)
             .on("tick", ticked);
 
         this.simulation.force("link")
@@ -175,10 +202,22 @@ export class GraphController {
                 .attr("x2", function (d) { return d.target.x; })
                 .attr("y2", function (d) { return d.target.y; });
 
-            circles
-                .attr("cx", function (d) { return d.x; })
-                .attr("cy", function (d) { return d.y; });
-
+            nodes.each(function(d) {
+                if(d.shape === 'square'){
+                    d3.select(this)
+                    .attr("x", function (d) { return d.x; })
+                    .attr("y", function (d) { 
+                        return d.y - Number(d3.select(this).attr('height')/2); 
+                    })
+                    // .attr("rx", function (d) { return d.x; })
+                    // .attr("ry", function (d) { return d.y; });
+                } else {
+                    d3.select(this)
+                    .attr("cx", function (d) { return d.x; })
+                    .attr("cy", function (d) { return d.y; })
+                }
+            })
+                
             labels.attr("transform", function (d) {
                 return "translate(" + (d.x + 10) + "," + (d.y + 10) + ")";
             });
@@ -186,51 +225,61 @@ export class GraphController {
     }
 
     addZoomListener() {
-        this.d3.zoom()
+        let self = this;
+        let d3 = this.d3;
+
+        let zoomHandler = d3.zoom()
             .scaleExtent([1, 10])
             .on("zoom", zoomed);
 
-        function zoomed() {
-            this.container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        this.container.call(zoomHandler);
+
+        function zoomed(e) {
+            self.container.attr("transform", d3.event.transform)
         }
     }
 
+
     addMouseOverListener() {
-        let node = this.svg.selectAll('circle');
+        let node = this.svg.selectAll('.node');
         let link = this.svg.selectAll('line');
         let self = this;
         node.on("mouseover", function (d) {
 
-            node.classed("node-active", function (o) {
-                this.setAttribute('fill-opacity', o);
-                return true;
-            });
+            // node.classed("node-active", function (o) {
+            //     this.setAttribute('fill-opacity', o);
+            //     return true;
+            // });
 
             // link.classed("link-active", function (o) {
             //     return true
             // });
 
-            self.d3.select(this).classed("node-active", .5);
-            self.d3.select(this).transition()
-                .duration(750)
-                .attr("r", 50);
+            // self.d3.select(this).classed("node-active", .5);
+            self.d3.select(this)
+                .attr('class', 'selected-node')
+                // .transition()
+                // .duration(750)
+                // .attr("r", 50);
         })
 
             .on("mouseout", function (d) {
 
-                node.classed("node-active", false);
+                //node.classed("node-active", false);
                 // link.classed("link-active", false);
 
-                self.d3.select(this).transition()
-                    .duration(750)
-                    .attr("r", 20);
+                self.d3.select(this)
+                    .attr('class', 'node')
+                    // .transition()
+                    // .duration(750)
+                    // .attr("r", 20);
             });
     }
 
     addDragListener() {
         let d3 = this.d3;
         let self: any = this;
-        let circles = this.svg.selectAll('circle');
+        let circles = this.svg.selectAll('.node');
 
         circles.on('mousedown.drag', null);
 
@@ -240,11 +289,11 @@ export class GraphController {
             .on("drag", dragged)
             .on("end", dragended));
 
-        // circles.on('click', function(d) {
-        //     console.log("clicked", d);
-        //     d3.event.preventDefault();
-        //     d3.event.stopPropagation();
-        // })
+        circles.on('click', function(d) {
+            console.log("clicked", d);
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+        })
 
         function dragstarted(d) {
             self.simulation.alphaTarget(0.3).restart();
@@ -271,112 +320,11 @@ export class GraphController {
 
     onBackgroundClick(e) {
         console.log('background dlick')
+        this.simulation.alpha(0);
+        // this.simulation.force("charge", this.d3.forceManyBody().strength(0))
         this.store.dispatch({ type: 'ADD_NODE', payload: { x: e.offsetX, y: e.offsetY } });
     }
 
     force2(nodes, links) {
-        //     let d3 = this.d3;
-
-        //     var margin = { top: -5, right: -5, bottom: -5, left: -5 };
-        //     var width = 500 - margin.left - margin.right,
-        //         height = 400 - margin.top - margin.bottom;
-
-        //     var color = d3.scale.category20();
-
-        //     var force = d3.layout.force()
-        //         .charge(-200)
-        //         .linkDistance(50)
-        //         .size([width + margin.left + margin.right, height + margin.top + margin.bottom]);
-
-
-
-        //     var drag = d3.behavior.drag()
-        //         .origin(function (d) { return d; })
-        //         .on("dragstart", dragstarted)
-        //         .on("drag", dragged)
-        //         .on("dragend", dragended);
-
-
-        //     var svg = d3.select("#map").append("svg")
-        //         .attr("width", width + margin.left + margin.right)
-        //         .attr("height", height + margin.top + margin.bottom)
-        //         .append("g")
-        //         .attr("transform", "translate(" + margin.left + "," + margin.right + ")")
-        //         .call(zoom);
-
-        //     var rect = svg.append("rect")
-        //         .attr("width", width)
-        //         .attr("height", height)
-        //         .style("fill", "none")
-        //         .style("pointer-events", "all");
-
-        //     var container = svg.append("g");
-
-        //     force
-        //         .nodes(graph.nodes)
-        //         .links(graph.links)
-        //         .start();
-
-
-
-        //     var link = container.append("g")
-        //         .attr("class", "links")
-        //         .selectAll(".link")
-        //         .data(graph.links)
-        //         .enter().append("line")
-        //         .attr("class", "link")
-        //         .style("stroke-width", function (d) { return Math.sqrt(d.value); });
-
-        //     var node = container.append("g")
-        //         .attr("class", "nodes")
-        //         .selectAll(".node")
-        //         .data(graph.nodes)
-        //         .enter().append("g")
-        //         .attr("class", "node")
-        //         .attr("cx", function (d) { return d.x; })
-        //         .attr("cy", function (d) { return d.y; })
-        //         .call(drag);
-
-        //     node.append("circle")
-        //         .attr("r", function (d) { return d.weight * 2 + 12; })
-        //         .style("fill", function (d) { return color(1 / d.rating); });
-
-
-        //     force.on("tick", function () {
-        //         link.attr("x1", function (d) { return d.source.x; })
-        //             .attr("y1", function (d) { return d.source.y; })
-        //             .attr("x2", function (d) { return d.target.x; })
-        //             .attr("y2", function (d) { return d.target.y; });
-
-        //         node.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
-        //     });
-
-
-
-
-
-        //     function dottype(d) {
-        //         d.x = +d.x;
-        //         d.y = +d.y;
-        //         return d;
-        //     }
-
-
-
-        //     function dragstarted(d) {
-        //         d3.event.sourceEvent.stopPropagation();
-        //         d3.select(this).classed("dragging", true);
-        //         force.start();
-        //     }
-
-        //     function dragged(d) {
-        //         d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-        //     }
-
-        //     function dragended(d) {
-        //         d3.select(this).classed("dragging", false);
-        //     }
-
-        // }
 
     }

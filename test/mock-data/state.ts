@@ -605,6 +605,7 @@ let state: any = {
                     id: 'n0',
                     x: 300,
                     y: 50,
+                    shape: 'square',
                     outEdges: ['e0', 'e00'],
                     inEdges: [],
                 },
