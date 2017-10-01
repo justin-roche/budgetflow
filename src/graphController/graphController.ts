@@ -100,7 +100,7 @@ export class GraphController {
             this.createSimulation(nodesArray, edgesArray);
         }
 
-        // this.addDragListener();
+         this.addDragListener();
         this.addMouseOverListener();
     }
 
@@ -212,10 +212,14 @@ export class GraphController {
                     
 
         this.simulation = d3.forceSimulation(_nodes)
-            .force("charge", d3.forceManyBody().strength(-1000))
-            .force("link", d3.forceLink(_links).id(function(d){return d.id}).distance(200))
-            .force("x", d3.forceX())
-            .force("y", d3.forceY())
+        //this.simulation = d3.forceSimulation()
+        .force("link", d3.forceLink(_links).id(function (d) { return d.id; }))
+        .force("charge", d3.forceManyBody().strength(-100))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+            // .force("charge", d3.forceManyBody().strength(-1000))
+            // .force("link", d3.forceLink(_links).id(function(d){return d.id}).distance(200))
+            // .force("x", d3.forceX())
+            // .force("y", d3.forceY())
             .alphaTarget(1)
             .on("tick", ticked);
 
