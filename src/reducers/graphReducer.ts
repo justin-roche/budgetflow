@@ -12,7 +12,11 @@ function graphReducer(state = null, action) {
             return { ...state, ...addNewNode(state, action.payload)};
         },
         case 'ADD_EDGE': {
-            return { ...state, ...addNewEdge(state, action.payload)};
+            let index = Object.keys(state.edges).length;
+            let id = 'e'+index; 
+            let newEdgeComposite = addNewEdge(state, action.payload, id);
+            let newNodesObj = updateOutNodes(state.nodes,action.payload, id)
+            return { ...state, ...newEdgeComposite, nodes: newNodesObj};
         }
         case 'BREADTH_TRAVERSE': {
             let sources = getSources(ArrayById(state.nodesData));
@@ -41,14 +45,21 @@ function addNewNode(g, nd) {
             nodesData: {...g.nodesData, [id]: nodeData}}
 }
 
-function addNewEdge(g, ed) {
-    let index = Object.keys(g.edges).length;
-    let id = 'e'+index; 
+function addNewEdge(g, ed, id) {
+    
     let edgeDescription = {...ed, ...{id: id}};
     let edgeData = {id: id, type: 'sink', linkFunctions: []}
     return {...g, 
             edges: {...g.edges, [id]: edgeDescription},
-            edgeData: {...g.edgesData, [id]: edgeData}}
+            edgesData: {...g.edgesData, [id]: edgeData}}
+}
+
+function updateOutNodes(nodes, ed, id) {
+    let outEdges = nodes[ed.source].outEdges.concat([id])
+    let inEdges = nodes[ed.target].inEdges.concat([id])
+    let targetNode = {...nodes[ed.target], inEdges: inEdges};
+    let sourceNode = {...nodes[ed.source], outEdges: outEdges};
+    return {...nodes, [ed.target]: targetNode, [ed.source]: sourceNode };
 }
 
 function getSources(g) {

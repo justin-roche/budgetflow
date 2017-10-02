@@ -37,9 +37,9 @@ let state: any = {
                 displayFunctions: { nodes: ['labelById', 'sizeByValue'] }
             },
             nodes: {
-                'n1': {
+                'n0': {
                     
-                    id: 'n1',
+                    id: 'n0',
                     x: 200,
                     y: 500,
                     outEdges: [],
@@ -47,8 +47,8 @@ let state: any = {
                 },
             },
             nodesData: {
-                'n1': {
-                    id: 'n1',
+                'n0': {
+                    id: 'n0',
                     type: 'source',
                     active: true,
                     value: 0,

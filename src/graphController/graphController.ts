@@ -102,7 +102,7 @@ export class GraphController {
 
         /* nodes */
         this.addNodes(nodesArray, data);
-        this.renderNodes(data);
+        this.renderNodes();
 
         if (this.simulation) {
             this.simulation.nodes(nodesArray);
@@ -156,9 +156,10 @@ export class GraphController {
 
     }
 
-    renderNodes(data) {
+    renderNodes() {
         let d3 = this.d3;
         let selectedNodeId = this.store.getState().ui.graphContainer.selectedNodeId;
+        let data = this.store.getState().graph; 
         
         this.svg.
             selectAll("text")
@@ -174,8 +175,6 @@ export class GraphController {
                     d3.select(this)
                         .attr("x", d.x)
                         .attr("y", d.y)
-                        //  .attr("rx", d.x)
-                        //  .attr("ry", d.y)
                         .attr("height", 20)
                         .attr('width', 20)
                 } else {
@@ -266,7 +265,7 @@ export class GraphController {
             })
 
             labels.attr("transform", function (d) {
-                return "translate(" + (d.x + 10) + "," + (d.y + 10) + ")";
+                return "translate(" + (d.x + 20) + "," + (d.y + 20) + ")";
             });
         }
     }
