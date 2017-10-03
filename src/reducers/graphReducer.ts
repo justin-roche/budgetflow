@@ -17,7 +17,7 @@ function graphReducer(state = null, action) {
             let newEdgeComposite = addNewEdge(state, action.payload, id);
             let newNodesObj = updateOutNodes(state.nodes,action.payload, id)
             return { ...state, ...newEdgeComposite, nodes: newNodesObj};
-        }
+        },
         case 'BREADTH_TRAVERSE': {
             let sources = getSources(ArrayById(state.nodesData));
             let newNodesDataArray = recurseNodes(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
@@ -154,37 +154,41 @@ function getEdge(source, target, g) {
         .pop();
 }
 
-function recurseNodes(last, fns, g) {
+function recurseNodes(last, fns, g, stepped = {}) {
 
     let nextNodesData = last.map(nodeData => { // n
         return getOutNodes(nodeData, g);
     });
 
     /* apply step function */
+
     let steppedSources = last.map((nodeData, i) => {
-        return { ...nodeData, ...fns.step(nodeData, g) };
+        stepped[nodeData.id] = stepped[nodeData.id] === 1? 2: 1;
+        return { ...nodeData, ...fns.step(nodeData, g)};
     })
 
-    /* apply link function */
-    let linkedTargets = [];
-    let linkedSources = [];
-    let x = steppedSources.reduce(function (acc, sourceNodeData, i) {
-        let outNodes = nextNodesData[i];
-        if (outNodes.length > 0) {
-            let [_linkedTargets, _linkedSource] = applyLinkFunction(outNodes, sourceNodeData, g, null);
-            return [acc[0].concat(_linkedTargets), acc[1].concat(_linkedSource)]
-        } else {
-            return [acc[0], acc[1].concat(sourceNodeData)];
-        }
+    /* apply link function forward */
 
-    }, [[], []]);
-    linkedTargets = x[0];
-    linkedSources = x[1];
+    let linkedPairs = steppedSources.reduce(function (acc, sourceNodeData, i) {
+            let outNodes = nextNodesData[i];
+            if(outNodes.length === 0 || stepped[sourceNodeData.id] === 2) {
+                return { linkedTargets: acc.linkedTargets,
+                        linkedSources: acc.linkedSources.concat(sourceNodeData)};
+            }
+            else {
+                let [_linkedTargets, _linkedSource] = applyLinkFunction(outNodes, sourceNodeData, g, null);
+                return {linkedTargets: acc.linkedTargets.concat(_linkedTargets), 
+                        linkedSources: acc.linkedSources.concat(_linkedSource)};
+            } 
+        }, {linkedTargets: [], linkedSources: []});
+
+    let linkedTargets = linkedPairs.linkedTargets;
+    let linkedSources = linkedPairs.linkedSources;
 
     if (linkedTargets.length === 0) {
         return linkedSources;
     } else {
-        return linkedSources.concat(recurseNodes(linkedTargets, fns, g));      // n
+        return linkedSources.concat(recurseNodes(linkedTargets, fns, g, stepped));      // n
     }
 
 }

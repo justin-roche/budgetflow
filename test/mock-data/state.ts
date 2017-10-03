@@ -30,6 +30,24 @@ let state: any = {
     graph: null,
     graphs: [
         {
+            id: 'g0',
+            data: {
+                name: 'blank'
+            },
+            nodes: {
+
+            },
+            nodesData: {
+
+            },
+            edges: {
+
+            },
+            edgesData: {
+
+            }
+        },
+        {
             id: 'g1',
             data: {
                 currentStep: 0,
@@ -38,7 +56,7 @@ let state: any = {
             },
             nodes: {
                 'n0': {
-                    
+
                     id: 'n0',
                     x: 200,
                     y: 500,
@@ -68,16 +86,6 @@ let state: any = {
 
             }
         },
-
-
-
-
-
-
-
-
-
-
         {
             id: 'g2',
             graphData: {
@@ -95,7 +103,7 @@ let state: any = {
                     // y:300,
                     outEdges: ['e1'],
                     inEdges: [],
-                  //  group: 0,
+                    //  group: 0,
                 },
                 'n2': {
                     id: 'n2',
@@ -103,7 +111,7 @@ let state: any = {
                     // y: 400,
                     inEdges: ['e1'],
                     outEdges: [],
-                   // group: 0
+                    // group: 0
                 },
             },
             nodesData: {
@@ -136,7 +144,7 @@ let state: any = {
             },
             edgesData: {
                 'e1': {
-                    linkFunctions: [{name: 'transfer', arguments: [1]}],
+                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     stepFunctions: null,
                 },
             }
@@ -210,12 +218,12 @@ let state: any = {
             },
             edgesData: {
                 'e1': {
-                    linkFunctions: [{name: 'transfer', arguments: [1]}],
+                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     stepFunctions: null,
                 },
 
                 'e2': {
-                    linkFunctions: [{name: 'transfer', arguments: [1]}],
+                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     stepFunctions: null,
                 },
             }
@@ -228,9 +236,6 @@ let state: any = {
                 currentStep: 0,
                 name: '2 independent stock flows',
                 displayFunctions: { nodes: ['labelById', 'sizeByValue'] }
-                // nodesInitial: {
-                //     displayFunctions: ['toggle', 'sizeByValue', 'labelById'],
-                // }
             },
             nodes: {
                 'n1': {
@@ -268,7 +273,7 @@ let state: any = {
                     type: 'source',
                     active: true,
                     value: 1,
-                    stepFunctions: [{name: 'increment', arguments: [1]}],
+                    stepFunctions: [{ name: 'increment', arguments: [1] }],
                     displayFunctions: ['toggle'],
                 },
                 'n2': {
@@ -368,7 +373,7 @@ let state: any = {
                     type: 'source',
                     active: true,
                     value: 1,
-                    stepFunctions: [{name: 'increment', arguments: [1]}],
+                    stepFunctions: [{ name: 'increment', arguments: [1] }],
                     displayFunctions: ['toggle'],
                 },
                 'n2': {
@@ -564,28 +569,28 @@ let state: any = {
             edgesData: {
                 'e1': {
                     id: 'e1',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e2': {
                     id: 'e2',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e3': {
                     id: 'e3',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e4': {
                     id: 'e4',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
@@ -598,7 +603,7 @@ let state: any = {
             data: {
                 currentStep: 0,
                 name: '1-2-3',
-                displayFunctions: { nodes: [{name: 'sizeByValue', arguments: [1]] }
+                displayFunctions: { nodes: [{ name: 'sizeByValue', arguments: [1]] }
             },
             nodes: {
                 'n0': {
@@ -763,42 +768,42 @@ let state: any = {
             edgesData: {
                 'e0': {
                     id: 'e0',
-                    linkFunctions: [{name: 'transfer', arguments: 3}],
+                    linkFunctions: [{ name: 'transfer', arguments: 3 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e00': {
                     id: 'e00',
-                    linkFunctions: [{name: 'transfer', arguments: 3}],
+                    linkFunctions: [{ name: 'transfer', arguments: 3 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e1': {
                     id: 'e1',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e2': {
                     id: 'e2',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e3': {
                     id: 'e3',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e4': {
                     id: 'e4',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
@@ -812,7 +817,7 @@ let state: any = {
             data: {
                 currentStep: 0,
                 name: '1-2-3',
-                displayFunctions: { nodes: [{name: 'sizeByValue', arguments: [1]] }
+                displayFunctions: { nodes: [{ name: 'sizeByValue', arguments: [1]] }
             },
             nodes: {
                 'n0': {
@@ -962,35 +967,35 @@ let state: any = {
             edgesData: {
                 'e0': {
                     id: 'e0',
-                    linkFunctions: [{name: 'transfer', arguments: 3}],
+                    linkFunctions: [{ name: 'transfer', arguments: 3 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e00': {
                     id: 'e00',
-                    linkFunctions: [{name: 'transfer', arguments: 3}],
+                    linkFunctions: [{ name: 'transfer', arguments: 3 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e1': {
                     id: 'e1',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e2': {
                     id: 'e2',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
                 },
                 'e3': {
                     id: 'e3',
-                    linkFunctions: [{name: 'transfer', arguments: 1}],
+                    linkFunctions: [{ name: 'transfer', arguments: 1 }],
                     stepFunctions: null,
                     feedback: 'exponentialIncrease',
                     feedbackArgument: .50,
@@ -1002,6 +1007,94 @@ let state: any = {
                 //     feedback: 'exponentialIncrease',
                 //     feedbackArgument: .50,
                 // },
+            }
+        },
+        {
+            "id": "g0",
+            "data":
+            { "name": "cycle 3" },
+            "nodes":
+            {
+                "n0":
+                {
+                    "x": 428,
+                    "y": 344,
+                    "id": "n0",
+                    "outEdges": ["e0"],
+                    "inEdges": ["e2"]
+                },
+                "n1": {
+                    "x": 632,
+                    "y": 330,
+                    "id": "n1",
+                    "outEdges": ["e1"],
+                    "inEdges": ["e0"]
+                },
+                "n2": {
+                    "x": 731,
+                    "y": 368,
+                    "id": "n2",
+                    "outEdges": ["e2"],
+                    "inEdges": ["e1"]
+                }
+            },
+            "nodesData":
+            {
+                "n0": {
+                    "id": "n0",
+                    "type": "source",
+                    "displayFunctions": [],
+                    "stepFunctions": [],
+                    "value": 1
+                },
+                "n1": {
+                    "id": "n1",
+                    "type": "sink",
+                    "displayFunctions": [],
+                    "stepFunctions": [],
+                    "value": 0
+                },
+                "n2": {
+                    "id": "n2",
+                    "type": "sink",
+                    "displayFunctions": [],
+                    "stepFunctions": [],
+                    "value": 0
+                }
+            },
+            "edges": {
+                "e0": {
+                    "source": "n0",
+                    "target": "n1",
+                    "id": "e0"
+                },
+                "e1": {
+                    "source": "n1",
+                    "target": "n2",
+                    "id": "e1"
+                },
+                "e2": {
+                    "source": "n2",
+                    "target": "n0",
+                    "id": "e2"
+                }
+            },
+            "edgesData": {
+                "e0": {
+                    "id": "e0",
+                    "type": "sink",
+                    "linkFunctions": [{ name: 'transduce', arguments: [1, 1] }]
+                },
+                "e1": {
+                    "id": "e1",
+                    "type": "sink",
+                    "linkFunctions": [{ name: 'transduce', arguments: [1, 1] }]
+                },
+                "e2": {
+                    "id": "e2",
+                    "type": "sink",
+                    "linkFunctions": [{ name: 'transduce', arguments: [1, 1] }]
+                }
             }
         }
     ],

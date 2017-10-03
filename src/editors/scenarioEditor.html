@@ -8,6 +8,7 @@
                         <ul class="list-group">
                             <li click.trigger="selectGraph(graph)" repeat.for="graph of graphs" class="list-group-item">${graph.data.name}</li>
                         </ul>
+                        <button click.trigger="saveGraph()">Save</button>
                     </div>
                 </aubs-tab>
                 <aubs-tab header="Graph">

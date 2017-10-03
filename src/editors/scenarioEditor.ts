@@ -32,6 +32,11 @@ export class ScenarioEditor {
     this.store.dispatch({type: 'STEP_INCREMENT'});
   }
 
+  saveGraph() {
+    let g = this.store.getState().graph;
+    console.log(JSON.stringify(g));
+  }
+
   selectGraph(selectedGraph) {
     this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
   }

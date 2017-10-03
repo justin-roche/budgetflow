@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/44</span>
+        <span class='fraction'>0/47</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>0/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/41</span>
       </div>
     </div>
   </div>
@@ -99,7 +99,12 @@
 54
 55
 56
-57</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+57
+58
+59
+60
+61
+62</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -138,6 +143,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -154,6 +163,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Stor<span class="cstat-no" title="statement not covered" >e } from '../services/reduxSt<span class="cstat-no" title="statement not covered" >o</span>re';</span>
 import { ModalSet<span class="cstat-no" title="statement not covered" >tings } from './../common/m<span class="fstat-no" title="function not covered" >od</span>alWrapper';</span>
@@ -189,27 +199,32 @@ expo<span class="cstat-no" title="statement not covered" >rt class ScenarioEdito
     this.store.dispatch({type: 'STEP_INCREMENT'});
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 &nbsp;
-  se<span class="cstat-no" title="statement not covered" >lectGraph(selectedGraph) {<span class="fstat-no" title="function not covered" ></span></span>
-    this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: 'GRAPH_SET', payload: sele</span>ctedGraph});
-  }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  select<span class="cstat-no" title="statement not covered" >SimulationTime(t) {</span>
-    this.store.dispatch({type: 'UI_SIMULATION_TIME_SET', payload: t});
+  sa<span class="cstat-no" title="statement not covered" >veGraph() {<span class="fstat-no" title="function not covered" ></span></span>
+    let <span class="cstat-no" title="statement not covered" >g = this.store.getState().graph;</span>
+    console.log(JSON.stringify(g));
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  attached() {
-    <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    $("#ex8").bootst<span class="cstat-no" title="statement not covered" >rapSl</span>ider({
-      to<span class="cstat-no" title="statement not covered" >oltip: 'always'</span>
-    });
+  select<span class="cstat-no" title="statement not covered" >Graph(selectedGraph) {</span>
+    this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
+  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  selectSimulationTime(t) {
+<span class="cstat-no" title="statement not covered" >    this.store.dispatch({type: 'UI_SIMULATION_TIME_S<span class="fstat-no" title="function not covered" >ET</span>', payload: t});</span>
+  }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-    $('#<span class="cstat-no" title="statement not covered" >ex8').on('slideStop', (v) =&gt; {<span class="fstat-no" title="function not covered" ></span></span>
-      this.s<span class="cstat-no" title="statement not covered" >electSimulationTime(Number(v.target.value));</span>
+  at<span class="cstat-no" title="statement not covered" >tached() {<span class="fstat-no" title="function not covered" ></span></span>
+    <span class="cstat-no" title="statement not covered" ></span>
+    $("#<span class="cstat-no" title="statement not covered" >ex8").bootstrapSlider({</span>
+      tooltip: 'always'
+    });
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    $('#ex8'<span class="cstat-no" title="statement not covered" >).on('slideStop', (v) =&gt; {</span>
+      this.selectSimulationTime(Number(v.target.value));
     })
-   
-  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  activate() {
-<span class="cstat-no" title="statement not covered" ></span>
+   <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+  }
+  ac<span class="cstat-no" title="statement not covered" >tivate() {</span>
+&nbsp;
   }
 }</pre></td></tr>
 </table></pre>
@@ -217,7 +232,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class ScenarioEdito
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Sep 30 2017 19:03:27 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 02 2017 20:54:50 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>
