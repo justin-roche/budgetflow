@@ -10,14 +10,17 @@ function graphReducer(state = null, action) {
         }
         case 'ADD_NODE': {
             return { ...state, ...addNewNode(state, action.payload)};
-        },
+        }
+        case 'DELETE_NODE': {
+            return {...state, ...deleteNode(state, action.payload)}
+        }
         case 'ADD_EDGE': {
             let index = Object.keys(state.edges).length;
             let id = 'e'+index; 
             let newEdgeComposite = addNewEdge(state, action.payload, id);
             let newNodesObj = updateOutNodes(state.nodes,action.payload, id)
             return { ...state, ...newEdgeComposite, nodes: newNodesObj};
-        },
+        }
         case 'BREADTH_TRAVERSE': {
             let sources = getSources(ArrayById(state.nodesData));
             let newNodesDataArray = recurseNodes(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
@@ -25,7 +28,7 @@ function graphReducer(state = null, action) {
                 return { ...acc, [item.id]: item };
             }, {});
             return { ...state, nodesData: newNodesDataObject };
-        },
+        }
         case 'UPDATE_DISPLAY_FUNCTIONS': {
             return {...state, nodes: applyDisplayFunctions(state)}
         }
@@ -33,6 +36,20 @@ function graphReducer(state = null, action) {
             return state;
     }
 
+}
+
+function deleteNode(g, nid) {
+    let nodes = ArrayToObject(ArrayById(g.nodes).filter(nd => nd.id !== nid.id));
+    let nodesData = ArrayToObject(ArrayById(g.nodesData).filter(nd => nd.id !== nid.id));
+
+    let edgesArray = ArrayById(g.edges).filter(ed => (ed.source !== nid.id && ed.target !== nid.id));
+    let edgesData = ArrayToObject(ArrayById(g.edges).filter(edata => {
+        return edgesArray.some(ed => ed.id === edata.id)
+    }));
+    let edges = ArrayToObject(edgesArray);
+
+    return {...g, nodes: nodes, nodesData: nodesData, edges: edges, edgesData: edgesData};
+    
 }
 
 function addNewNode(g, nd) {
@@ -46,7 +63,17 @@ function addNewNode(g, nd) {
 }
 
 function addNewEdge(g, ed, id) {
-    
+    let previouslyConnected = ArrayById(g.edges).some(edge => {
+        let _s = edge.source;
+        let _t = edge.target; 
+        if(_s === ed.target && _t === ed.source || _t === ed.source && _s === ed.target || _t === ed.target && _s === ed.source){
+            return true;
+        }
+    });
+    if(previouslyConnected){
+        return g;
+    }
+
     let edgeDescription = {...ed, ...{id: id}};
     let edgeData = {id: id, type: 'sink', linkFunctions: []}
     return {...g, 
@@ -154,7 +181,7 @@ function getEdge(source, target, g) {
         .pop();
 }
 
-function recurseNodes(last, fns, g, stepped = {}) {
+function recurseNodes(last, fns, g, _linkedSources = []) {
 
     let nextNodesData = last.map(nodeData => { // n
         return getOutNodes(nodeData, g);
@@ -163,15 +190,17 @@ function recurseNodes(last, fns, g, stepped = {}) {
     /* apply step function */
 
     let steppedSources = last.map((nodeData, i) => {
-        stepped[nodeData.id] = stepped[nodeData.id] === 1? 2: 1;
         return { ...nodeData, ...fns.step(nodeData, g)};
     })
+
+    /* apply graph step function */
+    
 
     /* apply link function forward */
 
     let linkedPairs = steppedSources.reduce(function (acc, sourceNodeData, i) {
             let outNodes = nextNodesData[i];
-            if(outNodes.length === 0 || stepped[sourceNodeData.id] === 2) {
+            if(outNodes.length === 0 || _linkedSources.some(n => n.id === sourceNodeData.id)) {
                 return { linkedTargets: acc.linkedTargets,
                         linkedSources: acc.linkedSources.concat(sourceNodeData)};
             }
@@ -188,7 +217,7 @@ function recurseNodes(last, fns, g, stepped = {}) {
     if (linkedTargets.length === 0) {
         return linkedSources;
     } else {
-        return linkedSources.concat(recurseNodes(linkedTargets, fns, g, stepped));      // n
+        return linkedSources.concat(recurseNodes(linkedTargets, fns, g, _linkedSources.concat(linkedSources)));      // n
     }
 
 }

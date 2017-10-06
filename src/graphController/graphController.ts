@@ -43,6 +43,7 @@ export class GraphController {
     }
 
     attached() {
+        this.addKeyListeners()
         this.svg = this.d3.select('svg');
         this.svg
             .attr("width", 1200)
@@ -375,6 +376,19 @@ export class GraphController {
 
     addEdge() {
         this.store.dispatch({ type: 'ADD_EDGE', payload: { source: 'n6', target: 'n7' } });
+    }
+
+    addKeyListeners() {
+        let self = this;
+        document.onkeydown =  function(e) {
+            console.log(e);
+            if(e.key === "Backspace") {
+                if(self.ui.selectedNodeId) {
+                    self.store.dispatch({ type: 'DELETE_NODE', payload: { id: self.ui.selectedNodeId } });
+                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+                }
+            }
+        }
     }
 
 }

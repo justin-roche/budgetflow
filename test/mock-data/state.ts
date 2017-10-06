@@ -144,6 +144,7 @@ let state: any = {
             },
             edgesData: {
                 'e1': {
+                    id: 'e1',
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     stepFunctions: null,
                 },
