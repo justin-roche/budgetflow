@@ -38,16 +38,16 @@ export class Store {
 
             }
             else if (previous !== slice) {
-                console.log('selector triggered:', selector)
+                console.log('selector triggered (current not equal to last):', selector)
                 previous = slice;
                 o.next(slice);
             }
         });
         if(previous === null) {
-            console.log('selector not initialized', selector)
+            console.log('selector skipped (previous value null)', selector)
             o = o.skip(1);
         } else {
-            console.log('selector initialized:', selector, previous)
+            console.log('selector triggered on initialization (previous value not null):', selector, previous)
             o.next(previous);
         }
        

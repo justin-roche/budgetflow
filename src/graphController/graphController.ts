@@ -116,6 +116,7 @@ export class GraphController {
         this.addDragListener();
         // this.addMouseOverListener();
         this.addClickListener();
+        this.addDblClickListener();
     }
 
     addLinks(edgesArray, data) {
@@ -364,6 +365,22 @@ export class GraphController {
                 self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
             }
             
+            
+        })
+        
+    }
+
+    addDblClickListener() {
+        let d3 = this.d3;
+        let nodes = this.container.selectAll('.node')
+        let self = this;
+        nodes.on('dblclick', function (d) {
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+            let previous = self.ui.selectedNodeId; 
+            alert(previous)
+            self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
+            self.store.dispatch({type: 'SHOW', payload: 'Node_Editor'});
             
         })
         

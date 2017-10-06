@@ -2,6 +2,7 @@ let state: any = {
 
     ui: {
         graphContainer: {
+            show: true,
             defaultEdgeColor: 'black',
             defaultNodeColor: 'gray',
             activeNodeColor: 'green',
@@ -9,14 +10,8 @@ let state: any = {
             defaultNodeSize: 50,
             selectedNodeId: null,
         },
-        sigma: {
-            doubleClickZoomingRatio: 1,
-            maxNodeSize: 50,
-            minNodeSize: 0,
-            minEdgeSize: 5,
-            maxEdgeSize: 5,
-            minArrowSize: 25,
-            enableEdgeHovering: true,
+        nodeEditor: {
+            show: false,
         },
         interactivity: {
             selectedNode: null,

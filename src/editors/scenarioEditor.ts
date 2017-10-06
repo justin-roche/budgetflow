@@ -13,23 +13,24 @@ export class ScenarioEditor {
 
   }
 
-  modalSettings = new Rx.BehaviorSubject<ModalSettings>( 
-    {title: 'Scenario Edit',
+  defaultModalSettings = {
+    title: 'Scenario Edit',
     id: 'scenario-edit',
     x: 0,
     y: 0,
     show: true
-  });
+  };
+  modalSettings = new Rx.BehaviorSubject<ModalSettings>(this.defaultModalSettings);
 
   constructor(private ea: EventAggregator, private store: Store<any>) {
-    this.$graphs = this.store.select('graphs');   
+    this.$graphs = this.store.select('graphs');
     this.$graphs.subscribe(d => {
-        this.graphs = d;
+      this.graphs = d;
     })
   }
 
   onStep() {
-    this.store.dispatch({type: 'STEP_INCREMENT'});
+    this.store.dispatch({ type: 'STEP_INCREMENT' });
   }
 
   saveGraph() {
@@ -38,15 +39,15 @@ export class ScenarioEditor {
   }
 
   selectGraph(selectedGraph) {
-    this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
+    this.store.dispatch({ type: 'GRAPH_SET', payload: selectedGraph });
   }
 
   selectSimulationTime(t) {
-    this.store.dispatch({type: 'UI_SIMULATION_TIME_SET', payload: t});
+    this.store.dispatch({ type: 'UI_SIMULATION_TIME_SET', payload: t });
   }
 
   attached() {
-    
+
     $("#ex8").bootstrapSlider({
       tooltip: 'always'
     });
@@ -54,7 +55,7 @@ export class ScenarioEditor {
     $('#ex8').on('slideStop', (v) => {
       this.selectSimulationTime(Number(v.target.value));
     })
-   
+
   }
   activate() {
 
