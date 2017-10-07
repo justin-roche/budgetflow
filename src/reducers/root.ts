@@ -38,11 +38,17 @@ function simulationReducer(state = null, action) {
         case 'SIMULATION_SET': {
             return (action.payload);
         }
-        case 'STEP_INCREMENT': {
-            return { ...state, step: (state.step === null ? 0 : state.step + 1) }
+        case 'REMAINING_CYCLES_SET': {
+            return { ...state, remainingCycles: action.payload }
         }
         case 'SIMULATION_TIME_SET': {
-            return Object.assign(state, { time: action.payload });
+            return {...state,  time: action.payload };
+        }
+        case 'SIMULATION_ON': {
+            return {...state, simulating: true};
+        }
+        case 'SIMULATION_OFF': {
+            return {...state, simulating: false};
         }
         default:
             return state;

@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/47</span>
+        <span class='fraction'>0/50</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/41</span>
+        <span class='fraction'>0/44</span>
       </div>
     </div>
   </div>
@@ -104,7 +104,16 @@
 59
 60
 61
-62</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -131,6 +140,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -138,8 +149,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -148,6 +157,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,12 +174,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Stor<span class="cstat-no" title="statement not covered" >e } from '../services/reduxSt<span class="cstat-no" title="statement not covered" >o</span>re';</span>
 import { ModalSet<span class="cstat-no" title="statement not covered" >tings } from './../common/m<span class="fstat-no" title="function not covered" >od</span>alWrapper';</span>
@@ -180,59 +198,68 @@ expo<span class="cstat-no" title="statement not covered" >rt class ScenarioEdito
 <span class="cstat-no" title="statement not covered" ></span>
   }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  modalSettings<span class="cstat-no" title="statement not covered" > = new Rx.Behavior</span>Subject&lt;ModalSettings&gt;( 
-    {title: 'Scenario<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > E</span>dit',</span>
+  defaultModalS<span class="cstat-no" title="statement not covered" >ettings = {</span>
+    title: 'Scenario <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >Ed</span>it',</span>
     id: 'scen<span class="fstat-no" title="function not covered" >ario-edit',</span>
     x: 0,<span class="cstat-no" title="statement not covered" ></span>
     y: 0<span class="cstat-no" title="statement not covered" >,</span>
     show<span class="cstat-no" title="statement not covered" >: true</span>
-  });<span class="cstat-no" title="statement not covered" ></span>
+  };<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+  modalSettings = new Rx.BehaviorSubject&lt;ModalSettings&gt;(this.defaultModalSettings);
 &nbsp;
   constructor(private ea: EventAggregator, private store: Store&lt;any&gt;) {
-    this.$graphs = this.store.select('graphs');   
+    this.$graphs = this.store.select('graphs');
     this.$graphs.subscribe(d =&gt; {
-        this.graphs = d;
+      th<span class="cstat-no" title="statement not covered" >is.graphs = d;</span>
     })<span class="cstat-no" title="statement not covered" ></span>
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  onStep() {
-    this.store.dispatch({type: 'STEP_INCREMENT'});
-  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+  /* GRAPHS */
 &nbsp;
   sa<span class="cstat-no" title="statement not covered" >veGraph() {<span class="fstat-no" title="function not covered" ></span></span>
-    let <span class="cstat-no" title="statement not covered" >g = this.store.getState().graph;</span>
+    let g = this.store.getState().graph;
     console.log(JSON.stringify(g));
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
   select<span class="cstat-no" title="statement not covered" >Graph(selectedGraph) {</span>
-    this.store.dispatch({type: 'GRAPH_SET', payload: selectedGraph});
+    this.store.dispatch({ type: 'GRAPH_SET', payload: selectedGraph });
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  selectSimulationTime(t) {
-<span class="cstat-no" title="statement not covered" >    this.store.dispatch({type: 'UI_SIMULATION_TIME_S<span class="fstat-no" title="function not covered" >ET</span>', payload: t});</span>
+  /* SIMULATION */
+&nbsp;
+  si<span class="cstat-no" title="statement not covered" >mulationTimeSet(t) {<span class="fstat-no" title="function not covered" ></span></span>
+    this<span class="cstat-no" title="statement not covered" >.store.dispatch({ type: 'SIMULATION_TIME_SET', payload: t });</span>
+  }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+  simula<span class="cstat-no" title="statement not covered" >tionCyclesSet(c) {</span>
+    this.store.dispatch({ type: 'REMAINING_CYCLES_SET', payload: c });
+  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  simulate() {
+<span class="cstat-no" title="statement not covered" >    this.store.dispatch({ type: 'SIMULAT<span class="fstat-no" title="function not covered" >IO</span>N_ON' });</span>
+  }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  attached() {
+&nbsp;
+    $("#<span class="cstat-no" title="statement not covered" >ex8").bootstrapSlider({<span class="fstat-no" title="function not covered" ></span></span>
+      toolti<span class="cstat-no" title="statement not covered" >p: 'always'</span>
+    });<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    $('#ex8').on('slideStop', (v) =&gt; {
+<span class="cstat-no" title="statement not covered" >      console.log(v.target.value)</span>
+      this.simulationCyclesSet(Number(v.target.value));
+    })
+&nbsp;
   }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-  at<span class="cstat-no" title="statement not covered" >tached() {<span class="fstat-no" title="function not covered" ></span></span>
-    <span class="cstat-no" title="statement not covered" ></span>
-    $("#<span class="cstat-no" title="statement not covered" >ex8").bootstrapSlider({</span>
-      tooltip: 'always'
-    });
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    $('#ex8'<span class="cstat-no" title="statement not covered" >).on('slideStop', (v) =&gt; {</span>
-      this.selectSimulationTime(Number(v.target.value));
-    })
-   <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  }
-  ac<span class="cstat-no" title="statement not covered" >tivate() {</span>
-&nbsp;
-  }
 }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 02 2017 20:54:50 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 06 2017 22:14:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

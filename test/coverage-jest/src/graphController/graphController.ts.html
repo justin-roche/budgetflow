@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/206</span>
+        <span class='fraction'>0/227</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/78</span>
+        <span class='fraction'>0/82</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/58</span>
+        <span class='fraction'>0/62</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/191</span>
+        <span class='fraction'>0/212</span>
       </div>
     </div>
   </div>
@@ -423,7 +423,38 @@
 378
 379
 380
-381</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -477,6 +508,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -536,6 +568,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -737,7 +770,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -748,13 +794,29 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -848,13 +910,14 @@ export class<span class="cstat-no" title="statement not covered" > GraphControll
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
     attached() {<span class="cstat-no" title="statement not covered" ></span>
+        this.addKeyListeners()
         this.svg = this.d3.select('svg');
         this.svg
-            .attr("width", 1200)
-<span class="cstat-no" title="statement not covered" >            .attr("height", 800);<span class="fstat-no" title="function not covered" ></span></span>
-    }<span class="cstat-no" title="statement not covered" ></span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    /* state join */<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >            .attr("width", 1200)<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >            .attr("heigh</span>t", 800);
+    }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    /* s<span class="cstat-no" title="statement not covered" >tate join */</span>
 <span class="cstat-no" title="statement not covered" ></span>
     getN<span class="cstat-no" title="statement not covered" >odesArray(nodesObj, data) {</span>
         return Object.keys(data.nodes).map(key =&gt; { return { ...data.nodes[key], key: data.id + data.nodes[key].id } });
@@ -916,10 +979,11 @@ export class<span class="cstat-no" title="statement not covered" > GraphControll
 <span class="cstat-no" title="statement not covered" >        } else {</span>
             this.createSimulation(nodesArray, edgesArray);
 <span class="cstat-no" title="statement not covered" >        }</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        this.addDragListener();<span class="fstat-no" title="function not covered" ></span></span>
-        // this.addMouseO<span class="cstat-no" title="statement not covered" >verListener();<span class="fstat-no" title="function not covered" ></span></span>
-        this<span class="cstat-no" title="statement not covered" >.addClickListe</span>ner();
+<span class="cstat-no" title="statement not covered" ></span>
+        this.addDragListener();
+<span class="cstat-no" title="statement not covered" >        // this.addMouseOverListener();<span class="fstat-no" title="function not covered" ></span></span>
+        this.addClickList<span class="cstat-no" title="statement not covered" >ener();<span class="fstat-no" title="function not covered" ></span></span>
+        this<span class="cstat-no" title="statement not covered" >.addDblClickLi</span>stener();
     }
 <span class="cstat-no" title="statement not covered" ></span>
     addL<span class="cstat-no" title="statement not covered" >inks(edgesArray, data) {</span>
@@ -1121,45 +1185,45 @@ export class<span class="cstat-no" title="statement not covered" > GraphControll
         let self: any = this;
         let circles = this.svg.selectAll('.node');
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >        circles.on('mousedown.drag', null</span>);
+        circles.o<span class="cstat-no" title="statement not covered" >n('mouse</span>down.drag', null);
 <span class="cstat-no" title="statement not covered" ></span>
-        circles.call(d3.drag()
-<span class="cstat-no" title="statement not covered" >            .on("start", dragstarted)<span class="fstat-no" title="function not covered" ></span></span>
+        circles.cal<span class="cstat-no" title="statement not covered" >l(d3.</span>drag()
+<span class="cstat-no" title="statement not covered" >            .on("start", drag<span class="fstat-no" title="function not covered" >st</span>arted)</span>
 <span class="cstat-no" title="statement not covered" >            .on("drag", dragged)</span>
-            .on("end", dragended));
+<span class="cstat-no" title="statement not covered" >            .on("end", dragended));</span>
 <span class="cstat-no" title="statement not covered" ></span>
-        function dragstarted(d) {
-            self.simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-<span class="cstat-no" title="statement not covered" >            d.fy = d.y;</span>
+        func<span class="cstat-no" title="statement not covered" >tion dragstarted(</span>d) {
+<span class="cstat-no" title="statement not covered" >            self.simulation.alphaTarget(0.3).restart();</span>
+<span class="cstat-no" title="statement not covered" >            d.fx = d.x;</span>
+            d.fy = d.y;
         }
-&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >        function dragged(d) {</span>
-            d.fx = d3.event.x;
+<span class="cstat-no" title="statement not covered" >            d.fx = d3.event.x;</span>
             d.fy = d3.event.y;
-        }
-&nbsp;
+<span class="cstat-no" title="statement not covered" >        }<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
         function dragended(d) {
-            self.simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
-    }
-&nbsp;
-    addClickListener() {
-        let d3 = this.d3;
+<span class="cstat-no" title="statement not covered" >            self.simulation.alphaTarget(0);<span class="fstat-no" title="function not covered" ></span></span>
+            d.fx = <span class="cstat-no" title="statement not covered" >null;</span>
+<span class="cstat-no" title="statement not covered" >            d.fy = null;<span class="fstat-no" title="function not covered" ></span></span>
+        }<span class="cstat-no" title="statement not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    addClickListener<span class="cstat-no" title="statement not covered" >() {</span>
+        let d3 = thi<span class="cstat-no" title="statement not covered" >s.d3;</span>
         let nodes = this.container.selectAll('.node')
         let self = this;
         nodes.on('click', function (d) {
             d3.event.preventDefault();
-            d3.event.stopPropagation();
+<span class="cstat-no" title="statement not covered" >            d3.event.stopPropagation();</span>
             let previous = self.ui.selectedNodeId; 
 &nbsp;
             if(previous) {
-                if(previous === d.id) {
+<span class="cstat-no" title="statement not covered" >                if(previous </span>=== d.id) {
                     self.store.dispatch({ type: 'SELECT_NODE', payload: null });
                 } 
-                if(previous !== d.id) {
+<span class="cstat-no" title="statement not covered" >                if(previous !== d.id) {</span>
                     self.store.dispatch({ type: 'ADD_EDGE', payload: { source: previous, target: d.id } });
                     self.store.dispatch({ type: 'SELECT_NODE', payload: null });
                 }
@@ -1168,6 +1232,22 @@ export class<span class="cstat-no" title="statement not covered" > GraphControll
                 self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
             }
             
+            
+        })
+        
+    }
+&nbsp;
+    addDblClickListener() {
+        let d3 = this.d3;
+        let nodes = this.container.selectAll('.node')
+        let self = this;
+        nodes.on('dblclick', function (d) {
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+            let previous = self.ui.selectedNodeId; 
+            alert(previous)
+            self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
+            self.store.dispatch({type: 'SHOW', payload: 'Node_Editor'});
             
         })
         
@@ -1182,6 +1262,19 @@ export class<span class="cstat-no" title="statement not covered" > GraphControll
         this.store.dispatch({ type: 'ADD_EDGE', payload: { source: 'n6', target: 'n7' } });
     }
 &nbsp;
+    addKeyListeners() {
+        let self = this;
+        document.onkeydown =  function(e) {
+            console.log(e);
+            if(e.key === "Backspace") {
+                if(self.ui.selectedNodeId) {
+                    self.store.dispatch({ type: 'DELETE_NODE', payload: { id: self.ui.selectedNodeId } });
+                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+                }
+            }
+        }
+    }
+&nbsp;
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -1189,7 +1282,7 @@ export class<span class="cstat-no" title="statement not covered" > GraphControll
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 02 2017 20:54:50 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 06 2017 22:14:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

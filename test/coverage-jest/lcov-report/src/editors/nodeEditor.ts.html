@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/44</span>
+        <span class='fraction'>0/53</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/34</span>
+        <span class='fraction'>0/36</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>0/15</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/44</span>
       </div>
     </div>
   </div>
@@ -105,7 +105,24 @@
 60
 61
 62
-63</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -134,14 +151,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -149,6 +160,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -167,9 +194,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct } from 'aurelia-framework'<span class="cstat-no" title="statement not covered" >;</span></span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct } from 'aurelia-framework'<span class="cstat-no" title="statement not covered" >;</span></span>
 import $ from 'jq<span class="cstat-no" title="statement not covered" >uery'<span class="fstat-no" title="function not covered" ></span></span>
-import {Moda<span class="cstat-no" title="statement not covered" >lSettings} from '</span>../c<span class="cstat-no" title="statement not covered" >ommon/modalWrapper'</span>
+import { Mod<span class="cstat-no" title="statement not covered" >alSettings } from</span> '..<span class="cstat-no" title="statement not covered" >/common/modalWrapper'</span>
 impo<span class="cstat-no" title="statement not covered" >rt * as Rx from 'rxjs';<span class="cstat-no" title="statement not covered" ></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt { Store } from '../services/reduxStore';<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -183,59 +217,76 @@ export class Node<span class="cstat-no" title="statement not covered" >Editor {<
         adjacentNod<span class="cstat-no" title="statement not covered" >es: null,</span>
         outNodes:<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" > [</span>],</span>
     }<span class="fstat-no" title="function not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    moda<span class="cstat-no" title="statement not covered" >lSettings = new Rx.B</span>ehaviorSubject&lt;ModalSettings&gt;( 
-<span class="cstat-no" title="statement not covered" >        {title: 'Node Edit',</span>
-<span class="cstat-no" title="statement not covered" >        id: 'node-edit',</span>
+    nodeDescription;<span class="cstat-no" title="statement not covered" ></span>
+    node<span class="cstat-no" title="statement not covered" >Data;</span>
+    outE<span class="cstat-no" title="statement not covered" >dges;</span>
+    inEd<span class="cstat-no" title="statement not covered" >ges;</span>
+    outNodes;
+    inNodes;
+&nbsp;
+    defa<span class="cstat-no" title="statement not covered" >ultModalSettings = {</span>
+        title: 'Node Edit',
+        id: 'node-edit',
         x: 0,
         y: 0,
-        show: false
-      })<span class="cstat-no" title="statement not covered" >;</span>
-&nbsp;
-    constructor(private store: Store){
-        this.$nodeId = this.store.select('ui.graphController.selectedNodeId');
-        this.$nodeId.subscribe(d =&gt; {
-            this.refresh(d);
+        show: true
+    };
+<span class="cstat-no" title="statement not covered" ></span>
+    moda<span class="cstat-no" title="statement not covered" >lSettings = new Rx.BehaviorSubject&lt;ModalSettings&gt;(this.defaultModalSet</span>tings);
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    construc<span class="cstat-no" title="statement not covered" >tor(private store: Store) {</span>
+        this.$no<span class="cstat-no" title="statement not covered" >deId = this.store.</span>select('ui.graphContainer.selectedNodeId');
+        this.$nodeId.subscribe(id =&gt; {
+            if(id !== null) {
+                this.update(id);
+<span class="cstat-no" title="statement not covered" >            }<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >        })</span>
-    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    refresh(){
-        console.log('new node');
-<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    show(e) {
-<span class="cstat-no" title="statement not covered" >        this.nodeModel = e.n; //<span class="fstat-no" title="function not covered" >JS</span>ON.parse(JSON.stringify(node));</span>
-<span class="cstat-no" title="statement not covered" >        this.initializeData();</span>
-<span class="cstat-no" title="statement not covered" >        this.emitChildSettings(</span>this.modalSettings, {
-<span class="cstat-no" title="statement not covered" >            x: e.x,</span>
-            y: e.y,
-            show: true
-        })
     }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    refresh() {<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        console.log('new node');</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+    upda<span class="cstat-no" title="statement not covered" >te(id) {<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" >        this.nodeDescription = this.store.<span class="fstat-no" title="function not covered" >ge</span>tState().gra<span class="cstat-no" title="statement not covered" >ph.nodes[id];</span></span>
+<span class="cstat-no" title="statement not covered" >        thi</span>s.nodeData = this.store.getState().graph.nodesData[id];
+        this.outEdges = this.nodeDescription.outEdges.map(en =&gt; this.store.getState().graph.edges[en]);
+        this.inEdges = this.nodeDescription.inEdges.map(en =&gt; this.store.getState().graph.edges[en]);
 &nbsp;
-   <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    log() {
-<span class="cstat-no" title="statement not covered" >        console.log('nodemodel',<span class="fstat-no" title="function not covered" > t</span>his.node);</span>
-    }
-<span class="cstat-no" title="statement not covered" ></span>
-    save() {
-        
-    }
-<span class="cstat-no" title="statement not covered" ></span>
-}
+        this.outNodes = this.outEdges.map(e =&gt; this.store.getState().graph.nodes[e.target]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export class KeysValueConverter {</span>
-    toView(obj) {<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-        retur<span class="fstat-no" title="function not covered" >n Reflect.ownKeys(o</span>bj);
+        1;
+        // this.initializeData();
+<span class="cstat-no" title="statement not covered" >        // this.emitChildSettin<span class="fstat-no" title="function not covered" >gs</span>(this.modalSettings, {</span>
+<span class="cstat-no" title="statement not covered" >        //     x: e.x,</span>
+        //     y: e.y,
+<span class="cstat-no" title="statement not covered" >        //     show: true<span class="fstat-no" title="function not covered" ></span></span>
+        // })
+<span class="cstat-no" title="statement not covered" >    }</span>
+&nbsp;
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    log() {</span>
+        console.log('nodemodel', this.node);
     }
-}<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></pre></td></tr>
+<span class="cstat-no" title="statement not covered" ></span>
+    save() {<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="fstat-no" title="function not covered" ></span>
+    }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+}<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+expo<span class="cstat-no" title="statement not covered" >rt class KeysValueConverter</span> {
+    toView(obj) {
+<span class="cstat-no" title="statement not covered" >        return Reflect.ownKeys(obj);</span>
+    }
+}</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Oct 02 2017 20:54:50 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 06 2017 22:14:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

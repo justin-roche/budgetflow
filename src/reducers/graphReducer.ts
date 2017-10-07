@@ -22,12 +22,8 @@ function graphReducer(state = null, action) {
             return { ...state, ...newEdgeComposite, nodes: newNodesObj};
         }
         case 'BREADTH_TRAVERSE': {
-            let sources = getSources(ArrayById(state.nodesData));
-            let newNodesDataArray = recurseNodes(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
-            let newNodesDataObject = newNodesDataArray.reduce((acc, item) => {
-                return { ...acc, [item.id]: item };
-            }, {});
-            return { ...state, nodesData: newNodesDataObject };
+            let _state = traverseCycles(state, action.payload);
+            return { ...state, ..._state };
         }
         case 'UPDATE_DISPLAY_FUNCTIONS': {
             return {...state, nodes: applyDisplayFunctions(state)}
@@ -37,6 +33,8 @@ function graphReducer(state = null, action) {
     }
 
 }
+
+/* addition and deletion */
 
 function deleteNode(g, nid) {
     let nodes = ArrayToObject(ArrayById(g.nodes).filter(nd => nd.id !== nid.id));
@@ -89,41 +87,61 @@ function updateOutNodes(nodes, ed, id) {
     return {...nodes, [ed.target]: targetNode, [ed.source]: sourceNode };
 }
 
-function getSources(g) {
-    return g.filter(n => n.type === 'source');
+function traverseCycles(_state, payload: any = {}) {
+    let cycleCount = payload.cycles || 1; 
+    let state = {..._state}
+
+    for(let c = 0; c < cycleCount; c++) {
+        let sources = getSources(ArrayById(state.nodesData));
+        let newNodesDataArray = breadthTraverse(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
+        let newNodesDataObject = newNodesDataArray.reduce((acc, item) => {
+            return { ...acc, [item.id]: item };
+        }, {});
+        state = { ...state, nodesData: newNodesDataObject };
+    }
+    
+    return state;
 }
 
-function ArrayById(o) {
-    return Object.keys(o).map(k => o[k]);
-}
+function breadthTraverse(last, fns, g, _linkedSources = []) {
 
-function ArrayToObject(a) {
-    return a.reduce((acc, n) => {
-        return {...acc, [n.id]: n};
-    },{});
-}
+    let nextNodesData = last.map(nodeData => { // n
+        return getOutNodes(nodeData, g);
+    });
 
-function applyDisplayFunctions(g) {
-    let nodesArr = ArrayById(g.nodes);
-    let displayFns = g.data.displayFunctions.nodes;
+    /* apply step function to nodes */
 
-    let update = displayFns.reduce((nodesArr,functionSettings) => {
-        /* for each display function */
-        let fn = SimulationFunctions.displayFunctions[functionSettings.name];
- 
-        /* reduce the nodesArray */
-        let updatedNodesArr = nodesArr.reduce((acc, node) => {
-            let nodeData = g.nodesData[node.id]
-            let newNodeData = fn(node, nodeData, ...functionSettings.arguments);
-            return acc.concat([{...node, ...newNodeData}]);
-        },[]);
-        
-        return updatedNodesArr;
+    let steppedSources = last.map((nodeData, i) => {
+        return { ...nodeData, ...fns.step(nodeData, g)};
+    })
 
-    }, nodesArr);
+    /* apply graph step function */
+    
 
-    /* convert back to object type */
-    return ArrayToObject(update);
+    /* apply link function forward */
+
+    let linkedPairs = steppedSources.reduce(function (acc, sourceNodeData, i) {
+            let outNodes = nextNodesData[i];
+            if(outNodes.length === 0 || _linkedSources.some(n => n.id === sourceNodeData.id)) {
+                return { linkedTargets: acc.linkedTargets,
+                        linkedSources: acc.linkedSources.concat(sourceNodeData)};
+            }
+            else {
+                let [_linkedTargets, _linkedSource] = applyLinkFunction(outNodes, sourceNodeData, g, null);
+                return {linkedTargets: acc.linkedTargets.concat(_linkedTargets), 
+                        linkedSources: acc.linkedSources.concat(_linkedSource)};
+            } 
+        }, {linkedTargets: [], linkedSources: []});
+
+    let linkedTargets = linkedPairs.linkedTargets;
+    let linkedSources = linkedPairs.linkedSources;
+
+    if (linkedTargets.length === 0) {
+        return linkedSources;
+    } else {
+        return linkedSources.concat(breadthTraverse(linkedTargets, fns, g, _linkedSources.concat(linkedSources)));      // n
+    }
+
 }
 
 function applyStepFunction(nodeData) {
@@ -161,6 +179,45 @@ function applyLinkFunction(targets, source, g, i) {
     }
 }
 
+function applyDisplayFunctions(g) {
+    let nodesArr = ArrayById(g.nodes);
+    let displayFns = g.data.displayFunctions.nodes;
+
+    let update = displayFns.reduce((nodesArr,functionSettings) => {
+        /* for each display function */
+        let fn = SimulationFunctions.displayFunctions[functionSettings.name];
+ 
+        /* reduce the nodesArray */
+        let updatedNodesArr = nodesArr.reduce((acc, node) => {
+            let nodeData = g.nodesData[node.id]
+            let newNodeData = fn(node, nodeData, ...functionSettings.arguments);
+            return acc.concat([{...node, ...newNodeData}]);
+        },[]);
+        
+        return updatedNodesArr;
+
+    }, nodesArr);
+
+    /* convert back to object type */
+    return ArrayToObject(update);
+}
+
+/* helper functions */
+
+function getSources(g) {
+    return g.filter(n => n.type === 'source');
+}
+
+function ArrayById(o) {
+    return Object.keys(o).map(k => o[k]);
+}
+
+function ArrayToObject(a) {
+    return a.reduce((acc, n) => {
+        return {...acc, [n.id]: n};
+    },{});
+}
+
 function getOutNodes(nodeData, g) {
     return g.nodes[nodeData.id].outEdges
         .map(edgeName => {
@@ -179,47 +236,6 @@ function getEdge(source, target, g) {
         .filter(g => g.target === target.id)
         .map(edgeDescription => g.edgesData[edgeDescription.id])
         .pop();
-}
-
-function recurseNodes(last, fns, g, _linkedSources = []) {
-
-    let nextNodesData = last.map(nodeData => { // n
-        return getOutNodes(nodeData, g);
-    });
-
-    /* apply step function */
-
-    let steppedSources = last.map((nodeData, i) => {
-        return { ...nodeData, ...fns.step(nodeData, g)};
-    })
-
-    /* apply graph step function */
-    
-
-    /* apply link function forward */
-
-    let linkedPairs = steppedSources.reduce(function (acc, sourceNodeData, i) {
-            let outNodes = nextNodesData[i];
-            if(outNodes.length === 0 || _linkedSources.some(n => n.id === sourceNodeData.id)) {
-                return { linkedTargets: acc.linkedTargets,
-                        linkedSources: acc.linkedSources.concat(sourceNodeData)};
-            }
-            else {
-                let [_linkedTargets, _linkedSource] = applyLinkFunction(outNodes, sourceNodeData, g, null);
-                return {linkedTargets: acc.linkedTargets.concat(_linkedTargets), 
-                        linkedSources: acc.linkedSources.concat(_linkedSource)};
-            } 
-        }, {linkedTargets: [], linkedSources: []});
-
-    let linkedTargets = linkedPairs.linkedTargets;
-    let linkedSources = linkedPairs.linkedSources;
-
-    if (linkedTargets.length === 0) {
-        return linkedSources;
-    } else {
-        return linkedSources.concat(recurseNodes(linkedTargets, fns, g, _linkedSources.concat(linkedSources)));      // n
-    }
-
 }
 
 export { graphReducer}

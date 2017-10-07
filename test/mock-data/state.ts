@@ -19,8 +19,9 @@ let state: any = {
         },
     },
     simulation: {
+        simulating: false,
         time: null,
-        step: null,
+        remainingCycles: 1,
     },
     graph: null,
     graphs: [
@@ -83,25 +84,25 @@ let state: any = {
         },
         {
             id: 'g2',
-            graphData: {
+            data: {
                 currentStep: 0,
-                name: 'linear 2x',
+                name: '2 nodes',
                 displayFunctions: { nodes: ['labelById', 'sizeByValue'] }
                 // nodesInitial: {
                 //     displayFunctions: ['toggle', 'sizeByValue', 'labelById'],
                 // }
             },
             nodes: {
-                'n1': {
-                    id: 'n1',
+                'n0': {
+                    id: 'n0',
                     // x: 300,
                     // y:300,
                     outEdges: ['e1'],
                     inEdges: [],
                     //  group: 0,
                 },
-                'n2': {
-                    id: 'n2',
+                'n1': {
+                    id: 'n1',
                     // x: 400,
                     // y: 400,
                     inEdges: ['e1'],
@@ -110,17 +111,17 @@ let state: any = {
                 },
             },
             nodesData: {
-                'n1': {
+                'n0': {
                     type: 'source',
-                    id: 'n1',
+                    id: 'n0',
                     active: true,
                     value: 1,
                     stepFunctions: [],
                     displayFunctions: [],
                 },
-                'n2': {
+                'n1': {
                     type: 'sink',
-                    id: 'n2',
+                    id: 'n1',
                     active: false,
                     value: 0,
                     stepFunctions: [],
@@ -130,8 +131,8 @@ let state: any = {
             edges: {
                 'e1': {
                     id: 'e1',
-                    source: 'n1',
-                    target: 'n2',
+                    source: 'n0',
+                    target: 'n1',
                     // color: 'black',
                     // size: 50,
                     type: 'arrow'
@@ -224,8 +225,6 @@ let state: any = {
                 },
             }
         },
-
-
         {
             id: 'g4',
             data: {
@@ -323,8 +322,10 @@ let state: any = {
                     feedbackArgument: .50,
                 },
             },
+        },
+        {
+            id: 'g5',
 
-            {
             data: {
                 currentStep: 0,
                 name: '2 independent stock flows',
@@ -425,7 +426,7 @@ let state: any = {
             }
         },
         {
-            id: 'g5',
+            id: 'g6',
             data: {
                 currentStep: 0,
                 name: '1-2, 1-2',
@@ -593,9 +594,8 @@ let state: any = {
                 },
             }
         },
-
         {
-            id: 'g6',
+            id: 'g7',
             data: {
                 currentStep: 0,
                 name: '1-2-3',
@@ -806,10 +806,8 @@ let state: any = {
                 },
             }
         },
-
-
         {
-            id: 'g7',
+            id: 'g8',
             data: {
                 currentStep: 0,
                 name: '1-2-3',
