@@ -31,34 +31,34 @@ let SimulationFunctions = {
     },
 
     displayFunctions: {
-        idByIndex: function(node,i){
-            node.index = 'n'+i;
+        labelById: function(node, nodeData) {
+            return {...nodeData.displayData, label: node.id+ ':' + nodeData.value};
         },
 
-        toggle: function(node) {
-            if (node.data.active) {
-                node.color = 'black';
-            } else {
-                node.color = 'gray';
-            }
-        },
+        // idByIndex: function(node,i){
+        //     node.index = 'n'+i;
+        // },
+
+        // toggle: function(node) {
+        //     if (node.data.active) {
+        //         node.color = 'black';
+        //     } else {
+        //         node.color = 'gray';
+        //     }
+        // },
         
-        sizeByValue: function(node, nodeData, multiplier) {
-            let newSize = nodeData.value * multiplier;
-            if(newSize <10) {
-                newSize = 10;
-            }
-            return {...node, r: newSize};
-        },
+        // sizeByValue: function(node, nodeData, multiplier) {
+        //     let newSize = nodeData.value * multiplier;
+        //     if(newSize <10) {
+        //         newSize = 10;
+        //     }
+        //     return {...node, r: newSize};
+        // },
 
-        labelById: function(node) {
-            node.label = node.id;
-        },
-
-        randomPosition: function(node) {
-            node.x = Math.random();
-            node.y = Math.random();
-        },
+        // randomPosition: function(node) {
+        //     node.x = Math.random();
+        //     node.y = Math.random();
+        // },
 
         
     },

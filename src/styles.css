@@ -73,6 +73,12 @@ svg {
   stroke-width: 2.5px;
 }
 
+.inactive-node {
+  stroke: #999;
+  fill: #1eb5ab20;
+  stroke-width: 2.5px;
+}
+
 .selected-node {
   stroke: white;
   fill: #8adbd6;

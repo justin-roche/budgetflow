@@ -99,21 +99,23 @@ function traverseCycles(_state, payload: any = {}) {
         }, {});
         state = { ...state, nodesData: newNodesDataObject };
     }
+
+    state = {...state, nodesData: applyDisplayFunctions(state)};
     
     return state;
 }
 
-function breadthTraverse(last, fns, g, _linkedSources = []) {
-
-    let nextNodesData = last.map(nodeData => { // n
-        return getOutNodes(nodeData, g);
-    });
+function breadthTraverse(current, fns, g, _linkedSources = []) {
 
     /* apply step function to nodes */
 
-    let steppedSources = last.map((nodeData, i) => {
+    let steppedSources = current.map((nodeData, i) => {
         return { ...nodeData, ...fns.step(nodeData, g)};
     })
+
+    let nextNodesData = current.map(nodeData => { // n
+        return getOutNodes(nodeData, g);
+    });
 
     /* apply graph step function */
     
@@ -180,9 +182,11 @@ function applyLinkFunction(targets, source, g, i) {
 }
 
 function applyDisplayFunctions(g) {
-    let nodesArr = ArrayById(g.nodes);
-    let displayFns = g.data.displayFunctions.nodes;
+    let nodesArr = ArrayById(g.nodesData);
 
+    /* apply for graph */
+    let displayFns = g.data.displayFunctions.nodes;
+    
     let update = displayFns.reduce((nodesArr,functionSettings) => {
         /* for each display function */
         let fn = SimulationFunctions.displayFunctions[functionSettings.name];
@@ -190,8 +194,8 @@ function applyDisplayFunctions(g) {
         /* reduce the nodesArray */
         let updatedNodesArr = nodesArr.reduce((acc, node) => {
             let nodeData = g.nodesData[node.id]
-            let newNodeData = fn(node, nodeData, ...functionSettings.arguments);
-            return acc.concat([{...node, ...newNodeData}]);
+            let newDisplayData = fn(node, nodeData, ...functionSettings.arguments);
+            return acc.concat([{...node, displayData: {...newDisplayData}}]);
         },[]);
         
         return updatedNodesArr;

@@ -64,7 +64,7 @@ export class NodeEditor {
 
 
     log() {
-        console.log('nodemodel', this.node);
+
     }
 
     save() {

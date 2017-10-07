@@ -1,18 +1,18 @@
 import { BehaviorSubject } from 'rxjs';
-import * as Rx from 
-import { GraphService } from './../services/graphService';
+import * as Rx from 'rxjs'
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Store } from '../services/reduxStore';
 
 const selectGraph = state => state.graph;
 
-@inject(EventAggregator, Store, GraphService)
+@inject(EventAggregator, Store)
 export class GraphController {
 
     d3 = window['d3'];
     svg;
-
+    $graph;
+    $ui;
     dragging = false;
     ui;
     containerRef;
@@ -21,7 +21,7 @@ export class GraphController {
     settings;
     newGraph: BehaviorSubject<any> = new BehaviorSubject(null);
 
-    constructor(private ea: EventAggregator, private store: Store<any>, private gs: GraphService) {
+    constructor(private ea: EventAggregator, private store: Store) {
         let previousValue;
         let self = this;
         this.$graph = this.store.select('graph');
@@ -135,8 +135,6 @@ export class GraphController {
             return d.key;
         });
 
-        console.log(nodeGroups);
-
         nodeGroups.exit().remove();
 
         let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup")
@@ -151,7 +149,6 @@ export class GraphController {
                     d3.select(this).append("circle")
                         .attr('class', 'node')
                 }
-
             })
 
         newGroups.append("text")
@@ -167,13 +164,22 @@ export class GraphController {
             selectAll("text")
             .attr('class', 'label')
             .text(function (d) {
-                return d.id + ':' + data.nodesData[d.id].value;
+                let dd = data.nodesData[d.id].displayData;
+                return dd.label;
             })
 
         this.svg
             .selectAll(".node")
             .each(function (d) {
-                if (d.shape === 'square') {
+                let dd = data.nodesData[d.id].displayData;
+                if(selectedNodeId === d.id){
+                    d3.select(this).classed('selected-node', true);
+                } else {
+                    d3.select(this).classed('selected-node', false);
+                }
+
+                
+                if (dd.shape === 'square') {
                     d3.select(this)
                         .attr("x", d.x)
                         .attr("y", d.y)
@@ -188,19 +194,16 @@ export class GraphController {
                         .attr("r", 20)
                 }
 
-                if(selectedNodeId === d.id){
-                    d3.select(this).classed('selected-node', true);
-                } else {
-                    d3.select(this).classed('selected-node', false);
-                }
+                d3.select(this)
+                .attr('stroke', 'white')
+                .attr('stroke-width', 3)
+                .attr("fill", function (d, i) {
+                    return dd.outlineColor;
+                })
+                
             })
-            .attr('stroke', 'white')
-            .attr('stroke-width', 3)
-            .attr("fill", function (d, i) {
-                return 'blue';
-            })
+            
            
-
     }
 
     renderLinks(data) {

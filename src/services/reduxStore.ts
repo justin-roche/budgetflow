@@ -16,13 +16,13 @@ export class Store {
         return this.store.subscribe(...args);
     }
 
-    getState() {
+    getState() : AppState {
         return this.store.getState();
     }
 
     select(selector): BehaviorSubject<any> {
 
-        let o = new BehaviorSubject();
+        let o = new BehaviorSubject({});
 
         let previous = selector.split('.').reduce((acc, prop) => {
             return acc[prop];
