@@ -1,4 +1,4 @@
-import {SimulationFunctions} from '../simulator/simulationFunctions';
+import { SimulationFunctions } from '../simulator/simulationFunctions';
 
 function graphReducer(state = null, action) {
     switch (action.type) {
@@ -9,24 +9,24 @@ function graphReducer(state = null, action) {
             return { ...state, nodes: action.payload };
         }
         case 'ADD_NODE': {
-            return { ...state, ...addNewNode(state, action.payload)};
+            return { ...state, ...addNewNode(state, action.payload) };
         }
         case 'DELETE_NODE': {
-            return {...state, ...deleteNode(state, action.payload)}
+            return { ...state, ...deleteNode(state, action.payload) }
         }
         case 'ADD_EDGE': {
             let index = Object.keys(state.edges).length;
-            let id = 'e'+index; 
+            let id = 'e' + index;
             let newEdgeComposite = addNewEdge(state, action.payload, id);
-            let newNodesObj = updateOutNodes(state.nodes,action.payload, id)
-            return { ...state, ...newEdgeComposite, nodes: newNodesObj};
+            let newNodesObj = updateOutNodes(state.nodes, action.payload, id)
+            return { ...state, ...newEdgeComposite, nodes: newNodesObj };
         }
         case 'BREADTH_TRAVERSE': {
             let _state = traverseCycles(state, action.payload);
             return { ...state, ..._state };
         }
         case 'UPDATE_DISPLAY_FUNCTIONS': {
-            return {...state, nodes: applyDisplayFunctions(state)}
+            return { ...state, nodes: applyDisplayFunctions(state) }
         }
         default:
             return state;
@@ -46,106 +46,168 @@ function deleteNode(g, nid) {
     }));
     let edges = ArrayToObject(edgesArray);
 
-    return {...g, nodes: nodes, nodesData: nodesData, edges: edges, edgesData: edgesData};
-    
+    return { ...g, nodes: nodes, nodesData: nodesData, edges: edges, edgesData: edgesData };
+
 }
 
 function addNewNode(g, nd) {
     let index = Object.keys(g.nodes).length;
-    let id = 'n'+index; 
-    let nodeDescription = {...nd, ...{id: id, outEdges:[], inEdges: []}};
-    let nodeData = {id: id, type: 'sink', displayFunctions: [], stepFunctions: [], value: 0}
-    return {...g, 
-            nodes: {...g.nodes, [id]: nodeDescription},
-            nodesData: {...g.nodesData, [id]: nodeData}}
+    let id = 'n' + index;
+    let nodeDescription = { ...nd, ...{ id: id, outEdges: [], inEdges: [] } };
+    let nodeData = { id: id, type: 'sink', displayFunctions: [], stepFunctions: [], value: 0 }
+    return {
+        ...g,
+        nodes: { ...g.nodes, [id]: nodeDescription },
+        nodesData: { ...g.nodesData, [id]: nodeData }
+    }
 }
 
 function addNewEdge(g, ed, id) {
     let previouslyConnected = ArrayById(g.edges).some(edge => {
         let _s = edge.source;
-        let _t = edge.target; 
-        if(_s === ed.target && _t === ed.source || _t === ed.source && _s === ed.target || _t === ed.target && _s === ed.source){
+        let _t = edge.target;
+        if (_s === ed.target && _t === ed.source || _t === ed.source && _s === ed.target || _t === ed.target && _s === ed.source) {
             return true;
         }
     });
-    if(previouslyConnected){
+    if (previouslyConnected) {
         return g;
     }
 
-    let edgeDescription = {...ed, ...{id: id}};
-    let edgeData = {id: id, type: 'sink', linkFunctions: []}
-    return {...g, 
-            edges: {...g.edges, [id]: edgeDescription},
-            edgesData: {...g.edgesData, [id]: edgeData}}
+    let edgeDescription = { ...ed, ...{ id: id } };
+    let edgeData = { id: id, type: 'sink', linkFunctions: [] }
+    return {
+        ...g,
+        edges: { ...g.edges, [id]: edgeDescription },
+        edgesData: { ...g.edgesData, [id]: edgeData }
+    }
 }
 
 function updateOutNodes(nodes, ed, id) {
     let outEdges = nodes[ed.source].outEdges.concat([id])
     let inEdges = nodes[ed.target].inEdges.concat([id])
-    let targetNode = {...nodes[ed.target], inEdges: inEdges};
-    let sourceNode = {...nodes[ed.source], outEdges: outEdges};
-    return {...nodes, [ed.target]: targetNode, [ed.source]: sourceNode };
+    let targetNode = { ...nodes[ed.target], inEdges: inEdges };
+    let sourceNode = { ...nodes[ed.source], outEdges: outEdges };
+    return { ...nodes, [ed.target]: targetNode, [ed.source]: sourceNode };
 }
 
 function traverseCycles(_state, payload: any = {}) {
-    let cycleCount = payload.cycles || 1; 
-    let state = {..._state}
+    let cycleCount = payload.cycles || 1;
+    let state = { ..._state }
 
-    for(let c = 0; c < cycleCount; c++) {
+    for (let c = 0; c < cycleCount; c++) {
         let sources = getSources(ArrayById(state.nodesData));
-        let newNodesDataArray = breadthTraverse(sources, { step: applyStepFunction, link: applyLinkFunctions }, state);
+        let newNodesDataArray = breadthTraverse(sources, state);
         let newNodesDataObject = newNodesDataArray.reduce((acc, item) => {
             return { ...acc, [item.id]: item };
         }, {});
         state = { ...state, nodesData: newNodesDataObject };
     }
 
-    state = {...state, nodesData: applyDisplayFunctions(state)};
-    
+    state = { ...state, nodesData: applyDisplayFunctions(state) };
+
     return state;
 }
 
-function breadthTraverse(current: Array<NodeData>, fns, g, _linkedSources = []) {
+function breadthTraverse(current: Array<NodeData>, g, _linkedSources = []) {
 
     /* apply step function to nodes */
-
+    
     let steppedSources = current.map((nodeData, i) => {
-        return { ...nodeData, ...fns.step(nodeData, g)};
+        return { ...nodeData, ...applyStepFunction(nodeData) };
     })
 
-    let nestedTargets = current.map(nodeData => { // n
+    let nestedTargets: Array<Array<NodeData>> = current.map(nodeData => { // n
         return getOutNodes(nodeData, g);
     });
 
     /* apply graph step function */
-    
 
-    /* apply link function forward */
 
-    let linkedPairs = steppedSources.reduce(function (acc, sourceNodeData, i) {
-            let outNodes = nestedTargets[i];
-            if(outNodes.length === 0 || _linkedSources.some(n => n.id === sourceNodeData.id)) {
-                return { linkedTargets: acc.linkedTargets,
-                        linkedSources: acc.linkedSources.concat(sourceNodeData)};
-            }
-            else {
-                /* apply link function when outNodes and not already stepped source
-                    the single function is applied to multiple target nodes  */
-                let [_linkedTargets, _linkedSource] = applyLinkFunctions(outNodes, sourceNodeData, g);
-                return {linkedTargets: acc.linkedTargets.concat(_linkedTargets), 
-                        linkedSources: acc.linkedSources.concat(_linkedSource)};
-            } 
-        }, {linkedTargets: [], linkedSources: []});
+    /* apply link function forward for a single level */
+    let {linkedTargets, linkedSources} = linkSources(steppedSources, nestedTargets, _linkedSources, g);
 
-    let linkedTargets = linkedPairs.linkedTargets;
-    let linkedSources = linkedPairs.linkedSources;
-
-    if (linkedTargets.length === 0) {
-        return linkedSources;
+    if (Object.keys(linkedTargets).length === 0) {
+        return ArrayById(linkedSources);
     } else {
-        return linkedSources.concat(breadthTraverse(linkedTargets, fns, g, _linkedSources.concat(linkedSources)));      // n
+        return ArrayById(linkedSources).concat(breadthTraverse(ArrayById(linkedTargets), g, _linkedSources.concat(ArrayById(linkedSources))));      // n
     }
 
+}
+
+function linkSources(steppedSources: Array<NodeData>, allTargets: Array<Array<NodeData>>, sourcesAlreadyLinked, g) {
+    
+    return steppedSources.reduce(function (acc, sourceData, i) {
+        let outNodes: Array<NodeData> = allTargets[i];
+        
+        if (outNodes.length === 0 || sourcesAlreadyLinked.some(n => n.id === sourceData.id)) {
+            return {
+                linkedTargets: acc.linkedTargets,
+                linkedSources: {...acc.linkedSources, [sourceData.id]: sourceData}
+            };
+        }
+        else {
+            /* apply link function when outNodes and not already stepped source
+                the single function is applied to multiple target nodes  */
+            let { linkedTargets, linkedSource } = linkSource(sourceData, outNodes, g);
+            return {
+                linkedTargets: {...acc.linkedTargets, ...linkedTargets},
+                linkedSources: {...acc.linkedSources, ...linkedSource}
+            };
+        }
+    }, { linkedTargets: {}, linkedSources: {} });
+}
+
+declare interface LinkedSource {
+    linkedTargets: NodesData,
+    linkedSource: NodesData
+}
+
+function linkSource(_source: NodeData, targets: Array<NodeData>, g: Graph) {
+
+    return targets.reduce((acc: any, target, i) => {
+
+        /* extract from NodesData type of acc to NodeData type */
+        let source = acc.linkedSource[_source.id];
+        //let target = _target[targets[i].id];
+        
+        let edge: EdgeData = getEdge(source, target, g);
+        let {linkedSource, linkedTarget} = linkTarget(source, target, edge);
+
+        return {linkedTargets: {...acc.linkedTargets, 
+                                [linkedTarget.id]: linkedTarget},
+                linkedSource: {[linkedSource.id]: linkedSource}}
+    
+    }, {linkedTargets: ArrayToObject(targets), linkedSource: {[_source.id]: _source} })
+    
+}
+
+declare interface LinkPair {
+    linkedSource: NodeData,
+    linkedTarget: NodeData
+}
+function linkTarget (source: NodeData, target: NodeData, edge) : LinkPair {
+
+    return edge.linkFunctions.reduce((acc, functionSettings) => {
+            let fn = SimulationFunctions.linkFunctions[functionSettings.name];
+    
+            /* application */
+            let singleResult;
+            if (target.active) {
+                /* apply if node is active */
+                singleResult = fn(acc.linkedSource, target, ...functionSettings.arguments);
+                return {
+                    linkedSource: singleResult.source,
+                    linkedTarget: singleResult.target
+                };
+            } else {
+                return {
+                    linkedSource: source,
+                    linkedTarget: target
+                }
+            }
+    
+        }, { linkedSource: source, linkedTarget: target });
 }
 
 function applyStepFunction(nodeData) {
@@ -159,71 +221,23 @@ function applyStepFunction(nodeData) {
     return update;
 }
 
-function applyLinkFunctions(targets: Array<NodeData>, source: NodeData, g: Graph, i = 0) {
-
-    let edge: EdgeData = getEdge(source, targets[i], g);
-    let target = targets[i];
-
-    /* pre-link functions */
-
-    let preLinkResult = edge.preLinkFunctions.reduce((acc, functionSettings) => {
-        let fn = SimulationFunctions.preLinkFunctions[functionSettings.name];
-        
-        let singleResult = fn(acc.source, target, ...functionSettings.arguments);
-        
-        return { source: singleResult.source, 
-                 target: singleResult.target };
-    }, { source: { ...source }, target: { ...target } });
-
-
-    /* apply to value functions */
-
-    let Result = edge.linkFunctions.reduce((acc, functionSettings) => {
-        let fn = SimulationFunctions.linkFunctions[functionSettings.name];
-
-        /* application */
-        let singleResult;
-        if(target.active) {
-            /* apply if node is active */
-            singleResult = fn(acc.source, target, ...functionSettings.arguments);
-            return { source: singleResult.source, 
-                    target: singleResult.target };
-        } else {
-            return {source: source,
-                    target: target}
-        }
-       
-    }, { source: { ...preLinkResult.source }, target: { ...preLinkResult.target } });
-
-    
-    let linkedSource = Result.source;
-    let linkedTarget = Result.target;
-
-    if (i === targets.length - 1) {
-        return [[linkedTarget], [linkedSource]];
-    } else {
-        let [returnedLinkedTargets, returnedLinkedSource] = applyLinkFunctions(targets, linkedSource, g, i + 1);
-        return [[linkedTarget].concat(returnedLinkedTargets), returnedLinkedSource]      // n
-    }
-}
-
 function applyDisplayFunctions(g) {
     let nodesArr = ArrayById(g.nodesData);
 
     /* apply for graph */
     let displayFns = g.data.displayFunctions.nodes;
-    
-    let update = displayFns.reduce((nodesArr,functionSettings) => {
+
+    let update = displayFns.reduce((nodesArr, functionSettings) => {
         /* for each display function */
         let fn = SimulationFunctions.displayFunctions[functionSettings.name];
- 
+
         /* reduce the nodesArray */
         let updatedNodesArr = nodesArr.reduce((acc, node) => {
             let nodeData = g.nodesData[node.id]
             let newDisplayData = fn(node, nodeData, ...functionSettings.arguments);
-            return acc.concat([{...node, displayData: {...newDisplayData}}]);
-        },[]);
-        
+            return acc.concat([{ ...node, displayData: { ...newDisplayData } }]);
+        }, []);
+
         return updatedNodesArr;
 
     }, nodesArr);
@@ -244,8 +258,8 @@ function ArrayById(o) {
 
 function ArrayToObject(a) {
     return a.reduce((acc, n) => {
-        return {...acc, [n.id]: n};
-    },{});
+        return { ...acc, [n.id]: n };
+    }, {});
 }
 
 function getOutNodes(nodeData, g) {
@@ -268,4 +282,19 @@ function getEdge(source, target, g) {
         .pop();
 }
 
-export { graphReducer}
+export { graphReducer }
+
+ /* pre-link functions */
+
+    // let preLinkResult = edge.preLinkFunctions.reduce((acc, functionSettings) => {
+    //     let fn = SimulationFunctions.preLinkFunctions[functionSettings.name];
+
+    //     let singleResult = fn(acc.source, target, ...functionSettings.arguments);
+
+    //     return {
+    //         source: singleResult.source,
+    //         target: singleResult.target
+    //     };
+    // }, { source: { ...source }, target: { ...target } });
+
+    /* apply to value functions */
