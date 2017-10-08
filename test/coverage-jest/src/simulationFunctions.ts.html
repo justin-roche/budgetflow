@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">15.79% </span>
+        <span class="strong">30.77% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>3/19</span>
+        <span class='fraction'>4/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>0/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.18% </span>
+        <span class="strong">37.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/11</span>
+        <span class='fraction'>3/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">15.79% </span>
+        <span class="strong">30.77% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/19</span>
+        <span class='fraction'>4/13</span>
       </div>
     </div>
   </div>
@@ -127,7 +127,12 @@
 82
 83
 84
-85</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+85
+86
+87
+88
+89
+90</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,7 +153,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">600626x</span>
+<span class="cline-any cline-yes">600631x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,31 +167,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -243,35 +253,44 @@ let SimulationFunctions = {
         }
     },
 &nbsp;
+    preLinkFunctions: {
+        derive: <span class="fstat-no" title="function not covered" >function(</span>source, target, dataKey, expression) {
+            let <span class="cstat-no" title="statement not covered" >r = </span>eval(expression);
+            let <span class="cstat-no" title="statement not covered" >newTarget = </span>{};
+<span class="cstat-no" title="statement not covered" >            newTarget[dataKey] = r</span>;
+<span class="cstat-no" title="statement not covered" >            return {source: source, target: {...target, newTarget}</span>};
+        } 
+    },
+&nbsp;
     displayFunctions: {
-        idByIndex: <span class="fstat-no" title="function not covered" >function(</span>node,i){
-<span class="cstat-no" title="statement not covered" >            node.index = 'n'+i</span>;
+        labelById: function(node, nodeData) {
+            return {...nodeData.displayData, label: node.id+ ':' + nodeData.value};
         },
 &nbsp;
-        toggle: <span class="fstat-no" title="function not covered" >function(</span>node) {
-<span class="cstat-no" title="statement not covered" >            if (node.data.active) {</span>
-<span class="cstat-no" title="statement not covered" >                node.color = '</span>black';
-            } else {
-<span class="cstat-no" title="statement not covered" >                node.color = '</span>gray';
-            }
-        },
+        // idByIndex: function(node,i){
+        //     node.index = 'n'+i;
+        // },
+&nbsp;
+        // toggle: function(node) {
+        //     if (node.data.active) {
+        //         node.color = 'black';
+        //     } else {
+        //         node.color = 'gray';
+        //     }
+        // },
         
-        sizeByValue: <span class="fstat-no" title="function not covered" >function(</span>node, nodeData, multiplier) {
-            let <span class="cstat-no" title="statement not covered" >newSize = </span>nodeData.value * multiplier;
-<span class="cstat-no" title="statement not covered" >            if(newSize &lt;10) {</span>
-<span class="cstat-no" title="statement not covered" >                newSize = 1</span>0;
-            }
-<span class="cstat-no" title="statement not covered" >            return {...node, r: n</span>ewSize};
-        },
+        // sizeByValue: function(node, nodeData, multiplier) {
+        //     let newSize = nodeData.value * multiplier;
+        //     if(newSize &lt;10) {
+        //         newSize = 10;
+        //     }
+        //     return {...node, r: newSize};
+        // },
 &nbsp;
-        labelById: <span class="fstat-no" title="function not covered" >function(</span>node) {
-<span class="cstat-no" title="statement not covered" >            node.label = node.i</span>d;
-        },
-&nbsp;
-        randomPosition: <span class="fstat-no" title="function not covered" >function(</span>node) {
-<span class="cstat-no" title="statement not covered" >            node.x = Math.r</span>andom();
-<span class="cstat-no" title="statement not covered" >            node.y = Math.r</span>andom();
-        },
+        // randomPosition: function(node) {
+        //     node.x = Math.random();
+        //     node.y = Math.random();
+        // },
 &nbsp;
         
     },
@@ -280,10 +299,6 @@ let SimulationFunctions = {
         add: <span class="fstat-no" title="function not covered" >function(</span>value, sourceNode, targetNode) {
 &nbsp;
         }
-    },
-&nbsp;
-    informationFunctions: {
-&nbsp;
     },
 &nbsp;
     quantifiers: {
@@ -301,7 +316,7 @@ export { SimulationFunctions}</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 06 2017 22:25:47 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Oct 07 2017 20:09:23 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

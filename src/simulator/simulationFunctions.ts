@@ -30,6 +30,15 @@ let SimulationFunctions = {
         }
     },
 
+    preLinkFunctions: {
+        derive: function(source, target, dataKey, expression) {
+            let r = eval(expression);
+            let newTarget = {};
+            newTarget[dataKey] = r;
+            return {source: source, target: {...target, newTarget}};
+        } 
+    },
+
     displayFunctions: {
         labelById: function(node, nodeData) {
             return {...nodeData.displayData, label: node.id+ ':' + nodeData.value};
@@ -67,10 +76,6 @@ let SimulationFunctions = {
         add: function(value, sourceNode, targetNode) {
 
         }
-    },
-
-    informationFunctions: {
-
     },
 
     quantifiers: {

@@ -7,7 +7,7 @@ describe('graph reducer', () => {
 
     describe('step function', () => {
         beforeEach(() => {
-            g = state.graphs.filter(graph => graph.id === 'g1')[0];
+            g = state.graphs.filter(graph => graph.data.name === '1 node')[0];
             // console.log(g);
             expect(g.nodesData['n0'].value).toBe(0);
         });
@@ -64,8 +64,9 @@ describe('graph reducer', () => {
     describe('link function', () => {
 
         beforeAll(() => {
-            g = state.graphs.filter(graph => graph.id === 'g2')[0];
-            expect(g.nodesData['n0'].value).toBe(1);
+            g = state.graphs.filter(graph => graph.data.name === '2 nodes')[0];
+            // console.log(g)
+            expect(g.nodesData['n0'].value).toBe(10);
         });
 
         it('does not mutate original state', ()=> {
@@ -77,7 +78,7 @@ describe('graph reducer', () => {
 
         it('graph traverse applies link function', () => {
             let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });
-            expect(s2.nodesData['n0'].value).toBe(0);
+            expect(s2.nodesData['n0'].value).toBe(9);
             expect(s2.nodesData['n1'].value).toBe(1);
         });
 
@@ -97,7 +98,7 @@ describe('graph reducer', () => {
             expect(originalg === unmutatedG).toBe(true);
         })
 
-        it('applies link function to all nodes',()=>{
+        it('applies link function to all active nodes',()=>{
             let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });            
             expect(s2.nodesData['n0'].value).toBe(44);
             expect(s2.nodesData['n1'].value).toBe(1);
@@ -107,6 +108,37 @@ describe('graph reducer', () => {
             expect(s2.nodesData['n5'].value).toBe(1);
             expect(s2.nodesData['n6'].value).toBe(1);
         });
+
+        it('does not apply link function toward inactive nodes',()=>{
+            let original = JSON.stringify(g);
+            g.nodesData['n1'].active = false;
+            let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });            
+            expect(s2.nodesData['n0'].value).toBe(47);
+            // expect(s2.nodesData['n1'].value).toBe(0);
+            // expect(s2.nodesData['n2'].value).toBe(0);
+            // expect(s2.nodesData['n3'].value).toBe(0);
+            // expect(s2.nodesData['n4'].value).toBe(1);
+            // expect(s2.nodesData['n5'].value).toBe(1);
+            // expect(s2.nodesData['n6'].value).toBe(1);
+
+            g.nodesData['n1'].active = true;
+            expect(original === JSON.stringify(g)).toBe(true);
+        });
+
+        // it('does not apply link function from inactive nodes',()=>{
+        //     let original = JSON.stringify(g);
+        //     g.nodesData['n1'].active = false;
+        //     let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });            
+        //     expect(s2.nodesData['n0'].value).toBe(47);
+        //     // expect(s2.nodesData['n1'].value).toBe(0);
+        //     // expect(s2.nodesData['n2'].value).toBe(0);
+        //     // expect(s2.nodesData['n3'].value).toBe(0);
+        //     // expect(s2.nodesData['n4'].value).toBe(1);
+        //     // expect(s2.nodesData['n5'].value).toBe(1);
+        //     // expect(s2.nodesData['n6'].value).toBe(1);
+
+        //     g = JSON.parse(original);
+        // });
 
         it('applies step function to all nodes',()=>{
             let ond = JSON.stringify(g.nodesData);

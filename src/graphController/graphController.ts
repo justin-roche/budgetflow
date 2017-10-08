@@ -171,22 +171,24 @@ export class GraphController {
         this.svg
             .selectAll(".node")
             .each(function (d) {
-                let dd = data.nodesData[d.id].displayData;
+                let selected = d3.select(this);
+                let nd = data.nodesData[d.id];
+                let dd = nd.displayData;
                 if(selectedNodeId === d.id){
-                    d3.select(this).classed('selected-node', true);
+                    selected.classed('selected-node', true);
                 } else {
-                    d3.select(this).classed('selected-node', false);
+                    selected.classed('selected-node', false);
                 }
 
                 
                 if (dd.shape === 'square') {
-                    d3.select(this)
+                    selected
                         .attr("x", d.x)
                         .attr("y", d.y)
                         .attr("height", 20)
                         .attr('width', 20)
                 } else {
-                    d3.select(this)
+                    selected
                         .attr("x", d.x)
                         .attr("y", d.y)
                         .attr("cx", d.x)
@@ -194,12 +196,19 @@ export class GraphController {
                         .attr("r", 20)
                 }
 
-                d3.select(this)
-                .attr('stroke', 'white')
-                .attr('stroke-width', 3)
-                .attr("fill", function (d, i) {
-                    return dd.outlineColor;
-                })
+                if(nd.active === false) {
+                    selected.attr('fill', 'gray')
+                    selected.classed('inactive-node', true);
+                } else {
+                    selected.classed('inactive-node', false);
+                }
+
+                selected
+                // .attr('stroke', 'white')
+                // .attr('stroke-width', 3)
+                // .attr("fill", function (d, i) {
+                //     return dd.outlineColor;
+                // })
                 
             })
             

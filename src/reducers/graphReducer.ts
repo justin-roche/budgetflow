@@ -93,7 +93,7 @@ function traverseCycles(_state, payload: any = {}) {
 
     for(let c = 0; c < cycleCount; c++) {
         let sources = getSources(ArrayById(state.nodesData));
-        let newNodesDataArray = breadthTraverse(sources, { step: applyStepFunction, link: applyLinkFunction }, state);
+        let newNodesDataArray = breadthTraverse(sources, { step: applyStepFunction, link: applyLinkFunctions }, state);
         let newNodesDataObject = newNodesDataArray.reduce((acc, item) => {
             return { ...acc, [item.id]: item };
         }, {});
@@ -105,7 +105,7 @@ function traverseCycles(_state, payload: any = {}) {
     return state;
 }
 
-function breadthTraverse(current, fns, g, _linkedSources = []) {
+function breadthTraverse(current: Array<NodeData>, fns, g, _linkedSources = []) {
 
     /* apply step function to nodes */
 
@@ -113,7 +113,7 @@ function breadthTraverse(current, fns, g, _linkedSources = []) {
         return { ...nodeData, ...fns.step(nodeData, g)};
     })
 
-    let nextNodesData = current.map(nodeData => { // n
+    let nestedTargets = current.map(nodeData => { // n
         return getOutNodes(nodeData, g);
     });
 
@@ -123,13 +123,15 @@ function breadthTraverse(current, fns, g, _linkedSources = []) {
     /* apply link function forward */
 
     let linkedPairs = steppedSources.reduce(function (acc, sourceNodeData, i) {
-            let outNodes = nextNodesData[i];
+            let outNodes = nestedTargets[i];
             if(outNodes.length === 0 || _linkedSources.some(n => n.id === sourceNodeData.id)) {
                 return { linkedTargets: acc.linkedTargets,
                         linkedSources: acc.linkedSources.concat(sourceNodeData)};
             }
             else {
-                let [_linkedTargets, _linkedSource] = applyLinkFunction(outNodes, sourceNodeData, g, null);
+                /* apply link function when outNodes and not already stepped source
+                    the single function is applied to multiple target nodes  */
+                let [_linkedTargets, _linkedSource] = applyLinkFunctions(outNodes, sourceNodeData, g);
                 return {linkedTargets: acc.linkedTargets.concat(_linkedTargets), 
                         linkedSources: acc.linkedSources.concat(_linkedSource)};
             } 
@@ -157,26 +159,50 @@ function applyStepFunction(nodeData) {
     return update;
 }
 
-function applyLinkFunction(targets, source, g, i) {
-    if (i === null) {
-        i = 0;
-    }
-    let edge = getEdge(source, targets[i], g);
+function applyLinkFunctions(targets: Array<NodeData>, source: NodeData, g: Graph, i = 0) {
+
+    let edge: EdgeData = getEdge(source, targets[i], g);
     let target = targets[i];
+
+    /* pre-link functions */
+
+    let preLinkResult = edge.preLinkFunctions.reduce((acc, functionSettings) => {
+        let fn = SimulationFunctions.preLinkFunctions[functionSettings.name];
+        
+        let singleResult = fn(acc.source, target, ...functionSettings.arguments);
+        
+        return { source: singleResult.source, 
+                 target: singleResult.target };
+    }, { source: { ...source }, target: { ...target } });
+
+
+    /* apply to value functions */
 
     let Result = edge.linkFunctions.reduce((acc, functionSettings) => {
         let fn = SimulationFunctions.linkFunctions[functionSettings.name];
-        let result = fn(acc.source, target, ...functionSettings.arguments);
-        return { source: result.source, target: result.target };
-    }, { source: { ...source }, target: { ...target } });
 
+        /* application */
+        let singleResult;
+        if(target.active) {
+            /* apply if node is active */
+            singleResult = fn(acc.source, target, ...functionSettings.arguments);
+            return { source: singleResult.source, 
+                    target: singleResult.target };
+        } else {
+            return {source: source,
+                    target: target}
+        }
+       
+    }, { source: { ...preLinkResult.source }, target: { ...preLinkResult.target } });
+
+    
     let linkedSource = Result.source;
     let linkedTarget = Result.target;
 
     if (i === targets.length - 1) {
         return [[linkedTarget], [linkedSource]];
     } else {
-        let [returnedLinkedTargets, returnedLinkedSource] = applyLinkFunction(targets, linkedSource, g, i + 1);
+        let [returnedLinkedTargets, returnedLinkedSource] = applyLinkFunctions(targets, linkedSource, g, i + 1);
         return [[linkedTarget].concat(returnedLinkedTargets), returnedLinkedSource]      // n
     }
 }

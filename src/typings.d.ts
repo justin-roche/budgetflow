@@ -6,39 +6,47 @@ declare interface AppState {
 }
 
 declare interface Graph {
-    id: String,
+    id: string,
     data: GraphData
-    nodes: {
-        [index: string]: AppNode
-    }
-    nodesData: {
-        [index: string]: NodeData, 
-    },
-    edges: {
-        [index: string]: Edge,
-    }
-    edgesData: {
-        [index: string]: EdgeData
-    }
+    nodes: Nodes
+    nodesData: NodesData,
+    edges: Edges
+    edgesData: EdgesData
+}
+
+declare interface Nodes {
+    [index: string]: AppNode
+}
+
+declare interface NodesData {
+    [index: string]: NodeData
+}
+
+declare interface Edges {
+    [index: string]: Edge
+}
+
+declare interface EdgesData{
+    [index: string]: EdgeData
 }
 
 declare interface GraphData {
-    id: String,
-    name: String,
+    id: string,
+    name: string,
     displayFunctions: GraphFunctions
 }
 
 declare interface AppNode {
-    id: String,
-    outEdges: Array<String>,
-    inEdges: Array<String>,
+    id: string,
+    outEdges: Array<string>,
+    inEdges: Array<string>,
     x?: Number,
     y?: Number
 }
 
 declare interface NodeData {
-    id: String,
-    type: String,
+    id: string,
+    type: string,
     active: Boolean,
     value: Number,
     stepFunctions: Array<FunctionItem>,
@@ -50,27 +58,26 @@ declare interface GraphFunctions {
     nodes: Array<FunctionItem>
 }
 
-
-
 declare interface NodeDisplayData {
-    label?: String,
-    shape?: String,
-    outlineColor?: String,
+    label?: string,
+    shape?: string,
+    outlineColor?: string,
 }
 
 declare interface EdgeData {
+    preLinkFunctions: Array<FunctionItem>,
     linkFunctions: Array<FunctionItem>,
-    stepFunctions: Array<FunctionItem>,
+    stepFunctions?: Array<FunctionItem>,
 }
 
 declare interface Edge {
-    id: String,
-    source: String,
-    target: String,
+    id: string,
+    source: string,
+    target: string,
 }
 
 declare interface FunctionItem {
-    name: String, 
+    name: string, 
     arguments: Array<any>
 }
 
