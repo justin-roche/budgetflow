@@ -300,8 +300,9 @@ let state = {
 
                 'e2': {
                     preLinkFunctions: [],
-                    // {name: 'derive', arguments: ['active', 'source.value > 100']}
-                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
+                    
+                    linkFunctions: [{ name: 'transfer', arguments: [1] },
+                                    { name: 'derive', phase: 'prelink', arguments: ['active', 'source.value > 1']}],
                     informationFunctions: [],
                 },
             }
@@ -691,7 +692,7 @@ let state = {
                     id: 'n0',
                     x: 300,
                     y: 50,
-                    shape: 'square',
+                    //shape: 'square',
                     outEdges: ['e0', 'e00'],
                     inEdges: [],
                 },

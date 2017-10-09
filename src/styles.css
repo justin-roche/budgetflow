@@ -79,7 +79,7 @@ svg {
 }
 
 .selected-node {
-  stroke: white;
+  stroke: rgb(179, 97, 97);
   fill: #1eb5ab20;
   stroke-width: 3px;
 }

@@ -27,16 +27,14 @@ let SimulationFunctions = {
         transduce: function(sourceNode, targetNode, amount, integral) {
             return {source: sourceNode,
             target: {...targetNode, value: targetNode.value + (amount * integral || 1)}};
-        }
-    },
+        },
 
-    preLinkFunctions: {
         derive: function(source, target, dataKey, expression) {
             let r = eval(expression);
             let newTarget = {};
             newTarget[dataKey] = r;
-            return {source: source, target: {...target, newTarget}};
-        } 
+            return {source: source, target: {...target, ...newTarget}};
+        }
     },
 
     displayFunctions: {

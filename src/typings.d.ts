@@ -65,7 +65,8 @@ declare interface NodeDisplayData {
 }
 
 declare interface EdgeData {
-    preLinkFunctions: Array<FunctionItem>,
+    id: string
+    // preLinkFunctions: Array<FunctionItem>,
     linkFunctions: Array<FunctionItem>,
     stepFunctions?: Array<FunctionItem>,
 }

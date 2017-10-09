@@ -114,31 +114,29 @@ describe('graph reducer', () => {
             g.nodesData['n1'].active = false;
             let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });            
             expect(s2.nodesData['n0'].value).toBe(47);
-            // expect(s2.nodesData['n1'].value).toBe(0);
-            // expect(s2.nodesData['n2'].value).toBe(0);
-            // expect(s2.nodesData['n3'].value).toBe(0);
-            // expect(s2.nodesData['n4'].value).toBe(1);
-            // expect(s2.nodesData['n5'].value).toBe(1);
-            // expect(s2.nodesData['n6'].value).toBe(1);
-
+            expect(s2.nodesData['n1'].value).toBe(0);
             g.nodesData['n1'].active = true;
             expect(original === JSON.stringify(g)).toBe(true);
         });
 
-        // it('does not apply link function from inactive nodes',()=>{
-        //     let original = JSON.stringify(g);
-        //     g.nodesData['n1'].active = false;
-        //     let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });            
-        //     expect(s2.nodesData['n0'].value).toBe(47);
-        //     // expect(s2.nodesData['n1'].value).toBe(0);
-        //     // expect(s2.nodesData['n2'].value).toBe(0);
-        //     // expect(s2.nodesData['n3'].value).toBe(0);
-        //     // expect(s2.nodesData['n4'].value).toBe(1);
-        //     // expect(s2.nodesData['n5'].value).toBe(1);
-        //     // expect(s2.nodesData['n6'].value).toBe(1);
+        it('does not apply link function from inactive nodes',()=>{
+            let original = JSON.stringify(g);
 
-        //     g = JSON.parse(original);
-        // });
+            g.nodesData['n1'].active = false;
+            g.nodesData['n2'].active = false;
+            g.nodesData['n3'].active = false;
+            let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });     
+
+            expect(s2.nodesData['n0'].value).toBe(47);
+            expect(s2.nodesData['n3'].value).toBe(0);
+            expect(s2.nodesData['n2'].value).toBe(0);
+
+            g.nodesData['n1'].active = true;
+            g.nodesData['n2'].active = true;
+            g.nodesData['n3'].active = true;
+            
+            g = JSON.parse(original);
+        });
 
         it('applies step function to all nodes',()=>{
             let ond = JSON.stringify(g.nodesData);
@@ -169,6 +167,22 @@ describe('graph reducer', () => {
             expect(s2.data === g.data);
         });
 
+    })
+
+    describe('conditional behavior', () => {
+        beforeEach(() => {
+            g = state.graphs.filter(graph => graph.data.name === 'conditional')[0];
+            expect(g.nodesData['n0'].value).toBe(10);
+        });
+
+        it('nodes are activated with activation conditions',()=>{
+            expect(g.nodesData.n2.active === false);
+            let s2 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });
+            expect(s2.nodesData.active === false);
+            let s3 = graphReducer(g, { type: 'BREADTH_TRAVERSE' });
+            expect(s3.nodesData.active === true);
+        });
+        
     })
 
     describe('cycles', () => {

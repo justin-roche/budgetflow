@@ -198,9 +198,10 @@ export class GraphController {
 
                 if(nd.active === false) {
                     selected.attr('fill', 'gray')
-                    selected.classed('inactive-node', true);
+                    // selected.classed('inactive-node', true);
                 } else {
-                    selected.classed('inactive-node', false);
+                    selected.attr('fill', 'white');
+                    // selected.classed('inactive-node', false);
                 }
 
                 selected

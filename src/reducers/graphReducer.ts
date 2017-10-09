@@ -14,6 +14,9 @@ function graphReducer(state = null, action) {
         case 'DELETE_NODE': {
             return { ...state, ...deleteNode(state, action.payload) }
         }
+        case 'NODE_PROPERTY_SET': {
+            return { ...state, ...nodePropertySet(state, action.payload.nodeData) }
+        }
         case 'ADD_EDGE': {
             let index = Object.keys(state.edges).length;
             let id = 'e' + index;
@@ -53,8 +56,14 @@ function deleteNode(g, nid) {
 function addNewNode(g, nd) {
     let index = Object.keys(g.nodes).length;
     let id = 'n' + index;
-    let nodeDescription = { ...nd, ...{ id: id, outEdges: [], inEdges: [] } };
-    let nodeData = { id: id, type: 'sink', displayFunctions: [], stepFunctions: [], value: 0 }
+    let nodeDescription: Node = { ...nd, ...{ id: id, outEdges: [], inEdges: [] } };
+    let nodeData: NodeData = { active: true, 
+                                id: id, 
+                                type: 'sink', 
+                                displayFunctions: [], 
+                                stepFunctions: [], 
+                                displayData: {},
+                                value: 0 }
     return {
         ...g,
         nodes: { ...g.nodes, [id]: nodeDescription },
@@ -74,8 +83,8 @@ function addNewEdge(g, ed, id) {
         return g;
     }
 
-    let edgeDescription = { ...ed, ...{ id: id } };
-    let edgeData = { id: id, type: 'sink', linkFunctions: [] }
+    let edgeDescription: Edge = { ...ed, ...{ id: id } };
+    let edgeData: EdgeData = { id: id, linkFunctions: [] }
     return {
         ...g,
         edges: { ...g.edges, [id]: edgeDescription },
@@ -90,6 +99,16 @@ function updateOutNodes(nodes, ed, id) {
     let sourceNode = { ...nodes[ed.source], outEdges: outEdges };
     return { ...nodes, [ed.target]: targetNode, [ed.source]: sourceNode };
 }
+
+function nodePropertySet(g, nodeData: NodeData) : Graph {
+    let nd = g.nodesData[nodeData.id];
+    nd = {...nd, ...nodeData};
+    let nodesData = {...g.nodesData, [nd.id]: nd};
+    console.log('new nodes data', nodesData);
+    return {...g, nodesData: nodesData};
+}
+
+/* TRAVERSAL */
 
 function traverseCycles(_state, payload: any = {}) {
     let cycleCount = payload.cycles || 1;
@@ -135,14 +154,18 @@ function breadthTraverse(current: Array<NodeData>, g, _linkedSources = []) {
 
 }
 
-function linkSources(steppedSources: Array<NodeData>, allTargets: Array<Array<NodeData>>, sourcesAlreadyLinked, g) {
+declare interface LinkedSources {
+    linkedTargets: NodesData
+    linkedSources: NodesData
+}
+function linkSources(steppedSources: Array<NodeData>, allTargets: Array<Array<NodeData>>, sourcesAlreadyLinked, g): LinkedSources {
     
     return steppedSources.reduce(function (acc, sourceData, i) {
         let outNodes: Array<NodeData> = allTargets[i];
         
-        if (outNodes.length === 0 || sourcesAlreadyLinked.some(n => n.id === sourceData.id)) {
+        if (!sourceData.active || outNodes.length === 0 || sourcesAlreadyLinked.some(n => n.id === sourceData.id)) {
             return {
-                linkedTargets: acc.linkedTargets,
+                linkedTargets: { ...acc.linkedTargets, ...ArrayToObject(outNodes)},
                 linkedSources: {...acc.linkedSources, [sourceData.id]: sourceData}
             };
         }
@@ -163,13 +186,14 @@ declare interface LinkedSource {
     linkedSource: NodesData
 }
 
+/* link from a single source to it's multiple targets */
+
 function linkSource(_source: NodeData, targets: Array<NodeData>, g: Graph) {
 
     return targets.reduce((acc: any, target, i) => {
 
         /* extract from NodesData type of acc to NodeData type */
         let source = acc.linkedSource[_source.id];
-        //let target = _target[targets[i].id];
         
         let edge: EdgeData = getEdge(source, target, g);
         let {linkedSource, linkedTarget} = linkTarget(source, target, edge);
@@ -193,7 +217,7 @@ function linkTarget (source: NodeData, target: NodeData, edge) : LinkPair {
     
             /* application */
             let singleResult;
-            if (target.active) {
+            if (target.active || functionSettings.phase === 'prelink') {
                 /* apply if node is active */
                 singleResult = fn(acc.linkedSource, target, ...functionSettings.arguments);
                 return {
