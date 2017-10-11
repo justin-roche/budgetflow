@@ -21,6 +21,9 @@ export class App {
     this.store.store.dispatch({type: 'GRAPH_SET', payload: state.graph});
     this.store.store.dispatch({type: 'UI_SET', payload: state.ui});
     this.store.store.dispatch({type: 'SIMULATION_SET', payload: state.simulation});
+    setTimeout(function(){
+      this.store.store.dispatch({type: 'GRAPH_SET', payload: state.graphs.filter(g => g.data.name === '1-2-3').pop()});
+    }.bind(this),0)
 }
 
   configureRouter(config: RouterConfiguration, router: Router) {

@@ -1,0 +1,53 @@
+<template>
+    <require from="../common/typeAhead"></require>
+    <div>
+        <button click.trigger="toggleActive()" class="btn btn-success" aubs-btn-checkbox="state.bind: nodeModel.nodeData.active; checked-value.bind: false; unchecked-value.bind: true">
+            ${nodeModel.nodeData.active === true? 'active': 'inactive'}
+        </button>
+        <aubs-accordion close-others.bind="closeOthers">
+            <aubs-accordion-group title="Activation Conditions" is-open.bind="firstTabState">
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <li repeat.for="conditional of conditionals">
+                                    ${conditional}
+                                </li>
+                            <tr>
+                                <td>
+                                    <input type="text" value.bind="inputConditional" class="form-control">
+                                </td>
+                                <td>
+                                    <i class="glyphicon glyphicon-plus" click.trigger="addConditional()"></i>
+                                </td>
+                            </tr>
+                            <!-- <tr repeat.for="conditional of conditionals">
+                                ${conditional}
+                                
+                            </tr> -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </aubs-accordion-group>
+
+            <aubs-accordion-group title="Deactivation Conditions" disabled.bind="secondDisabled">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control">
+                    </td>
+                    <td>
+                        <i class="glyphicon glyphicon-plus"></i>
+                    </td>
+
+                </tr>
+            </aubs-accordion-group>
+
+        </aubs-accordion>
+
+    </div>
+</template>

@@ -17,6 +17,10 @@ function graphReducer(state = null, action) {
         case 'NODE_PROPERTY_SET': {
             return { ...state, ...nodePropertySet(state, action.payload.nodeData) }
         }
+        case 'EDGE_UPDATE': {
+            updateEdge(state, action.payload.edge, action.payload.edgeData);
+            return { ...state};
+        }
         case 'ADD_EDGE': {
             let index = Object.keys(state.edges).length;
             let id = 'e' + index;
@@ -90,6 +94,11 @@ function addNewEdge(g, ed, id) {
         edges: { ...g.edges, [id]: edgeDescription },
         edgesData: { ...g.edgesData, [id]: edgeData }
     }
+}
+
+function updateEdge(g, edges, edgesData) {
+    console.log('update data', edges, edgesData);
+    // return {edges, edgesData}
 }
 
 function updateOutNodes(nodes, ed, id) {

@@ -1,38 +1,30 @@
 <template>
     <require from="../common/modalWrapper"></require>
     <require from="../common/typeAhead"></require>
+    <require from="./conditionalEditor"></require>
     <modal-wrapper $settings.bind="modalSettings">
         <div slot="modalbody">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active">
-                    <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a>
-                </li>
-                <li role="presentation">
-                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Out</a>
-                </li>
-                <li role="presentation">
-                    <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">In</a>
-                </li>
-                <li role="presentation">
-                    <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
-                </li>
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Out</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">In</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Conditions</a></li>
             </ul>
 
             <div class="tab-content">
+
+                <!-- Profile -->
                 <div if.bind="node" role="tabpanel" class="tab-pane active" id="home">
-                    <div>
-                        <button click.trigger="toggleActive()" class="btn btn-success"
-                            aubs-btn-checkbox="state.bind: nodeActive; checked-value.bind: false; unchecked-value.bind: true">
-                             ${nodeActive === true? 'active': 'inactive'}
-                    </button>
-                    </div>
+                    <!-- bind to intermediate representation -->
                     <label>name</label>
                     <input class="form-control" type="text" value.bind="nodeData.name || 'untitled'" placeholder="name">
                     <label>type</label>
-                    <input class="form-control" type="text" value.bind="nodeModel.type" placeholder="type">
+                    <input class="form-control" type="text" value.bind="nodeData.type" placeholder="type">
                     <label>step function</label>
                     <type-ahead></type-ahead>
                 </div>
+
+                <!-- out -->
                 <div role="tabpanel" class="tab-pane" id="profile">
                     <table class="table">
                         <thead>
@@ -62,6 +54,9 @@
                     </table>
 
                 </div>
+
+                <!-- in -->
+
                 <div role="tabpanel" class="tab-pane" id="messages">
                     <table if.bind="inNodes.length > 0" class="table">
                         <thead>
@@ -90,7 +85,13 @@
                         </tbody>
                     </table>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="settings">Settings</div>
+                <div role="tabpanel" class="tab-pane" id="settings">
+                    <conditional-editor nodeModel.bind="nodeModel" conditionals.bind="conditionals">
+
+                    </conditional-editor>
+                       
+                    <!-- end tab content -->
+                </div>
             </div>
 
     </modal-wrapper>

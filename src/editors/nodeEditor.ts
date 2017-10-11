@@ -8,20 +8,9 @@ import { Store } from '../services/reduxStore';
 export class NodeEditor {
     collapsed = false;
     $nodeId;
-
+    @bindable nodeModel;
     
-    node: AppNode;
-    nodeData: NodeData;
-    outEdges: Array<Edge>;
-    outEdgesData: Array<EdgeData>;
-    inEdges: Array<Edge>;
-    inEdgesData: Array<EdgeData>;
-    outNodes: Array<AppNode>;
-    outNodesData: Array<NodeData>;
-    inNodes: Array<AppNode>;
-    inNodesData: Array<NodeData>;
-    
-    @bindable nodeActive: Boolean;
+    conditionals = ['x'];   
 
     defaultModalSettings = {
         title: 'Node Edit',
@@ -36,7 +25,7 @@ export class NodeEditor {
     constructor(private store: Store) {
         this.$nodeId = this.store.select('ui.graphContainer.selectedNodeId');
         this.$nodeId.subscribe(id => {
-            if(id !== null) {
+            if (id !== null) {
                 this.update(id);
             }
         })
@@ -46,48 +35,67 @@ export class NodeEditor {
         console.log('new node');
     }
 
+    toggled(s) {
+        console.log('toggled', s)
+    }
+
+    selectActivationSource(c) {
+        console.log(c)
+    }
+
     toggleActive() {
-        setTimeout(function(){
-            let nodeData = {id: this.node.id, active: this.nodeActive};
-        this.store.dispatch({type: 'NODE_PROPERTY_SET', payload: {nodeData: nodeData}});
-        }.bind(this),100)
+        setTimeout(function () {
+            let nodeData = { id: this.node.id, active: this.nodeActive };
+            this.store.dispatch({ type: 'NODE_PROPERTY_SET', payload: { nodeData: nodeData } });
+        }.bind(this), 100)
     }
 
     update(id) {
-        this.node = this.store.getState().graph.nodes[id];
-        this.nodeData = this.store.getState().graph.nodesData[id];
-        
-        
-        this.outEdges = this.node.outEdges.map(en => this.store.getState().graph.edges[en]);
-        this.outEdgesData = this.outEdges.map(ed => this.store.getState().graph.edgesData[ed.id]);
+        this.buildNodeModel(id);
+    }
 
-        this.inEdges = this.node.inEdges.map(en => this.store.getState().graph.edges[en]);
-        this.inEdgesData = this.inEdges.map(ed => this.store.getState().graph.edgesData[ed.id]);
-        
-        this.outNodes = this.outEdges.map(e => this.store.getState().graph.nodes[e.target]);
-        this.outNodesData = this.outNodes.map(e => this.store.getState().graph.nodesData[e.id]);
+    buildNodeModel(id) {
+        let graph = this.store.getState().graph;
 
-        this.inNodes = this.inEdges.map(e => this.store.getState().graph.nodes[e.source]);
-        this.inNodesData = this.inNodes.map(e => this.store.getState().graph.nodesData[e.id]);
-        
-        this.nodeActive = this.nodeData.active;
+        let node = graph.nodes[id];
+        let nodeData = graph.nodesData[id];
+        let outEdges = node.outEdges.map(en => graph.edges[en]);
+        let outEdgesData = outEdges.map(ed => graph.edgesData[ed.id]);
+        let inEdges = node.inEdges.map(en => graph.edges[en]);
+        let inEdgesData = inEdges.map(ed => graph.edgesData[ed.id]);
+        let outNodes = outEdges.map(e => graph.nodes[e.target]);
+        let outNodesData = outNodes.map(e => graph.nodesData[e.id]);
+        let inNodes = inEdges.map(e => graph.nodes[e.source]);
+        let inNodesData = inNodes.map(e => graph.nodesData[e.id]);
 
+        this.nodeModel = JSON.parse(JSON.stringify({
+            node: node,
+            nodeData: nodeData,
+            outEdges: outEdges,
+            outEdgesData: outEdgesData,
+            inEdges: inEdges,
+            inEdgesData: inEdgesData,
+            ouNodes: outNodes,
+            outNodesData: outNodesData,
+            inNodes: inNodes,
+            inNodesData: inNodesData,
+        }));
+        //this.nodeModel = JSON.parse(JSON.stringify(this.nodeModel));
+        console.log(this.nodeModel)
     }
 
     matchEdgeData(nodeId) {
-        let edge = this.outEdges.filter(ed => ed.target === nodeId)[0];
-        let edgeData = this.outEdgesData.filter(ed => ed.id === edge.id)[0];
-        return edgeData
+        // let edge = this.outEdges.filter(ed => ed.target === nodeId)[0];
+        // let edgeData = this.outEdgesData.filter(ed => ed.id === edge.id)[0];
+        // return edgeData
     }
 
     matchInEdgeData(nodeId) {
-        let edge = this.inEdges.filter(ed => ed.source === nodeId)[0];
-        let edgeData = this.inEdgesData.filter(ed => ed.id === edge.id)[0];
-        console.log('in edges', edgeData)
-        return edgeData
+        // let edge = this.inEdges.filter(ed => ed.source === nodeId)[0];
+        // let edgeData = this.inEdgesData.filter(ed => ed.id === edge.id)[0];
+        // console.log('in edges', edgeData)
+        // return edgeData
     }
-
-
 
     save() {
 

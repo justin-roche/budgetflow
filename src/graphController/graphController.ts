@@ -412,12 +412,12 @@ export class GraphController {
         let self = this;
         document.onkeydown =  function(e) {
             console.log(e);
-            if(e.key === "Backspace") {
-                if(self.ui.selectedNodeId) {
-                    self.store.dispatch({ type: 'DELETE_NODE', payload: { id: self.ui.selectedNodeId } });
-                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
-                }
-            }
+            // if(e.key === "Backspace") {
+            //     if(self.ui.selectedNodeId) {
+            //         self.store.dispatch({ type: 'DELETE_NODE', payload: { id: self.ui.selectedNodeId } });
+            //         self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+            //     }
+            // }
         }
     }
 
