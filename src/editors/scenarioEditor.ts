@@ -39,6 +39,7 @@ export class ScenarioEditor {
 
   selectGraph(selectedGraph) {
     this.store.dispatch({ type: 'GRAPH_SET', payload: selectedGraph });
+    this.store.dispatch({ type: 'DISPLAY_FUNCTIONS_APPLY'});
   }
 
   /* SIMULATION */

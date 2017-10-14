@@ -83,8 +83,8 @@ function uiReducer(state = null, action) {
         case 'UI_SIMULATION_TIME_SET': {
             return { ...state, simulation: { ...state['simulation'], time: action.payload } };
         }
-        case 'SIGMA_SETTINGS_SET': {
-            return Object.assign(state, { sigmaSettings: action.payload });
+        case 'NODE_EDITOR_MODEL_SET': {
+            return {...state, nodeEditor: {...state.nodeEditor, nodeModel: action.payload} };
         }
         default:
             return state;

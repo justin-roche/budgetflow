@@ -14,6 +14,7 @@ let state = {
         },
         nodeEditor: {
             show: false,
+            nodeModel: {},
         },
         interactivity: {
             selectedNode: null,

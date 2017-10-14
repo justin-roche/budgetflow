@@ -10,8 +10,6 @@ export class NodeEditor {
     $nodeId;
     @bindable nodeModel;
     
-    conditionals = ['x'];   
-
     defaultModalSettings = {
         title: 'Node Edit',
         id: 'node-edit',
@@ -41,13 +39,6 @@ export class NodeEditor {
 
     selectActivationSource(c) {
         console.log(c)
-    }
-
-    toggleActive() {
-        setTimeout(function () {
-            let nodeData = { id: this.node.id, active: this.nodeActive };
-            this.store.dispatch({ type: 'NODE_PROPERTY_SET', payload: { nodeData: nodeData } });
-        }.bind(this), 100)
     }
 
     update(id) {
@@ -80,8 +71,8 @@ export class NodeEditor {
             inNodes: inNodes,
             inNodesData: inNodesData,
         }));
-        //this.nodeModel = JSON.parse(JSON.stringify(this.nodeModel));
-        console.log(this.nodeModel)
+        this.nodeModel = JSON.parse(JSON.stringify(this.nodeModel));
+        this.store.dispatch({type: 'NODE_EDITOR_MODEL_SET', payload: this.nodeModel})
     }
 
     matchEdgeData(nodeId) {
