@@ -66,7 +66,7 @@ export class NodeEditor {
             outEdgesData: outEdgesData,
             inEdges: inEdges,
             inEdgesData: inEdgesData,
-            ouNodes: outNodes,
+            outNodes: outNodes,
             outNodesData: outNodesData,
             inNodes: inNodes,
             inNodesData: inNodesData,
@@ -76,9 +76,9 @@ export class NodeEditor {
     }
 
     matchEdgeData(nodeId) {
-        // let edge = this.outEdges.filter(ed => ed.target === nodeId)[0];
-        // let edgeData = this.outEdgesData.filter(ed => ed.id === edge.id)[0];
-        // return edgeData
+        let edge = this.nodeModel.outEdges.filter(ed => ed.target === nodeId)[0];
+        let edgeData = this.nodeModel.outEdgesData.filter(ed => ed.id === edge.id)[0];
+        return edgeData
     }
 
     matchInEdgeData(nodeId) {

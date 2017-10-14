@@ -4,9 +4,9 @@
     <require from="./conditionalEditor"></require>
     <modal-wrapper $settings.bind="modalSettings">
         <div slot="modalbody">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Out</a></li>
+            <ul if.bind="nodeModel" class="nav nav-tabs" role="tablist">
+                <li  role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#out" aria-controls="out" role="tab" data-toggle="tab">Out</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">In</a></li>
                 <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Conditions</a></li>
             </ul>
@@ -14,18 +14,18 @@
             <div class="tab-content">
 
                 <!-- Profile -->
-                <div if.bind="node" role="tabpanel" class="tab-pane active" id="home">
+                <div if.bind="nodeModel" role="tabpanel" class="tab-pane active" id="profile">
                     <!-- bind to intermediate representation -->
                     <label>name</label>
-                    <input class="form-control" type="text" value.bind="nodeData.name || 'untitled'" placeholder="name">
+                    <input class="form-control" type="text" value.bind="nodeModel.nodeData.name || 'untitled'" placeholder="name">
                     <label>type</label>
-                    <input class="form-control" type="text" value.bind="nodeData.type" placeholder="type">
+                    <input class="form-control" type="text" value.bind="nodeModel.nodeData.type" placeholder="type">
                     <label>step function</label>
                     <type-ahead></type-ahead>
                 </div>
 
                 <!-- out -->
-                <div role="tabpanel" class="tab-pane" id="profile">
+                <div role="tabpanel" class="tab-pane" id="out">
                     <table class="table">
                         <thead>
                             <tr>
@@ -34,9 +34,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr repeat.for="node of outNodesData">
+                            <tr repeat.for="node of nodeModel.outNodes">
                                 <th scope="row">${node.id}</th>
-                                <td>${node.name}</td>
+                                <!-- <td>${node.name}</td>
                                 <td>
                                     <label>link function</label>
                                     <ul>
@@ -45,7 +45,7 @@
                                             <p>${fn.arguments}</p>
                                         </li>
                                     </ul>
-                                </td>
+                                </td> -->
                                 <td>
                                     <type-ahead></type-ahead>
                                 </td>

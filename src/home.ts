@@ -12,10 +12,6 @@ export class Home {
        
     }
 
-    attached() {
-
-        
-    }
 
     
     
