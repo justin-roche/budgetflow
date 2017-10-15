@@ -15,12 +15,12 @@ import { createStore } from 'redux';
 require('jquery-ui-dist/jquery-ui.js')
 require('jquery-ui-dist/jquery-ui.css')
 require('bootstrap'); // reference window.jQuery
-require('bootstrap-slider/dist/css/bootstrap-slider.css');
-require('sigma')
-require('sigma/plugins/sigma.plugins.dragNodes/sigma.plugins.dragNodes.js');
-require('sigma/plugins/sigma.layout.forceAtlas2/worker.js')
-require('sigma/plugins/sigma.layout.forceAtlas2/supervisor.js')
-require('bootstrap-slider')
+// require('bootstrap-slider/dist/css/bootstrap-slider.css');
+require('nouislider/distribute/nouislider.css');
+require('nouislider/distribute/nouislider.js');
+require('wnumb/wNumb.js');
+
+// require('bootstrap-slider')
 require('aurelia-async')
 //require('d3');
 

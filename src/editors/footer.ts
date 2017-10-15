@@ -16,12 +16,7 @@ export class Footer {
   }
 
   attached() {
-
-    $("#ex2").bootstrapSlider({
-      tooltip: 'always'
-    });
-
-    $("#mainslider").addClass('main-slider');
+    
   }
 
   showConditionalTable() {

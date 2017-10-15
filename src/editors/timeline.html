@@ -1,0 +1,12 @@
+<template style="display: flex; flex-direction: row; width: 100%">
+        <div style="flex: 7; width: 100%" id="date-slider"></div>
+        <span id="event-start">
+
+        </span>
+        <span id="event-end"></span>
+        <div style="flex: 1; align-self:flex-end">
+            <div style="margin-left: 100px">
+                <i click.trigger="showConditionalTable()" class="${conditionalTable.show? 'glyphicon glyphicon-chevron-down' : 'glyphicon glyphicon-chevron-up'}"></i>
+            </div>
+        </div>
+</template>

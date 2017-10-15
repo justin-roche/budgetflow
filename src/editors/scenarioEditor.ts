@@ -58,14 +58,14 @@ export class ScenarioEditor {
 
   attached() {
 
-    $("#ex8").bootstrapSlider({
-      tooltip: 'always'
-    });
+    // $("#ex8").bootstrapSlider({
+    //   tooltip: 'always'
+    // });
 
-    $('#ex8').on('slideStop', (v) => {
-      console.log(v.target.value)
-      this.simulationCyclesSet(Number(v.target.value));
-    })
+    // $('#ex8').on('slideStop', (v) => {
+    //   console.log(v.target.value)
+    //   this.simulationCyclesSet(Number(v.target.value));
+    // })
 
   }
 
