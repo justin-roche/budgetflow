@@ -16,6 +16,9 @@ let state = {
             show: false,
             nodeModel: {},
         },
+        conditionalTable: {
+            show: false,
+        },
         interactivity: {
             selectedNode: null,
             selectedEdge: null,

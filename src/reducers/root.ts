@@ -1,3 +1,4 @@
+import { ConditionalTable } from './../editors/conditionalTable';
 import { SimulationFunctions } from './../simulator/simulationFunctions';
 import { _ } from 'underscore';
 import {graphReducer} from './graphReducer';
@@ -77,14 +78,14 @@ function uiReducer(state = null, action) {
             console.log('reducing')
             return {...state, graphContainer: {...state.graphContainer, selectedNodeId: action.payload}};
         }
-        case 'GRAPH_CONTAINER_SETTINGS_SET': {
-            return Object.assign(state, { graphContainerSettings: action.payload });
-        }
         case 'UI_SIMULATION_TIME_SET': {
             return { ...state, simulation: { ...state['simulation'], time: action.payload } };
         }
         case 'NODE_EDITOR_MODEL_SET': {
             return {...state, nodeEditor: {...state.nodeEditor, nodeModel: action.payload} };
+        }
+        case 'UI_CONDITIONAL_TABLE_TOGGLE': {
+            return {...state, conditionalTable: {...state.conditionalTable, show: !state.conditionalTable.show} };
         }
         default:
             return state;
