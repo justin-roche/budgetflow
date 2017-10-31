@@ -19,6 +19,7 @@ require('bootstrap'); // reference window.jQuery
 require('nouislider/distribute/nouislider.css');
 require('nouislider/distribute/nouislider.js');
 require('wnumb/wNumb.js');
+require('moment');
 
 // require('bootstrap-slider')
 require('aurelia-async')

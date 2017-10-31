@@ -1,15 +1,21 @@
+import { Store } from './../services/reduxStore';
 import { inject, bindable } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(EventAggregator)
+@inject(Store)
 export class NavBar {
-    ea;
 
     @bindable router;
-    loggedIn = false;
 
-    constructor(eventAggregator) {
-        this.ea = eventAggregator;
+    constructor(private store: Store) {
+        
+    }
+
+    toggleScenarioEditor() {
+        this.store.dispatch({ type: 'UI_SCENARIO_EDITOR_TOGGLE' });        
+    }
+
+    toggleNodeEditor() {
+        this.store.dispatch({ type: 'UI_NODE_EDITOR_TOGGLE' });        
     }
 
 }

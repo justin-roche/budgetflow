@@ -16,6 +16,9 @@ let state = {
             show: false,
             nodeModel: {},
         },
+        scenarioEditor: {
+            show: true,
+        },
         conditionalTable: {
             show: false,
         },
@@ -25,9 +28,12 @@ let state = {
         },
     },
     simulation: <Simulation>{
-        simulating: false,
-        time: null,
-        remainingCycles: 1,
+        on: false,
+        stepInterval: 24 * 60 * 60 * 1000,
+        currentTime: 0,
+        nextTime: null,
+        remainingCycles: 0,
+        cache: {},
     },
     graph: null,
     graphs: <Array<Graph>>[

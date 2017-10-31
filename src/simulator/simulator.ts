@@ -7,42 +7,41 @@ import { _ } from 'underscore';
 
 @inject(Store, GraphService)
 export class Simulator {
-    t = new BehaviorSubject(null);
-    //@select(createSelector('ui.simulation.time', t), {subscribe: true})
-    $time;
-
-
-    dragging = false;
-    containerRef;
-
-    sigmaInstance;
-
-    sigmaSettings;
-    settings;
-
-    graph;
-    simulation;
-
-    g;
+    simulationOn;
 
     constructor(private store: Store<any>) {
         // select('ui.simulation.time', { subscribe: true })(this, 'simulationTime');   
-       // this.$time = this.store.select('ui.simulation.time');   
+       this.store.select('simulation.time').subscribe(d => {
+           //if(this.simulationOn) {
+               let cycles = this.getCycles();
+               // this.store.dispatch({type: 'BREADTH_TRAVERSE', payload: {cycles: this.$cycles.value}});
+               // this.store.dispatch({type: 'SIMULATION_OFF'})
+           //}
+       });  
+       this.store.select('simulation.on').subscribe(d => {
+            this.simulationOn = d;
+    });   
     
-        this.$cycles = this.store.select('simulation.remainingCycles');   
-        this.$cycles.subscribe(d => {
-            console.log('cycles', d)
-           // this.store.dispatch({type: 'BREADTH_TRAVERSE'})
-        })
+        // this.$cycles = this.store.select('simulation.remainingCycles');   
+        // this.$cycles.subscribe(d => {
+        //     console.log('cycles', d)
+        //    // this.store.dispatch({type: 'BREADTH_TRAVERSE'})
+        // })
 
-        this.$simulating = this.store.select('simulation.simulating');   
-        this.$simulating.subscribe(d => {
-              if(d === true) {
-                this.store.dispatch({type: 'BREADTH_TRAVERSE', payload: {cycles: this.$cycles.value}});
-                this.store.dispatch({type: 'SIMULATION_OFF'})
-              }
-        })
+        // this.$simulating = this.store.select('simulation.simulating');   
+        // this.$simulating.subscribe(d => {
+        //       if(d === true) {
+        
+        //       }
+        // })
        // this.test();
+    }
+
+    getCycles() {
+        let s = this.store.getState().simulation;
+        let d = s.nextTime - s.currentTime; 
+        let c = d/s.stepInterval;
+        console.log('cycles remaining', c);
     }
 
     simulationTimeChanged(current, last) {
@@ -60,7 +59,7 @@ export class Simulator {
         for (let c = 0; c < numberOfCycles; c++) {
             // dispatch traversal
         }
-        this.graph.data.currentStep = numberOfCycles;
+        //this.graph.data.currentStep = numberOfCycles;
     }
 
 

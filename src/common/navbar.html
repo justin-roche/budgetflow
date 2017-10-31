@@ -3,9 +3,12 @@
         <div class="top-menu">
             <span repeat.for="row of router.navigation">
                 <a class="btn btn-default ${row.isActive ? 'btn-primary' : ''}" href.bind="row.href">${row.title}</a>
-              </span>
+            </span>
             <span class="pull-right">
-              </span>
+                <button class="btn btn-default" click.trigger="toggleScenarioEditor()">Scenario Editor</button>
+                <button class="btn btn-default" click.trigger="toggleNodeEditor()">Node Editor</button>
+                
+            </span>
         </div>
     </nav>
 </template>

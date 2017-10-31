@@ -19,8 +19,6 @@ export class Footer {
     
   }
 
-  showConditionalTable() {
-    this.store.dispatch({type: 'UI_CONDITIONAL_TABLE_TOGGLE'});
-  }
+  
 
 }
