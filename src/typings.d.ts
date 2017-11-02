@@ -84,7 +84,11 @@ declare interface FunctionItem {
 
 declare interface Simulation {
     on: Boolean,
-    stepInterval: Number,
+    beginRangeTime: Number,
+    endRangeTime: Number,
+    currentTime: Number,
+    nextTime: Number,
+    cycleTime: Number,
     remainingCycles: Number,
 }
 

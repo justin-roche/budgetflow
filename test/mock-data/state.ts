@@ -29,8 +29,10 @@ let state = {
     },
     simulation: <Simulation>{
         on: false,
-        stepInterval: 24 * 60 * 60 * 1000,
-        currentTime: 0,
+        cycleTime: 24 * 60 * 60 * 1000,
+        beginRangeTime: new Date().getTime(),
+        endRangeTime: new Date('2019').getTime(),
+        currentTime: new Date().getTime(),
         nextTime: null,
         remainingCycles: 0,
         cache: {},
@@ -57,6 +59,7 @@ let state = {
         //     }
         // },
         {
+            cache: {},
             id: 'g1',
             data: {
                 id: 'g1',

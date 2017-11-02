@@ -33,9 +33,13 @@ function graphReducer(state = null, action) {
         case 'EDGE_LINK_FUNCTION_ADD': {
             return {...state, ...addLinkFunction(state, action.payload.edge, action.payload.function)}
         }
-        case 'BREADTH_TRAVERSE': {
-            let _state = traverseCycles(state, action.payload);
-            return { ...state, ..._state };
+        case 'GRAPH_TRAVERSE_CYCLES': {
+            return traverseCycles(state, action.payload);
+            // return { ...state, ..._state };
+        }
+        case 'GRAPH_REVERSE_CYCLES': {
+            return reverseCycles(state, action.payload);
+            // return { ...state, ..._state };
         }
         case 'DISPLAY_FUNCTIONS_APPLY': {
             return { ...state, nodesData: applyDisplayFunctions(state) }
@@ -154,9 +158,10 @@ function nodePropertySet(g, nodeData: NodeData): Graph {
 
 /* TRAVERSAL */
 
-function traverseCycles(_state, payload: any = {}) {
-    let cycleCount = payload.cycles || 1;
+function traverseCycles(_state, payload: Number = 0) {
+    let cycleCount = payload;
     let state = { ..._state }
+    let cache =  { ...state.cache };
 
     for (let c = 0; c < cycleCount; c++) {
         let sources = getSources(ArrayById(state.nodesData));
@@ -165,11 +170,20 @@ function traverseCycles(_state, payload: any = {}) {
             return { ...acc, [item.id]: item };
         }, {});
         state = { ...state, nodesData: newNodesDataObject };
+        let name = String(c);
+        cache[name] = state;
     }
 
-    state = { ...state, nodesData: applyDisplayFunctions(state) };
+    state = { ...state, nodesData: applyDisplayFunctions(state), cache: cache };
 
     return state;
+}
+
+function reverseCycles(_state, backCycles: Number = 0) {
+    let state = { ..._state }
+    let currentCycle = Object.keys(state.cache).length - 1; 
+    let nextCycle = currentCycle + backCycles;
+    return { ...state, ...state.cache[String(nextCycle)]   };
 }
 
 function breadthTraverse(current: Array<NodeData>, g, _linkedSources = []) {

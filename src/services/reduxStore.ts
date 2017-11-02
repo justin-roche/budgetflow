@@ -10,17 +10,36 @@ export class Store {
 
     dispatch(...args) {
         this.store.dispatch(...args);
+        let self  = this;
+        return nextMonad()
+
+        function nextMonad() {
+            return {
+                next: function (cb) {
+                    cb(self.store.getState());
+                    return nextMonad();
+                }
+            }
+        }
+    }
+
+    dispatchSequence(...actions) {
+        actions.reduce((acc, action) => {
+            this.dispatch(...action);
+            console.log('new store', this.store);
+            return this.store;
+        }, null)
     }
 
     subscribe(...args) {
         return this.store.subscribe(...args);
     }
 
-    getState() : AppState {
+    getState(): AppState {
         return this.store.getState();
     }
 
-    select(selector): BehaviorSubject<any> {
+    select(selector, options = { log: false }): BehaviorSubject<any> {
 
         let o = new BehaviorSubject({});
 
@@ -38,21 +57,21 @@ export class Store {
 
             }
             else if (previous !== slice) {
-                console.log('selector triggered (current not equal to last):', selector)
+                if (options.log) console.log('selector triggered (current not equal to last):', selector)
                 previous = slice;
                 o.next(slice);
             }
         });
-        if(previous === null) {
-            console.log('selector skipped (previous value null)', selector)
+        if (previous === null) {
+            if (options.log) console.log('selector skipped (previous value null)', selector)
             o = o.skip(1);
         } else {
-            console.log('selector triggered on initialization (previous value not null):', selector, previous)
+            if (options.log) console.log('selector triggered on initialization (previous value not null):', selector, previous)
             o.next(previous);
         }
-       
+
         return o;
-        
+
     }
 
 }

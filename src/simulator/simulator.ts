@@ -11,16 +11,16 @@ export class Simulator {
 
     constructor(private store: Store<any>) {
         // select('ui.simulation.time', { subscribe: true })(this, 'simulationTime');   
-       this.store.select('simulation.time').subscribe(d => {
+       //this.store.select('simulation.time').subscribe(d => {
            //if(this.simulationOn) {
-               let cycles = this.getCycles();
+               //let cycles = this.getCycles();
                // this.store.dispatch({type: 'BREADTH_TRAVERSE', payload: {cycles: this.$cycles.value}});
                // this.store.dispatch({type: 'SIMULATION_OFF'})
            //}
-       });  
-       this.store.select('simulation.on').subscribe(d => {
-            this.simulationOn = d;
-    });   
+       //});  
+       //this.store.select('simulation.on').subscribe(d => {
+           // this.simulationOn = d;
+   // });   
     
         // this.$cycles = this.store.select('simulation.remainingCycles');   
         // this.$cycles.subscribe(d => {
