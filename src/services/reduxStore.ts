@@ -39,7 +39,7 @@ export class Store {
         return this.store.getState();
     }
 
-    select(selector, options = {}): BehaviorSubject<any> {
+    select(selector, options:any = {}): BehaviorSubject<any> {
         let log = options.log || false;
         let time = options.time || 'present';
 
@@ -47,6 +47,14 @@ export class Store {
         let selectorArray = selector.split('.');
         selectorArray.splice(1,0,time);
         selector = selectorArray.join('.');
+
+        if(options.bind) {
+            let context = options.bind[0];
+            let property = options.bind[1];
+            o.subscribe(v => {
+                context[property] = v;
+            })
+        }
 
         let previous = selector.split('.').reduce((acc, prop) => {
             // if(acc[options.time]) return acc[options.time][prop];

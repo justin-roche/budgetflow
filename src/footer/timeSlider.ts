@@ -1,3 +1,4 @@
+import { SimulationService } from './../services/simulationService';
 import { Store } from './../services/reduxStore';
 import { ModalSettings } from './../common/modalWrapper';
 import *  as Rx from 'rxjs';
@@ -6,17 +7,22 @@ import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
 import $ from 'jquery';
 import * as moment from 'moment';
+import * as simulationActions from '../reducers/simulationActions';
 
-@inject(Store)
+@inject(Store, SimulationService)
 export class TimeSlider {
     _simulation: Simulation;
     ref;
     displayedSelectedDate;
 
-    constructor(private store: Store) {
-        store.select('simulation', { log: true }).subscribe(s => {
-            this._simulation = s;
-        })
+    constructor(private store: Store, private sim: SimulationService) {
+        store.select('simulation', { log: true, bind: [this, '_simulation'] }).subscribe(_ => {
+            this.updateDisplay();
+        });
+    }
+
+    updateDisplay() {
+        this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');
     }
 
     attached() {
@@ -66,9 +72,7 @@ export class TimeSlider {
         this.ref.noUiSlider.on('update', function (values, handle) {
             this.displayedSelectedDate = this.formatFromMsString(values[0]);
             let nextTime = Number(values[0]);
-
-            
-            
+            this.sim.setNextTime(nextTime);
         }.bind(this));
     }
 

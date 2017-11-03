@@ -9,12 +9,8 @@ export class Home {
     private showNodeEditor;
 
     constructor(private store: Store) {
-        this.store.select('ui.scenarioEditor.show').subscribe(d => {
-            this.showScenarioEditor = d;
-        });
-        this.store.select('ui.nodeEditor.show').subscribe(d => {
-            this.showNodeEditor = d;
-        });
+        this.store.select('ui.scenarioEditor.show',{bind:[this,'showScenarioEditor']});
+        this.store.select('ui.nodeEditor.show',{bind:[this,'showNodeEditor']});
     }
 
 }

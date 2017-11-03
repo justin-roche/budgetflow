@@ -25,7 +25,9 @@ let defaultState = {
     simulation: null
 }
 
-let undoableGraphReducer = undoable(graphReducer);
+let undoableGraphReducer = undoable(graphReducer, {undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function(x, prev, next){
+    return (next !== null && prev !== null) && next !== prev;
+}});
 let undoableUiReducer = undoable(uiReducer);
 let undoableSimulationReducer = undoable(simulationReducer);
 let undoableGraphsReducer = undoable(graphsReducer);
@@ -33,13 +35,27 @@ let undoableGraphsReducer = undoable(graphsReducer);
 function rootReducer(state: AppState = defaultState, action) {
 
     
-    return {
+     state = combinedReducer(state, action);
+
+    return {...state, ...{
         ui: undoableUiReducer(state.ui, action),
         graphs: undoableGraphsReducer(state.graphs, action),
         graph: undoableGraphReducer(state.graph, action),
         simulation: undoableSimulationReducer(state.simulation, action)
-    }
+    }}
 
+}
+
+function combinedReducer(state, action) {
+    switch (action.type) {
+        case 'SIMULATION_NEXT_TIME_SET': {
+
+        }
+        default: {
+            return state;
+        }
+    }
+   
 }
 
 function graphsReducer(state = null, action) {

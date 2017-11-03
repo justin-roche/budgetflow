@@ -17,7 +17,7 @@ let state = {
             nodeModel: {},
         },
         scenarioEditor: {
-            show: true,
+            show: false,
         },
         conditionalTable: {
             show: false,

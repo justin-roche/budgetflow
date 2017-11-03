@@ -25,14 +25,10 @@ export class GraphController {
     constructor(private ea: EventAggregator, private store: Store) {
         let previousValue;
         let self = this;
-        this.$graph = this.store.select('graph');
-        this.$graph.subscribe(d => {
-            this.graph = d;
+        this.store.select('graph', {bind: [this, 'graph']}).subscribe(d => {
             this.refresh(d);
         })
-        this.$ui = this.store.select('ui');
-        this.$ui.subscribe(d => {
-            self.ui = d;
+        this.store.select('ui', {bind: [this, 'ui']}).subscribe(d => {
             if(this.container) {
                 this.refresh(this.graph);
             }

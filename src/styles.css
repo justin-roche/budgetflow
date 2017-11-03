@@ -107,6 +107,10 @@ body {
     
   }
 
+  .active-simulation-handle {
+    background-color: red;
+  }
+
 
 #contextMenu {
   position: absolute;

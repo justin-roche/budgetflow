@@ -30,10 +30,7 @@ function simulationReducer(state: Simulation = null, action) {
 }
 
 function setNextTime(state, nextTime) {
-    let timeDifference = nextTime - state.currentTime;
-
-    let remainingCycles = timeDifference/state.cycleTime;
-    return {...state, nextTime: nextTime, remainingCycles: remainingCycles};
+    return {...state, nextTime: nextTime};
 }
 
 export { simulationReducer };
