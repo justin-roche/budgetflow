@@ -39,11 +39,17 @@ export class Store {
         return this.store.getState();
     }
 
-    select(selector, options = { log: false }): BehaviorSubject<any> {
+    select(selector, options = {}): BehaviorSubject<any> {
+        let log = options.log || false;
+        let time = options.time || 'present';
 
         let o = new BehaviorSubject({});
+        let selectorArray = selector.split('.');
+        selectorArray.splice(1,0,time);
+        selector = selectorArray.join('.');
 
         let previous = selector.split('.').reduce((acc, prop) => {
+            // if(acc[options.time]) return acc[options.time][prop];
             return acc[prop];
         }, this.store.getState());
 
@@ -57,16 +63,16 @@ export class Store {
 
             }
             else if (previous !== slice) {
-                if (options.log) console.log('selector triggered (current not equal to last):', selector)
+                if (log) console.log('selector triggered (current not equal to last):', selector)
                 previous = slice;
                 o.next(slice);
             }
         });
         if (previous === null) {
-            if (options.log) console.log('selector skipped (previous value null)', selector)
+            if (log) console.log('selector skipped (previous value null)', selector)
             o = o.skip(1);
         } else {
-            if (options.log) console.log('selector triggered on initialization (previous value not null):', selector, previous)
+            if (log) console.log('selector triggered on initialization (previous value not null):', selector, previous)
             o.next(previous);
         }
 

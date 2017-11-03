@@ -1,4 +1,4 @@
-import { SimulationFunctions } from '../simulator/simulationFunctions';
+import { SimulationFunctions } from '../parser/simulationFunctions';
 
 function graphReducer(state = null, action) {
     switch (action.type) {
@@ -38,7 +38,7 @@ function graphReducer(state = null, action) {
             // return { ...state, ..._state };
         }
         case 'GRAPH_REVERSE_CYCLES': {
-            return reverseCycles(state, action.payload);
+            // return reverseCycles(state, action.payload);
             // return { ...state, ..._state };
         }
         case 'DISPLAY_FUNCTIONS_APPLY': {
@@ -179,12 +179,12 @@ function traverseCycles(_state, payload: Number = 0) {
     return state;
 }
 
-function reverseCycles(_state, backCycles: Number = 0) {
-    let state = { ..._state }
-    let currentCycle = Object.keys(state.cache).length - 1; 
-    let nextCycle = currentCycle + backCycles;
-    return { ...state, ...state.cache[String(nextCycle)]   };
-}
+// function reverseCycles(_state, backCycles: Number = 0) {
+//     let state = { ..._state }
+//     let currentCycle = Object.keys(state.cache).length - 1; 
+//     let nextCycle = currentCycle + backCycles;
+//     return { ...state, ...state.cache[String(nextCycle)]   };
+// }
 
 function breadthTraverse(current: Array<NodeData>, g, _linkedSources = []) {
 

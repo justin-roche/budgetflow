@@ -4,7 +4,7 @@ function simulationReducer(state: Simulation = null, action) {
 
         case 'SIMULATION_NEXT_TIME_SET': {
             return {...state,  ...setNextTime(state, action.payload) };
-        },
+        }
         case 'SIMULATION_CURRENT_TIME_SET': {
             return {...state,  currentTime: action.payload };
         }

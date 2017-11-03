@@ -15,6 +15,7 @@ export class GraphController {
     $ui;
     dragging = false;
     ui;
+    graph;
     containerRef;
     container;
     simulation;
@@ -26,13 +27,14 @@ export class GraphController {
         let self = this;
         this.$graph = this.store.select('graph');
         this.$graph.subscribe(d => {
+            this.graph = d;
             this.refresh(d);
         })
-        this.$ui = this.store.select('ui.graphContainer');
+        this.$ui = this.store.select('ui');
         this.$ui.subscribe(d => {
             self.ui = d;
             if(this.container) {
-                this.refresh(this.store.getState().graph);
+                this.refresh(this.graph);
             }
         })
 
@@ -157,8 +159,8 @@ export class GraphController {
 
     renderNodes() {
         let d3 = this.d3;
-        let selectedNodeId = this.store.getState().ui.graphContainer.selectedNodeId;
-        let data = this.store.getState().graph; 
+        let selectedNodeId = this.ui.graphContainer.selectedNodeId;
+        let data = this.graph; 
         
         this.svg.
             selectAll("text")

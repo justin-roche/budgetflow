@@ -13,7 +13,7 @@ let SimulationFunctions = {
                 node.data.active = true;
             } else {
                 node.data.active = false;
-            }
+            } 
         }
     },
 

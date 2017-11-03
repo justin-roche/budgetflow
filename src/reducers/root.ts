@@ -1,9 +1,10 @@
 import { ScenarioEditor } from './../editors/scenarioEditor';
-import { SimulationFunctions } from './../simulator/simulationFunctions';
+import { SimulationFunctions } from './../parser/simulationFunctions';
 import { _ } from 'underscore';
 import {graphReducer} from './graphReducer';
 import {simulationReducer} from './simulationReducer';
 import { uiReducer } from './uiReducer';
+import undoable, { distinctState } from 'redux-undo'
 
 // declare interface AppState {
 //     ui: any;
@@ -24,13 +25,19 @@ let defaultState = {
     simulation: null
 }
 
+let undoableGraphReducer = undoable(graphReducer);
+let undoableUiReducer = undoable(uiReducer);
+let undoableSimulationReducer = undoable(simulationReducer);
+let undoableGraphsReducer = undoable(graphsReducer);
+
 function rootReducer(state: AppState = defaultState, action) {
 
+    
     return {
-        ui: uiReducer(state.ui, action),
-        graphs: graphsReducer(state.graphs, action),
-        graph: graphReducer(state.graph, action),
-        simulation: simulationReducer(state.simulation, action)
+        ui: undoableUiReducer(state.ui, action),
+        graphs: undoableGraphsReducer(state.graphs, action),
+        graph: undoableGraphReducer(state.graph, action),
+        simulation: undoableSimulationReducer(state.simulation, action)
     }
 
 }
