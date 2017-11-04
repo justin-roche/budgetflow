@@ -23,7 +23,7 @@ export class ScenarioEditor {
 
   modalSettings = new Rx.BehaviorSubject<ModalSettings>(this.defaultModalSettings);
 
-  constructor(private ea: EventAggregator, private store: Store<any>) {
+  constructor(private ea: EventAggregator, private store: Store) {
     this.$graphs = this.store.select('graphs');
     this.$graphs.subscribe(d => {
       this.graphs = d;

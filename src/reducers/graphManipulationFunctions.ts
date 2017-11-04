@@ -76,7 +76,7 @@ function addNewEdge(g, o) {
     if(shareEdge(g, o)) return g;
 
     let edge = { ...o.edge, id: getNewEdgeId(g)};
-    let data: EdgeData = {...{ id: edge.id, linkFunctions: [] }, ...o.data};
+    let data: EdgeData = {...{ id: edge.id, active: true, linkFunctions: [] }, ...o.data};
 
     return {
             ...g, 

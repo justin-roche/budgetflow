@@ -1,4 +1,7 @@
-import { SimulationFunctions } from '../parser/simulationFunctions';
+import { stepFunctions } from '../parser/stepFunctions';
+import { displayFunctions } from '../parser/displayFunctions';
+import { linkFunctions } from '../parser/linkFunctions';
+
 import { ArrayById, ArrayToObject} from './utilities';
 
 /* TRAVERSAL */
@@ -14,9 +17,9 @@ function traverseCycles(_state, payload: Number = 1) {
             return { ...acc, [item.id]: item };
         }, {});
         state = { ...state, nodesData: newNodesDataObject };
-        let name = String(c);
     }
 
+    /* update the display */
     state = { ...state, nodesData: applyDisplayFunctions(state)};
 
     return state;
@@ -57,10 +60,10 @@ function linkSources(steppedSources: Array<NodeData>, nestedTargets, sourcesAlre
     return steppedSources.reduce(function (acc, sourceData, i) {
         let outNodes: Array<NodeData> = nestedTargets[i]; 
 
-        /* if the outNode has already been linked to by another source, use it */
+        /* retrieve already reduced outNodes */
         outNodes = outNodes.map(outNode => acc.linkedTargets[outNode.id]? acc.linkedTargets[outNode.id] : outNode);
 
-        if (!sourceData.active || outNodes.length === 0 || sourcesAlreadyLinked.some(n => n.id === sourceData.id)) {
+        if (outNodes.length === 0 || sourcesAlreadyLinked.some(n => n.id === sourceData.id)) {
             return {
                 linkedTargets: { ...acc.linkedTargets, ...ArrayToObject(outNodes) },
                 linkedSources: { ...acc.linkedSources, [sourceData.id]: sourceData }
@@ -88,20 +91,21 @@ function linkSource(_source: NodeData, targets: Array<NodeData>, g: Graph) {
 
     return targets.reduce((acc: any, target, i) => {
 
-        /* extract from NodesData type of acc to NodeData type */
+        /* retrieve already reduced source */
         let source = acc.linkedSource[_source.id];
 
         let edge: EdgeData = getEdge(source, target, g);
-        let { linkedSource, linkedTarget } = linkTarget(source, target, edge);
-
-        return {
-            linkedTargets: {
-                ...acc.linkedTargets,
-                [linkedTarget.id]: linkedTarget
-            },
-            linkedSource: { [linkedSource.id]: linkedSource }
+        
+        if(activeEdge(g, edge)) {
+            let { linkedSource, linkedTarget } = linkTarget(g, source, target, edge);
+            return {
+                linkedTargets: { ...acc.linkedTargets, [linkedTarget.id]: linkedTarget},
+                linkedSource: { [linkedSource.id]: linkedSource }
+            }
+        } else {
+            return acc;
         }
-
+        
     }, { linkedTargets: ArrayToObject(targets), linkedSource: { [_source.id]: _source } })
 
 }
@@ -110,33 +114,35 @@ declare interface LinkPair {
     linkedSource: NodeData,
     linkedTarget: NodeData
 }
-function linkTarget(source: NodeData, target: NodeData, edge): LinkPair {
+function linkTarget(g, source: NodeData, target: NodeData, edge): LinkPair {
 
     return edge.linkFunctions.reduce((acc, functionSettings) => {
-        let fn = SimulationFunctions.linkFunctions[functionSettings.name];
+        let fn = linkFunctions[functionSettings.name];
 
-        /* application */
-        let singleResult;
-        if (target.active || functionSettings.phase === 'prelink') {
-            /* apply if node is active, function on target is pure */
-            singleResult = fn(acc.linkedSource, target, ...functionSettings.arguments);
-            return {
-                linkedSource: singleResult.source,
-                linkedTarget: singleResult.target
-            };
-        } else {
-            return {
-                linkedSource: source,
-                linkedTarget: target
-            }
-        }
+        let linkPair = fn(acc.linkedSource, target, ...functionSettings.arguments);
+        return {
+            linkedSource: linkPair.source,
+            linkedTarget: linkPair.target
+        };
 
     }, { linkedSource: source, linkedTarget: target });
 }
 
+function activeEdge (g, edgeData: EdgeData) {
+    if(!edgeData.conditions) {
+        return true;
+    } else {
+        return edgeData.conditions.reduce((acc, condition: Condition ) =>{
+            if(acc === true) return acc;
+            if(condition.type === 'sufficient' && linkFunctions.canActivate(g, edgeData, condition.expression)) return true;
+            return acc;
+        },false);
+    }
+}
+
 function applyStepFunction(nodeData) {
     let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
-        let fn = SimulationFunctions.stepFunctions[functionSettings.name];
+        let fn = stepFunctions[functionSettings.name];
         let newSlice = fn(nodeData, ...functionSettings.arguments);
         let updated = { ...acc, ...newSlice };
         return updated;
@@ -145,29 +151,25 @@ function applyStepFunction(nodeData) {
     return update;
 }
 
-function applyDisplayFunctions(g) {
-    let nodesArr = ArrayById(g.nodesData);
+function applyDisplayFunctions(g): NodesData {
 
-    /* apply for graph */
+    let nodesArr: Array<NodeData> = ArrayById(g.nodesData);
     let displayFns = g.data.displayFunctions.nodes;
 
-    let update = displayFns.reduce((nodesArr, functionSettings) => {
-        /* for each display function */
-        let fn = SimulationFunctions.displayFunctions[functionSettings.name];
+    /* reduce the nodesArray */
+    let updatedNodesArr = nodesArr.reduce((acc, nodeData) => {
 
-        /* reduce the nodesArray */
-        let updatedNodesArr = nodesArr.reduce((acc, node) => {
-            let nodeData = g.nodesData[node.id]
-            let newDisplayData = fn(node, nodeData, ...functionSettings.arguments);
-            return acc.concat([{ ...node, displayData: { ...newDisplayData } }]);
-        }, []);
+        let appliedNodeData = displayFns.reduce((acc, fn) => {
+            let newDisplayData = displayFunctions[fn.name](g, nodeData.id, ...fn.arguments);
+            return { ...acc, displayData: { ...acc.displayData, ...newDisplayData } };
+        }, nodeData);
 
-        return updatedNodesArr;
+        return acc.concat(appliedNodeData);
 
-    }, nodesArr);
+    }, []);
 
     /* convert back to object type */
-    return ArrayToObject(update);
+    return ArrayToObject(updatedNodesArr);
 }
 
 /* helper functions */

@@ -35,7 +35,7 @@ let undoableGraphsReducer = undoable(graphsReducer);
 function rootReducer(state: AppState = defaultState, action) {
 
     
-     state = combinedReducer(state, action);
+     // state = combinedReducer(state, action);
 
     return {...state, ...{
         ui: undoableUiReducer(state.ui, action),
@@ -47,14 +47,7 @@ function rootReducer(state: AppState = defaultState, action) {
 }
 
 function combinedReducer(state, action) {
-    switch (action.type) {
-        case 'SIMULATION_NEXT_TIME_SET': {
-
-        }
-        default: {
-            return state;
-        }
-    }
+    
    
 }
 

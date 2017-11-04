@@ -226,7 +226,7 @@ export class GraphController {
                         .attr("r", 20)
                 }
 
-                if(nd.active === false) {
+                if(nd.displayData.active === false) {
                     selected.attr('fill', 'gray')
                     // selected.classed('inactive-node', true);
                 } else {

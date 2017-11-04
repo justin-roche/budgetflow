@@ -144,6 +144,7 @@ let state = {
             edges: <Edges>{
                 'e0': {
                     id: 'e0',
+                    active: true,
                     source: 'n0',
                     target: 'n1',
                     type: 'arrow'
@@ -152,6 +153,7 @@ let state = {
             edgesData: <EdgesData>{
                 'e0': {
                     id: 'e0',
+                    active: true,
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     stepFunctions: null,
@@ -241,7 +243,7 @@ let state = {
             id: 'g3',
             data: {
                 name: 'conditional',
-                displayFunctions: { nodes: [{ name: 'labelById' }] }
+                displayFunctions: { nodes: [{ name: 'labelById' }, {name: 'inactivateByLinks'}] }
             },
             nodes: {
                 'n0': {
@@ -264,7 +266,7 @@ let state = {
                 'n0': {
                     id: 'n0',
                     type: 'source',
-                    active: true,
+                    //active: true,
                     value: 10,
                     stepFunctions: [],
                     displayFunctions: [],
@@ -273,7 +275,7 @@ let state = {
                 'n1': {
                     id: 'n1',
                     type: 'sink',
-                    active: true,
+                    //active: true,
                     value: 0,
                     stepFunctions: [],
                     displayFunctions: [],
@@ -282,21 +284,14 @@ let state = {
                 'n2': {
                     id: 'n2',
                     type: 'sink',
-                    active: true,
+                    //active: true,
                     value: 0,
                     stepFunctions: [],
                     displayFunctions: [],
                     displayData: {},
                 }
             },
-            conditionsData: {
-                'n2': {
-                    edges: [{
-                        id: 'e2',
-                        
-                    }]
-                },
-            },
+           
             edges: {
                 'e1': {
                     id: 'e1',
@@ -317,19 +312,16 @@ let state = {
             },
             edgesData: {
                 'e1': {
-                    preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
-
+                    active: true,
                 },
 
                 'e2': {
-                    preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
-                    informationFunctions: [],
                     active: false,
                     conditions: [
-                        {expression: 'time > 1526156557686',
-                         type: 'necessary'}
+                        {expression: 'true',
+                        type: 'sufficient'}
                     ]
                 },
             }
@@ -883,32 +875,38 @@ let state = {
             },
             edgesData: <EdgesData> {
                 'e0': {
+                    active: true,
                     id: 'e0',
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [3] }],
                 },
                 'e00': {
+                    active: true,
                     id: 'e00',
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [3] }],
                 },
                 'e1': {
                     id: 'e1',
+                    active: true,
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                 },
                 'e2': {
                     id: 'e2',
+                    active: true,
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                 },
                 'e3': {
                     id: 'e3',
+                    active: true,
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                 },
                 'e4': {
                     id: 'e4',
+                    active: true,
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                 },
@@ -1286,10 +1284,12 @@ let state = {
             "edgesData": {
                 "e0": {
                     "id": "e0",
+                    active: true,
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                 },
                 "e1": {
                     "id": "e1",
+                    active: true,
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                 }
             }

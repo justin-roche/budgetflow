@@ -107,34 +107,34 @@ describe('graph reducer', () => {
             expect(s2.nodesData['n6'].value).toBe(1);
         });
 
-        it('does not apply link function toward inactive nodes',()=>{
-            let original = JSON.stringify(g);
-            g.nodesData['n1'].active = false;
-            let s2 = graphReducer(g, actions.graphTraverseCycles());            
-            expect(s2.nodesData['n0'].value).toBe(47);
-            expect(s2.nodesData['n1'].value).toBe(0);
-            g.nodesData['n1'].active = true;
-            expect(original === JSON.stringify(g)).toBe(true);
-        });
+        // it('does not apply link function toward inactive nodes',()=>{
+        //     let original = JSON.stringify(g);
+        //     g.nodesData['n1'].active = false;
+        //     let s2 = graphReducer(g, actions.graphTraverseCycles());            
+        //     expect(s2.nodesData['n0'].value).toBe(47);
+        //     expect(s2.nodesData['n1'].value).toBe(0);
+        //     g.nodesData['n1'].active = true;
+        //     expect(original === JSON.stringify(g)).toBe(true);
+        // });
 
-        it('does not apply link function from inactive nodes',()=>{
-            let original = JSON.stringify(g);
+        // it('does not apply link function from inactive nodes',()=>{
+        //     let original = JSON.stringify(g);
 
-            g.nodesData['n1'].active = false;
-            g.nodesData['n2'].active = false;
-            g.nodesData['n3'].active = false;
-            let s2 = graphReducer(g, actions.graphTraverseCycles());     
+        //     g.nodesData['n1'].active = false;
+        //     g.nodesData['n2'].active = false;
+        //     g.nodesData['n3'].active = false;
+        //     let s2 = graphReducer(g, actions.graphTraverseCycles());     
 
-            expect(s2.nodesData['n0'].value).toBe(47);
-            expect(s2.nodesData['n3'].value).toBe(0);
-            expect(s2.nodesData['n2'].value).toBe(0);
+        //     expect(s2.nodesData['n0'].value).toBe(47);
+        //     expect(s2.nodesData['n3'].value).toBe(0);
+        //     expect(s2.nodesData['n2'].value).toBe(0);
 
-            g.nodesData['n1'].active = true;
-            g.nodesData['n2'].active = true;
-            g.nodesData['n3'].active = true;
+        //     g.nodesData['n1'].active = true;
+        //     g.nodesData['n2'].active = true;
+        //     g.nodesData['n3'].active = true;
             
-            g = JSON.parse(original);
-        });
+        //     g = JSON.parse(original);
+        // });
 
         it('applies step function to all nodes',()=>{
             let ond = JSON.stringify(g.nodesData);
@@ -176,7 +176,8 @@ describe('graph reducer', () => {
         describe('nodes with no active incoming or outgoing links', ()=>{
 
             it('marks nodes with no active links as inactive', ()=>{
-
+                let s2 = graphReducer(g, actions.graphTraverseCycles());
+                expect(s2.nodesData['n2'].displayData.active).toBe(false);
             });
 
             it('stepFunctions can be inactivated if no active links', ()=>{
@@ -228,6 +229,10 @@ describe('graph reducer', () => {
             it('individual links to nodes are activated when self activation conditions are met', () => {
                 
             })
+
+        });
+
+        describe('conditional behavior affecting distant nodes', ()=> {
 
         })
 

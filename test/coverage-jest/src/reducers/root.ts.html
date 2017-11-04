@@ -22,12 +22,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/36</span>
+        <span class='fraction'>0/33</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/19</span>
+        <span class='fraction'>0/17</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/31</span>
+        <span class='fraction'>0/28</span>
       </div>
     </div>
   </div>
@@ -119,14 +119,7 @@
 74
 75
 76
-77
-78
-79
-80
-81
-82
-83
-84</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+77</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -153,23 +146,16 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -236,8 +222,8 @@ let defaultState = {<span class="cstat-no" title="statement not covered" ><span 
     simulation: null<span class="cstat-no" title="statement not covered" ></span>
 }<span class="cstat-no" title="statement not covered" ></span>
 <span class="fstat-no" title="function not covered" ></span>
-let <span class="cstat-no" title="statement not covered" >undoableGraphReducer = <span class="cstat-no" title="statement not covered" >undoable(graphReducer,</span> </span>{undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function(x, prev, next){
-<span class="cstat-no" title="statement not covered" >    return (next !== null &amp;&amp; prev !== null) </span>&amp;&amp; next !== prev;
+let undoableGraphReducer = undoable(graphReducer, {undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function(x, prev, next){
+<span class="cstat-no" title="statement not covered" >    return (next !== null &amp;<span class="cstat-no" title="statement not covered" >&amp; prev !== null) &amp;&amp; ne</span>x</span>t !== prev;
 }});<span class="cstat-no" title="statement not covered" ></span>
 let undoableUiReducer = undoable(uiReducer);
 let undoableSimulationReducer = undoable(simulationReducer);
@@ -246,26 +232,19 @@ let undoableGraphsReducer = undoable(graphsReducer);
 function rootReducer(state: AppState = defaultState, action) {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    </span>
-     stat<span class="fstat-no" title="function not covered" >e = combinedRedu</span>cer(state, action);
-<span class="cstat-no" title="statement not covered" ></span>
-    return {...state, ...{
-        ui: undoableUiReducer(state.ui, action),
-        graphs: undoableGraphsReducer(state.graphs, action),
-        graph: u<span class="cstat-no" title="statement not covered" >ndoableGraphRe</span>ducer(state.graph, action),
-        simulation: undoableSimulationReducer(state.simulation, action)
-    }}
+     // s<span class="fstat-no" title="function not covered" >tate = combinedR</span>educer(state, action);
 &nbsp;
-}<span class="fstat-no" title="function not covered" ></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
-func<span class="cstat-no" title="statement not covered" >tion combinedReducer(state, action) {</span>
-    switch (action.type) {
-        case 'SI<span class="cstat-no" title="statement not covered" >MULATION_NEXT_TIME_SET': {</span>
+    retur<span class="fstat-no" title="function not covered" >n {...state, .</span>..{
+<span class="cstat-no" title="statement not covered" >        ui: undoableUiReduc<span class="cstat-no" title="statement not covered" >er(state.ui, a</span>c</span>tion),
+<span class="cstat-no" title="statement not covered" >        graphs: undoableGraphsReducer(state.graphs, action),</span>
+        graph: undoableGraphReducer(state.graph, action),
+        simulati<span class="cstat-no" title="statement not covered" >on: undoableSimulationReducer(state.simulation</span>, action)
+    }}<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+}
 <span class="cstat-no" title="statement not covered" ></span>
-        }
-        default: {
-<span class="cstat-no" title="statement not covered" >            return state;</span>
-        }
-    }
+function combinedReducer(state, action) {
+    
    <span class="fstat-no" title="function not covered" ></span>
 }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -298,7 +277,7 @@ export { rootReducer };</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 04 2017 16:40:36 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 04 2017 18:44:22 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

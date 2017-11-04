@@ -69,6 +69,12 @@ declare interface EdgeData {
     // preLinkFunctions: Array<FunctionItem>,
     linkFunctions: Array<FunctionItem>,
     stepFunctions?: Array<FunctionItem>,
+    conditions?: Array<Condition>
+}
+
+declare interface Condition {
+    type: string,
+    expression: string,
 }
 
 declare interface Edge {
