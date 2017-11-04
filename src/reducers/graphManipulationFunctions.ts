@@ -31,8 +31,8 @@ function addNewNode(g, nd) {
     let node: AppNode = { ...nd, 
                         ...{ id: getNewNodeId(g), outEdges: [], inEdges: [] } };
     
-    let nodeData: NodeData = {id: node.id, ...createBaseNodeData()};
-
+    let nodeData: NodeData = {...createBaseNodeData(), id: node.id};
+    
     return {
         ...g,
         nodes: { ...g.nodes, [node.id]: node },

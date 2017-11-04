@@ -14,7 +14,11 @@ let state = {
         },
         nodeEditor: {
             show: false,
-            nodeModel: {},
+            nodeModel: {
+               
+
+
+            },
         },
         scenarioEditor: {
             show: false,
@@ -268,7 +272,7 @@ let state = {
                 },
                 'n1': {
                     id: 'n1',
-                    type: 'conditional',
+                    type: 'sink',
                     active: true,
                     value: 0,
                     stepFunctions: [],
@@ -278,12 +282,20 @@ let state = {
                 'n2': {
                     id: 'n2',
                     type: 'sink',
-                    active: false,
+                    active: true,
                     value: 0,
                     stepFunctions: [],
                     displayFunctions: [],
-                    displayData: {}
+                    displayData: {},
                 }
+            },
+            conditionsData: {
+                'n2': {
+                    edges: [{
+                        id: 'e2',
+                        
+                    }]
+                },
             },
             edges: {
                 'e1': {
@@ -312,10 +324,13 @@ let state = {
 
                 'e2': {
                     preLinkFunctions: [],
-                    
-                    linkFunctions: [{ name: 'transfer', arguments: [1] },
-                                    { name: 'derive', phase: 'prelink', arguments: ['active', 'source.value > 1']}],
+                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     informationFunctions: [],
+                    active: false,
+                    conditions: [
+                        {expression: 'time > 1526156557686',
+                         type: 'necessary'}
+                    ]
                 },
             }
         },
@@ -1184,6 +1199,101 @@ let state = {
         //         }
         //     }
         // }
+        {
+            "id": "g10",
+            "data": {
+                "id": "g10",
+                "name": "2 sources 1 sink",
+                "displayFunctions": {
+                    "nodes": [
+                        {
+                            "name": "labelById",
+                            "arguments": []
+                        }
+                    ]
+                }
+            },
+            "nodes": {
+                "n0": {
+                    "id": "n0",
+                    "outEdges": [
+                        "e0"
+                    ],
+                    "inEdges": []
+                },
+                "n1": {
+                    "id": "n1",
+                    "outEdges": [],
+                    "inEdges": [
+                        "e0",
+                        "e1"
+                    ]
+                },
+                "n2": {
+                    "id": "n2",
+                    "outEdges": [
+                        "e1"
+                    ],
+                    "inEdges": []
+                }
+            },
+            "nodesData": {
+                "n0": {
+                    "id": "n0",
+                    "type": "source",
+                    "active": true,
+                    "value": 10,
+                    "stepFunctions": [
+                        
+                    ],
+                    "displayFunctions": [],
+                    "displayData": {
+                        "outlineColor": "blue",
+                        "label": "n0:0"
+                    }
+                },
+                "n1": {
+                    "id": 'n1',
+                    "active": true,
+                    "type": "sink",
+                    "displayFunctions": [],
+                    "stepFunctions": [],
+                    "displayData": {},
+                    "value": 0
+                },
+                "n2": {
+                    "id": 'n2',
+                    "active": true,
+                    "type": "source",
+                    "displayFunctions": [],
+                    "stepFunctions": [],
+                    "displayData": {},
+                    "value": 10
+                }
+            },
+            "edges": {
+                "e0": {
+                    "source": "n0",
+                    "target": "n1",
+                    "id": "e0"
+                },
+                "e1": {
+                    "source": "n2",
+                    "target": "n1",
+                    "id": "e1"
+                }
+            },
+            "edgesData": {
+                "e0": {
+                    "id": "e0",
+                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
+                },
+                "e1": {
+                    "id": "e1",
+                    linkFunctions: [{ name: 'transfer', arguments: [1] }],
+                }
+            }
+        }
     ],
 }
 

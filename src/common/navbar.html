@@ -5,6 +5,7 @@
                 <a class="btn btn-default ${row.isActive ? 'btn-primary' : ''}" href.bind="row.href">${row.title}</a>
             </span>
             <span class="pull-right">
+                <button class="btn btn-default" click.trigger="downloadGraph()">Download</button>    
                 <button class="btn btn-default" click.trigger="toggleScenarioEditor()">Scenario Editor</button>
                 <button class="btn btn-default" click.trigger="toggleNodeEditor()">Node Editor</button>
                 

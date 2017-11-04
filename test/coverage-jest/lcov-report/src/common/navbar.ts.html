@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/27</span>
+        <span class='fraction'>0/31</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>0/7</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/21</span>
+        <span class='fraction'>0/25</span>
       </div>
     </div>
   </div>
@@ -63,7 +63,14 @@
 18
 19
 20
-21</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+21
+22
+23
+24
+25
+26
+27
+28</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -77,39 +84,53 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Stor<span class="cstat-no" title="statement not covered" >e } from './../services/redux<span class="cstat-no" title="statement not covered" >S</span>tore';</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Stor<span class="cstat-no" title="statement not covered" >e } from './../services/redux<span class="cstat-no" title="statement not covered" >S</span>tore';</span>
 import { inject, <span class="cstat-no" title="statement not covered" >bindable } from 'aurelia-fr<span class="fstat-no" title="function not covered" >am</span>ework';</span>
+import { dow<span class="cstat-no" title="statement not covered" >nloadText } from </span>'dow<span class="cstat-no" title="statement not covered" >nload.js';</span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
-@inj<span class="cstat-no" title="statement not covered" >ect(Store)<span class="cstat-no" title="statement not covered" ></span></span>
-expo<span class="cstat-no" title="statement not covered" >rt class NavBar {<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    @bindable router;
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+@inj<span class="cstat-no" title="statement not covered" >ect(Store)</span>
+export class NavBar {
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >    constructor(private store: Store) {<span class="cstat-no" title="statement not covered" ></span></span>
-        
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >    @bindable router;<span class="cstat-no" title="statement not covered" ></span></span>
+    graph;
 <span class="cstat-no" title="statement not covered" ></span>
-    toggleScenarioEditor()<span class="cstat-no" title="statement not covered" > {</span>
-        this.<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >st</span>ore.dispatch({ type: 'UI_SCENARIO_EDITOR_TOGGLE' });        </span>
-    }<span class="fstat-no" title="function not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    toggleNodeEditor() {
-<span class="cstat-no" title="statement not covered" >        this.store.dispatch({ type: 'UI_NODE<span class="fstat-no" title="function not covered" >_E</span>DITOR_TOGGLE' });        </span>
+    constructor(pri<span class="cstat-no" title="statement not covered" >vate store: Store) {</span>
+        this.store.select(<span class="cstat-no" title="statement not covered" >'graph', {bind: [this,'graph'</span>]});
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    toggleSce<span class="fstat-no" title="function not covered" >narioEd</span>itor() {
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch(</span>{ type: 'UI_SCENARIO_EDITOR_TOGGLE' });        
     }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-}<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></pre></td></tr>
+<span class="cstat-no" title="statement not covered" >    toggleNodeEditor() {<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch({ type: 'UI_NODE_EDITOR_TOGGLE' });        </span>
+    }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    down<span class="cstat-no" title="statement not covered" >loadGraph() {</span>
+        downloadText(this.graph.data.name + '.txt', JSON.stringify(this.graph))        
+<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+}</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:51:31 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 04 2017 16:40:36 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

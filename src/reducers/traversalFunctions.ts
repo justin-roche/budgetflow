@@ -6,7 +6,6 @@ import { ArrayById, ArrayToObject} from './utilities';
 function traverseCycles(_state, payload: Number = 1) {
     let cycleCount = payload;
     let state = { ..._state }
-    let cache =  { ...state.cache };
 
     for (let c = 0; c < cycleCount; c++) {
         let sources = getSources(ArrayById(state.nodesData));
@@ -16,10 +15,9 @@ function traverseCycles(_state, payload: Number = 1) {
         }, {});
         state = { ...state, nodesData: newNodesDataObject };
         let name = String(c);
-        cache[name] = state;
     }
 
-    state = { ...state, nodesData: applyDisplayFunctions(state), cache: cache };
+    state = { ...state, nodesData: applyDisplayFunctions(state)};
 
     return state;
 }
@@ -32,7 +30,7 @@ function breadthTraverse(current: Array<NodeData>, g, _linkedSources = []) {
         return { ...nodeData, ...applyStepFunction(nodeData) };
     })
 
-    let nestedTargets: Array<Array<NodeData>> = current.map(nodeData => { // n
+    let nestedTargets: Array<Array<NodeData>> = current.map((nodeData, i) => { 
         return getOutNodes(nodeData, g);
     });
 
@@ -54,10 +52,13 @@ declare interface LinkedSources {
     linkedTargets: NodesData
     linkedSources: NodesData
 }
-function linkSources(steppedSources: Array<NodeData>, allTargets: Array<Array<NodeData>>, sourcesAlreadyLinked, g): LinkedSources {
+function linkSources(steppedSources: Array<NodeData>, nestedTargets, sourcesAlreadyLinked, g): LinkedSources {
 
     return steppedSources.reduce(function (acc, sourceData, i) {
-        let outNodes: Array<NodeData> = allTargets[i];
+        let outNodes: Array<NodeData> = nestedTargets[i]; 
+
+        /* if the outNode has already been linked to by another source, use it */
+        outNodes = outNodes.map(outNode => acc.linkedTargets[outNode.id]? acc.linkedTargets[outNode.id] : outNode);
 
         if (!sourceData.active || outNodes.length === 0 || sourcesAlreadyLinked.some(n => n.id === sourceData.id)) {
             return {
@@ -66,8 +67,7 @@ function linkSources(steppedSources: Array<NodeData>, allTargets: Array<Array<No
             };
         }
         else {
-            /* apply link function when outNodes and not already stepped source
-                the single function is applied to multiple target nodes  */
+            /* apply link when outNodes and not already stepped sources  */
             let { linkedTargets, linkedSource } = linkSource(sourceData, outNodes, g);
             return {
                 linkedTargets: { ...acc.linkedTargets, ...linkedTargets },
@@ -118,7 +118,7 @@ function linkTarget(source: NodeData, target: NodeData, edge): LinkPair {
         /* application */
         let singleResult;
         if (target.active || functionSettings.phase === 'prelink') {
-            /* apply if node is active */
+            /* apply if node is active, function on target is pure */
             singleResult = fn(acc.linkedSource, target, ...functionSettings.arguments);
             return {
                 linkedSource: singleResult.source,

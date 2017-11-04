@@ -173,14 +173,74 @@ describe('graph reducer', () => {
             expect(g.nodesData['n0'].value).toBe(10);
         });
 
-        it('nodes are activated with activation conditions',()=>{
-            expect(g.nodesData.n2.active === false);
-            let s2 = graphReducer(g, actions.graphTraverseCycles());
-            expect(s2.nodesData.active === false);
-            let s3 = graphReducer(g, actions.graphTraverseCycles());
-            expect(s3.nodesData.active === true);
+        describe('nodes with no active incoming or outgoing links', ()=>{
+
+            it('marks nodes with no active links as inactive', ()=>{
+
+            });
+
+            it('stepFunctions can be inactivated if no active links', ()=>{
+
+            });
+
         });
+
+        describe('global activation conditions',() => {
+            it('all links from nodes are activated when global activation conditions are met',()=>{
+                expect(g.nodesData.n2.active === false);
+                let s2 = graphReducer(g, actions.graphTraverseCycles());
+                expect(s2.nodesData.active === false);
+                let s3 = graphReducer(g, actions.graphTraverseCycles());
+                expect(s3.nodesData.active === true);
+            });
+    
+            it('individual links from nodes are activated when global activation conditions are met', () => {
+    
+            })
+    
+            it('links to nodes are activated when global activation conditions are met', () => {
+                
+            })
+    
+            it('individual links to nodes are activated when global activation conditions are met', () => {
+                
+            })
+
+        });
+
+        describe('self activation conditions',() => {
+            it('all links from nodes are activated when self activation conditions are met',()=>{
+                expect(g.nodesData.n2.active === false);
+                let s2 = graphReducer(g, actions.graphTraverseCycles());
+                expect(s2.nodesData.active === false);
+                let s3 = graphReducer(g, actions.graphTraverseCycles());
+                expect(s3.nodesData.active === true);
+            });
+    
+            it('individual links from nodes are activated when self activation conditions are met', () => {
+    
+            })
+    
+            it('links to nodes are activated when self activation conditions are met', () => {
+                
+            })
+    
+            it('individual links to nodes are activated when self activation conditions are met', () => {
+                
+            })
+
+        })
+
         
+        
+    })
+
+    describe('function limits prevent output', () => {
+        
+        
+        it('links do not run if limit condition is met', ()=> {
+
+        })
     })
 
     describe('cycles', () => {
@@ -229,6 +289,19 @@ describe('graph reducer', () => {
         }, 13428);
 
     });
+
+    describe('multiple source scenarios', ()=> {
+        beforeEach(() => {
+            g = state.graphs.filter(graph => graph.data.name === '2 sources 1 sink')[0];
+        });
+
+        it('runs a link function on both sources', ()=>{
+            let s2 = graphReducer(g, actions.graphTraverseCycles(10));
+            expect(s2.nodesData['n0'].value).toBe(0);
+            expect(s2.nodesData['n2'].value).toBe(0);
+            expect(s2.nodesData['n1'].value).toBe(20);
+        });
+    })
 
     describe('node addition and deletion', () => {
         beforeEach(() => {
