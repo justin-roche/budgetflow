@@ -46,7 +46,7 @@ export class NodeEditor {
     }
 
     buildNodeModel(id) {
-        let graph = this.store.getState().graph;
+        let graph = this.store.getState().graph.present;
 
         let node = graph.nodes[id];
         let nodeData = graph.nodesData[id];

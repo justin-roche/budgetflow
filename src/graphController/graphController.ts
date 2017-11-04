@@ -58,6 +58,19 @@ export class GraphController {
         }
         this.container.append("g").attr("id", "linklayer")
         this.container.append("g").attr("id", "nodelayer")
+
+        this.container.append("svg:defs").selectAll("marker")
+        .data(["end"])      // Different link/path types can be defined here
+        .enter().append("svg:marker")    // This section adds in the arrows
+        .attr("id", String)
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 25)
+        .attr("refY", 0)
+        .attr("markerWidth", 2)
+        .attr("markerHeight", 2)
+        .attr("orient", "auto")
+        .append("svg:path")
+        .attr("d", "M0,-5L10,0L0,5");
     }
 
     /* state join- joines the d3 config data to redux */
@@ -140,7 +153,7 @@ export class GraphController {
             return d.key;
         })
         linkGroups.exit().remove();
-        linkGroups.enter().append("g").attr("class", "linkGroup").append("line")
+        linkGroups.enter().append("g").attr("class", "linkGroup").append("line").attr("marker-end", "url(#end)");
     }
 
     addNodes(nodesArray, data) {

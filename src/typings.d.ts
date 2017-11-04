@@ -92,8 +92,23 @@ declare interface Simulation {
     remainingCycles: Number,
 }
 
+declare interface NodeModel {
+    node: AppNode,
+    nodeData: NodeData,
+    outEdges: Array<Edge>,
+    outEdgesData: Array<Edge>,
+    inEdges: Array<Edge>,
+    inEdgesData: Array<EdgeData>,
+    outNodes: Array<AppNode>,
+    outNodesData: Array<AppNode>,
+    inNodes: Array<AppNode>,
+    inNodesData: Array<AppNode>,
+}
+
 declare interface UI {
     graphContainer: any,
-    nodeEditor: any,
+    nodeEditor: {
+        nodeModel: NodeModel
+    },
     interactivity: any,
 }
