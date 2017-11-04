@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/42</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/32</span>
+        <span class='fraction'>0/35</span>
       </div>
     </div>
   </div>
@@ -78,7 +78,11 @@
 33
 34
 35
-36</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+36
+37
+38
+39
+40</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -107,6 +111,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -119,14 +127,14 @@ import {Rout<span class="cstat-no" title="statement not covered" >er, RouterConf
 impo<span class="cstat-no" title="statement not covered" >rt {PLATFORM} from 'aurelia-pal';<span class="cstat-no" title="statement not covered" ></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt { createStore, applyMiddleware } from 'redux';<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt { rootReducer } from './reducers/root';</span>
-import { state } from '../test/mock-data/state';
+import { state } from './state';
 import logger fro<span class="cstat-no" title="statement not covered" >m 'redux-logger'<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
 @inject(Store)
 <span class="cstat-no" title="statement not covered" >export class App {</span>
   router: Router;<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  constructor(privat<span class="cstat-no" title="statement not covered" >e store: (Store&lt;any&gt;)) </span>{
+  constructor(privat<span class="cstat-no" title="statement not covered" >e store: (Store)) {</span>
     store.prov<span class="cstat-no" title="statement not covered" >ideStore(createSt</span>ore(rootReducer, applyMiddleware(logger)));
     this.hydr<span class="cstat-no" title="statement not covered" >ateInitial();</span>
   }<span class="cstat-no" title="statement not covered" ></span>
@@ -136,12 +144,16 @@ import logger fro<span class="cstat-no" title="statement not covered" >m 'redux-
     this<span class="cstat-no" title="statement not covered" >.store.store.dispatc</span>h({type: 'GRAPH_SET', payload: state.graph});
     this<span class="cstat-no" title="statement not covered" >.store.store.dispatch({type: 'UI_SET', payload: state.ui});</span>
     this<span class="cstat-no" title="statement not covered" >.store.store.dispatch({</span>type: 'SIMULATION_SET', payload: state.simulation});
-}
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  config<span class="cstat-no" title="statement not covered" >ureRouter(config: RouterConfiguration, router: Router) {</span>
-    conf<span class="cstat-no" title="statement not covered" >ig.title = 'Aurelia';</span>
-    conf<span class="cstat-no" title="statement not covered" >ig.map([</span>
-      { <span class="cstat-no" title="statement not covered" >route: ['', 'test'], name: 'test',      moduleId: PLATFORM.moduleName('./home'),      nav:</span> true, title: 'test' },
+    setTimeout(function(){
+<span class="cstat-no" title="statement not covered" >      this.store.store.dispatch({ty<span class="fstat-no" title="function not covered" >pe</span>: 'GRAPH_SET', payload: state.graphs.filter(g =&gt; g.data.name === '1-2-3').pop()});</span>
+      th<span class="cstat-no" title="statement not covered" >is.store.dispatch({ type: 'DISPLAY_FUNCTIONS_APPLY'});</span>
+    }.bi<span class="cstat-no" title="statement not covered" >nd(this),0)</span>
+}<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  config<span class="cstat-no" title="statement not covered" >ureRouter(c<span class="fstat-no" title="function not covered" >on</span>fig: RouterConfiguration, router: Router) {</span>
+    config.t<span class="cstat-no" title="statement not covered" >itle = 'Aurelia';<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+    config.m<span class="cstat-no" title="statement not covered" >ap([</span>
+      { route: ['', 'test'], name: 'test',      moduleId: PLATFORM.moduleName('./home/home'),      nav: true, title: 'test' },
       // { route: 'users',         name: 'users',        moduleId: PLATFORM.moduleName('./users'),        nav: true, title: 'Github Users' },
 <span class="cstat-no" title="statement not covered" >      // { route: 'child-router',  n<span class="fstat-no" title="function not covered" >am</span>e: 'child-router', moduleId: PLATFORM.moduleName('./child-router'), nav: true, title: 'Child Router' },</span>
     ]);<span class="cstat-no" title="statement not covered" ></span>
@@ -154,7 +166,7 @@ import logger fro<span class="cstat-no" title="statement not covered" >m 'redux-
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Oct 08 2017 19:10:29 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:40:00 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

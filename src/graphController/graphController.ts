@@ -25,6 +25,7 @@ export class GraphController {
     constructor(private ea: EventAggregator, private store: Store) {
         let previousValue;
         let self = this;
+
         this.store.select('graph', {bind: [this, 'graph']}).subscribe(d => {
             this.refresh(d);
         })
@@ -34,10 +35,6 @@ export class GraphController {
             }
         })
 
-    }
-
-    getCurrentGraph(s) {
-        return s.graph;
     }
 
     attached() {
@@ -361,14 +358,14 @@ export class GraphController {
         nodes.on('click', function (d) {
             d3.event.preventDefault();
             d3.event.stopPropagation();
-            let previous = self.ui.selectedNodeId; 
-
+            let previous = self.ui.graphContainer.selectedNodeId; 
+            
             if(previous) {
                 if(previous === d.id) {
                     self.store.dispatch({ type: 'SELECT_NODE', payload: null });
                 } 
                 if(previous !== d.id) {
-                    self.store.dispatch({ type: 'ADD_EDGE', payload: { source: previous, target: d.id } });
+                    self.store.dispatch({ type: 'EDGE_ADD', payload: {edge:{ source: previous, target: d.id }} });
                     self.store.dispatch({ type: 'SELECT_NODE', payload: null });
                 }
             }

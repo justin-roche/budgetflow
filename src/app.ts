@@ -4,14 +4,14 @@ import {Router, RouterConfiguration} from 'aurelia-router';
 import {PLATFORM} from 'aurelia-pal';
 import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
-import { state } from '../test/mock-data/state';
+import { state } from './state';
 import logger from 'redux-logger'
 
 @inject(Store)
 export class App {
   router: Router;
 
-  constructor(private store: (Store<any>)) {
+  constructor(private store: (Store)) {
     store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
     this.hydrateInitial();
   }

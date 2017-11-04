@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/editors/conditionalEditor.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/editors</a> conditionalEditor.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/66</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/42</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/54</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
+import { Store <span class="cstat-no" title="statement not covered" >} from './../services/reduxStore';<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+@inject(<span class="cstat-no" title="statement not covered" >Store)<span class="cstat-no" title="statement not covered" ></span></span>
+export c<span class="cstat-no" title="statement not covered" >lass Conditio</span>nalEditor {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    conditiona</span>ls = [];
+    tests = [];
+    $nodeModel;<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    nodeMode<span class="cstat-no" title="statement not covered" >l;<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >    inputConditional: String = 'n1 &gt; 10'<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" >    constructor(private store: Store) {</span>
+        this.$nodeModel = this.store.select('ui.nodeEditor.nodeModel');
+        this.$nod<span class="cstat-no" title="statement not covered" >eModel.subscribe(d =&gt; {<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >            this.nodeModel = d;<span class="cstat-no" title="statement not covered" ></span></span>
+        })
+<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" ></span>
+    addConditional(<span class="cstat-no" title="statement not covered" >) {</span>
+        let parsed = thi<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >s.</span>parseStatement(this.inputConditional);</span>
+        this.<span class="fstat-no" title="function not covered" >conditionals.push(</span>this.inputConditional);
+        console.log(<span class="cstat-no" title="statement not covered" >this.</span>conditionals)
+<span class="cstat-no" title="statement not covered" >        this.inputConditiona</span>l = '';
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    pars<span class="cstat-no" title="statement not covered" >eStatement(statement) {</span>
+<span class="cstat-no" title="statement not covered" >        let [subject, predicate, object] = statement.split(' ');</span>
+<span class="cstat-no" title="statement not covered" >        let fn = { name: 'derive',<span class="fstat-no" title="function not covered" > p</span>hase: 'prelink', arguments: ['active', 'source.value ' + predicate + ' ' + object] };</span>
+<span class="cstat-no" title="statement not covered" ></span>
+        let inEdge = this.nodeModel.inEdges.filter(ed =&gt; ed.source === subject)[0];
+        let inEdgeData = this.nodeModel.inEdgesData.filter(ed =&gt; ed.id === inEdge.id)[0];
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+        if (inEdge) {<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >            inEdgeData = {...inEdgeData, linkFunctions:</span> {...inEdgeData.linkFunctions, }}
+<span class="cstat-no" title="statement not covered" >            this.store.dispatch({ type: </span>'EDGE_LINK_FUNCTION_ADD', payload: { edge: inEdge, function: fn } });
+<span class="cstat-no" title="statement not covered" >        } else {</span>
+            let edge = { source: subject, target: this.nodeModel.node.id };
+<span class="cstat-no" title="statement not covered" >            let edgeData = { linkFunctions: [fn] <span class="fstat-no" title="function not covered" >};</span></span>
+            this.<span class="cstat-no" title="statement not covered" >store.dispatch({ type</span>: 'EDGE_AD<span class="cstat-no" title="statement not covered" >D', pa</span>yload: { des<span class="cstat-no" title="statement not covered" >cripti</span>on: edge,<span class="cstat-no" title="statement not covered" > data:</span> edgeData } });
+        }<span class="cstat-no" title="statement not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+    getC<span class="cstat-no" title="statement not covered" >onditionals() {</span>
+        retu<span class="cstat-no" title="statement not covered" >rn this.conditionals;</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    nodeModelChanged() {
+        console.log('nm<span class="cstat-no" title="statement not covered" > changed', this.nodeModel)</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    toggleActive() {
+        let nodeData = { id: this.nodeModel.node.id, active: !this.nodeModel.nodeData.active };
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch({ type: 'NODE_PROPERTY<span class="fstat-no" title="function not covered" >_S</span>ET', payload: { nodeData: nodeData } });</span>
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch({ type</span>: 'DISPLAY_FUNCTIONS_APPLY'});
+    }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    sele<span class="cstat-no" title="statement not covered" >ctActivationSource() {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+}<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:40:00 GMT-0400 (EDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

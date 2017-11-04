@@ -55,14 +55,14 @@ export class SimulationService {
     }
 
     iterateForward(cycles) {
-        alert('forward cycles '+cycles);
+        // alert('forward cycles '+cycles);
         for (let i = 0; i < cycles; i++) {
            this.goForward();
         }
     }
 
     iterateBackward(cycles) {
-        alert('backward cycles '+cycles)
+        // alert('backward cycles '+cycles)
         console.warn('undo cycles', cycles);
             for (let i = cycles; i < 0; i++) {
                 this.goBackward();
