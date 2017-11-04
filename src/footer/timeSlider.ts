@@ -7,7 +7,6 @@ import noUiSlider from 'nouislider';
 import wNumb from 'wnumb';
 import $ from 'jquery';
 import * as moment from 'moment';
-import * as simulationActions from '../reducers/simulationActions';
 
 @inject(Store, SimulationService)
 export class TimeSlider {

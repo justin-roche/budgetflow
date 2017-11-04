@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/224</span>
+        <span class='fraction'>0/222</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/61</span>
+        <span class='fraction'>0/60</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/209</span>
+        <span class='fraction'>0/207</span>
       </div>
     </div>
   </div>
@@ -462,10 +462,7 @@
 417
 418
 419
-420
-421
-422
-423</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+420</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -507,9 +504,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -914,24 +908,21 @@ export class Grap<span class="cstat-no" title="statement not covered" >hControll
     constructor(privat<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >e </span>ea: EventAggregator, private store: Store) {</span>
         let p<span class="fstat-no" title="function not covered" >reviousValue;</span>
         let self = t<span class="cstat-no" title="statement not covered" >his;</span>
-<span class="cstat-no" title="statement not covered" >        this.store.sel</span>ect('graph', {bind: [this, 'graph']}).subscribe(d =&gt; {
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        this.store.select('g</span>raph', {bind: [this, 'graph']}).subscribe(d =&gt; {
 <span class="cstat-no" title="statement not covered" >            this.refresh(d);</span>
 <span class="cstat-no" title="statement not covered" >        })</span>
-<span class="cstat-no" title="statement not covered" >        this.store.select('ui',</span> {bind: [this, 'ui']}).subscribe(d =&gt; {
-<span class="cstat-no" title="statement not covered" >            if(this.container) {</span>
-                this.refresh(this.graph);
-            }<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        })<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    getCurre<span class="cstat-no" title="statement not covered" >ntGraph(s) {</span>
-        return s<span class="cstat-no" title="statement not covered" >.graph;</span>
-    }
+<span class="cstat-no" title="statement not covered" >        this.store.select('ui', {bind: [this, 'ui']}).subs</span>cribe(d =&gt; {
+            if(this.container) {
+                thi<span class="cstat-no" title="statement not covered" >s.ref</span>resh(this.graph);
+<span class="cstat-no" title="statement not covered" >            }<span class="fstat-no" title="function not covered" ></span></span>
+        })<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-    attached() {
-<span class="cstat-no" title="statement not covered" >        this.addKeyListeners()<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >        this.svg = this.</span>d3.select('svg');
+    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    attached() {<span class="cstat-no" title="statement not covered" ></span>
+        this.addKeyListeners()
+        this.svg = this.d3.select('svg');
         this.svg
 <span class="cstat-no" title="statement not covered" >            .attr("width", 1200)<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >            .attr("height", 800)</span>;
@@ -955,11 +946,11 @@ export class Grap<span class="cstat-no" title="statement not covered" >hControll
 <span class="cstat-no" title="statement not covered" >            if (match) {</span>
 <span class="cstat-no" title="statement not covered" >                for (let prop in node) {</span>
 <span class="cstat-no" title="statement not covered" >                    if (prop !== 'x' &amp;&amp; prop !== 'y') {</span>
-<span class="cstat-no" title="statement not covered" >                        match[prop] = node[prop];</span>
+<span class="cstat-no" title="statement not covered" >                        match[prop] = node[prop]; </span>// update the existing properties on nodes already in the graph simulation
                     }
                 }
             } else {
-                base.push(node);
+                base.push(node); // add nodes for which the key does not match
             }<span class="cstat-no" title="statement not covered" ></span>
         });
         base = base.filter(baseNode =&gt; nodesArr.some(node =&gt; node.key === baseNode.key));
@@ -968,7 +959,7 @@ export class Grap<span class="cstat-no" title="statement not covered" >hControll
 &nbsp;
     /* refresh */
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    refresh(data) {
+    refresh(data: Graph) {
 <span class="cstat-no" title="statement not covered" >        let nodesArray, edgesArray;</span>
 <span class="cstat-no" title="statement not covered" ></span>
         if (<span class="cstat-no" title="statement not covered" >!this.container) {</span>
@@ -1315,7 +1306,7 @@ export class Grap<span class="cstat-no" title="statement not covered" >hControll
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:40:00 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:51:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

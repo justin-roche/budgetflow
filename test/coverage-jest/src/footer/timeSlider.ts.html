@@ -129,8 +129,7 @@
 84
 85
 86
-87
-88</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+87</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -216,7 +215,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Simu<span class="cstat-no" title="statement not covered" >lationService } from './../se<span class="cstat-no" title="statement not covered" >r</span>vices/simulat</span>ionService';
 import { Store } <span class="cstat-no" title="statement not covered" >from './../services/reduxSt<span class="fstat-no" title="function not covered" >or</span>e';</span>
 import { Mod<span class="cstat-no" title="statement not covered" >alSettings } from</span> './<span class="cstat-no" title="statement not covered" >../common/modalWrapper';</span>
@@ -226,38 +224,37 @@ impo<span class="cstat-no" title="statement not covered" >rt noUiSlider from 'no
 import wNumb from 'wnumb';
 import $ from 'jq<span class="cstat-no" title="statement not covered" >uery';<span class="fstat-no" title="function not covered" ></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt * as moment from 'moment';<span class="cstat-no" title="statement not covered" ></span></span>
-import * as simulationActions from '../reducers/simulationActions';
-<span class="cstat-no" title="statement not covered" ></span>
-@inject(Store, SimulationS<span class="cstat-no" title="statement not covered" >ervice)</span>
-export class TimeSl<span class="cstat-no" title="statement not covered" >ider {</span>
-    _simulation: Simulatio<span class="cstat-no" title="statement not covered" >n;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >@inject(Store, SimulationService)</span>
+export class TimeSlider {<span class="cstat-no" title="statement not covered" ></span>
+    _simulation: Si<span class="cstat-no" title="statement not covered" >mulation;</span>
     ref;<span class="cstat-no" title="statement not covered" ></span>
-    displayedSe<span class="cstat-no" title="statement not covered" >lectedDate;</span>
+    displayedSelect<span class="cstat-no" title="statement not covered" >edDate;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-    constructor(p<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >ri</span>vate store: Store, private sim: SimulationService) {</span>
-        store<span class="fstat-no" title="function not covered" >.select('si</span>mulation', { log: true, bind: [this, '_simulation'] }).subscribe(_ =&gt; {
-            this.upd<span class="cstat-no" title="statement not covered" >ateDi</span>splay();
-<span class="cstat-no" title="statement not covered" >        });</span>
+    construct<span class="cstat-no" title="statement not covered" >or(private store: </span>Store, private sim: SimulationService) {
+        store.sel<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >ec</span>t('simulation', { log: true, bind: [this, '_simulation'] }).subscribe(_ =&gt; {</span>
+            t<span class="fstat-no" title="function not covered" >his.updateD</span>isplay();
+        });<span class="cstat-no" title="statement not covered" ></span>
     }<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    updateDi<span class="cstat-no" title="statement not covered" >splay() {</span>
-        this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');
+<span class="cstat-no" title="statement not covered" ></span>
+    upda<span class="cstat-no" title="statement not covered" >teDisplay() {<span class="fstat-no" title="function not covered" ></span></span>
+        this<span class="cstat-no" title="statement not covered" >._simulation.on? $('.no</span>Ui-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');
     }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    atta<span class="cstat-no" title="statement not covered" >ched() {</span>
-        let pipSize = 7 * 24 * 60 * 60 * 1000;
-<span class="cstat-no" title="statement not covered" >        let min = this._simulation.b<span class="fstat-no" title="function not covered" >eg</span>inRangeTime;</span>
-        let max = this<span class="cstat-no" title="statement not covered" >._simulation.endRangeTim</span>e;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    attached() {<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        let pipSize = 7 * 24 * 60 * 60 * 1000;</span>
+        let min = this._simulation.beginRangeTime;
+<span class="cstat-no" title="statement not covered" >        let max = this._simulation.e<span class="fstat-no" title="function not covered" >nd</span>RangeTime;</span>
 <span class="cstat-no" title="statement not covered" ></span>
         this.creat<span class="cstat-no" title="statement not covered" >eSlider(min, max, pipSize);</span>
-<span class="cstat-no" title="statement not covered" >        this.formatPips();</span>
-<span class="cstat-no" title="statement not covered" >        this.addListeners()</span>;
+        this.forma<span class="cstat-no" title="statement not covered" >tPips();</span>
+<span class="cstat-no" title="statement not covered" >        this.addListeners();</span>
 <span class="cstat-no" title="statement not covered" ></span>
-    }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    crea<span class="cstat-no" title="statement not covered" >teSlider(min, max, pipSize) {</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    createSlider(min, max, pipSize) {<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >        this.ref = document.getElementById('date-slider');</span>
-        noUiSlider.create(this.ref, {
+<span class="cstat-no" title="statement not covered" >        noUiSlider.create(this.ref, {</span>
             start: [this._simulation.beginRangeTime],
 &nbsp;
             range: {
@@ -270,47 +267,47 @@ export class TimeSl<span class="cstat-no" title="statement not covered" >ider {<
                 values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
                 density: 4
             },
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-            step: p<span class="cstat-no" title="statement not covered" >ipSiz</span>e,
-<span class="cstat-no" title="statement not covered" >        });<span class="fstat-no" title="function not covered" ></span></span>
-    }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            step: pipSize,<span class="fstat-no" title="function not covered" ></span></span>
+        });<span class="cstat-no" title="statement not covered" ></span>
+    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-    formatPips() {
+    formatPi<span class="cstat-no" title="statement not covered" >ps() {</span>
         let self = this;
-<span class="cstat-no" title="statement not covered" >        $('.noUi-value').each(function (<span class="fstat-no" title="function not covered" >el</span>em) {</span>
-            let d = <span class="cstat-no" title="statement not covered" >self.</span>formatFromMsString($(this).html());
-<span class="cstat-no" title="statement not covered" >            $(this).html(d)<span class="fstat-no" title="function not covered" ></span></span>
-        })<span class="cstat-no" title="statement not covered" ></span>
-    }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    addListe<span class="cstat-no" title="statement not covered" >ners() {</span>
-        $('.noUi-handle').d<span class="cstat-no" title="statement not covered" >blclick(()=&gt;{</span>
-<span class="cstat-no" title="statement not covered" >            this.store.dispatch({ type: 'SIM</span>ULATION_ON_TOGGLE'})
-        });
-&nbsp;
-<span class="cstat-no" title="statement not covered" >        this.ref.noUiSlider.on('update', funct<span class="fstat-no" title="function not covered" >io</span>n (values, handle) {</span>
-            this<span class="cstat-no" title="statement not covered" >.displayedSelectedDa</span>te = this.formatFromMsString(values[0]);
-<span class="cstat-no" title="statement not covered" >            let nextTime = Number(values[0]);</span>
-            this.sim.setNextTime(nextTime);
-<span class="cstat-no" title="statement not covered" >        }.bind(this));<span class="fstat-no" title="function not covered" ></span></span>
+        $('.noUi-value').each(function (elem) {
+<span class="cstat-no" title="statement not covered" >            let d = self.formatFromMsStr<span class="fstat-no" title="function not covered" >in</span>g($(this).html());</span>
+            $(this).<span class="cstat-no" title="statement not covered" >html(</span>d)
+<span class="cstat-no" title="statement not covered" >        })<span class="fstat-no" title="function not covered" ></span></span>
     }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    formatFromMsString(s: String) {</span>
-        let d = new Date(Number(s));
+    addL<span class="cstat-no" title="statement not covered" >isteners() {<span class="fstat-no" title="function not covered" ></span></span>
+        $('.<span class="cstat-no" title="statement not covered" >noUi-handle').dblclick(()=&gt;{</span>
+            this.store.disp<span class="cstat-no" title="statement not covered" >atch({ type: 'SIMU</span>LATION_ON_TOGGLE'})
+        });<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+        this.ref.noUiSlider.on('update', function (values, handle) {
+<span class="cstat-no" title="statement not covered" >            this.displayedSelectedDate = this.<span class="fstat-no" title="function not covered" >fo</span>rmatFromMsString(values[0]);</span>
+            let <span class="cstat-no" title="statement not covered" >nextTime = Number(va</span>lues[0]);
+<span class="cstat-no" title="statement not covered" >            this.sim.setNextTime(nextTime);</span>
+        }.bind(this));
+<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    formatFromMsString(s: String) {
+<span class="cstat-no" title="statement not covered" >        let d = new Date(Number(s));</span>
         return moment(d).format('MM/DD/YYYY');
     }
-<span class="cstat-no" title="statement not covered" ></span>
-    timestamp(str) {
-        return new Date(str).getTime();
-<span class="cstat-no" title="statement not covered" >    }</span>
 &nbsp;
+<span class="cstat-no" title="statement not covered" >    timestamp(str) {</span>
+        return new Date(str).getTime();
+    }
+<span class="cstat-no" title="statement not covered" ></span>
 }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:40:00 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:51:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../../prettify.js"></script>

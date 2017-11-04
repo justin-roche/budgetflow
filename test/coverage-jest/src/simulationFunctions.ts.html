@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">61.54% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>1/13</span>
+        <span class='fraction'>8/13</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>4/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">61.54% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>1/13</span>
+        <span class='fraction'>8/13</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -135,7 +135,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">100314x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -151,7 +151,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">600634x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,16 +162,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">77x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,8 +221,8 @@
 let SimulationFunctions = {
 &nbsp;
     stepFunctions: {
-        increment: <span class="fstat-no" title="function not covered" >function(</span>nodeData, argument) {
-<span class="cstat-no" title="statement not covered" >            return {value: nodeData.value + a</span>rgument}
+        increment: function(nodeData, argument) {
+            return {value: nodeData.value + argument}
         },
         equal: <span class="fstat-no" title="function not covered" >function(</span>value, node) {
 <span class="cstat-no" title="statement not covered" >            return v</span>alue;
@@ -237,8 +237,8 @@ let SimulationFunctions = {
     },
 &nbsp;
     linkFunctions: {
-        transfer: <span class="fstat-no" title="function not covered" >function(</span>sourceNode, targetNode, amount) {
-<span class="cstat-no" title="statement not covered" >            return {source: {...sourceNode, value: sourceNode.value - amount},</span>
+        transfer: function(sourceNode, targetNode, amount) {
+            return {source: {...sourceNode, value: sourceNode.value - amount},
                     target: {...targetNode, value: targetNode.value + amount}};
         },
 &nbsp;
@@ -248,17 +248,17 @@ let SimulationFunctions = {
             target: {...targetNode, value: targetNode.value + (amount * integral || 1)}};
         },
 &nbsp;
-        derive: <span class="fstat-no" title="function not covered" >function(</span>source, target, dataKey, expression) {
-            let <span class="cstat-no" title="statement not covered" >r = </span>eval(expression);
-            let <span class="cstat-no" title="statement not covered" >newTarget = </span>{};
-<span class="cstat-no" title="statement not covered" >            newTarget[dataKey] = r</span>;
-<span class="cstat-no" title="statement not covered" >            return {source: source, target: {...target, ...n</span>ewTarget}};
+        derive: function(source, target, dataKey, expression) {
+            let r = eval(expression);
+            let newTarget = {};
+            newTarget[dataKey] = r;
+            return {source: source, target: {...target, ...newTarget}};
         }
     },
 &nbsp;
     displayFunctions: {
-        labelById: <span class="fstat-no" title="function not covered" >function(</span>node, nodeData) {
-<span class="cstat-no" title="statement not covered" >            return {...nodeData.displayData, label: node.id+ ':' + nodeData.v</span>alue};
+        labelById: function(node, nodeData) {
+            return {...nodeData.displayData, label: node.id+ ':' + nodeData.value};
         },
 &nbsp;
         // idByIndex: function(node,i){
@@ -310,7 +310,7 @@ export { SimulationFunctions}</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:40:00 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:51:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

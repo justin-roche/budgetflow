@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">19.3% </span>
+        <span class="strong">36.84% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>11/57</span>
+        <span class='fraction'>21/57</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">20% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/10</span>
+        <span class='fraction'>2/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">17.65% </span>
+        <span class="strong">52.94% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/17</span>
+        <span class='fraction'>9/17</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">11.76% </span>
+        <span class="strong">31.37% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/51</span>
+        <span class='fraction'>16/51</span>
       </div>
     </div>
   </div>
@@ -174,21 +174,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -298,22 +298,22 @@
 &nbsp;
 /* NODE */
 &nbsp;
-<span class="fstat-no" title="function not covered" >function deleteNode(</span>g, nid) {
-    let <span class="cstat-no" title="statement not covered" >nodes = ArrayToObject(ArrayById(g.nodes)</span>
-    .filter(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nd =&gt; </span>nd.id !== nid.id));</span>
+function deleteNode(g, nid) {
+    let nodes = ArrayToObject(ArrayById(g.nodes)
+    .filter(nd =&gt; nd.id !== nid.id));
     
-    let <span class="cstat-no" title="statement not covered" >nodesData = ArrayToObject(ArrayById(g.nodesData)</span>
-    .filter(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nd =&gt; </span>nd.id !== nid.id));</span>
+    let nodesData = ArrayToObject(ArrayById(g.nodesData)
+    .filter(nd =&gt; nd.id !== nid.id));
 &nbsp;
-    let <span class="cstat-no" title="statement not covered" >edgesArray = ArrayById(g.edges)</span>
-    .filter(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >ed =&gt; </span>(ed.source !== nid.id &amp;&amp; ed.target !== nid.id));</span>
+    let edgesArray = ArrayById(g.edges)
+    .filter(ed =&gt; (ed.source !== nid.id &amp;&amp; ed.target !== nid.id));
     
-    let <span class="cstat-no" title="statement not covered" >edgesData = ArrayToObject(ArrayById(g.edges)</span>
-    .filter(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="fstat-no" title="function not covered" >edata =&gt; </span>e</span>dgesArray.some(ed =&gt; ed.id === edata.id)));</span>
+    let edgesData = ArrayToObject(ArrayById(g.edges)
+    .filter(edata =&gt; edgesArray.some(ed =&gt; ed.id === edata.id)));
 &nbsp;
-    let <span class="cstat-no" title="statement not covered" >edges = </span>ArrayToObject(edgesArray);
+    let edges = ArrayToObject(edgesArray);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return { ...g, </span>
+    return { ...g, 
             nodes: nodes, 
             nodesData: nodesData, 
             edges: edges, 
@@ -424,7 +424,7 @@ export { addNewNode, addNewEdge, updateEdge, deleteNode, nodePropertySet, addLin
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:40:00 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 03 2017 20:51:31 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

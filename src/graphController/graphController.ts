@@ -6,6 +6,13 @@ import { Store } from '../services/reduxStore';
 
 const selectGraph = state => state.graph;
 
+declare interface D3NodeConfig extends AppNode {
+    key: String,
+}
+declare interface D3EdgeConfig extends Edge {
+    key: String,
+}
+
 @inject(EventAggregator, Store)
 export class GraphController {
 
@@ -43,69 +50,81 @@ export class GraphController {
         this.svg
             .attr("width", 1200)
             .attr("height", 800);
-    }
-
-    /* state join */
-
-    getNodesArray(nodesObj, data) {
-        return Object.keys(data.nodes).map(key => { return { ...data.nodes[key], key: data.id + data.nodes[key].id } });
-    }
-
-    getEdgesArray(edgesObj, data) {
-        return Object.keys(data.edges).map(key => { return { ...data.edges[key], key: data.id + data.edges[key].id } });
-    }
-
-    /* copy the input nodes state to the existing layout nodes array */
-    addLayoutState(nodesArr) {
-        let base = this.simulation.nodes();
-        nodesArr.forEach(node => {
-            let match = base.filter(n => n.key === node.key)[0];
-            if (match) {
-                for (let prop in node) {
-                    if (prop !== 'x' && prop !== 'y') {
-                        match[prop] = node[prop];
-                    }
-                }
-            } else {
-                base.push(node);
-            }
-        });
-        base = base.filter(baseNode => nodesArr.some(node => node.key === baseNode.key));
-        return base;
-    }
-
-    /* refresh */
-
-    refresh(data) {
-        let nodesArray, edgesArray;
 
         if (!this.container) {
             this.svg = this.d3.select('svg');
             this.container = this.svg.append('g');
             this.addZoomListener();
         }
+        this.container.append("g").attr("id", "linklayer")
+        this.container.append("g").attr("id", "nodelayer")
+    }
 
-        nodesArray = this.getNodesArray(data.nodes, data); // returns pure original, lost x,y
-        edgesArray = this.getEdgesArray(data.edges, data);
+    /* state join- joines the d3 config data to redux */
+
+    /* convert graph.nodes object to array with unique keys */
+    convertNodesToArray(graph: Graph) : Array<D3NodeConfig> {
+        return Object.keys(graph.nodes).map(key => 
+            { return { ...graph.nodes[key], key: graph.id + graph.nodes[key].id } 
+        });
+    }
+
+    /* convert graph.edges object to array with unique keys */
+    convertEdgesToArray(graph: Graph): Array<D3EdgeConfig> {
+        return Object.keys(graph.edges).map(edgeName => { 
+            return { ...graph.edges[edgeName], key: graph.id + graph.edges[edgeName].id } 
+        });
+    }
+
+    /* copy the input nodes state to the existing layout nodes array */
+    extendNodesWithLayoutProperties(nodesArr) {
+        let simNodes = this.simulation.nodes();
+        nodesArr.forEach(node => {
+            let match = simNodes.filter(n => n.key === node.key)[0];
+            if (match) {
+                for (let prop in node) {
+                    if (prop !== 'x' && prop !== 'y') {
+                        match[prop] = node[prop]; // update the existing properties on nodes already in the graph simulation
+                    }
+                }
+            } else {
+                simNodes.push(node); // add nodes for which no key exists
+            }
+        });
+
+        simNodes = simNodes.filter(simNode => nodesArr.some(node => {
+            return node.key === simNode.key // remove sim nodes that no longer exist in the graph Nodes
+        }));
+
+        return simNodes;
+    }
+
+    /* refresh */
+
+    refresh(graph: Graph) {
+        let d3NodesArray, d3EdgesArray;
+
+        /* state -> d3 data join */
+        d3NodesArray = this.convertNodesToArray(graph); 
+        d3EdgesArray = this.convertEdgesToArray(graph);
 
         if (this.simulation) {
-            nodesArray = this.addLayoutState(nodesArray); /* data join on force layout data */
+            d3NodesArray = this.extendNodesWithLayoutProperties(d3NodesArray); /* extend nodes with existing simulation properties */
         }
 
-        /* edges */
-        this.addLinks(edgesArray, data);
-        this.renderLinks(data)
-
-        /* nodes */
-        this.addNodes(nodesArray, data);
+        /* d3 -> dom data join */
+        this.addLinks(d3EdgesArray, graph);
+        this.renderLinks(graph)
+        this.addNodes(d3NodesArray, graph);
         this.renderNodes();
 
+        // /* adding d3 data to simulation, associates links to nodes */
         if (this.simulation) {
-            this.simulation.nodes(nodesArray);
-            this.simulation.force("link").links(edgesArray);
+            this.simulation.nodes(d3NodesArray);
+            this.simulation.force("link").links(d3EdgesArray);
             this.simulation.alpha(1).restart();
         } else {
-            this.createSimulation(nodesArray, edgesArray);
+            this.createSimulation(d3NodesArray, d3EdgesArray);
         }
 
         this.addDragListener();
@@ -115,7 +134,9 @@ export class GraphController {
     }
 
     addLinks(edgesArray, data) {
-        let linkGroups = this.container.selectAll(".linkGroup").data(edgesArray, function (d) {
+        let linkGroups = this.container.select('#linklayer')
+        .selectAll(".linkGroup")
+        .data(edgesArray, function (d) {
             return d.key;
         })
         linkGroups.exit().remove();
@@ -126,13 +147,14 @@ export class GraphController {
         let self = this;
         let d3 = this.d3;
 
-        let nodeGroups = this.container.selectAll(".nodeGroup").data(nodesArray, function (d) {
+        let l = this.container.select('#nodelayer');
+        let x = l.selectAll(".nodeGroup");
+        let nodeGroups = x.data(nodesArray, function (d) {
             return d.key;
         });
 
-        nodeGroups.exit().remove();
-
-        let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup")
+        nodeGroups.exit().remove(); // remove all nodes for which no key exists in the d3 graph config
+        let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup") // add new nodes where no key exists in the Dom
         console.log(newGroups);
 
         let newCircles = newGroups

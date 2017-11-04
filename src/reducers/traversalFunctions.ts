@@ -24,13 +24,6 @@ function traverseCycles(_state, payload: Number = 1) {
     return state;
 }
 
-// function reverseCycles(_state, backCycles: Number = 0) {
-//     let state = { ..._state }
-//     let currentCycle = Object.keys(state.cache).length - 1; 
-//     let nextCycle = currentCycle + backCycles;
-//     return { ...state, ...state.cache[String(nextCycle)]   };
-// }
-
 function breadthTraverse(current: Array<NodeData>, g, _linkedSources = []) {
 
     /* apply step function to nodes */
