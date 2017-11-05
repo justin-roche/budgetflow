@@ -40,7 +40,7 @@ function rootReducer(state: AppState = defaultState, action) {
     return {...state, ...{
         ui: undoableUiReducer(state.ui, action),
         graphs: undoableGraphsReducer(state.graphs, action),
-        graph: undoableGraphReducer(state.graph, action),
+        graph: undoableGraphReducer(state.graph, action, state),
         simulation: undoableSimulationReducer(state.simulation, action)
     }}
 

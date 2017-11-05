@@ -5,23 +5,23 @@ import { linkFunctions } from '../parser/linkFunctions';
 import { ArrayById, ArrayToObject} from './utilities';
 import { _ } from 'underscore';
 
-function traverseCycles(_state, payload: Number = 1) {
+function traverseCycles(_state, payload: Number = 1, globalState) {
     let cycleCount = payload;
     let state = { ..._state }
 
     for (let c = 0; c < cycleCount; c++) {
         let sources = ArrayToObject(getSources(ArrayById(state.nodesData)));
-        let {linkedNodes, linkedEdges} = breadthTraverse(sources, state);
+        let {linkedNodes, linkedEdges} = breadthTraverse(sources, state, globalState);
         state = { ...state, nodesData: linkedNodes, edgesData: linkedEdges };
     }
 
     /* update the display */
-    state = { ...state, nodesData: applyDisplayFunctions(state)};
+    state = { ...state, nodesData: applyDisplayFunctions(state, globalState)};
 
     return state;
 }
 
-function breadthTraverse(current: NodesData, g, _linkedSources = []) {
+function breadthTraverse(current: NodesData, g, s, _linkedSources = []) {
 
     /* apply step function to nodes */
 
@@ -44,7 +44,7 @@ function breadthTraverse(current: NodesData, g, _linkedSources = []) {
 
     } else {
         /* return the next level, previously linked targets become sources */
-        let subLevelsResults = breadthTraverse(linkedTargets, g, {..._linkedSources, ...linkedSources});
+        let subLevelsResults = breadthTraverse(linkedTargets, g, s, {..._linkedSources, ...linkedSources});
 
         return {...{linkedNodes: {...linkedSources, ...subLevelsResults.linkedNodes},
                 ...{linkedEdges: {...linkedEdges, ...subLevelsResults.linkedEdges} } } };
@@ -103,14 +103,15 @@ function linkSource(_source: NodeData, targets: Array<NodeData>, g: Graph) {
 
         let edge: EdgeData = getEdge(source, target, g);
         
-        if(activeEdge(g, edge)) {
+        if(edge.active) {
             let { linkedSource, linkedTarget } = linkTarget(g, source, target, edge);
             return {
                 linkedTargets: { ...acc.linkedTargets, [linkedTarget.id]: linkedTarget},
-                linkedSource: { [linkedSource.id]: linkedSource }
+                linkedSource: { [linkedSource.id]: linkedSource },
+                linkedEdges: {...acc.linkedEdges, [edge.id]: edge}
             }
         } else {
-            return acc;
+            return {...acc, linkedEdges: {...acc.linkedEdges, [edge.id]: edge}};
         }
         
     }, { linkedTargets: ArrayToObject(targets), linkedSource: { [_source.id]: _source }, linkedEdges: {}} )
@@ -158,7 +159,7 @@ function applyStepFunction(nodeData) {
     return update;
 }
 
-function applyDisplayFunctions(g): NodesData {
+function applyDisplayFunctions(g, globalState): NodesData {
 
     let nodesArr: Array<NodeData> = ArrayById(g.nodesData);
     let displayFns = g.data.displayFunctions.nodes;

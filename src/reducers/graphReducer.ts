@@ -19,7 +19,7 @@ let actions = {
 }
 
   
-function graphReducer(state = null, action) {
+function graphReducer(state = null, action, globalState) {
     switch (action.type) {
         case 'GRAPH_SET': {
             return action.payload;
@@ -50,7 +50,7 @@ function graphReducer(state = null, action) {
             return { ...state, nodesData: applyDisplayFunctions(state) }
         }
         case 'GRAPH_TRAVERSE_CYCLES': {
-            return traverseCycles(state, action.payload);
+            return traverseCycles(state, action.payload, globalState);
         }
         
         default:

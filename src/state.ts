@@ -157,6 +157,7 @@ let state = {
                     preLinkFunctions: [],
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     stepFunctions: null,
+                    conditions: [],
                 },
             }
         },
@@ -312,15 +313,18 @@ let state = {
             },
             edgesData: {
                 'e1': {
+                    id: 'e1',
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     active: true,
+                    conditions: [],
                 },
 
                 'e2': {
+                    id: 'e2',
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     active: false,
                     conditions: [
-                        {expression: 'true',
+                        {expression: 'false',
                         type: 'sufficient'}
                     ]
                 },

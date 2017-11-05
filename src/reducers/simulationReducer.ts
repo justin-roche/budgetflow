@@ -12,7 +12,7 @@ function simulationReducer(state: Simulation = null, action) {
             return (action.payload);
         }
         case 'REMAINING_CYCLES_SET': {
-            return { ...state, remainingCycles: action.payload }
+            return { ...state, remainingCycles: action.payload}
         }
         case 'SIMULATION_ON_TOGGLE': {
             return {...state, on: !state.on};
