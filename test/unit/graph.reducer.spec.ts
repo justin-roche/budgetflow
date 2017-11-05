@@ -187,16 +187,16 @@ describe('graph reducer', () => {
         });
 
         describe('global activation conditions',() => {
-            it('all links from nodes are activated when global activation conditions are met',()=>{
-                expect(g.nodesData.n2.active === false);
-                let s2 = graphReducer(g, actions.graphTraverseCycles());
-                expect(s2.nodesData.active === false);
-                let s3 = graphReducer(g, actions.graphTraverseCycles());
-                expect(s3.nodesData.active === true);
-            });
+            // it('all links from nodes are activated when global activation conditions are met',()=>{
+            //     expect(g.nodesData.n2.active === false);
+            //     let s2 = graphReducer(g, actions.graphTraverseCycles());
+            //     expect(s2.nodesData.active === false);
+            //     let s3 = graphReducer(g, actions.graphTraverseCycles());
+            //     expect(s3.nodesData.active === true);
+            // });
     
             it('individual links from nodes are activated when global activation conditions are met', () => {
-    
+                
             })
     
             it('links to nodes are activated when global activation conditions are met', () => {

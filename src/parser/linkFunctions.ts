@@ -13,7 +13,7 @@ let linkFunctions = {
 
     canActivate: function(g, edgeData, expression) {
         let testResult = eval(expression);
-        return {...edgeData, active: testResult};
+        return testResult;
     }
 }
 

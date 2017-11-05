@@ -43,25 +43,7 @@ let state = {
     },
     graph: null,
     graphs: <Array<Graph>>[
-        // {
-        //     id: 'g0',
-        //     data: {
-        //         id: 
-        //         name: 'blank'
-        //     },
-        //     nodes: {
-
-        //     },
-        //     nodesData: {
-
-        //     },
-        //     edges: {
-
-        //     },
-        //     edgesData: {
-
-        //     }
-        // },
+        
         {
             id: 'g1',
             data: {

@@ -5,25 +5,27 @@ import { linkFunctions } from '../parser/linkFunctions';
 import { ArrayById, ArrayToObject} from './utilities';
 import { _ } from 'underscore';
 
-function traverseCycles(_state, payload: Number = 1, globalState) {
+function traverseCycles(_state, payload: Number = 1) {
     let cycleCount = payload;
     let state = { ..._state }
 
     for (let c = 0; c < cycleCount; c++) {
         let sources = ArrayToObject(getSources(ArrayById(state.nodesData)));
-        let {linkedNodes, linkedEdges} = breadthTraverse(sources, state, globalState);
+        let {linkedNodes, linkedEdges} = breadthTraverse(sources, state);
         state = { ...state, nodesData: linkedNodes, edgesData: linkedEdges };
     }
 
     /* update the display */
-    state = { ...state, nodesData: applyDisplayFunctions(state, globalState)};
+    state = { ...state, nodesData: applyDisplayFunctions(state)};
 
     return state;
 }
 
-function breadthTraverse(current: NodesData, g, s, _linkedSources = []) {
+function breadthTraverse(current: NodesData, g, _linkedSources = []) {
 
     /* apply step function to nodes */
+
+    g = iterateLevel(g);
 
     let steppedSources = _.map(current, (nodeData) => {
         return { ...nodeData, ...applyStepFunction(nodeData) };
@@ -44,13 +46,46 @@ function breadthTraverse(current: NodesData, g, s, _linkedSources = []) {
 
     } else {
         /* return the next level, previously linked targets become sources */
-        let subLevelsResults = breadthTraverse(linkedTargets, g, s, {..._linkedSources, ...linkedSources});
+        let subLevelsResults = breadthTraverse(linkedTargets, g, {..._linkedSources, ...linkedSources});
 
         return {...{linkedNodes: {...linkedSources, ...subLevelsResults.linkedNodes},
                 ...{linkedEdges: {...linkedEdges, ...subLevelsResults.linkedEdges} } } };
 
     }
 
+}
+
+function iterateLevel(g) {
+    g = {...g, edgesData: iterateEdges(g)};
+    return g;
+}
+
+function iterateEdges(g) {
+    return iterateIds(g.edgesData, iterateEdge.bind(this, g));
+}
+
+function iterateEdge (g, edgeData: EdgeData) {
+    return {...edgeData, active: isEdgeActive(edgeData, g)};
+}
+
+function iterateIds(obj, fn) {
+    let o = {...obj}
+    for (let prop in o) {
+        o[prop] = {...o[prop], ...fn(o[prop])};
+    }
+    return o;
+}
+
+function isEdgeActive(edgeData, g) {
+    if(!edgeData.conditions || edgeData.conditions.length === 0) {
+        return true;
+    } else {
+        return edgeData.conditions.reduce((acc, condition: Condition ) =>{
+            if(acc === true) return acc;
+            if(condition.type === 'sufficient' && linkFunctions.canActivate(g, edgeData, condition.expression)) return true;
+            return acc;
+        },false);
+    }
 }
 
 declare interface LinkedSources {
@@ -136,17 +171,7 @@ function linkTarget(g, source: NodeData, target: NodeData, edge): LinkPair {
     }, { linkedSource: source, linkedTarget: target });
 }
 
-function activeEdge (g, edgeData: EdgeData) {
-    if(!edgeData.conditions) {
-        return true;
-    } else {
-        return edgeData.conditions.reduce((acc, condition: Condition ) =>{
-            if(acc === true) return acc;
-            if(condition.type === 'sufficient' && linkFunctions.canActivate(g, edgeData, condition.expression)) return true;
-            return acc;
-        },false);
-    }
-}
+
 
 function applyStepFunction(nodeData) {
     let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
@@ -159,7 +184,7 @@ function applyStepFunction(nodeData) {
     return update;
 }
 
-function applyDisplayFunctions(g, globalState): NodesData {
+function applyDisplayFunctions(g): NodesData {
 
     let nodesArr: Array<NodeData> = ArrayById(g.nodesData);
     let displayFns = g.data.displayFunctions.nodes;
