@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96.15% </span>
+        <span class="strong">96.2% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>75/78</span>
+        <span class='fraction'>76/79</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">81.82% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>30/30</span>
+        <span class='fraction'>28/28</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">97.06% </span>
+        <span class="strong">96.97% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>66/68</span>
+        <span class='fraction'>64/66</span>
       </div>
     </div>
   </div>
@@ -244,26 +244,33 @@
 199
 200
 201
-202</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">200428x</span>
-<span class="cline-any cline-yes">200428x</span>
-<span class="cline-any cline-yes">200428x</span>
-<span class="cline-any cline-yes">801084x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">200428x</span>
 <span class="cline-any cline-yes">200428x</span>
+<span class="cline-any cline-yes">400856x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -293,7 +300,15 @@
 <span class="cline-any cline-yes">400658x</span>
 <span class="cline-any cline-yes">200428x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">200230x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">200230x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -318,7 +333,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">600688x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -450,21 +468,19 @@ import { displayFunctions } from '../parser/displayFunctions';
 import { linkFunctions } from '../parser/linkFunctions';
 &nbsp;
 import { ArrayById, ArrayToObject} from './utilities';
-&nbsp;
-/* TRAVERSAL */
+import { _ } from 'underscore';
 &nbsp;
 function traverseCycles(_state, <span class="missing-if-branch" title="if path not taken" >I</span>payload: Number = 1) {
     let cycleCount = payload;
     let state = { ..._state }
 &nbsp;
     for (let c = 0; c &lt; cycleCount; c++) {
-        let sources = getSources(ArrayById(state.nodesData));
-        let newNodesDataArray = breadthTraverse(sources, state);
-        let newNodesDataObject = newNodesDataArray.reduce((acc, item) =&gt; {
-            return { ...acc, [item.id]: item };
-        }, {});
-        state = { ...state, nodesData: newNodesDataObject };
-        let name = String(c);
+        let sources = ArrayToObject(getSources(ArrayById(state.nodesData)));
+        let {linkedNodes, linkedEdges} = breadthTraverse(sources, state);
+        // let newNodesDataObject = newNodesDataArray.reduce((acc, item) =&gt; {
+        //     return { ...acc, [item.id]: item };
+        // }, {});
+        state = { ...state, nodesData: linkedNodes };
     }
 &nbsp;
     /* update the display */
@@ -473,15 +489,15 @@ function traverseCycles(_state, <span class="missing-if-branch" title="if path n
     return state;
 }
 &nbsp;
-function breadthTraverse(current: Array&lt;NodeData&gt;, g, _linkedSources = []) {
+function breadthTraverse(current: NodesData, g, _linkedSources = []) {
 &nbsp;
     /* apply step function to nodes */
 &nbsp;
-    let steppedSources = current.map((nodeData, i) =&gt; {
+    let steppedSources = _.map(current, (nodeData) =&gt; {
         return { ...nodeData, ...applyStepFunction(nodeData) };
     })
 &nbsp;
-    let nestedTargets: Array&lt;Array&lt;NodeData&gt;&gt; = current.map((nodeData, i) =&gt; { 
+    let nestedTargets: Array&lt;Array&lt;NodeData&gt;&gt; = _.map(current,(nodeData, i) =&gt; { 
         return getOutNodes(nodeData, g);
     });
 &nbsp;
@@ -489,12 +505,18 @@ function breadthTraverse(current: Array&lt;NodeData&gt;, g, _linkedSources = [])
 &nbsp;
 &nbsp;
     /* apply link function forward for a single level */
-    let { linkedTargets, linkedSources } = linkSources(steppedSources, nestedTargets, _linkedSources, g);
+    let { linkedTargets, linkedSources, linkedEdges } = linkSources(steppedSources, nestedTargets, _linkedSources, g);
 &nbsp;
-    if (Object.keys(linkedTargets).length === 0) {
-        return ArrayById(linkedSources);
+    if (_.size(linkedTargets) === 0) {
+        return {linkedNodes: linkedSources };
+&nbsp;
     } else {
-        return ArrayById(linkedSources).concat(breadthTraverse(ArrayById(linkedTargets), g, _linkedSources.concat(ArrayById(linkedSources))));      // n
+        /* return the next level, previously linked targets become sources */
+        let subLevelsResults = breadthTraverse(linkedTargets, g, {..._linkedSources, ...linkedSources});
+&nbsp;
+        return {...{linkedNodes: {...linkedSources, ...subLevelsResults.linkedNodes},
+                    linkedEdges: subLevelsResults.linkedEdges}};
+&nbsp;
     }
 &nbsp;
 }
@@ -502,7 +524,9 @@ function breadthTraverse(current: Array&lt;NodeData&gt;, g, _linkedSources = [])
 declare interface LinkedSources {
     linkedTargets: NodesData
     linkedSources: NodesData
+    linkedEdges: EdgesData
 }
+&nbsp;
 function linkSources(steppedSources: Array&lt;NodeData&gt;, nestedTargets, sourcesAlreadyLinked, g): LinkedSources {
 &nbsp;
     return steppedSources.reduce(function (acc, sourceData, i) {
@@ -511,26 +535,29 @@ function linkSources(steppedSources: Array&lt;NodeData&gt;, nestedTargets, sourc
         /* retrieve already reduced outNodes */
         outNodes = outNodes.map(outNode =&gt; acc.linkedTargets[outNode.id]? acc.linkedTargets[outNode.id] : outNode);
 &nbsp;
-        if (outNodes.length === 0 || sourcesAlreadyLinked.some(n =&gt; n.id === sourceData.id)) {
+        if (outNodes.length === 0 || sourcesAlreadyLinked[sourceData.id]) {
             return {
                 linkedTargets: { ...acc.linkedTargets, ...ArrayToObject(outNodes) },
-                linkedSources: { ...acc.linkedSources, [sourceData.id]: sourceData }
+                linkedSources: { ...acc.linkedSources, [sourceData.id]: sourceData },
+                linkedEdges: {...acc.linkedEdges}
             };
         }
         else {
             /* apply link when outNodes and not already stepped sources  */
-            let { linkedTargets, linkedSource } = linkSource(sourceData, outNodes, g);
+            let { linkedTargets, linkedSource, linkedEdges } = linkSource(sourceData, outNodes, g);
             return {
                 linkedTargets: { ...acc.linkedTargets, ...linkedTargets },
-                linkedSources: { ...acc.linkedSources, ...linkedSource }
+                linkedSources: { ...acc.linkedSources, ...linkedSource },
+                linkedEdges: {...acc.linkedEdges, ...linkedEdges}
             };
         }
-    }, { linkedTargets: {}, linkedSources: {} });
+    }, { linkedTargets: {}, linkedSources: {}, linkedEdges: {} });
 }
 &nbsp;
 declare interface LinkedSource {
     linkedTargets: NodesData,
     linkedSource: NodesData
+    linkedEdges: EdgeData
 }
 &nbsp;
 /* link from a single source to it's multiple targets */
@@ -554,7 +581,7 @@ function linkSource(_source: NodeData, targets: Array&lt;NodeData&gt;, g: Graph)
 <span class="cstat-no" title="statement not covered" >            return a</span>cc;
         }
         
-    }, { linkedTargets: ArrayToObject(targets), linkedSource: { [_source.id]: _source } })
+    }, { linkedTargets: ArrayToObject(targets), linkedSource: { [_source.id]: _source }, linkedEdges: {}} )
 &nbsp;
 }
 &nbsp;
@@ -599,22 +626,22 @@ function applyStepFunction(nodeData) {
     return update;
 }
 &nbsp;
-function applyDisplayFunctions(g) : NodesData {
-    
+function applyDisplayFunctions(g): NodesData {
+&nbsp;
     let nodesArr: Array&lt;NodeData&gt; = ArrayById(g.nodesData);
     let displayFns = g.data.displayFunctions.nodes;
 &nbsp;
-        /* reduce the nodesArray */
-        let updatedNodesArr = nodesArr.reduce((acc, nodeData) =&gt; {
-            
-            let appliedNodeData = displayFns.reduce((acc, fn) =&gt; {
-                let newDisplayData = displayFunctions[fn.name](g, nodeData.id, ...fn.arguments);
-                return { ...acc, displayData: { ...acc.displayData, ...newDisplayData }};
-            }, nodeData);
-            
-            return acc.concat(appliedNodeData);
+    /* reduce the nodesArray */
+    let updatedNodesArr = nodesArr.reduce((acc, nodeData) =&gt; {
 &nbsp;
-        }, []);
+        let appliedNodeData = displayFns.reduce((acc, fn) =&gt; {
+            let newDisplayData = displayFunctions[fn.name](g, nodeData.id, ...fn.arguments);
+            return { ...acc, displayData: { ...acc.displayData, ...newDisplayData } };
+        }, nodeData);
+&nbsp;
+        return acc.concat(appliedNodeData);
+&nbsp;
+    }, []);
 &nbsp;
     /* convert back to object type */
     return ArrayToObject(updatedNodesArr);
@@ -652,7 +679,7 @@ export { traverseCycles, applyDisplayFunctions };</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 04 2017 18:44:22 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 04 2017 20:06:10 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>
