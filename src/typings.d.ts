@@ -75,6 +75,8 @@ declare interface EdgeData {
 declare interface Condition {
     type: string,
     expression: string,
+    phase: string,
+    value: boolean
 }
 
 declare interface Edge {

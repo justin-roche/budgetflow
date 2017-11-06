@@ -306,7 +306,9 @@ let state = {
                     linkFunctions: [{ name: 'transfer', arguments: [1] }],
                     active: false,
                     conditions: [
-                        {expression: 'false',
+                        {phase: 'simulation',
+                        expression: 'state.simulation.currentTime > 0',
+                        value: false,
                         type: 'sufficient'}
                     ]
                 },

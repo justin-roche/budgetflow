@@ -1,17 +1,19 @@
 import { inject } from 'aurelia-framework';
 import { Store } from './reduxStore';
-
+import { graphActions } from '../reducers/graphReducer';
 
 @inject(Store)
 export class SimulationService {
 
     remainingCycles;
     simulationOn;
+    simulation;
     currentTime;
     cycleTime;
 
     constructor(private store: Store) {
         this.store.select('simulation.remainingCycles', { bind: [this, 'remainingCycles'] });
+        this.store.select('simulation', { bind: [this, 'simulation'] });
         this.store.select('simulation.on', { bind: [this, 'simulationOn'] });
         this.store.select('simulation.currentTime', { bind: [this, 'currentTime'] });
         this.store.select('simulation.cycleTime', { bind: [this, 'cycleTime'] });
@@ -41,7 +43,8 @@ export class SimulationService {
     }
 
     goForward() {
-        this.store.dispatch({ type: 'GRAPH_TRAVERSE_CYCLES', payload: 1 });
+        this.store.dispatch(graphActions.preTraverse(this.simulation));
+        //this.store.dispatch({ type: 'GRAPH_TRAVERSE_CYCLES', payload: 1 });
     }
 
     goBackward() {

@@ -1,11 +1,15 @@
-import { traverseCycles, applyDisplayFunctions } from './traversalFunctions';
+import { traverseCycles, applyDisplayFunctions, preTraverse } from './traversalFunctions';
 import {addNewNode, addNewEdge, updateEdge, deleteNode, nodePropertySet, addLinkFunction} from './graphManipulationFunctions';
 
-let actions = {
+let graphActions = {
 
 
     graphTraverseCycles: function(n?: Number){
         return {type: 'GRAPH_TRAVERSE_CYCLES', payload: (n || 1)};
+    },
+
+    preTraverse: function(simulation) {
+        return {type: 'GRAPH_PRE_TRAVERSE', payload: ({simulation: simulation})};
     },
 
     deleteNode: function(id: String) {
@@ -49,6 +53,9 @@ function graphReducer(state = null, action) {
         case 'DISPLAY_FUNCTIONS_APPLY': {
             return { ...state, nodesData: applyDisplayFunctions(state) }
         }
+        case 'GRAPH_PRE_TRAVERSE': {
+            return {...state, ...preTraverse({graph: state, ...action.payload})}
+        }
         case 'GRAPH_TRAVERSE_CYCLES': {
             return traverseCycles(state, action.payload);
         }
@@ -63,7 +70,7 @@ function graphReducer(state = null, action) {
 
 
 
-export { graphReducer, actions }
+export { graphReducer, graphActions }
 
  /* pre-link functions */
 

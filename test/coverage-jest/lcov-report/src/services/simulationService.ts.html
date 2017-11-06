@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/55</span>
+        <span class='fraction'>0/57</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/49</span>
+        <span class='fraction'>0/51</span>
       </div>
     </div>
   </div>
@@ -114,7 +114,10 @@
 69
 70
 71
-72</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+72
+73
+74
+75</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -128,20 +131,15 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -151,6 +149,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -158,6 +163,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -187,21 +193,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct } from 'aurelia-framework'<span class="cstat-no" title="statement not covered" >;</span></span>
 import { Store } <span class="cstat-no" title="statement not covered" >from './reduxStore';<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
+import { gra<span class="cstat-no" title="statement not covered" >phActions } from </span>'../<span class="cstat-no" title="statement not covered" >reducers/graphReducer';</span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
 @inj<span class="cstat-no" title="statement not covered" >ect(Store)<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
 expo<span class="cstat-no" title="statement not covered" >rt class SimulationService {</span>
 &nbsp;
     remainingCycl<span class="cstat-no" title="statement not covered" >es;<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" >    simulationOn;<span class="cstat-no" title="statement not covered" ></span></span>
-    currentTime;
-<span class="cstat-no" title="statement not covered" >    cycleTime;</span>
+    simulation;
+<span class="cstat-no" title="statement not covered" >    currentTime;</span>
+    cycleTime;<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-    constructor(pri<span class="cstat-no" title="statement not covered" >vate store: Store) {</span>
+    constructor(priva<span class="cstat-no" title="statement not covered" >te store: Store) {</span>
         this.store.selec<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >t(</span>'simulation.remainingCycles', { bind: [this, 'remainingCycles'] });</span>
-        this.<span class="fstat-no" title="function not covered" >store.select('simu</span>lation.on', { bind: [this, 'simulationOn'] });
-<span class="cstat-no" title="statement not covered" >        this.store.select('s</span>imulation.currentTime', { bind: [this, 'currentTime'] });
-<span class="cstat-no" title="statement not covered" >        this.store.select('simulation.cycleTime', { bind: [this, 'cycleTime'] });</span>
+        this.<span class="fstat-no" title="function not covered" >store.select('simu</span>lation', { bind: [this, 'simulation'] });
+<span class="cstat-no" title="statement not covered" >        this.store.select('s</span>imulation.on', { bind: [this, 'simulationOn'] });
+<span class="cstat-no" title="statement not covered" >        this.store.select('simulation.currentTime', { bind: [this, 'currentTime'] });</span>
+<span class="cstat-no" title="statement not covered" >        this.store.select('simulation.cycleTime', { bind: [this, 'cycleTi</span>me'] });
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
     setN<span class="cstat-no" title="statement not covered" >extTime(nextTime: Number) {</span>
@@ -228,7 +236,8 @@ expo<span class="cstat-no" title="statement not covered" >rt class SimulationSer
     }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    goForward() {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >        this.store.dispatch({ type: 'GRAPH_TRAVERSE_CYCLES', payload: 1 });</span>
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch(graphActions.preTraverse(this.simulation));</span>
+        //this.store.dispatch({ type: 'GRAPH_TRAVERSE_CYCLES', payload: 1 });
     }
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
     goBa<span class="cstat-no" title="statement not covered" >ckward() {</span>
@@ -262,7 +271,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class SimulationSer
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 05 2017 17:01:03 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 05 2017 20:12:59 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

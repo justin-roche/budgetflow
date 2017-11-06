@@ -5,6 +5,64 @@ import { linkFunctions } from '../parser/linkFunctions';
 import { ArrayById, ArrayToObject} from './utilities';
 import { _ } from 'underscore';
 
+/* PRE-TRAVERSAL */
+
+declare interface GraphSimulationState {
+    graph: Graph
+    simulation: Simulation
+}
+
+function preTraverse(state: GraphSimulationState): Graph {
+    let edges = extend(state.graph.edgesData).map((edgeData) => {
+        return {...edgeData, ...updateEdgeConditions(edgeData, state, 'simulation')};
+    });
+    let g = {...state.graph, edgesData: edges};
+
+     /* update the display */
+     g = { ...g, nodesData: applyDisplayFunctions(g)};
+
+    return g;
+}
+
+function extend(obj) {
+    return {
+        map: function(fn){
+            let o = {...obj}
+            for (let prop in o) {
+                o[prop] = {...o[prop], ...fn(o[prop])};
+            }
+            return o;
+        }
+    }
+}
+
+function updateEdgeConditions(edgeData, state, phase) {
+    let conditions = edgeData.conditions;
+    if(conditions.length === 0) {
+        return edgeData;
+    }
+
+    let partitioned = _.partition(conditions, (cond => cond.phase === phase));
+    let inPhase = partitioned[0];
+    let outPhase = partitioned[1];
+
+    let updatedConds = inPhase.map(cond => {
+        return {...cond, value: linkFunctions.evaluateEdgeCondition(edgeData, state, cond.expression)};
+    })
+
+    edgeData = {...edgeData, conditions: updatedConds.concat(outPhase), active: false};
+
+    if(edgeData.conditions.some(cond => cond.value === true && cond.type === 'sufficient')){
+        edgeData.active = true;
+    }
+    if(edgeData.conditions.every(cond => cond.value === true && cond.type === 'necessary')){
+        edgeData.active = true;
+    }
+    return edgeData;
+}
+
+/* TRAVERSAL */
+
 function traverseCycles(_state, payload: Number = 1) {
     let cycleCount = payload;
     let state = { ..._state }
@@ -25,7 +83,7 @@ function breadthTraverse(current: NodesData, g, _linkedSources = []) {
 
     /* apply step function to nodes */
 
-    g = iterateLevel(g);
+    // g = iterateLevel(g);
 
     let steppedSources = _.map(current, (nodeData) => {
         return { ...nodeData, ...applyStepFunction(nodeData) };
@@ -55,38 +113,7 @@ function breadthTraverse(current: NodesData, g, _linkedSources = []) {
 
 }
 
-function iterateLevel(g) {
-    g = {...g, edgesData: iterateEdges(g)};
-    return g;
-}
 
-function iterateEdges(g) {
-    return iterateIds(g.edgesData, iterateEdge.bind(this, g));
-}
-
-function iterateEdge (g, edgeData: EdgeData) {
-    return {...edgeData, active: isEdgeActive(edgeData, g)};
-}
-
-function iterateIds(obj, fn) {
-    let o = {...obj}
-    for (let prop in o) {
-        o[prop] = {...o[prop], ...fn(o[prop])};
-    }
-    return o;
-}
-
-function isEdgeActive(edgeData, g) {
-    if(!edgeData.conditions || edgeData.conditions.length === 0) {
-        return true;
-    } else {
-        return edgeData.conditions.reduce((acc, condition: Condition ) =>{
-            if(acc === true) return acc;
-            if(condition.type === 'sufficient' && linkFunctions.canActivate(g, edgeData, condition.expression)) return true;
-            return acc;
-        },false);
-    }
-}
 
 declare interface LinkedSources {
     linkedTargets: NodesData
@@ -231,4 +258,4 @@ function getEdge(source, target, g) {
         .pop();
 }
 
-export { traverseCycles, applyDisplayFunctions };
+export { traverseCycles, applyDisplayFunctions, preTraverse };
