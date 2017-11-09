@@ -1,5 +1,4 @@
 import { Store } from '../services/reduxStore';
-import { ModalSettings } from './../common/modalWrapper';
 import *  as Rx from 'rxjs';
 import { inject } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
@@ -13,15 +12,6 @@ export class ScenarioEditor {
 
   }
 
-  defaultModalSettings = {
-    title: 'Scenario Edit',
-    id: 'scenario-edit',
-    x: 0,
-    y: 0,
-    show: true
-  };
-
-  modalSettings = new Rx.BehaviorSubject<ModalSettings>(this.defaultModalSettings);
 
   constructor(private ea: EventAggregator, private store: Store) {
     this.$graphs = this.store.select('graphs');

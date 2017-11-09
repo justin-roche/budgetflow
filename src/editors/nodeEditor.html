@@ -2,7 +2,7 @@
     <require from="../common/modalWrapper"></require>
     <require from="../common/typeAhead"></require>
     <require from="./conditionalEditor"></require>
-    <modal-wrapper $settings.bind="modalSettings">
+    <modal-wrapper selector.bind="'ui.nodeEditor.modalSettings'">
         <div slot="modalbody">
             <ul if.bind="nodeModel" class="nav nav-tabs" role="tablist">
                 <li  role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>

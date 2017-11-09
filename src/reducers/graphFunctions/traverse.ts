@@ -1,0 +1,180 @@
+import { stepFunctions } from '../../parser/stepFunctions';
+import { linkFunctions } from '../../parser/linkFunctions';
+
+import { ArrayById, ArrayToObject} from '../utilities';
+import { _ } from 'underscore';
+
+
+
+/* TRAVERSAL */
+
+function traverseGraph(s: AppState) {
+    let state = { ...s}
+
+    let sources = getSources(state.graph.nodesData);
+    let state2 = breadthTraverse(state, sources);
+    //state = { ...state, nodesData: linkedNodes, edgesData: linkedEdges };
+
+    /* update the display */
+    //state = { ...state, nodesData: applyDisplayFunctions(state)};
+
+    return state;
+}
+
+function breadthTraverse(state, current, _linkedSources = []) {
+
+    /* apply step function to nodes */
+
+    // g = iterateLevel(g);
+
+    let steppedSources = _.map(current, (nodeData) => {
+        return { ...nodeData, ...applyStepFunction(nodeData) };
+    })
+
+    let nestedTargets: Array<Array<NodeData>> = _.map(current,(nodeData, i) => { 
+        return getOutNodes(nodeData, state.graph);
+    });
+
+    /* apply graph step function */
+
+
+    /* apply link function forward for a single level */
+    let currentLevelResults = linkSources(state, steppedSources, nestedTargets, _linkedSources);
+
+    if (_.size(currentLevelResults.linkedTargets) === 0) {
+        return {linkedNodes: currentLevelResults.linkedSources, linkedEdges: currentLevelResults.linkedEdges };
+
+    } else {
+        /* return the next level, previously linked targets become sources */
+        let subLevelsResults = breadthTraverse(state, currentLevelResults.linkedTargets, {..._linkedSources, ...currentLevelResults.linkedSources});
+
+        return {...{linkedNodes: {...currentLevelResults.linkedSources, ...subLevelsResults.linkedNodes},
+                ...{linkedEdges: {...currentLevelResults.linkedEdges, ...subLevelsResults.linkedEdges} } } };
+
+    }
+
+}
+
+declare interface LinkedSources {
+    linkedTargets: NodesData
+    linkedSources: NodesData
+    linkedEdges: EdgesData
+}
+
+function linkSources(state:AppState, steppedSources: Array<NodeData>, nestedTargets, sourcesAlreadyLinked): LinkedSources {
+
+    return steppedSources.reduce(function (acc, sourceData, i) {
+        let outNodes: Array<NodeData> = nestedTargets[i]; 
+
+        /* retrieve already reduced outNodes */
+        outNodes = outNodes.map(outNode => acc.linkedTargets[outNode.id]? acc.linkedTargets[outNode.id] : outNode);
+
+        if (outNodes.length === 0 || sourcesAlreadyLinked[sourceData.id]) {
+            return {
+                linkedTargets: { ...acc.linkedTargets, ...ArrayToObject(outNodes) },
+                linkedSources: { ...acc.linkedSources, [sourceData.id]: sourceData },
+                linkedEdges: {...acc.linkedEdges}
+            };
+        }
+        else {
+            /* apply link when outNodes and not already stepped sources  */
+            let { linkedTargets, linkedSource, linkedEdges } = linkSource(state, sourceData, outNodes);
+            return {
+                linkedTargets: { ...acc.linkedTargets, ...linkedTargets },
+                linkedSources: { ...acc.linkedSources, ...linkedSource },
+                linkedEdges: {...acc.linkedEdges, ...linkedEdges}
+            };
+        }
+    }, { linkedTargets: {}, linkedSources: {}, linkedEdges: {} });
+}
+
+declare interface LinkedSource {
+    linkedTargets: NodesData,
+    linkedSource: NodesData
+    linkedEdges: EdgeData
+}
+
+/* link from a single source to it's multiple targets */
+
+function linkSource(state:AppState, _source: NodeData, targets: Array<NodeData>) {
+
+    return targets.reduce((acc: any, target, i) => {
+
+        /* retrieve already reduced source */
+        let source = acc.linkedSource[_source.id];
+
+        let edge: EdgeData = getEdge(state, source, target);
+        
+        if(edge.active) {
+            let { linkedSource, linkedTarget } = linkTarget(state, source, target, edge);
+            return {
+                linkedTargets: { ...acc.linkedTargets, [linkedTarget.id]: linkedTarget},
+                linkedSource: { [linkedSource.id]: linkedSource },
+                linkedEdges: {...acc.linkedEdges, [edge.id]: edge}
+            }
+        } else {
+            return {...acc, linkedEdges: {...acc.linkedEdges, [edge.id]: edge}};
+        }
+        
+    }, { linkedTargets: ArrayToObject(targets), linkedSource: { [_source.id]: _source }, linkedEdges: {}} )
+
+}
+
+declare interface LinkPair {
+    linkedSource: NodeData,
+    linkedTarget: NodeData
+}
+function linkTarget(state:AppState, source: NodeData, target: NodeData, edge): LinkPair {
+
+    return edge.linkFunctions.reduce((acc, functionSettings) => {
+        let fn = linkFunctions[functionSettings.name];
+
+        let linkPair = fn(acc.linkedSource, target, ...functionSettings.arguments);
+        return {
+            linkedSource: linkPair.source,
+            linkedTarget: linkPair.target
+        };
+
+    }, { linkedSource: source, linkedTarget: target });
+}
+
+function applyStepFunction(nodeData) {
+    let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
+        let fn = stepFunctions[functionSettings.name];
+        let newSlice = fn(nodeData, ...functionSettings.arguments);
+        let updated = { ...acc, ...newSlice };
+        return updated;
+    }, { ...nodeData });
+
+    return update;
+}
+
+
+
+/* helper functions */
+
+function getSources(g) {
+    return _.filter(g, n => n.type === 'source');
+}
+
+function getOutNodes(nodeData, g) {
+    return g.nodes[nodeData.id].outEdges
+        .map(edgeName => {
+            return g.edges[edgeName]
+        })
+        .map(edge => {
+            return g.nodes[edge.target]
+        })
+        .map(outNode => {
+            return g.nodesData[outNode.id]
+        });
+}
+
+function getEdge(state, source, target) {
+    return state.graph.nodes[source.id].outEdges.map(edge => state.graph.edges[edge])
+        .filter(g => g.target === target.id)
+        .map(edgeDescription => state.graph.edgesData[edgeDescription.id])
+        .pop();
+}
+
+export { traverseGraph };

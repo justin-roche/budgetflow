@@ -1,11 +1,28 @@
 import { BehaviorSubject } from 'rxjs';
 
-
 export class Store {
-    store;
+    public actions;
+    
+    public store;
 
-    provideStore(reduxInstance) {
+    public provideStore(reduxInstance) {
         this.store = reduxInstance;
+    }
+
+    provideActions(actionCreators) {
+        let boundActionCreators = actionCreators.map(actionCreator => actionCreator(this));
+        this.actions = boundActionCreators.reduce((acc, actionCreator)=> {
+            acc[actionCreator.name] = actionCreator.actions;
+            return acc;
+        },{});
+    }
+
+    setState(s) {
+        this.store.dispatch({type: 'SET_STATE', payload: s});
+    }
+
+    getState(): AppState {
+        return this.store.getState();
     }
 
     dispatch(...args) {
@@ -35,8 +52,15 @@ export class Store {
         return this.store.subscribe(...args);
     }
 
-    getState(): AppState {
-        return this.store.getState();
+    
+
+    getPresentState(): AppState {
+        let s = this.store.getState();
+        let s2 = {} 
+        for(let prop in s) {
+            s2[prop] = s[prop].present;
+        }
+        return (<AppState>s2);
     }
 
     select(selector, options:any = {}): BehaviorSubject<any> {
@@ -64,6 +88,9 @@ export class Store {
         this.store.subscribe(() => {
             let state = this.store.getState();
             let slice = selector.split('.').reduce((acc, prop) => {
+                if(acc === undefined) {
+                    debugger;
+                }
                 return acc[prop];
             }, state);
 

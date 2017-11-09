@@ -1,59 +1,42 @@
+import { Store } from './../services/reduxStore';
 import { ComponentBase } from './componentBase';
-import { ModalSettings } from './modalWrapper';
 import { inject, bindable } from 'aurelia-framework';
+import { uiActions } from '../reducers/uiReducer';
+
 import $ from 'jquery'
-import * as Rx from 'rxjs';
+import * as Rx from 'rxjs'; 
 
-export interface ModalSettings {
-    title: string;
-    id: string;
-    x: number;
-    y: number;
-    show: boolean;
-}
+@inject(Store)
+export class ModalWrapper {
+    @bindable selector;
+    public show;
+    public settings = null;
+    private ref;
 
-export class ModalWrapper extends ComponentBase {
-    @bindable $settings: Rx.BehaviorSubject<ModalSettings>;
-    modalRef;
-
-    constructor() {
-        super();
+    constructor(private store: Store) {
+        
     }
 
     attached() {
-        this.bindViewSettings();
-        this.createModal();
+        console.log('settings', this.settings)
+        this.store.select(this.selector, {bind: [this,'settings'], log: true}).subscribe(_ => {
+            this.update();
+        });
     }
 
-    createModal() {
-        // $(this.modalRef)
-        //     .resizable({
-        //         handles: "s, e"
-        //     })
-           
-    }
+    update() {
 
-    afterSettingsChanged(v) {
-
-        if(v.x || v.y) {
-            $(this.modalRef).css({
+        if(this.settings.x || this.settings.y) {
+            $(this.ref).css({
                 'z-index': Math.random()*1000,
                 left: this.settings.x + 'px',
                 top: this.settings.y + 'px'
             });
-        }
-        if(v.show) {
-
-        }
-        
+        }        
     }
 
     close() {
-        this.emitSettings({show: false});
-    }
-
-    save() {
-
+        uiActions(this.store).closeModal(this.settings);
     }
 
 }

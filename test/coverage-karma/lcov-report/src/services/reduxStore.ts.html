@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/services/reduxStore.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/services</a> reduxStore.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.1% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>11/78</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/22</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.26% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">17.19% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>11/64</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">import { BehaviorSubject } from 'rxjs';
+&nbsp;
+export class Store {
+    public actions;
+    
+    public store;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    public provideStore(</span>reduxInstance) {
+<span class="cstat-no" title="statement not covered" >        this.store = reduxInstance;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    provideActions(</span>actionCreators) {</span>
+        let boundActionCreators = <span class="cstat-no" title="statement not covered" >actionCreators.map(<span class="fstat-no" title="function not covered" >actionCreator =&gt; <span class="cstat-no" title="statement not covered" >actionCreator(this))</span>;</span></span>
+<span class="cstat-no" title="statement not covered" >        this.actions = boundActionCreators.reduce(<span class="fstat-no" title="function not covered" >(</span>acc, actionCreator)=&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            acc[actionCreator.name] = actionCreator.actions;</span>
+<span class="cstat-no" title="statement not covered" >            return acc;</span>
+        },{});
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    setState(</span>s) {
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch({type: 'SET_STATE', payload: s});</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    getState(): AppState {</span>
+<span class="cstat-no" title="statement not covered" >        return this.store.getState();</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    dispatch(<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >...args</span>)</span> {</span>
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch(...args);</span>
+        let self  = <span class="cstat-no" title="statement not covered" >this;</span>
+<span class="cstat-no" title="statement not covered" >        return nextMonad()</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >        function nextMonad() {</span>
+<span class="cstat-no" title="statement not covered" >            return {</span>
+                next: <span class="fstat-no" title="function not covered" >function (</span>cb) {
+<span class="cstat-no" title="statement not covered" >                    cb(self.store.getState());</span>
+<span class="cstat-no" title="statement not covered" >                    return nextMonad();</span>
+                }
+            }
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    dispatchSequence(<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >...actions</span>)</span> {</span></span>
+<span class="cstat-no" title="statement not covered" >        actions.reduce(<span class="fstat-no" title="function not covered" >(</span>acc, action) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            this.dispatch(...action);</span>
+<span class="cstat-no" title="statement not covered" >            console.log('new store', this.store);</span>
+<span class="cstat-no" title="statement not covered" >            return this.store;</span>
+        }, null)
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    subscribe(<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >...args</span>)</span> {</span>
+<span class="cstat-no" title="statement not covered" >        return this.store.subscribe(...args);</span>
+    }
+&nbsp;
+    
+&nbsp;
+<span class="fstat-no" title="function not covered" >    getPresentState(): AppState {</span>
+        let s = <span class="cstat-no" title="statement not covered" >this.store.getState();</span>
+        let s2 = <span class="cstat-no" title="statement not covered" >{} </span>
+<span class="cstat-no" title="statement not covered" >        for(let prop in s) {</span>
+<span class="cstat-no" title="statement not covered" >            s2[prop] = s[prop].present;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return (&lt;AppState&gt;s2);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    select(</span>selector, <span class="cstat-no" title="statement not covered" >options:any = {})</span>: BehaviorSubject&lt;any&gt; {</span>
+        let log = <span class="cstat-no" title="statement not covered" >options.log || false;</span>
+        let time = <span class="cstat-no" title="statement not covered" >options.time || 'present';</span>
+&nbsp;
+        let o = <span class="cstat-no" title="statement not covered" >new BehaviorSubject({});</span>
+        let selectorArray = <span class="cstat-no" title="statement not covered" >selector.split('.');</span>
+<span class="cstat-no" title="statement not covered" >        selectorArray.splice(1,0,time);</span>
+<span class="cstat-no" title="statement not covered" >        selector = selectorArray.join('.');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(options.bind) {</span>
+            let context = <span class="cstat-no" title="statement not covered" >options.bind[0];</span>
+            let property = <span class="cstat-no" title="statement not covered" >options.bind[1];</span>
+<span class="cstat-no" title="statement not covered" >            o.subscribe(<span class="fstat-no" title="function not covered" >v =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >                context[property] = v;</span>
+            })
+        }
+&nbsp;
+        let previous = <span class="cstat-no" title="statement not covered" >selector.split('.').reduce(<span class="fstat-no" title="function not covered" >(</span>acc, prop) =&gt; {</span>
+            // if(acc[options.time]) return acc[options.time][prop];
+<span class="cstat-no" title="statement not covered" >            return acc[prop];</span>
+        }, this.store.getState());
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.store.subscribe(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
+            let state = <span class="cstat-no" title="statement not covered" >this.store.getState();</span>
+            let slice = <span class="cstat-no" title="statement not covered" >selector.split('.').reduce(<span class="fstat-no" title="function not covered" >(</span>acc, prop) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                if(acc === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >                    debugger;</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return acc[prop];</span>
+            }, state);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (typeof slice === 'undefined') {</span>
+&nbsp;
+            }
+            else <span class="cstat-no" title="statement not covered" >if (previous !== slice) {</span>
+<span class="cstat-no" title="statement not covered" >                if (log) <span class="cstat-no" title="statement not covered" >console.log('selector triggered (current not equal to last):', selector)</span></span>
+<span class="cstat-no" title="statement not covered" >                previous = slice;</span>
+<span class="cstat-no" title="statement not covered" >                o.next(slice);</span>
+            }
+        });
+<span class="cstat-no" title="statement not covered" >        if (previous === null) {</span>
+<span class="cstat-no" title="statement not covered" >            if (log) <span class="cstat-no" title="statement not covered" >console.log('selector skipped (previous value null)', selector)</span></span>
+<span class="cstat-no" title="statement not covered" >            o = o.skip(1);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            if (log) <span class="cstat-no" title="statement not covered" >console.log('selector triggered on initialization (previous value not null):', selector, previous)</span></span>
+<span class="cstat-no" title="statement not covered" >            o.next(previous);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return o;</span>
+&nbsp;
+    }
+&nbsp;
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Nov 08 2017 19:07:45 GMT-0500 (EST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

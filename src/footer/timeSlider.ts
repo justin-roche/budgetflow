@@ -1,6 +1,5 @@
 import { SimulationService } from './../services/simulationService';
 import { Store } from './../services/reduxStore';
-import { ModalSettings } from './../common/modalWrapper';
 import *  as Rx from 'rxjs';
 import { inject } from 'aurelia-framework';
 import noUiSlider from 'nouislider';

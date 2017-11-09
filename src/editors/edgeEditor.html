@@ -2,9 +2,9 @@
     <require from="../common/modalWrapper"></require>
     <require from="../common/typeAhead"></require>
     <require from="./conditionalEditor"></require>
-    <modal-wrapper $settings.bind="modalSettings">
+    <modal-wrapper selector.bind="'ui.edgeEditor.modalSettings'">
         <div slot="modalbody">
-            <ul if.bind="nodeModel" class="nav nav-tabs" role="tablist">
+            <ul if.bind="edgeModel" class="nav nav-tabs" role="tablist">
                 <li  role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
                 <li role="presentation"><a href="#out" aria-controls="out" role="tab" data-toggle="tab">Out</a></li>
                 <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">In</a></li>
@@ -13,78 +13,7 @@
 
             <div class="tab-content">
 
-                <!-- Profile -->
-                <div if.bind="nodeModel" role="tabpanel" class="tab-pane active" id="profile">
-                    <!-- bind to intermediate representation -->
-                    <label>name</label>
-                    <input class="form-control" type="text" value.bind="nodeModel.nodeData.name || 'untitled'" placeholder="name">
-                    <label>type</label>
-                    <input class="form-control" type="text" value.bind="nodeModel.nodeData.type" placeholder="type">
-                    <label>step function</label>
-                    <type-ahead></type-ahead>
-                </div>
-
-                <!-- out -->
-                <div role="tabpanel" class="tab-pane" id="out">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Label</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr repeat.for="node of nodeModel.outNodes">
-                                <th scope="row">${node.id}</th>
-                                <!-- <td>${node.name}</td>
-                                <td>
-                                    <label>link function</label>
-                                    <ul>
-                                        <li repeat.for="fn of matchEdgeData(node.id).linkFunctions">
-                                            <p>${fn.name}</p>
-                                            <p>${fn.arguments}</p>
-                                        </li>
-                                    </ul>
-                                </td> -->
-                                <td>
-                                    <type-ahead></type-ahead>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <!-- in -->
-
-                <div role="tabpanel" class="tab-pane" id="messages">
-                    <table if.bind="inNodes.length > 0" class="table">
-                        <thead>
-                            <tr>
-                                <th>Label</th>
-                                <th>Id</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr repeat.for="node of inNodes">
-                                <th scope="row">${node.id}</th>
-                                <td>${node.name}</td>
-                                <td>
-                                    <label>link function</label>
-                                    <ul>
-                                        <li repeat.for="fn of matchInEdgeData(node.id).linkFunctions">
-                                            <p>${fn.name}</p>
-                                            <p>${fn.arguments}</p>
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <type-ahead></type-ahead>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
                 <div role="tabpanel" class="tab-pane" id="settings">
                     <!-- <conditional-editor nodeModel.bind="nodeModel">
 

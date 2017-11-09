@@ -1,28 +1,39 @@
-import { traverseCycles, applyDisplayFunctions, preTraverse } from './traversalFunctions';
-import {addNewNode, addNewEdge, updateEdge, deleteNode, nodePropertySet, addLinkFunction} from './graphManipulationFunctions';
+import { traverseGraph } from './graphFunctions/traverse';
+import { addNewNode, addNewEdge, updateEdge, deleteNode, nodePropertySet, addLinkFunction } from './graphFunctions/graphManipulationFunctions';
+import { displayUpdate } from './graphFunctions/displayUpdate'
+import { updateEdgesConditions } from './graphFunctions/conditionsUpdate';
+import undoable, { distinctState } from 'redux-undo'
 
-let graphActions = {
+let graphActions = function (store) {
 
-
-    graphTraverseCycles: function(n?: Number){
-        return {type: 'GRAPH_TRAVERSE_CYCLES', payload: (n || 1)};
-    },
-
-    preTraverse: function(simulation) {
-        return {type: 'GRAPH_PRE_TRAVERSE', payload: ({simulation: simulation})};
-    },
-
-    deleteNode: function(id: String) {
-        return {type: 'DELETE_NODE', payload: id};
-    },
-
-    addNode: function() {
-        return {type: 'ADD_NODE'}
+    return {
+        name: 'graph',
+        actions: {
+            applyDisplayFunctions: function() {
+                return store.dispatch({ type: 'GRAPH_SET', payload: displayUpdate(store.getPresentState())});                
+            },
+            conditionsUpdate: function (simulation) {
+                return { type: 'GRAPH_SET', payload: updateEdgesConditions(store.getPresentState()) };
+            },
+            graphTraverse: function (n?: Number) {
+                return store.dispatch({ type: 'GRAPH_SET', payload: traverseGraph(store.getPresentState())});
+            },
+            deleteNode: function (id: String) {
+                return { type: 'DELETE_NODE', payload: id };
+            },
+            setGraph: function(g) {
+                return store.dispatch({ type: 'GRAPH_SET', payload: g});                                
+            },
+            addNode: function () {
+                return { type: 'ADD_NODE' }
+            }
+        }
     }
+
 
 }
 
-  
+
 function graphReducer(state = null, action) {
     switch (action.type) {
         case 'GRAPH_SET': {
@@ -41,36 +52,34 @@ function graphReducer(state = null, action) {
             return { ...state, ...nodePropertySet(state, action.payload.nodeData) }
         }
         case 'EDGE_ADD': {
-           return { ...state, ...addNewEdge(state, action.payload)};
+            return { ...state, ...addNewEdge(state, action.payload) };
         }
         case 'EDGE_UPDATE': {
             updateEdge(state, action.payload.edge, action.payload.edgeData);
             return { ...state };
         }
         case 'EDGE_LINK_FUNCTION_ADD': {
-            return {...state, ...addLinkFunction(state, action.payload.edge, action.payload.function)}
-        }
-        case 'DISPLAY_FUNCTIONS_APPLY': {
-            return { ...state, nodesData: applyDisplayFunctions(state) }
+            return { ...state, ...addLinkFunction(state, action.payload.edge, action.payload.function) }
         }
         case 'GRAPH_PRE_TRAVERSE': {
-            return {...state, ...preTraverse({graph: state, ...action.payload})}
+            // return { ...state, ...preTraverse({ graph: state, ...action.payload }) }
         }
-        case 'GRAPH_TRAVERSE_CYCLES': {
-            return traverseCycles(state, action.payload);
-        }
-        
+
         default:
             return state;
     }
 
 }
 
+let undoableGraphReducer = undoable(graphReducer, {undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function(x, prev, next){
+    return (next !== null && prev !== null) && next !== prev;
+}});
 
 
 
 
-export { graphReducer, graphActions }
+
+export { graphReducer, graphActions, undoableGraphReducer }
 
  /* pre-link functions */
 

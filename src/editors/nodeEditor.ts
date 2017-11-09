@@ -1,6 +1,5 @@
 import { inject, bindable } from 'aurelia-framework';
 import $ from 'jquery'
-import { ModalSettings } from '../common/modalWrapper'
 import * as Rx from 'rxjs';
 import { Store } from '../services/reduxStore';
 
@@ -10,15 +9,6 @@ export class NodeEditor {
     $nodeId;
     @bindable nodeModel;
     
-    defaultModalSettings = {
-        title: 'Node Edit',
-        id: 'node-edit',
-        x: 0,
-        y: 0,
-        show: true
-    };
-
-    modalSettings = new Rx.BehaviorSubject<ModalSettings>(this.defaultModalSettings);
 
     constructor(private store: Store) {
         this.$nodeId = this.store.select('ui.graphContainer.selectedNodeId');
@@ -46,7 +36,7 @@ export class NodeEditor {
     }
 
     buildNodeModel(id) {
-        let graph = this.store.getState().graph.present;
+        let graph = this.store.getPresentState().graph;
 
         let node = graph.nodes[id];
         let nodeData = graph.nodesData[id];

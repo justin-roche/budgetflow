@@ -22,22 +22,22 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/227</span>
+        <span class='fraction'>0/243</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/75</span>
+        <span class='fraction'>0/81</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/60</span>
+        <span class='fraction'>0/62</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/215</span>
+        <span class='fraction'>0/231</span>
       </div>
     </div>
   </div>
@@ -497,7 +497,31 @@
 452
 453
 454
-455</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -717,8 +741,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -839,10 +873,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -990,7 +1038,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
             this.refresh(d);
 <span class="cstat-no" title="statement not covered" >        })<span class="fstat-no" title="function not covered" ></span></span>
         this<span class="cstat-no" title="statement not covered" >.store.select('ui', {bind: [this, 'ui']}).subscribe(d =&gt; {</span>
-            if(t<span class="cstat-no" title="statement not covered" >his.container) {</span>
+            if(t<span class="cstat-no" title="statement not covered" >his.container &amp;&amp; this.graph)</span> {
                 this.refresh(this.graph);
             }
         })
@@ -1170,177 +1218,186 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
                         .attr("y", d.y)
                         .attr("height", 20)
 <span class="cstat-no" title="statement not covered" >                        .attr('width', 20)<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >                } else {</span>
-                    selected
-<span class="fstat-no" title="function not covered" ></span>                        .attr("x", d.x)
-<span class="cstat-no" title="statement not covered" >                        .</span>attr("y", d.y)
-                        .attr("cx", d.x)
-                        .attr("cy", d.y)
+                } else {<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >                    selec</span>ted
+<span class="cstat-no" title="statement not covered" >                        .attr("x", d.x)</span>
+                        .attr("y", d.y)
+<span class="fstat-no" title="function not covered" ></span>                        .attr("cx", d.x)
+<span class="cstat-no" title="statement not covered" >                        .</span>attr("cy", d.y)
                         .attr("r", 20)
-                }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-                i<span class="cstat-no" title="statement not covered" >f(nd.dis</span>playData.active === false) {
-<span class="cstat-no" title="statement not covered" >                    selected.attr('</span>fill', '<span class="cstat-no" title="statement not covered" >gray')<span class="cstat-no" title="statement not covered" ></span></span>
-                    /<span class="cstat-no" title="statement not covered" >/ selected.classed('inac</span>tive-node', true);
-<span class="cstat-no" title="statement not covered" >                } else {</span>
-                    selected.attr('fill', 'whi<span class="fstat-no" title="function not covered" >te</span>');<span class="cstat-no" title="statement not covered" ></span>
+<span class="fstat-no" title="function not covered" ></span>                }
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >                if(nd.displayData.active === false) {</span>
+<span class="cstat-no" title="statement not covered" >                    selected.attr('fill', 'gray')</span>
+                    // selected.classed('inactive-node', true);
+                } else {
+<span class="cstat-no" title="statement not covered" >                    selected.attr('fill', 'white');</span>
                     // selected.classed('inactive-node', false);
                 }
 &nbsp;
                 selected
-                // .attr('stroke', 'white')
-                /<span class="fstat-no" title="function not covered" >/ .attr</span>('stroke-width', 3)
-                // .attr<span class="cstat-no" title="statement not covered" >("fill", function (d, i</span>) {
-                //     r<span class="cstat-no" title="statement not covered" >eturn dd.outlineColor;</span>
-                // })<span class="cstat-no" title="statement not covered" ></span>
-            <span class="cstat-no" title="statement not covered" >    </span>
-            })<span class="fstat-no" title="function not covered" ></span>
-            <span class="cstat-no" title="statement not covered" ></span>
-           
-    }<span class="fstat-no" title="function not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    renderLinks(data) {
-<span class="fstat-no" title="function not covered" ></span>
-        this.con<span class="cstat-no" title="statement not covered" >tainer.selectAll('l</span>ine')
-            .attr("class", "link")
-            .attr('id',<span class="fstat-no" title="function not covered" > f</span>unction (d) {
-<span class="cstat-no" title="statement not covered" >                return d.id;</span>
+<span class="cstat-no" title="statement not covered" >                // .attr('stroke', 'white')<span class="fstat-no" title="function not covered" ></span></span>
+                /<span class="cstat-no" title="statement not covered" >/ .attr(</span>'stroke-width', 3)
+                //<span class="cstat-no" title="statement not covered" > .attr("fill", fu</span>nction (<span class="cstat-no" title="statement not covered" >d, i) {<span class="cstat-no" title="statement not covered" ></span></span>
+                //   <span class="cstat-no" title="statement not covered" >  return dd.outlineColor</span>;
+<span class="cstat-no" title="statement not covered" >                // })</span>
+                <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
             })
-        //.a<span class="cstat-no" title="statement not covered" >ttr('marker<span class="fstat-no" title="function not covered" >-e</span>nd', "url(#arrow)")</span>
-    }<span class="cstat-no" title="statement not covered" ></span>
+            
+           
+    }
+&nbsp;
+    renderLinks(d<span class="fstat-no" title="function not covered" >ata) {</span>
+        let selectedEdge<span class="cstat-no" title="statement not covered" >Id = this.ui.graphConta</span>iner.selectedEdgeId;
+        let d3 = this.d3<span class="cstat-no" title="statement not covered" >;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-    /* simuluation */<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-<span class="fstat-no" title="function not covered" ></span>
-    createSimulation(_no<span class="cstat-no" title="statement not covered" >des, _links) {</span>
-        let d3 = this.d3;
+        this<span class="cstat-no" title="statement not covered" >.container.selectAll('line')</span>
+            .attr("clas<span class="fstat-no" title="function not covered" >s"</span>, "link")
+            .att<span class="cstat-no" title="statement not covered" >r('id', function (d</span>) {
+                return d.id;
+            })<span class="fstat-no" title="function not covered" ></span>
+            .eac<span class="cstat-no" title="statement not covered" >h(function(d){</span>
+                let selected = d3.select(this);
+                if(sele<span class="fstat-no" title="function not covered" >ct</span>edEdgeId === d.id){
+<span class="cstat-no" title="statement not covered" >                    selected.classe</span>d('selected-edge', true);
+                } else {
+                    sel<span class="fstat-no" title="function not covered" >ec</span>ted.classed('selected-edge', false);
+<span class="cstat-no" title="statement not covered" >                }</span>
+            })
+    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+    /* simuluation *<span class="cstat-no" title="statement not covered" >/</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    createSimulation(_nodes, _<span class="fstat-no" title="function not covered" >li</span>nks) {
+        let d3 = this.d3<span class="cstat-no" title="statement not covered" >;</span>
         var svg = d3.select("svg"),
             width = +svg.attr("width"),
             height = +svg.attr("height");
 &nbsp;
-        let labels =<span class="cstat-no" title="statement not covered" > svg.selectAll('.label');</span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+        let labels = svg.selectAll('.label');
+<span class="cstat-no" title="statement not covered" ></span>
         this.simulation = d3.fo<span class="fstat-no" title="function not covered" >rc</span>eSimulation(<span class="cstat-no" title="statement not covered" >_nodes)</span>
-            .force("link", d3.forceLink(_links).id(function (d) { return d.id; }))
+            .force("link", d3.f<span class="fstat-no" title="function not covered" >or</span>ceLink(_link<span class="cstat-no" title="statement not covered" >s).id(functi</span>on (d) { return d.id; }))
             .force("charge", d3.forceManyBody().strength(-1000))
-<span class="cstat-no" title="statement not covered" >            .force("center", d3.force<span class="fstat-no" title="function not covered" >Ce</span>nter(width / 2, height / 2))</span>
-            .vel<span class="cstat-no" title="statement not covered" >ocityDecay(0.9)</span>
-            .alphaTarget(1)
+            .force("center", d3.forceCenter(width / 2, height / 2))
+<span class="cstat-no" title="statement not covered" >            .velocityDecay(0.9)<span class="fstat-no" title="function not covered" ></span></span>
+            .alp<span class="cstat-no" title="statement not covered" >haTarget(1)</span>
             .on("tick", ticked);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        function ticked() {<span class="fstat-no" title="function not covered" ></span></span>
-            let n<span class="cstat-no" title="statement not covered" >odes = s</span>vg.selectAll('.node');
-            let li<span class="cstat-no" title="statement not covered" >nks = svg</span>.selectAll('.link')
-            let labels = svg.selectAll('.label')
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-            links<span class="cstat-no" title="statement not covered" ></span>
-                .<span class="cstat-no" title="statement not covered" >attr("x1</span>", function (d) {
-                    return<span class="cstat-no" title="statement not covered" > d.source.x;</span>
-                })
+        function ticked() {
+<span class="cstat-no" title="statement not covered" >            let nodes = svg.selectAll('.node<span class="fstat-no" title="function not covered" >')</span>;</span>
+            let l<span class="cstat-no" title="statement not covered" >inks = s</span>vg.selectAll('.link')
+            let la<span class="cstat-no" title="statement not covered" >bels = sv</span>g.selectAll('.label')
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            links<span class="fstat-no" title="function not covered" ></span></span>
+                .at<span class="cstat-no" title="statement not covered" >tr("x</span>1", function (d) {
+<span class="cstat-no" title="statement not covered" >                    retur</span>n d.source.x;
+                })<span class="cstat-no" title="statement not covered" ></span>
                 .attr("y1", function (d) {
-<span class="cstat-no" title="statement not covered" >                    return d.source.y;</span>
-                }<span class="fstat-no" title="function not covered" >)</span>
-<span class="cstat-no" title="statement not covered" >                .attr("x2", function (d) {</span>
-                    return d.target.x;
+                    return d.source.y;
+<span class="cstat-no" title="statement not covered" >                })</span>
+                .<span class="fstat-no" title="function not covered" >attr("x</span>2", function (d) {
+<span class="cstat-no" title="statement not covered" >                    return d.target.x;</span>
                 })
-<span class="cstat-no" title="statement not covered" >                .attr("y2", function (d) {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >                    return d.target.y;</span>
+                .attr("y2", function (d) {
+<span class="cstat-no" title="statement not covered" >                    return d.target.y;<span class="fstat-no" title="function not covered" ></span></span>
                 });<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >            nodes.each(functi<span class="fstat-no" title="function not covered" >on</span> (d) {</span>
-<span class="cstat-no" title="statement not covered" >                if (d.shape === 'square') {</span>
-                    d3.select(this)
+            nodes.e<span class="cstat-no" title="statement not covered" >ach(f</span>unction (d) {
+<span class="cstat-no" title="statement not covered" >                if (d.shape =<span class="fstat-no" title="function not covered" >==</span> 'square') {</span>
+<span class="cstat-no" title="statement not covered" >                    d3.select(this)</span>
                         .attr("x", function (d) { return d.x; })
-<span class="fstat-no" title="function not covered" >                        .</span>attr("y", function (d) {
-<span class="cstat-no" title="statement not covered" >                            return d.y - Number(d3.select(this).attr('height') / 2);</span>
-                        })
+                        .attr("y", function (d) {
+<span class="fstat-no" title="function not covered" ></span>                            return d.y - Number(d3.select(this).attr('height') / 2);
+<span class="cstat-no" title="statement not covered" >                        })</span>
                     // .attr("rx", function (d) { return d.x; })
                     // .attr("ry", function (d) { return d.y; });
-<span class="cstat-no" title="statement not covered" >                } else {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >                    d3.se</span>lect(this)
-<span class="cstat-no" title="statement not covered" ></span>                        .attr("cx", function (d) { return d.x; })
-<span class="cstat-no" title="statement not covered" >                        .attr("cy", function (d) {</span> return d.y; })
-<span class="cstat-no" title="statement not covered" >                }</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                    d3.select(this)<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >                        .</span>attr("cx", function (d) { return d.x; })
+<span class="cstat-no" title="statement not covered" ></span>                        .attr("cy", function (d) { return d.y; })
+                }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >            })</span>
-&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>
             labels.attr("transform", function (d) {
                 return "translate(" + (d.x + 20) + "," + (d.y + 20) + ")";
-            });<span class="fstat-no" title="function not covered" ></span>
-        }<span class="cstat-no" title="statement not covered" ></span>
+            });
+        }<span class="fstat-no" title="function not covered" ></span>
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-    renderForce(_nodes, edges) {
-        let d3 = <span class="fstat-no" title="function not covered" >this.d3;</span>
-        let <span class="cstat-no" title="statement not covered" >svg = this.svg;</span>
+    renderFo<span class="cstat-no" title="statement not covered" >rce(_nodes, </span>edges) {
+        let d3 = this.d3;
+        let svg =<span class="fstat-no" title="function not covered" > this.sv</span>g;
 <span class="cstat-no" title="statement not covered" ></span>
-    }
-<span class="fstat-no" title="function not covered" ></span>
-    addZoomL<span class="cstat-no" title="statement not covered" >istener() {</span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+    addZoomListen<span class="fstat-no" title="function not covered" >er() {</span>
         let <span class="cstat-no" title="statement not covered" >self = this;</span>
         let <span class="cstat-no" title="statement not covered" >d3 = this.d3;</span>
-&nbsp;
-        let zoomHandler = d3.zoom()
-<span class="cstat-no" title="statement not covered" >            .scaleExtent([1, 10])<span class="fstat-no" title="function not covered" ></span></span>
-            .on("<span class="cstat-no" title="statement not covered" >zoom", z</span>oomed);
 <span class="cstat-no" title="statement not covered" ></span>
-        this.contai<span class="cstat-no" title="statement not covered" >ner.c</span>all(zoomHandler);
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-        func<span class="cstat-no" title="statement not covered" >tion zoomed(e) {</span>
-<span class="cstat-no" title="statement not covered" >            self.container.attr("transfo</span>rm", d3.event.transform)
+        let zoomHandler = d3.zoom()
+            .scaleExtent([1, 10])
+<span class="cstat-no" title="statement not covered" >            .on("zoom", zoomed);<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+        this.contain<span class="cstat-no" title="statement not covered" >er.call(zoomHandler);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        function zoomed(e)<span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >            self.container.attr("transf</span>orm", d3.event.transform)
         }<span class="cstat-no" title="statement not covered" ></span>
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-    addMouseOverList<span class="cstat-no" title="statement not covered" >ener() {</span>
-        let node = this.svg.selectAll('.node');
-        let link<span class="cstat-no" title="statement not covered" > = this.svg.selectAll('line');</span>
-        let self = t<span class="cstat-no" title="statement not covered" >his;</span>
+    addMouseOver<span class="cstat-no" title="statement not covered" >Listener() {</span>
+        let node = t<span class="cstat-no" title="statement not covered" >his.svg.selectAll('.node');</span>
+        let link = this.svg.selectAll('line');
+        let self<span class="cstat-no" title="statement not covered" > = this;</span>
         node.on("mou<span class="cstat-no" title="statement not covered" >seover", function (d) {</span>
-&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>
            
             self.d3.select(this)
-<span class="cstat-no" title="statement not covered" >                .attr('class', 'selected-node')</span>
-           
+                .attr('class', 'selected-node')
+           <span class="cstat-no" title="statement not covered" ></span>
         })
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            .on("mouseout", function (d) {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-                self<span class="cstat-no" title="statement not covered" >.d3.select(this)</span>
-<span class="cstat-no" title="statement not covered" >                    .att</span>r('class', 'node')
-        <span class="cstat-no" title="statement not covered" >     <span class="fstat-no" title="function not covered" ></span></span>
+            .on("mou<span class="cstat-no" title="statement not covered" >seout", function (d) {</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >                self.d3.select(this)</span>
+<span class="cstat-no" title="statement not covered" >                    .attr('class', 'node</span>')
+             <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >            });</span>
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-    addDragL<span class="cstat-no" title="statement not covered" >istener() {</span>
-        let <span class="cstat-no" title="statement not covered" >d3 = this.d3;</span>
-        let <span class="cstat-no" title="statement not covered" >self: any = this;</span>
-        let circles = this.svg.selectAll('.node');
+    addDragListener() {
+        let d3 = this.d3;
+        let self<span class="cstat-no" title="statement not covered" >: any = this;</span>
+        let circ<span class="cstat-no" title="statement not covered" >les = this.svg.selectAll('.node');</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        circles.on('mousedown.drag', null);<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        circles.call(d3.drag()</span>
-            .on("start", dragstarted)
-<span class="cstat-no" title="statement not covered" >            .on("drag", dragged)<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >            .on("end", dragended));</span>
+        circles.on('mousedown.drag', null);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        function dragstarted(d) {<span class="fstat-no" title="function not covered" ></span></span>
-            self.si<span class="cstat-no" title="statement not covered" >mulat</span>ion.alphaTarget(0.3).restart();
-<span class="cstat-no" title="statement not covered" >            d.fx = d.x;<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        circles.call(d3.drag()<span class="fstat-no" title="function not covered" ></span></span>
+            .on("<span class="cstat-no" title="statement not covered" >start", </span>dragstarted)
+            .on("dra<span class="cstat-no" title="statement not covered" >g", dragged)</span>
+            .on("en<span class="cstat-no" title="statement not covered" >d", d</span>ragended));
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+        func<span class="cstat-no" title="statement not covered" >tion dragstarted(d) {</span>
+<span class="cstat-no" title="statement not covered" >            self.simulation.alphaTarget(</span>0.3).restart();
+            d.fx = d.x;<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >            d.fy = d.y;</span>
-        }
-&nbsp;
+        }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
         function dragged(d) {
             d.fx = d3.event.x;
-            d.fy = d3.event.y;
-        }
-&nbsp;
+<span class="cstat-no" title="statement not covered" >            d.fy = d3.event.y;<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+<span class="cstat-no" title="statement not covered" ></span>
         function dragended(d) {
-<span class="cstat-no" title="statement not covered" >            self.simulation.alphaTarget(0);</span>
-            d.fx = null;
+<span class="cstat-no" title="statement not covered" >            self.simulation.alphaTarget(<span class="fstat-no" title="function not covered" >0)</span>;</span>
+<span class="cstat-no" title="statement not covered" >            d.fx = null;</span>
             d.fy = null;
-        }
-<span class="cstat-no" title="statement not covered" >    }</span>
-&nbsp;
-    addClickListener() {
-<span class="cstat-no" title="statement not covered" >        let d3 = this.d3;</span>
+<span class="cstat-no" title="statement not covered" >        }<span class="fstat-no" title="function not covered" ></span></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    addClick<span class="cstat-no" title="statement not covered" >Listener() {</span>
+        let d3 = this.d3;
         let nodes = this.container.selectAll('.node')
         let self = this;
         nodes.on('click', function (d) {
@@ -1348,20 +1405,35 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
             d3.event.stopPropagation();
             let previous = self.ui.graphContainer.selectedNodeId; 
             
-            if(previous) {
+<span class="cstat-no" title="statement not covered" >            if(previous) {</span>
                 if(previous === d.id) {
                     self.store.dispatch({ type: 'SELECT_NODE', payload: null });
                 } 
-                if(previous !== d.id) {
+<span class="cstat-no" title="statement not covered" >                if(previous </span>!== d.id) {
                     self.store.dispatch({ type: 'EDGE_ADD', payload: {edge:{ source: previous, target: d.id }} });
                     self.store.dispatch({ type: 'SELECT_NODE', payload: null });
-                }
+<span class="cstat-no" title="statement not covered" >                }</span>
             }
             else {
                 self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
             }
             
             
+        })
+&nbsp;
+        let links = this.container.selectAll('.link')
+&nbsp;
+        links.on('click', function (d) {
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+            let previous = self.ui.graphContainer.selectedEdgeId; 
+            if(previous === d.id) {
+                self.store.dispatch({ type: 'UI_SELECT_EDGE', payload: null });
+                self.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+            } else {
+                self.store.dispatch({ type: 'UI_SELECT_EDGE', payload: d.id });
+                self.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+            }
         })
         
     }
@@ -1411,7 +1483,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 05 2017 20:12:59 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Nov 08 2017 21:54:31 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

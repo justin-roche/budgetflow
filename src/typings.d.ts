@@ -3,6 +3,7 @@ declare interface AppState {
     ui: UI
     simulation: Object
     graph: Graph
+    
 }
 
 declare interface Graph {
@@ -11,7 +12,8 @@ declare interface Graph {
     nodes: Nodes
     nodesData: NodesData,
     edges: Edges
-    edgesData: EdgesData
+    edgesData: EdgesData,
+    conditions: Array<Condition>    
 }
 
 declare interface Nodes {
@@ -26,7 +28,7 @@ declare interface Edges {
     [index: string]: Edge
 }
 
-declare interface EdgesData{
+declare interface EdgesData {
     [index: string]: EdgeData
 }
 
@@ -47,7 +49,7 @@ declare interface AppNode {
 declare interface NodeData {
     id: string,
     type: string,
-    active: Boolean,
+    active?: Boolean,
     value: Number,
     stepFunctions: Array<FunctionItem>,
     displayFunctions: Array<FunctionItem>,
@@ -68,15 +70,17 @@ declare interface EdgeData {
     id: string
     linkFunctions: Array<FunctionItem>,
     stepFunctions?: Array<FunctionItem>,
-    conditions: Array<Condition>
     active: boolean,
 }
 
 declare interface Condition {
+    id: string,
     type: string,
+    target: string,
     expression: string,
     phase: string,
-    value: boolean
+    value: boolean,
+    scope: string
 }
 
 declare interface Edge {
@@ -86,8 +90,8 @@ declare interface Edge {
 }
 
 declare interface FunctionItem {
-    name: string, 
-    arguments: Array<any>
+    name: string,
+    arguments?: Array<any>
 }
 
 declare interface Simulation {
@@ -119,4 +123,12 @@ declare interface UI {
         nodeModel: NodeModel
     },
     interactivity: any,
+}
+
+declare interface modalSettings {
+    id: string;
+    title: string;
+    x: number;
+    y: number;
+    show: boolean;
 }

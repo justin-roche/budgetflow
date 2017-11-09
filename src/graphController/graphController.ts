@@ -37,7 +37,7 @@ export class GraphController {
             this.refresh(d);
         })
         this.store.select('ui', {bind: [this, 'ui']}).subscribe(d => {
-            if(this.container) {
+            if(this.container && this.graph) {
                 this.refresh(this.graph);
             }
         })
@@ -247,13 +247,22 @@ export class GraphController {
     }
 
     renderLinks(data) {
+        let selectedEdgeId = this.ui.graphContainer.selectedEdgeId;
+        let d3 = this.d3;
 
         this.container.selectAll('line')
             .attr("class", "link")
             .attr('id', function (d) {
                 return d.id;
             })
-        //.attr('marker-end', "url(#arrow)")
+            .each(function(d){
+                let selected = d3.select(this);
+                if(selectedEdgeId === d.id){
+                    selected.classed('selected-edge', true);
+                } else {
+                    selected.classed('selected-edge', false);
+                }
+            })
     }
 
     /* simuluation */
@@ -409,6 +418,21 @@ export class GraphController {
             }
             
             
+        })
+
+        let links = this.container.selectAll('.link')
+
+        links.on('click', function (d) {
+            d3.event.preventDefault();
+            d3.event.stopPropagation();
+            let previous = self.ui.graphContainer.selectedEdgeId; 
+            if(previous === d.id) {
+                self.store.dispatch({ type: 'UI_SELECT_EDGE', payload: null });
+                self.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+            } else {
+                self.store.dispatch({ type: 'UI_SELECT_EDGE', payload: d.id });
+                self.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+            }
         })
         
     }

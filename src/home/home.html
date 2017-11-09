@@ -2,10 +2,12 @@
     <require from="./../styles.css"></require>
     <require from="./../editors/nodeEditor"></require>
     <require from="./../editors/scenarioEditor"></require> 
+    <require from="./../editors/edgeEditor"></require> 
     <require from="./../footer/footer"></require> 
     <require from="./../graphController/graphController"></require>  
-    <scenario-editor if.bind="showScenarioEditor"></scenario-editor>
-    <node-editor if.bind="showNodeEditor"></node-editor>          
+    <scenario-editor></scenario-editor>
+    <node-editor></node-editor>   
+    <edge-editor></edge-editor>          
     <div class="main-container">
             <graph-controller></graph-controller> 
             <footer></footer> 

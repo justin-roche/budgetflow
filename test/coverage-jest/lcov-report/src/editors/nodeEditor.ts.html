@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/76</span>
+        <span class='fraction'>0/73</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/60</span>
+        <span class='fraction'>0/57</span>
       </div>
     </div>
   </div>
@@ -133,17 +133,7 @@
 88
 89
 90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+91</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -157,18 +147,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -242,67 +223,56 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
 import $ from 'jq<span class="cstat-no" title="statement not covered" >uery'<span class="fstat-no" title="function not covered" ></span></span>
-import { Mod<span class="cstat-no" title="statement not covered" >alSettings } from</span> '..<span class="cstat-no" title="statement not covered" >/common/modalWrapper'</span>
-impo<span class="cstat-no" title="statement not covered" >rt * as Rx from 'rxjs';<span class="cstat-no" title="statement not covered" ></span></span>
-impo<span class="cstat-no" title="statement not covered" >rt { Store } from '../services/reduxStore';<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+import * as <span class="cstat-no" title="statement not covered" >Rx from 'rxjs';<span class="cstat-no" title="statement not covered" ></span></span>
+impo<span class="cstat-no" title="statement not covered" >rt { Store } from '../services/reduxStore';<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+@inj<span class="cstat-no" title="statement not covered" >ect(Store)</span>
+export class NodeEditor {
+    collapsed = f<span class="cstat-no" title="statement not covered" >alse;<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >    $nodeId;<span class="cstat-no" title="statement not covered" ></span></span>
+    @bindable nodeModel;
+<span class="cstat-no" title="statement not covered" >    </span>
 <span class="cstat-no" title="statement not covered" ></span>
-@inject(Store)
-export class Node<span class="cstat-no" title="statement not covered" >Editor {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >    collapsed = false;<span class="cstat-no" title="statement not covered" ></span></span>
-    $nodeId;
-<span class="cstat-no" title="statement not covered" >    @bindable nodeModel;</span>
-    <span class="cstat-no" title="statement not covered" ></span>
-    defau<span class="cstat-no" title="statement not covered" >ltModalSettings </span>= {
-        title: 'Nod<span class="cstat-no" title="statement not covered" >e Edit',</span>
-        id: 'node<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >-e</span>dit',</span>
-        x: 0,<span class="fstat-no" title="function not covered" ></span>
-        y: 0,<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        show: true</span>
-    };<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    modalSettings = new Rx.BehaviorSubject&lt;ModalSettings&gt;(this.defaultModalSettings);
-&nbsp;
-    constructor(private store: Store) {
-        this.$nodeId = this.store.select('ui.graphContainer.selectedNodeId');
-        this.$nodeId.subscribe(id =&gt; {
-            if (id !== null) {
-<span class="cstat-no" title="statement not covered" >                this.update(id);</span>
+    constructor(pri<span class="cstat-no" title="statement not covered" >vate store: Store) {</span>
+        this.$nod<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >eI</span>d = this.store.select('ui.graphContainer.selectedNodeId');</span>
+        this.<span class="fstat-no" title="function not covered" >$nodeId.sub</span>scribe(id =&gt; {
+            if (id !<span class="cstat-no" title="statement not covered" >== nu</span>ll) {
+<span class="cstat-no" title="statement not covered" >                this.update(</span>id);
 <span class="cstat-no" title="statement not covered" >            }</span>
-<span class="cstat-no" title="statement not covered" >        })<span class="fstat-no" title="function not covered" ></span></span>
-    }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        })</span>
+    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-    refresh() {
+    refresh() {<span class="cstat-no" title="statement not covered" ></span>
         console.log('new node');
     }
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    togg<span class="cstat-no" title="statement not covered" >led(s) {</span>
-        console.log('toggled', s)
-<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    selectActivationSource(c) {
-<span class="cstat-no" title="statement not covered" >        console.log(c)<span class="fstat-no" title="function not covered" ></span></span>
-    }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    update(id) {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >        this.buildNodeModel(id);</span>
+<span class="cstat-no" title="statement not covered" >    toggled(s) {<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('toggled', s)</span>
     }
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    buildNodeModel(i<span class="cstat-no" title="statement not covered" >d) {</span>
-        let graph =<span class="cstat-no" title="statement not covered" > this.store.getS</span>tate().graph.present;
+    sele<span class="cstat-no" title="statement not covered" >ctActivationSource(c) {</span>
+        console.log(c)
+<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-        let node = grap<span class="cstat-no" title="statement not covered" >h.nodes[id];<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-        let nodeData = grap<span class="cstat-no" title="statement not covered" >h.nodesData[i<span class="fstat-no" title="function not covered" >d]</span>;<span class="cstat-no" title="statement not covered" ></span></span>
-        let outEdges =<span class="cstat-no" title="statement not covered" > node.outEdges.ma<span class="fstat-no" title="function not covered" >p(</span>en =&gt; graph.e<span class="cstat-no" title="statement not covered" >dges[en]);</span></span>
-        let outEdgesData =<span class="cstat-no" title="statement not covered" > outEdges.ma<span class="fstat-no" title="function not covered" >p(</span>ed =&gt; graph.e<span class="cstat-no" title="statement not covered" >dgesData[ed.id]);</span></span>
-        let inEdges = n<span class="cstat-no" title="statement not covered" >ode.inEdges.m<span class="fstat-no" title="function not covered" >ap</span>(en =&gt; graph<span class="cstat-no" title="statement not covered" >.edges[en]);</span></span>
-        let inEdgesData = i<span class="cstat-no" title="statement not covered" >nEdges.map(ed<span class="fstat-no" title="function not covered" > =</span>&gt; graph.edge<span class="cstat-no" title="statement not covered" >sData[ed.id]);</span></span>
-        let outNodes =<span class="cstat-no" title="statement not covered" > outEdges.ma<span class="fstat-no" title="function not covered" >p(</span>e =&gt; graph.n<span class="cstat-no" title="statement not covered" >odes[e.target]);</span></span>
-        let outNodesData =<span class="cstat-no" title="statement not covered" > outNodes.ma<span class="fstat-no" title="function not covered" >p(</span>e =&gt; graph.n<span class="cstat-no" title="statement not covered" >odesData[e.id]);</span></span>
-<span class="cstat-no" title="statement not covered" >        let inNodes = inEdges.map(e =&gt; graph.nodes[e.source]);</span>
-        let inNodesData = inNodes.map(e =&gt; graph.nodesData[e.id]);
+    update(id) {
+<span class="cstat-no" title="statement not covered" >        this.buildNodeModel(id);<span class="fstat-no" title="function not covered" ></span></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    buildNodeModel(id) {<span class="fstat-no" title="function not covered" ></span></span>
+        let graph = <span class="cstat-no" title="statement not covered" >this.store.getPresentState().graph;</span>
+<span class="cstat-no" title="statement not covered" ></span>
+        let node = grap<span class="cstat-no" title="statement not covered" >h.nodes[id];</span>
+        let nodeData = <span class="cstat-no" title="statement not covered" >graph.nodesData[id<span class="fstat-no" title="function not covered" >];<span class="cstat-no" title="statement not covered" ></span></span></span>
+        let outEdges = node<span class="cstat-no" title="statement not covered" >.outEdges.map<span class="fstat-no" title="function not covered" >(e</span>n =&gt; graph.ed<span class="cstat-no" title="statement not covered" >ges[en]);</span></span>
+        let outEdgesDa<span class="cstat-no" title="statement not covered" >ta = outEdges.map<span class="fstat-no" title="function not covered" >(e</span>d =&gt; graph.ed<span class="cstat-no" title="statement not covered" >gesData[ed.id]);</span></span>
+        let inEdges = node<span class="cstat-no" title="statement not covered" >.inEdges.map<span class="fstat-no" title="function not covered" >(e</span>n =&gt; graph.ed<span class="cstat-no" title="statement not covered" >ges[en]);</span></span>
+        let inEdgesData<span class="cstat-no" title="statement not covered" > = inEdges.ma<span class="fstat-no" title="function not covered" >p(</span>ed =&gt; graph.<span class="cstat-no" title="statement not covered" >edgesData[ed.id]);</span></span>
+        let outNodes = outE<span class="cstat-no" title="statement not covered" >dges.map(e =&gt;<span class="fstat-no" title="function not covered" > g</span>raph.nodes[e<span class="cstat-no" title="statement not covered" >.target]);</span></span>
+        let outNodesDa<span class="cstat-no" title="statement not covered" >ta = outNode<span class="fstat-no" title="function not covered" >s.</span>map(e =&gt; gra<span class="cstat-no" title="statement not covered" >ph.nodesData[e.id]);</span></span>
+        let inNodes = inEd<span class="cstat-no" title="statement not covered" >ges.map(e =&gt;<span class="fstat-no" title="function not covered" > g</span>raph.nodes[e<span class="cstat-no" title="statement not covered" >.source]);</span></span>
+<span class="cstat-no" title="statement not covered" >        let inNodesData = inNodes.map(e =&gt; graph.nodesData[e.id]);</span>
 &nbsp;
         this.nodeModel = JSON.parse(JSON.stringify({
             node: node,
@@ -313,43 +283,43 @@ export class Node<span class="cstat-no" title="statement not covered" >Editor {<
             inEdgesData: inEdgesData,
             outNodes: outNodes,
             outNodesData: outNodesData,
-<span class="cstat-no" title="statement not covered" >            inNodes: inNodes,</span>
+            inNodes: inNodes,
 <span class="cstat-no" title="statement not covered" >            inNodesData: inNodesData,</span>
-        }));
-<span class="cstat-no" title="statement not covered" >        this.nodeModel = JSON.parse(JSON.<span class="fstat-no" title="function not covered" >st</span>ringify(this.nodeModel));</span>
-        this.store.<span class="cstat-no" title="statement not covered" >dispatch({type: 'NODE_EDITOR_MO<span class="fstat-no" title="function not covered" >DE</span>L_SET', paylo<span class="cstat-no" title="statement not covered" >ad: this.nodeModel})</span></span>
+<span class="cstat-no" title="statement not covered" >        }));</span>
+        this.nodeModel = JSON.parse(JSON.stringify(this.nodeModel));
+<span class="cstat-no" title="statement not covered" >        this.store.dispatch({type: 'NODE_<span class="fstat-no" title="function not covered" >ED</span>ITOR_MODEL_SET', payload: this.nodeModel})</span>
     }<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-    matchEdgeData(nodeId) {
-<span class="cstat-no" title="statement not covered" >        let edge = this.nodeModel.outEdges.<span class="fstat-no" title="function not covered" >fi</span>lter(ed =&gt; ed.target === nodeId)[0];</span>
-        let edgeData = this.nodeModel.outEdgesData.filter(ed =&gt; ed.id === edge.id)[0];
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+    matc<span class="cstat-no" title="statement not covered" >hEdgeData(nodeId)</span> {
+        let edge = this.nodeModel.outEdges.filter(ed =&gt; ed.target === nodeId)[0];
+<span class="cstat-no" title="statement not covered" >        let edgeData = this.nodeModel.outEd<span class="fstat-no" title="function not covered" >ge</span>sData.filter(ed =&gt; ed.id === edge.id)[0];</span>
         return edgeData
     }
 &nbsp;
     matchInEdgeData(nodeId) {
-<span class="cstat-no" title="statement not covered" >        // let edge = this.inEdg<span class="fstat-no" title="function not covered" >es</span>.filter(ed =&gt; ed.source === nodeId)[0];</span>
-        // let edgeData = this.inEdgesData.filter(ed =&gt; ed.id === edge.id)[0];
-<span class="cstat-no" title="statement not covered" >        // console.log('in edges', edgeData)</span>
-        // return edgeData
+        // let edge = this.inEdges.filter(ed =&gt; ed.source === nodeId)[0];
+<span class="cstat-no" title="statement not covered" >        // let edgeData = this.i<span class="fstat-no" title="function not covered" >nE</span>dgesData.filter(ed =&gt; ed.id === edge.id)[0];</span>
+        // console.log('in edges', edgeData)
+<span class="cstat-no" title="statement not covered" >        // return edgeData</span>
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    save() {</span>
-&nbsp;
+    save() {
+<span class="cstat-no" title="statement not covered" ></span>
     }
 &nbsp;
-}<span class="cstat-no" title="statement not covered" ></span>
-&nbsp;
+}
+<span class="cstat-no" title="statement not covered" ></span>
 export class KeysValueConverter {
-<span class="cstat-no" title="statement not covered" >    toView(obj) {</span>
-        return Reflect.ow<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >nK</span>eys(obj);</span>
-    }<span class="fstat-no" title="function not covered" ></span>
-}</pre></td></tr>
+    toView(obj) {
+<span class="cstat-no" title="statement not covered" >        return Reflect.ownKeys(ob</span>j);
+    }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+}<span class="fstat-no" title="function not covered" ></span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 05 2017 20:12:59 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Nov 08 2017 21:54:31 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

@@ -11,8 +11,7 @@ let linkFunctions = {
         target: {...targetNode, value: targetNode.value + (amount * integral || 1)}};
     },
 
-    evaluateEdgeCondition: function(edgeData, state, expression) {
-        
+    evaluateEdgeCondition: function(state: AppState, edgeData, expression) {
         let testResult = eval(expression);
         return testResult;
     }

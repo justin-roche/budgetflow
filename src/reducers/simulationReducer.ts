@@ -1,5 +1,6 @@
 function simulationReducer(state: Simulation = null, action) {
     
+    
     switch (action.type) {
 
         case 'SIMULATION_NEXT_TIME_SET': {

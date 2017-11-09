@@ -43,8 +43,9 @@ export class SimulationService {
     }
 
     goForward() {
-        this.store.dispatch(graphActions.preTraverse(this.simulation));
+       // this.store.dispatch(graphActions.preTraverse(this.simulation));
         //this.store.dispatch({ type: 'GRAPH_TRAVERSE_CYCLES', payload: 1 });
+        this.store.actions.graphTraverse();
     }
 
     goBackward() {

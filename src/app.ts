@@ -4,7 +4,9 @@ import {Router, RouterConfiguration} from 'aurelia-router';
 import {PLATFORM} from 'aurelia-pal';
 import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
+import { graphActions } from './reducers/graphReducer';
 import { state } from './state';
+
 import logger from 'redux-logger'
 
 @inject(Store)
@@ -13,17 +15,18 @@ export class App {
 
   constructor(private store: (Store)) {
     store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
+    store.provideActions([graphActions])
     this.hydrateInitial();
   }
 
   hydrateInitial() {
-    this.store.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});
-    this.store.store.dispatch({type: 'GRAPH_SET', payload: state.graph});
-    this.store.store.dispatch({type: 'UI_SET', payload: state.ui});
-    this.store.store.dispatch({type: 'SIMULATION_SET', payload: state.simulation});
+    this.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});
+    this.store.dispatch({type: 'GRAPH_SET', payload: state.graph});
+    this.store.dispatch({type: 'UI_SET', payload: state.ui});
+    this.store.dispatch({type: 'SIMULATION_SET', payload: state.simulation});
     setTimeout(function(){
-      this.store.store.dispatch({type: 'GRAPH_SET', payload: state.graphs.filter(g => g.data.name === '1-2-3').pop()});
-      this.store.dispatch({ type: 'DISPLAY_FUNCTIONS_APPLY'});
+      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'conditional').pop());
+      this.store.actions.graph.applyDisplayFunctions();
     }.bind(this),0)
 }
 

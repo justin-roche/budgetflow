@@ -168,6 +168,12 @@ svg {
   stroke-width: 3px;
 }
 
+.selected-edge {
+  stroke: rgb(179, 97, 97);
+  fill: #1eb5ab20;
+  stroke-width: 10px;
+}
+
 .label {
   font-size: 20px;
   fill: white;
