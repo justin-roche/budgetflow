@@ -1,9 +1,7 @@
 <template>
     <require from="../common/typeAhead"></require>
     <div>
-        <button click.trigger="toggleActive()" class="btn btn-success" aubs-btn-checkbox="state.bind: nodeModel.nodeData.active; checked-value.bind: false; unchecked-value.bind: true">
-            ${nodeModel.nodeData.active === true? 'active': 'inactive'}
-        </button>
+      
         <aubs-accordion close-others.bind="closeOthers">
             <aubs-accordion-group title="Activation Conditions" is-open.bind="firstTabState">
                 <div>

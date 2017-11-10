@@ -7,20 +7,27 @@ import { Store } from '../services/reduxStore';
 export class EdgeEditor {
    edgeId;
    edgeData;
+   conditions;
 
     constructor(private store: Store) {
-        this.store.select('ui.graphContainer.selectedEdgeId', {log: true, bind: [this, 'edgeId']}).subscribe(id => {
+        this.store.select('ui.graphContainer.selectedEdgeId', {log: true, bind: [this, 'edgeId']})
+        .subscribe(id => {
             if (id !== null) {
-                let g = this.store.getPresentState().graph;
-                if(g) {
-                    this.edgeData = {...g.edgesData[id]};
-                }
+                let s = this.store.getPresentState();
+                this.edgeData = {...s.graph.edgesData[id]};
+                this.store.select(`graph.edgesData.${id}`, {log: true, bind: [this, 'edgeData']})
+                this.store.select('graph.conditions').subscribe(conds => {
+                    
+                })
+                
+            
             }
         })
     }
 
     toggleActive(x) {
-        console.log('active?', this.edgeData)
+        this.store.actions.graph.toggleEdgeActivation(this.edgeData.id)
+            .actions.graph.applyDisplayFunctions();
     }
 
 }

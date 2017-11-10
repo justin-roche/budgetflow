@@ -1,7 +1,7 @@
 <template>
         <label>id</label>
         <input class="form-control" type="text" value.bind="edgeData.id" placeholder="name">
-        <button click.trigger="toggleActive()" class="btn btn-success" aubs-btn-checkbox="state.bind: edgeData.active; checked-value.bind: false; unchecked-value.bind: true">
+        <button click.trigger="toggleActive()" class="btn btn-success">
                 ${edgeData.active === true? 'active': 'inactive'}
         </button>
 </template>

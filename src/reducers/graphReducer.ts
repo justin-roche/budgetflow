@@ -1,6 +1,6 @@
 import { traverseGraph } from './graphFunctions/traverse';
-import { addNewNode, addNewEdge, updateEdge, deleteNode, 
-    deleteEdge, nodePropertySet, addLinkFunction } from './graphFunctions/graphManipulationFunctions';
+import { addNewNode, addNewEdge, updateEdgeData, deleteNode, 
+    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation } from './graphFunctions/graphManipulationFunctions';
 import { displayUpdate } from './graphFunctions/displayUpdate'
 import { updateEdgesConditions } from './graphFunctions/conditionsUpdate';
 import undoable, { distinctState } from 'redux-undo'
@@ -34,6 +34,13 @@ let graphActions = function (store) {
             deleteEdge: function (eid: String) {
                 store.dispatch({ type: 'DELETE_EDGE', payload: deleteEdge(store.getPresentState().graph, eid)});
            },
+           updateEdgeData: function (ed: EdgeData) {
+                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: updateEdgeData(store.getPresentState().graph, ed)});
+            // return store;
+            },
+            toggleEdgeActivation: function(id: String) {
+                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id)});
+            },
             setGraph: function(g) {
                  store.dispatch({ type: 'GRAPH_SET', payload: g});                                
             },
@@ -77,9 +84,8 @@ function graphReducer(state = null, action) {
         case 'EDGE_ADD': {
             return { ...state, ...addNewEdge(state, action.payload) };
         }
-        case 'EDGE_UPDATE': {
-            updateEdge(state, action.payload.edge, action.payload.edgeData);
-            return { ...state };
+        case 'EDGE_DATA_UPDATE': {
+            return action.payload;
         }
         case 'EDGE_LINK_FUNCTION_ADD': {
             return { ...state, ...addLinkFunction(state, action.payload.edge, action.payload.function) }

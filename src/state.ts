@@ -15,6 +15,7 @@ let state = {
             activeEdgeColor: 'green',
             defaultNodeSize: 50,
             selectedNodeId: null,
+            selectedEdgeId: null,
         },
         nodeEditor: {
             

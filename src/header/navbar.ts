@@ -31,7 +31,8 @@ export class NavBar {
     test() {
         // this.store.actions.graph.traverse();
         //this.store.actions.graph.applyDisplayFunctions();
-        this.store.actions.graph.deleteEdge('e0')
+        //this.store.actions.graph.deleteEdge('e0')
+        this.store.actions.graph.conditionsUpdate();
     }
 
 }

@@ -3,14 +3,11 @@ import { ArrayById, ArrayToObject } from '../utilities';
 import { linkFunctions } from '../../parser/linkFunctions';
 import { _ } from 'underscore';
 
-/* PRE-TRAVERSAL */
-
-
 function updateAllConditions(state, conditions) {
 
 }
 
-function updateEdgesConditions(state) {
+function updateEdgesConditions(state: AppState) {
     state = Object.freeze(state)
     let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
 
@@ -31,15 +28,16 @@ declare interface update_edge_conditions {
 }
 
 function updateEdgeConditions(state: AppState, edgeData) {
-    let conditions = selectEdgeConditions(state, edgeData);
-    if (conditions.length === 0) {
-        return { edgeData: edgeData, conditions: conditions };
+    let conditionsIds = selectEdgeConditions(state, edgeData);
+    if (conditionsIds.length === 0) {
+        return { edgeData: edgeData, conditions: conditionsIds.map(id => state.graph.conditions[id]) };
     }
-    return updateConditions(state, conditions, edgeData);
+    return updateConditions(state, conditionsIds, edgeData);
 }
 
-function updateConditions(state, edgeConditions, edgeData) {
-    let updatedConds = edgeConditions.map(cond => {
+function updateConditions(state, conditionIds, edgeData) {
+    let updatedConds = conditionIds.map(condId => {
+        let cond = state.graph.conditions[condId];
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
     })
 
@@ -53,12 +51,13 @@ function updateConditions(state, edgeConditions, edgeData) {
         edgeData.active = false;
     } 
 
+    updatedConds = ArrayToObject(updatedConds);
     return { edgeData: edgeData, conditions: updatedConds };
 }
 
 function selectEdgeConditions(state, edgeData) {
-    let conditions = state.graph.conditions.filter(cond => cond.target === edgeData.id);
-    return conditions;
+    let conditionsIds = state.graph.conditionsIds.filter(condId => state.graph.conditions[condId].target === edgeData.id);
+    return conditionsIds;
 }
 
 export { updateEdgesConditions };

@@ -13,7 +13,8 @@ declare interface Graph {
     nodesData: NodesData,
     edges: Edges
     edgesData: EdgesData,
-    conditions: Array<Condition>    
+    conditions: ConditionsData,
+    conditionsIds: Array<String>    
 }
 
 declare interface Nodes {
@@ -22,6 +23,10 @@ declare interface Nodes {
 
 declare interface NodesData {
     [index: string]: NodeData
+}
+
+declare interface ConditionsData {
+    [index: string]: Condition
 }
 
 declare interface Edges {

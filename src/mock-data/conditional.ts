@@ -77,15 +77,19 @@ let conditionalGraph: Graph = {
             active: false,
         },
     },
-    conditions: [{
-        id: 'c0',
-        type: 'edge',
-        target: 'e1',
-        phase: 'simulation',
-        expression: 'false',
-        value: false,
-        scope: 'sufficient'
-    }]
+    conditionsIds: ['c0'],
+    conditions: {
+        'c0': {
+            id: 'c0',
+            type: 'edge',
+            target: 'e1',
+            phase: 'simulation',
+            expression: 'true',
+            value: false,
+            scope: 'sufficient'
+        }
+        
+    }
     
 }
 

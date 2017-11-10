@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">96.55% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>25/25</span>
+        <span class='fraction'>28/29</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">90.91% </span>
+        <span class="strong">83.33% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/11</span>
+        <span class='fraction'>10/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>22/22</span>
+        <span class='fraction'>24/24</span>
       </div>
     </div>
   </div>
@@ -105,15 +105,9 @@
 60
 61
 62
-63
-64
-65</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+63</td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,40 +145,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">import { EdgeEditor } from './../../editors/edgeEditor';
-import { ArrayById, ArrayToObject } from '../utilities';
+<span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">import { ArrayById, ArrayToObject } from '../utilities';
 &nbsp;
 import { linkFunctions } from '../../parser/linkFunctions';
 import { _ } from 'underscore';
-&nbsp;
-/* PRE-TRAVERSAL */
-&nbsp;
 &nbsp;
 <span class="fstat-no" title="function not covered" >function updateAllConditions(</span>state, conditions) {
 &nbsp;
 }
 &nbsp;
-function updateEdgesConditions(state) {
+function updateEdgesConditions(state: AppState) {
     state = Object.freeze(state)
     let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
 &nbsp;
@@ -205,15 +197,16 @@ declare interface update_edge_conditions {
 }
 &nbsp;
 function updateEdgeConditions(state: AppState, edgeData) {
-    let conditions = selectEdgeConditions(state, edgeData);
-    if (conditions.length === 0) {
-        return { edgeData: edgeData, conditions: conditions };
+    let conditionsIds = selectEdgeConditions(state, edgeData);
+    if (conditionsIds.length === 0) {
+        return { edgeData: edgeData, conditions: conditionsIds.map(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >id =&gt; </span>state.graph.conditions[id]) };</span>
     }
-    return updateConditions(state, conditions, edgeData);
+    return updateConditions(state, conditionsIds, edgeData);
 }
 &nbsp;
-function updateConditions(state, edgeConditions, edgeData) {
-    let updatedConds = edgeConditions.map(cond =&gt; {
+function updateConditions(state, conditionIds, edgeData) {
+    let updatedConds = conditionIds.map(condId =&gt; {
+        let cond = state.graph.conditions[condId];
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
     })
 &nbsp;
@@ -227,12 +220,13 @@ function updateConditions(state, edgeConditions, edgeData) {
         edgeData.active = false;
     } 
 &nbsp;
+    updatedConds = ArrayToObject(updatedConds);
     return { edgeData: edgeData, conditions: updatedConds };
 }
 &nbsp;
 function selectEdgeConditions(state, edgeData) {
-    let conditions = state.graph.conditions.filter(cond =&gt; cond.target === edgeData.id);
-    return conditions;
+    let conditionsIds = state.graph.conditionsIds.filter(condId =&gt; state.graph.conditions[condId].target === edgeData.id);
+    return conditionsIds;
 }
 &nbsp;
 export { updateEdgesConditions };</pre></td></tr>
@@ -241,7 +235,7 @@ export { updateEdgesConditions };</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 11:02:08 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 13:03:47 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

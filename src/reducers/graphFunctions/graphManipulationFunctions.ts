@@ -1,5 +1,6 @@
 import {ArrayToObject, ArrayById} from '../utilities';
 import { _ } from 'underscore';
+import { extend } from '../utilities';
 
 /* NODE */
 
@@ -136,16 +137,16 @@ function addLinkFunction(g, edge: Edge, linkFunction: FunctionItem) : AppState {
 }
 
 /*untested*/
-function updateEdge(g, edge: Edge, edgeData: EdgeData) {
-    console.log('update data', edge, edgeData);
-    let id = edge.id; 
-    let currentEdge = g.edges[id];
-    let currentEdgeData = g.edgesData[id];
-    let updatedEdge = {...currentEdge, ...edge};
-    let updatedEdgeData = {...currentEdgeData, ...edgeData};
-    let updatedEdges = {...g.edges, id: updatedEdge};
-    let updatedEdgesData = {...g.edgesData, id: updatedEdgeData};
-    return {...g, edges: updatedEdges, edgesData: updatedEdgesData};
+function updateEdgeData(g: Graph, edgeData: EdgeData) {
+    return extend(g).select(`edgesData.${edgeData.id}`).data((obj: any) => {
+        return { ...obj, ...edgeData };
+    });
 }
 
-export { addNewNode, addNewEdge, updateEdge, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }
+function toggleEdgeActivation(g, eid) {
+    return extend(g).select(`edgesData.${eid}`).data((obj: any) => {
+        return { ...obj, ...{active: !obj.active} };
+    });
+}
+
+export { addNewNode, addNewEdge, updateEdgeData, toggleEdgeActivation, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }
