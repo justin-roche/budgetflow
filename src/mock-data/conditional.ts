@@ -82,7 +82,7 @@ let conditionalGraph: Graph = {
         type: 'edge',
         target: 'e2',
         phase: 'simulation',
-        expression: 'state.simulation.currentTime > 0',
+        expression: 'false',
         value: false,
         scope: 'sufficient'
     }]

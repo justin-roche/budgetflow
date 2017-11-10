@@ -25,10 +25,8 @@ export class NavBar {
     }
 
     test() {
-        //this.store.setState({x: 1});
-        //let x = this.store.getState();
-        //console.log('SET STATE', x);
-        this.store.actions.graph.conditionsUpdate();
+        // this.store.actions.graph.traverse();
+        this.store.actions.graph.applyDisplayFunctions();
     }
 
 }

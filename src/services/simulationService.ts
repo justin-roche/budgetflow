@@ -29,10 +29,12 @@ export class SimulationService {
     simulate(nextTime) {
         if(this.isForward(nextTime)) {
             this.iterateForward(this.getRemainingCycles(nextTime));
+            this.store.actions.graph.applyDisplayFunctions();
             this.store.dispatch({ type: 'SIMULATION_NEXT_TIME_SET', payload: null });
             this.store.dispatch({ type: 'SIMULATION_CURRENT_TIME_SET', payload: nextTime });
         } else {
             this.iterateBackward(this.getRemainingCycles(nextTime));
+            this.store.actions.graph.applyDisplayFunctions();
             this.store.dispatch({ type: 'SIMULATION_NEXT_TIME_SET', payload: null });
             this.store.dispatch({ type: 'SIMULATION_CURRENT_TIME_SET', payload: nextTime });
         }
@@ -45,7 +47,7 @@ export class SimulationService {
     goForward() {
        // this.store.dispatch(graphActions.preTraverse(this.simulation));
         //this.store.dispatch({ type: 'GRAPH_TRAVERSE_CYCLES', payload: 1 });
-        this.store.actions.graphTraverse();
+        this.store.actions.graph.traverse();
     }
 
     goBackward() {
@@ -59,7 +61,7 @@ export class SimulationService {
     }
 
     iterateForward(cycles) {
-        // alert('forward cycles '+cycles);
+        alert('forward cycles '+cycles);
         for (let i = 0; i < cycles; i++) {
            this.goForward();
         }

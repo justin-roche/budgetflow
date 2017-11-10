@@ -1,14 +1,14 @@
 let displayFunctions = {
 
-    labelById: function(graph, nodeId) {
-        let nodeData = graph.nodesData[nodeId]
+    labelById: function(s: AppState, nodeId) : NodeDisplayData {
+        let nodeData = s.graph.nodesData[nodeId]
         return {...nodeData.displayData, label: nodeId+ ':' + nodeData.value};
     },
     
-    inactivateByLinks: function(g, nodeId) {
-        let nodeData = g.nodesData[nodeId]
-        let outEdges = g.nodes[nodeId].outEdges.map(edgeId => g.edgesData[edgeId]);
-        let inEdges = g.nodes[nodeId].inEdges.map(edgeId => g.edgesData[edgeId]);
+    inactivateByLinks: function(s: AppState, nodeId) : NodeDisplayData {
+        let nodeData = s.graph.nodesData[nodeId]
+        let outEdges = s.graph.nodes[nodeId].outEdges.map(edgeId => s.graph.edgesData[edgeId]);
+        let inEdges = s.graph.nodes[nodeId].inEdges.map(edgeId => s.graph.edgesData[edgeId]);
         let edges = outEdges.concat(inEdges);
         let active = edges.some(edge => edge.active === true);
         return {...nodeData.displayData, active: active};

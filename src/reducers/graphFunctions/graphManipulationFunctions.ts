@@ -1,22 +1,22 @@
 import {ArrayToObject, ArrayById} from '../utilities';
-
+import { _ } from 'underscore';
 
 /* NODE */
 
 function deleteNode(g, nid) {
-    let nodes = ArrayToObject(ArrayById(g.nodes)
-    .filter(nd => nd.id !== nid.id));
-    
-    let nodesData = ArrayToObject(ArrayById(g.nodesData)
-    .filter(nd => nd.id !== nid.id));
+    let [retainedNodes, excludedNodes] = _.partition(g.nodes, nd => nd.id !== nid);
+    let [retainedNodesData, exludedNodesData] =  _.partition(g.nodesData, nd => nd.id !== nid);
+    let [retainedEdges, exludedEdges] =  _.partition(g.edges, ed => (ed.source !== nid && ed.target !== nid));
+    let [retainedEdgesData, exludedEdgesData] =  _.partition(g.edges, edata => retainedEdges.some(ed => ed.id === edata.id));
 
-    let edgesArray = ArrayById(g.edges)
-    .filter(ed => (ed.source !== nid.id && ed.target !== nid.id));
-    
-    let edgesData = ArrayToObject(ArrayById(g.edges)
-    .filter(edata => edgesArray.some(ed => ed.id === edata.id)));
+    let updatedNodesArray = removeEdgeAssociations(retainedNodes, exludedEdges);
 
-    let edges = ArrayToObject(edgesArray);
+   
+    let nodes = ArrayToObject(updatedNodesArray);
+    let nodesData = ArrayToObject(retainedNodesData);
+    
+    let edges = ArrayToObject(retainedEdges);
+    let edgesData = ArrayToObject(retainedEdgesData);
 
     return { ...g, 
             nodes: nodes, 
@@ -24,6 +24,16 @@ function deleteNode(g, nid) {
             edges: edges, 
             edgesData: edgesData 
         };
+}
+
+function removeEdgeAssociations(retainedNodes, removedEdges) : Nodes {
+    let nodes = _.map(retainedNodes, node => {
+        node = {...node}
+        node.inEdges = node.inEdges.filter(id => removedEdges.every(edge => edge.id !== id));
+        node.outEdges = node.outEdges.filter(id => removedEdges.every(edge => edge.id !== id));
+        return node; 
+    });
+    return nodes;
 }
 
 function addNewNode(g, nd) {

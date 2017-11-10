@@ -2,7 +2,7 @@ import { ArrayById, ArrayToObject } from '../utilities';
 import { displayFunctions } from '../../parser/displayFunctions';
 
 function displayUpdate(state: AppState): Graph {
-
+    state = Object.freeze(state);
     let nodesArr: Array<NodeData> = ArrayById(state.graph.nodesData);
     let displayFns = state.graph.data.displayFunctions.nodes;
 
@@ -10,7 +10,7 @@ function displayUpdate(state: AppState): Graph {
     let updatedNodesArr = nodesArr.reduce((acc, nodeData) => {
 
         let appliedNodeData = displayFns.reduce((acc, fn) => {
-            let newDisplayData = displayFunctions[fn.name](state.graph, nodeData.id, ...fn.arguments);
+            let newDisplayData = displayFunctions[fn.name](state, nodeData.id, ...fn.arguments);
             return { ...acc, displayData: { ...acc.displayData, ...newDisplayData } };
         }, nodeData);
 

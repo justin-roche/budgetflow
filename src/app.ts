@@ -5,6 +5,7 @@ import {PLATFORM} from 'aurelia-pal';
 import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
 import { graphActions } from './reducers/graphReducer';
+import { uiActions } from './reducers/uiReducer';
 import { state } from './state';
 
 import logger from 'redux-logger'
@@ -15,7 +16,7 @@ export class App {
 
   constructor(private store: (Store)) {
     store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
-    store.provideActions([graphActions])
+    store.provideActions([graphActions, uiActions])
     this.hydrateInitial();
   }
 

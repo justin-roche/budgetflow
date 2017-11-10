@@ -28,9 +28,10 @@ export class ScenarioEditor {
   }
 
   selectGraph(selectedGraph) {
-    this.store.dispatch({ type: 'GRAPH_SET', payload: selectedGraph });
-    this.store.dispatch({ type: 'DISPLAY_FUNCTIONS_APPLY'});
-    this.store.dispatch({ type: 'SELECT_NODE', payload: null });
+    this.store.actions.graph.setGraph(selectedGraph)
+    .actions.graph.applyDisplayFunctions()
+    .actions.ui.selectNode(null);
+  
   }
 
   /* SIMULATION */

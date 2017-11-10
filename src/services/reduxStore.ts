@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
+
 export class Store {
     public actions;
     
@@ -13,9 +14,21 @@ export class Store {
         let boundActionCreators = actionCreators.map(actionCreator => actionCreator(this));
         this.actions = boundActionCreators.reduce((acc, actionCreator)=> {
             acc[actionCreator.name] = actionCreator.actions;
+
+            for(let prop in actionCreator.actions){
+                console.log(prop);
+                let boundAction = actionCreator.actions[prop];
+                actionCreator.actions[prop] = function(...args){
+                    boundAction(...args);
+                    return this;
+                }.bind(this) 
+            }
+
             return acc;
         },{});
     }
+
+    
 
     setState(s) {
         this.store.dispatch({type: 'SET_STATE', payload: s});

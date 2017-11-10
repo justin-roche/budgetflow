@@ -2,7 +2,7 @@ let twoNodes = {
     id: 'g2',
     data: <GraphData>{
         id: 'g2',
-        name: '2 nodes',
+        name: 'twoNodes',
         displayFunctions: {
             nodes: [{ name: 'labelById', arguments: [] }],
         }

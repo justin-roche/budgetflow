@@ -51,7 +51,6 @@ function graphsReducer(state = null, action) {
     switch (action.type) {
 
         case 'GRAPHS_SET': {
-            console.log('graphs', state, action.payload)
             return [].concat(action.payload);
         }
         default:

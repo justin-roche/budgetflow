@@ -12,10 +12,11 @@ function updateAllConditions(state, conditions) {
 }
 
 function updateEdgesConditions(state) {
+    state = Object.freeze(state)
     let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
 
     let { edgesData, conditions } = ArrayById(state.graph.edgesData).reduce((acc, ed) => {
-        let { conditions, edgeData } = updateEdgeConditions(state, ed);
+        let { conditions, edgeData } = updateEdgeConditions(state, {...ed});
 
         let c = { ...acc.conditions, ...conditions };
         let e = { ...acc.edgesData, [edgeData.id]: edgeData };
@@ -43,15 +44,15 @@ function updateConditions(state, edgeConditions, edgeData) {
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
     })
 
-    if (updatedConds.some(cond => cond.value === true && cond.scope === 'sufficient')) {
+    let necessary = updatedConds.filter(cond => cond.scope = "necessary");
+    let sufficient = updatedConds.filter(cond => cond.scope = "sufficient");
+
+    if (sufficient.some(cond => cond.value === true)) {
         edgeData.active = true;
     }
-    if (updatedConds.filter(cond => cond.scope === 'necessary')
-        .every(cond => cond.value === true)) {
-        edgeData.active = true;
-    } else {
+    if (necessary.some(cond => cond.value === false)) {
         edgeData.active = false;
-    }
+    } 
 
     return { edgeData: edgeData, conditions: updatedConds };
 }
@@ -59,14 +60,6 @@ function updateConditions(state, edgeConditions, edgeData) {
 function selectEdgeConditions(state, edgeData) {
     let conditions = state.graph.conditions.filter(cond => cond.target === edgeData.id);
     return conditions;
-    // if(conditions.length === 0) {
-    //     return [];
-    // }
-
-    // let partitioned = _.partition(conditions, (cond => cond.phase === phase));
-    // let inPhase = partitioned[0];
-    // let outPhase = partitioned[1];
-    // return inPhase;
 }
 
 export { updateEdgesConditions };

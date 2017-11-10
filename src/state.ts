@@ -1,5 +1,8 @@
 
-import {conditionalGraph} from './conditional';
+import {conditionalGraph} from './mock-data/conditional';
+import {singleNode} from './mock-data/singleNode';
+import {twoNodes} from './mock-data/twoNodes';
+import {tree} from './mock-data/tree';
 
 let state = {
 
@@ -68,7 +71,7 @@ let state = {
     },
     graph: null,
     graphs: <Array<Graph>>[
-        conditionalGraph
+        conditionalGraph, singleNode, twoNodes, tree
     ],
 }
 

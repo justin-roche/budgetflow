@@ -64,6 +64,7 @@ declare interface NodeDisplayData {
     label?: string,
     shape?: string,
     outlineColor?: string,
+    active?: boolean
 }
 
 declare interface EdgeData {

@@ -3,7 +3,7 @@ let tree = {
     id: 'g7',
     data: <GraphData> {
         id: 'g7',
-        name: '1-2-3',
+        name: 'tree',
         displayFunctions: { nodes: [{ name: 'labelById', arguments: []}] }
     },
     nodes: <Nodes> {

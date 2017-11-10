@@ -12,13 +12,17 @@ function traverseGraph(s: AppState) {
     let state = { ...s}
 
     let sources = getSources(state.graph.nodesData);
-    let state2 = breadthTraverse(state, sources);
-    //state = { ...state, nodesData: linkedNodes, edgesData: linkedEdges };
+    let {linkedNodes, linkedEdges} = breadthTraverse(state, sources);
+
+    let nodesData = Object.assign({},state.graph.nodesData, linkedNodes);
+    let edgesData = Object.assign({},state.graph.edgesData, linkedEdges);
+    let graph = Object.assign({}, state.graph, {nodesData: nodesData, edgesData: edgesData});
+    // let s2= Object.assign({}, state, {graph: graph});
 
     /* update the display */
     //state = { ...state, nodesData: applyDisplayFunctions(state)};
 
-    return state;
+    return graph;
 }
 
 function breadthTraverse(state, current, _linkedSources = []) {

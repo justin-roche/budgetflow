@@ -4,28 +4,39 @@ import { displayUpdate } from './graphFunctions/displayUpdate'
 import { updateEdgesConditions } from './graphFunctions/conditionsUpdate';
 import undoable, { distinctState } from 'redux-undo'
 
+declare interface GraphActions {
+    applyDisplayFunctions: Function,
+    conditionsUpdate: Function,
+    traverse: Function,
+    deleteNode: Function,
+    addNode: Function,
+    setGraph: Function,
+}
+
 let graphActions = function (store) {
 
     return {
         name: 'graph',
         actions: {
             applyDisplayFunctions: function() {
-                return store.dispatch({ type: 'GRAPH_SET', payload: displayUpdate(store.getPresentState())});                
+                 store.dispatch({ type: 'GRAPH_SET', payload: displayUpdate(store.getPresentState())}); 
             },
             conditionsUpdate: function (simulation) {
-                return { type: 'GRAPH_SET', payload: updateEdgesConditions(store.getPresentState()) };
+                 store.dispatch({ type: 'GRAPH_SET', payload: x });
             },
-            graphTraverse: function (n?: Number) {
-                return store.dispatch({ type: 'GRAPH_SET', payload: traverseGraph(store.getPresentState())});
+            traverse: function (n?: Number) {
+                 store.dispatch({ type: 'GRAPH_SET', payload: traverseGraph(store.getPresentState())});
             },
             deleteNode: function (id: String) {
-                return { type: 'DELETE_NODE', payload: id };
+                 store.dispatch({ type: 'DELETE_NODE', payload: id });
+                // return store;
             },
             setGraph: function(g) {
-                return store.dispatch({ type: 'GRAPH_SET', payload: g});                                
+                 store.dispatch({ type: 'GRAPH_SET', payload: g});                                
             },
             addNode: function () {
-                return { type: 'ADD_NODE' }
+                store.dispatch({ type: 'ADD_NODE' });
+               // return store;
             }
         }
     }
@@ -60,9 +71,6 @@ function graphReducer(state = null, action) {
         }
         case 'EDGE_LINK_FUNCTION_ADD': {
             return { ...state, ...addLinkFunction(state, action.payload.edge, action.payload.function) }
-        }
-        case 'GRAPH_PRE_TRAVERSE': {
-            // return { ...state, ...preTraverse({ graph: state, ...action.payload }) }
         }
 
         default:
