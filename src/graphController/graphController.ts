@@ -406,15 +406,15 @@ export class GraphController {
             
             if(previous) {
                 if(previous === d.id) {
-                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+                    self.store.actions.ui.selectNode(null)
                 } 
                 if(previous !== d.id) {
-                    self.store.dispatch({ type: 'EDGE_ADD', payload: {edge:{ source: previous, target: d.id }} });
-                    self.store.dispatch({ type: 'SELECT_NODE', payload: null });
+                    //self.store.dispatch({ type: 'EDGE_ADD', payload: {edge:{ source: previous, target: d.id }} });
+                    self.store.actions.ui.selectNode(d.id)
                 }
             }
             else {
-                self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
+                self.store.actions.ui.selectNode(d.id)
             }
             
             
@@ -427,11 +427,9 @@ export class GraphController {
             d3.event.stopPropagation();
             let previous = self.ui.graphContainer.selectedEdgeId; 
             if(previous === d.id) {
-                self.store.dispatch({ type: 'UI_SELECT_EDGE', payload: null });
-                self.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+                self.store.actions.ui.selectEdge(null);            
             } else {
-                self.store.dispatch({ type: 'UI_SELECT_EDGE', payload: d.id });
-                self.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+                self.store.actions.ui.selectEdge(d.id);            
             }
         })
         
@@ -446,9 +444,7 @@ export class GraphController {
             d3.event.stopPropagation();
             let previous = self.ui.selectedNodeId; 
             alert(previous)
-            self.store.dispatch({ type: 'SELECT_NODE', payload: d.id });
-            self.store.dispatch({type: 'SHOW', payload: 'Node_Editor'});
-            
+            self.store.actions.ui.selectNode(d.id);            
         })
         
     }

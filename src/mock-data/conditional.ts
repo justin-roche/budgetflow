@@ -8,18 +8,18 @@ let conditionalGraph: Graph = {
     nodes: {
         'n0': {
             id: 'n0',
-            outEdges: ['e1'],
+            outEdges: ['e0'],
             inEdges: [],
         },
         'n1': {
             id: 'n1',
-            outEdges: ['e2'],
-            inEdges: ['e1']
+            outEdges: ['e1'],
+            inEdges: ['e0']
         },
         'n2': {
             id: 'n2',
             outEdges: [],
-            inEdges: ['e2']
+            inEdges: ['e1']
         }
     },
     nodesData: {
@@ -53,26 +53,26 @@ let conditionalGraph: Graph = {
     },
    
     edges: {
-        'e1': {
-            id: 'e1',
+        'e0': {
+            id: 'e0',
             source: 'n0',
             target: 'n1',
         },
-        'e2': {
-            id: 'e2',
+        'e1': {
+            id: 'e1',
             source: 'n1',
             target: 'n2',
         }
     },
     edgesData: {
-        'e1': {
-            id: 'e1',
+        'e0': {
+            id: 'e0',
             linkFunctions: [{ name: 'transfer', arguments: [1] }],
             active: true,
         },
 
-        'e2': {
-            id: 'e2',
+        'e1': {
+            id: 'e1',
             linkFunctions: [{ name: 'transfer', arguments: [1] }],
             active: false,
         },
@@ -80,7 +80,7 @@ let conditionalGraph: Graph = {
     conditions: [{
         id: 'c0',
         type: 'edge',
-        target: 'e2',
+        target: 'e1',
         phase: 'simulation',
         expression: 'false',
         value: false,

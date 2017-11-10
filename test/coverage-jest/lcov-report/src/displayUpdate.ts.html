@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>3/12</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/3</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/12</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -68,53 +68,53 @@
 23
 24
 25
-26</td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+26</td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ArrayById, ArrayToObject } from '../utilities';
 import { displayFunctions } from '../../parser/displayFunctions';
 &nbsp;
-<span class="fstat-no" title="function not covered" >function displayUpdate(</span>state: AppState): Graph {
-<span class="cstat-no" title="statement not covered" >    state = Object.freeze(s</span>tate);
-    let <span class="cstat-no" title="statement not covered" >nodesArr: Array&lt;NodeData&gt; = </span>ArrayById(state.graph.nodesData);
-    let <span class="cstat-no" title="statement not covered" >displayFns = </span>state.graph.data.displayFunctions.nodes;
+function displayUpdate(state: AppState): Graph {
+    state = Object.freeze(state);
+    let nodesArr: Array&lt;NodeData&gt; = ArrayById(state.graph.nodesData);
+    let displayFns = state.graph.data.displayFunctions.nodes;
 &nbsp;
     /* reduce the nodesArray */
-    let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >updatedNodesArr = nodesArr.</span>reduce((acc, nodeData) =&gt; {</span>
+    let updatedNodesArr = nodesArr.reduce((acc, nodeData) =&gt; {
 &nbsp;
-        let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >appliedNodeData = displayFns.</span>reduce((acc, fn) =&gt; {</span>
-            let <span class="cstat-no" title="statement not covered" >newDisplayData = displayFunctions[</span>fn.name](state, nodeData.id, ...fn.arguments);
-<span class="cstat-no" title="statement not covered" >            return { ...acc, displayData: { ...acc.displayData, ...n</span>ewDisplayData } };
+        let appliedNodeData = displayFns.reduce((acc, fn) =&gt; {
+            let newDisplayData = displayFunctions[fn.name](state, acc, ...fn.arguments);
+            return { ...acc, displayData: { ...acc.displayData, ...newDisplayData } };
         }, nodeData);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return acc.concat(a</span>ppliedNodeData);
+        return acc.concat(appliedNodeData);
 &nbsp;
     }, []);
 &nbsp;
     /* convert back to object type */
-<span class="cstat-no" title="statement not covered" >    return { ...state.graph, nodesData: ArrayToObject(u</span>pdatedNodesArr) };
+    return { ...state.graph, nodesData: ArrayToObject(updatedNodesArr) };
 }
 &nbsp;
 export { displayUpdate };
@@ -124,7 +124,7 @@ export { displayUpdate };
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 09 2017 20:11:47 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 11:02:08 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

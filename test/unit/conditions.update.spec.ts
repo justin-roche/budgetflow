@@ -24,30 +24,30 @@ describe('graph reducer', () => {
         })
 
         it('individual links from nodes are activated when sufficient conditions are met', () => {
-            s1.graph.edgesData.e2.active = false;
+            s1.graph.edgesData.e1.active = false;
             s1.graph.conditions[0].expression = 'true';
             s1.graph.conditions[0].scope = 'sufficient';
             store.actions.graph.conditionsUpdate();
             let s2 = store.getPresentState();
-            expect(s2.graph.edgesData.e2.active).toBe(true);
+            expect(s2.graph.edgesData.e1.active).toBe(true);
         })
 
         it('individual links from nodes are deactivated when necessary conditions are not met', () => {
-            s1.graph.edgesData.e2.active = true;
+            s1.graph.edgesData.e1.active = true;
             s1.graph.conditions[0].scope = 'necessary';
             s1.graph.conditions[0].expression = 'false';
             store.actions.graph.conditionsUpdate();
             let s2 = store.getPresentState();
-            expect(s2.graph.edgesData.e2.active).toBe(false);
+            expect(s2.graph.edgesData.e1.active).toBe(false);
         })
 
         it('condition update has access to global state', () => {
-            s1.graph.edgesData.e2.active = true;
+            s1.graph.edgesData.e1.active = true;
             s1.graph.conditions[0].scope = 'necessary';
             s1.graph.conditions[0].expression = "state.simulation.time === 'a'";
             store.actions.graph.conditionsUpdate();
             let s2 = store.getPresentState();
-            expect(s2.graph.edgesData.e2.active).toBe(false);
+            expect(s2.graph.edgesData.e1.active).toBe(false);
         })
     });
 

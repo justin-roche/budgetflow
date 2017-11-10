@@ -26,6 +26,21 @@ function deleteNode(g, nid) {
         };
 }
 
+function deleteEdge(g: Graph, eid) {
+    let edgesData = {...g.edgesData};
+    let edges = {...g.edges};
+
+    let removedEdges = edgesData[eid];
+    delete edges[eid];
+    delete edgesData[eid];
+
+    let nodes = _.toArray(g.nodes);
+    nodes = removeEdgeAssociations(nodes, [removedEdges] )
+    nodes = ArrayToObject(nodes);
+
+    return {...g, edgesData: edgesData, edges: edges, nodes: nodes};
+}
+
 function removeEdgeAssociations(retainedNodes, removedEdges) : Nodes {
     let nodes = _.map(retainedNodes, node => {
         node = {...node}
@@ -133,4 +148,4 @@ function updateEdge(g, edge: Edge, edgeData: EdgeData) {
     return {...g, edges: updatedEdges, edgesData: updatedEdgesData};
 }
 
-export { addNewNode, addNewEdge, updateEdge, deleteNode, nodePropertySet, addLinkFunction }
+export { addNewNode, addNewEdge, updateEdge, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }

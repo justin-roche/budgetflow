@@ -16,7 +16,6 @@ export class Store {
             acc[actionCreator.name] = actionCreator.actions;
 
             for(let prop in actionCreator.actions){
-                console.log(prop);
                 let boundAction = actionCreator.actions[prop];
                 actionCreator.actions[prop] = function(...args){
                     boundAction(...args);
@@ -102,6 +101,7 @@ export class Store {
             let state = this.store.getState();
             let slice = selector.split('.').reduce((acc, prop) => {
                 if(acc === undefined) {
+                    console.log('selector', selector, 'state', state)
                     debugger;
                 }
                 return acc[prop];
@@ -111,7 +111,7 @@ export class Store {
 
             }
             else if (previous !== slice) {
-                if (log) console.log('selector triggered (current not equal to last):', selector)
+                if (log) console.log('selector triggered (current not equal to last):', selector, slice)
                 previous = slice;
                 o.next(slice);
             }

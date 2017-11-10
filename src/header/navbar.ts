@@ -20,13 +20,18 @@ export class NavBar {
         this.store.dispatch({ type: 'UI_NODE_EDITOR_TOGGLE' });        
     }
 
+    toggleEdgeEditor() {
+        this.store.actions.ui.toggleEdgeEditor();
+    }
+
     downloadGraph() {
         downloadText(this.graph.data.name + '.txt', JSON.stringify(this.graph))        
     }
 
     test() {
         // this.store.actions.graph.traverse();
-        this.store.actions.graph.applyDisplayFunctions();
+        //this.store.actions.graph.applyDisplayFunctions();
+        this.store.actions.graph.deleteEdge('e0')
     }
 
 }

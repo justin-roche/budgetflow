@@ -1,5 +1,6 @@
 import { traverseGraph } from './graphFunctions/traverse';
-import { addNewNode, addNewEdge, updateEdge, deleteNode, nodePropertySet, addLinkFunction } from './graphFunctions/graphManipulationFunctions';
+import { addNewNode, addNewEdge, updateEdge, deleteNode, 
+    deleteEdge, nodePropertySet, addLinkFunction } from './graphFunctions/graphManipulationFunctions';
 import { displayUpdate } from './graphFunctions/displayUpdate'
 import { updateEdgesConditions } from './graphFunctions/conditionsUpdate';
 import undoable, { distinctState } from 'redux-undo'
@@ -19,18 +20,20 @@ let graphActions = function (store) {
         name: 'graph',
         actions: {
             applyDisplayFunctions: function() {
-                 store.dispatch({ type: 'GRAPH_SET', payload: displayUpdate(store.getPresentState())}); 
+                 store.dispatch({ type: 'DISPLAY_UPDATE', payload: displayUpdate(store.getPresentState())}); 
             },
             conditionsUpdate: function (simulation) {
-                 store.dispatch({ type: 'GRAPH_SET', payload: x });
+                 store.dispatch({ type: 'GRAPH_SET', payload: updateEdgesConditions(store.getPresentState()) });
             },
             traverse: function (n?: Number) {
-                 store.dispatch({ type: 'GRAPH_SET', payload: traverseGraph(store.getPresentState())});
+                 store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState())});
             },
             deleteNode: function (id: String) {
                  store.dispatch({ type: 'DELETE_NODE', payload: id });
-                // return store;
             },
+            deleteEdge: function (eid: String) {
+                store.dispatch({ type: 'DELETE_EDGE', payload: deleteEdge(store.getPresentState().graph, eid)});
+           },
             setGraph: function(g) {
                  store.dispatch({ type: 'GRAPH_SET', payload: g});                                
             },
@@ -50,6 +53,12 @@ function graphReducer(state = null, action) {
         case 'GRAPH_SET': {
             return action.payload;
         }
+        case 'DISPLAY_UPDATE': {
+            return action.payload;
+        }
+        case 'TRAVERSE': {
+            return action.payload;
+        }
         case 'NODES_SET': {
             return { ...state, nodes: action.payload };
         }
@@ -58,6 +67,9 @@ function graphReducer(state = null, action) {
         }
         case 'DELETE_NODE': {
             return { ...state, ...deleteNode(state, action.payload) }
+        }
+        case 'DELETE_EDGE': {
+            return { ...state, ...action.payload }
         }
         case 'NODE_PROPERTY_SET': {
             return { ...state, ...nodePropertySet(state, action.payload.nodeData) }
@@ -88,18 +100,3 @@ let undoableGraphReducer = undoable(graphReducer, {undoType: 'GRAPH_UNDO', redoT
 
 
 export { graphReducer, graphActions, undoableGraphReducer }
-
- /* pre-link functions */
-
-    // let preLinkResult = edge.preLinkFunctions.reduce((acc, functionSettings) => {
-    //     let fn = SimulationFunctions.preLinkFunctions[functionSettings.name];
-
-    //     let singleResult = fn(acc.source, target, ...functionSettings.arguments);
-
-    //     return {
-    //         source: singleResult.source,
-    //         target: singleResult.target
-    //     };
-    // }, { source: { ...source }, target: { ...target } });
-
-    /* apply to value functions */

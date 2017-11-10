@@ -1,0 +1,23 @@
+<template>
+    <require from="../common/modalWrapper"></require>
+    <require from="../common/typeAhead"></require>
+    <require from="../editors/conditionalEditor"></require>
+
+    <modal-wrapper selector.bind="'ui.nodeEditor.modalSettings'">
+        <div slot="modalbody">
+                <aubs-tabset>
+                        <aubs-tab header="Profile">
+                                <compose view="./profile-tab.html"></compose>
+                        </aubs-tab>
+                        <aubs-tab header="Settings">
+                        </aubs-tab>
+                        <aubs-tab header="Out Nodes">
+                                <compose view="./out-nodes-tab.html"></compose>
+                        </aubs-tab>
+                        <aubs-tab header="Out Nodes">
+                                <compose view="./in-nodes-tab.html"></compose>
+                        </aubs-tab>
+                    </aubs-tabset>
+        </div>
+    </modal-wrapper>
+</template>

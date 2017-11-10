@@ -1,0 +1,17 @@
+<template>
+    <require from="../common/modalWrapper"></require>
+    <require from="../common/typeAhead"></require>
+    <require from="./../editors/conditionalEditor"></require>
+    <modal-wrapper selector.bind="'ui.edgeEditor.modalSettings'">
+        <div slot="modalbody">
+            <aubs-tabset>
+                <aubs-tab header="Profile">
+                    <compose view="./profile-tab.html"></compose>
+                </aubs-tab>
+                <aubs-tab header="Conditions">
+                    <compose view="./conditions-tab.html"></compose>
+                </aubs-tab>
+            </aubs-tabset>
+        </div>
+    </modal-wrapper>
+</template>

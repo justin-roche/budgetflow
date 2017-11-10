@@ -1,4 +1,3 @@
-import { EdgeEditor } from './../../editors/edgeEditor';
 import { ArrayById, ArrayToObject } from '../utilities';
 
 import { linkFunctions } from '../../parser/linkFunctions';

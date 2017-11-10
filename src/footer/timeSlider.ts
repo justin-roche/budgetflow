@@ -70,7 +70,7 @@ export class TimeSlider {
         this.ref.noUiSlider.on('update', function (values, handle) {
             this.displayedSelectedDate = this.formatFromMsString(values[0]);
             let nextTime = Number(values[0]);
-            this.sim.setNextTime(nextTime);
+            this.sim.setTargetTime(nextTime);
         }.bind(this));
     }
 

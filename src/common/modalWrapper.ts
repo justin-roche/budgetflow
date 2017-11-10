@@ -1,5 +1,4 @@
 import { Store } from './../services/reduxStore';
-import { ComponentBase } from './componentBase';
 import { inject, bindable } from 'aurelia-framework';
 import { uiActions } from '../reducers/uiReducer';
 
@@ -18,9 +17,8 @@ export class ModalWrapper {
     }
 
     attached() {
-        console.log('settings', this.settings)
         this.store.select(this.selector, {bind: [this,'settings'], log: true}).subscribe(_ => {
-            this.update();
+            //this.update();
         });
     }
 
@@ -36,7 +34,7 @@ export class ModalWrapper {
     }
 
     close() {
-        uiActions(this.store).closeModal(this.settings);
+       this.store.actions.ui.closeModal(this.settings);
     }
 
 }

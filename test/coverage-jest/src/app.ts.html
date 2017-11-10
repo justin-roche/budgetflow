@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/44</span>
+        <span class='fraction'>0/46</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/37</span>
+        <span class='fraction'>0/39</span>
       </div>
     </div>
   </div>
@@ -85,7 +85,9 @@
 40
 41
 42
-43</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+43
+44
+45</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -95,6 +97,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -134,23 +138,25 @@ impo<span class="cstat-no" title="statement not covered" >rt {PLATFORM} from 'au
 impo<span class="cstat-no" title="statement not covered" >rt { createStore, applyMiddleware } from 'redux';<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt { rootReducer } from './reducers/root';</span>
 import { graphActions } from './reducers/graphReducer';
-import { state } <span class="cstat-no" title="statement not covered" >from './state';<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
-import logger from 'redux-logger'
+import { uiAction<span class="cstat-no" title="statement not covered" >s } from './reducers/uiRedu<span class="fstat-no" title="function not covered" >ce</span>r';</span>
+impo<span class="cstat-no" title="statement not covered" >rt { simulationActions } from './reducers/simulationReducer';<span class="cstat-no" title="statement not covered" ></span></span>
+import { state } from './state';
+<span class="cstat-no" title="statement not covered" ></span>
+import logger from <span class="cstat-no" title="statement not covered" >'redux-logger'</span>
 <span class="cstat-no" title="statement not covered" ></span>
 @inject(Store)<span class="cstat-no" title="statement not covered" ></span>
-export class App {<span class="cstat-no" title="statement not covered" ></span>
-  router: Router;<span class="cstat-no" title="statement not covered" ></span>
+export class A<span class="cstat-no" title="statement not covered" >pp {</span>
+  router: Rou<span class="cstat-no" title="statement not covered" >ter;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-  constructor<span class="cstat-no" title="statement not covered" >(private store: (Store)) {</span>
-    store.provideStor<span class="cstat-no" title="statement not covered" >e(createStore(rootReducer, applyMid</span>dleware(logger)));
-    store.prov<span class="cstat-no" title="statement not covered" >ideActions([graphAc</span>tions])
+  constructor(priv<span class="cstat-no" title="statement not covered" >ate store: (Store)) {</span>
+    store.provideStore(cre<span class="cstat-no" title="statement not covered" >ateStore(rootReducer, applyMiddleware(lo</span>gger)));
+    store.prov<span class="cstat-no" title="statement not covered" >ideActions([graphAc</span>tions, uiActions, simulationActions])
     this.hydrateIniti<span class="cstat-no" title="statement not covered" >al();</span>
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="fstat-no" title="function not covered" ></span>
   hydrat<span class="cstat-no" title="statement not covered" >eInitial() {</span>
     this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});</span>
-    this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: 'GRAPH_SET', payload: state.gr</span>aph});
+    this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: 'GRAPH_SET', payload: state.graph});</span>
     this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: </span>'UI_SET', payload: state.ui});
     this.store.dispatch({type: 'SIMULATION_SET', payload: state.simulation});
 <span class="cstat-no" title="statement not covered" >    setTimeout(function(){<span class="fstat-no" title="function not covered" ></span></span>
@@ -175,7 +181,7 @@ export class App {<span class="cstat-no" title="statement not covered" ></span>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Nov 09 2017 20:11:47 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 11:02:08 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

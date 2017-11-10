@@ -65,7 +65,7 @@ let state = {
         beginRangeTime: new Date().getTime(),
         endRangeTime: new Date('2019').getTime(),
         currentTime: new Date().getTime(),
-        nextTime: null,
+        targetTime: null,
         remainingCycles: 0,
         cache: {},
     },

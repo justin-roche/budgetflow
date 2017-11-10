@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
 import { graphActions } from './reducers/graphReducer';
 import { uiActions } from './reducers/uiReducer';
+import { simulationActions } from './reducers/simulationReducer';
 import { state } from './state';
 
 import logger from 'redux-logger'
@@ -16,7 +17,7 @@ export class App {
 
   constructor(private store: (Store)) {
     store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
-    store.provideActions([graphActions, uiActions])
+    store.provideActions([graphActions, uiActions, simulationActions])
     this.hydrateInitial();
   }
 

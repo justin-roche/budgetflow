@@ -100,7 +100,7 @@ declare interface Simulation {
     beginRangeTime: Number,
     endRangeTime: Number,
     currentTime: Number,
-    nextTime: Number,
+    targetTime: Number,
     cycleTime: Number,
     remainingCycles: Number,
 }

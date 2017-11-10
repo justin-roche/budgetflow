@@ -19,12 +19,25 @@ let uiActions = function (store) {
                 }
             },
             selectNode(id) {
-                let state = store.getPresentState();
-                return {
+                let state = store.getPresentState().ui;
+                let s = {
                     ...state,
-                    edgeEditor: { ...state.edgeEditor, ...{ show: !!id } },
+                    nodeEditor: { ...state.nodeEditor, ...{ show: !!id } },
+                    graphContainer: { ...state.graphContainer, selectedNodeId: id }
+                };
+                return store.dispatch({ type: 'UI_SELECT_NODE', payload: s });
+            },
+            selectEdge(id) {
+                let state = store.getPresentState().ui;
+                let s = {
+                    ...state,
+                    edgeEditor: { ...state.edgeEditor, ...{ show: !!id } },                    
                     graphContainer: { ...state.graphContainer, selectedEdgeId: id }
                 };
+                return store.dispatch({ type: 'UI_SELECT_EDGE', payload: s });
+            },
+            toggleEdgeEditor() {
+                return store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
             }
         }
     }
@@ -36,13 +49,11 @@ function uiReducer(state = null, action) {
     switch (action.type) {
         case 'UI_SET':
             return action.payload;
-        case 'SELECT_NODE': {
-            console.log('reducing')
-            return { ...state, graphContainer: { ...state.graphContainer, selectedNodeId: action.payload } };
+        case 'UI_SELECT_NODE': {
+            return action.payload;
         }
         case 'UI_SELECT_EDGE': {
-            return state.payload;
-
+            return action.payload;
         }
         case 'NODE_EDITOR_MODEL_SET': {
             return { ...state, nodeEditor: { ...state.nodeEditor, nodeModel: action.payload } };
