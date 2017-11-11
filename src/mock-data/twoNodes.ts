@@ -7,6 +7,7 @@ let twoNodes = {
             nodes: [{ name: 'labelById', arguments: [] }],
         }
     },
+    nodesIds: ['n0','n1'],
     nodes: {
         'n0': {
             id: 'n0',
@@ -39,6 +40,7 @@ let twoNodes = {
             displayData: {}
         }
     },
+    edgesIds: ['e0'],
     edges: <Edges>{
         'e0': {
             id: 'e0',

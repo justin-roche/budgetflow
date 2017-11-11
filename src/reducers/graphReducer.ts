@@ -1,6 +1,8 @@
 import { traverseGraph } from './graphFunctions/traverse';
-import { addNewNode, addNewEdge, updateEdgeData, deleteNode, 
-    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation } from './graphFunctions/graphManipulationFunctions';
+import {
+    addNewNode, addEdge, updateEdgeData, deleteNode,
+    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation
+} from './graphFunctions/graphManipulationFunctions';
 import { displayUpdate } from './graphFunctions/displayUpdate'
 import { applyEdgesConditions, updateConditionExpression } from './graphFunctions/conditionsApply';
 import undoable, { distinctState } from 'redux-undo'
@@ -19,37 +21,40 @@ let graphActions = function (store) {
     return {
         name: 'graph',
         actions: {
-            applyDisplayFunctions: function() {
-                 store.dispatch({ type: 'DISPLAY_UPDATE', payload: displayUpdate(store.getPresentState())}); 
+            applyDisplayFunctions: function () {
+                store.dispatch({ type: 'DISPLAY_UPDATE', payload: displayUpdate(store.getPresentState()) });
             },
             applyConditions: function (simulation) {
-                 store.dispatch({ type: 'GRAPH_SET', payload: applyEdgesConditions(store.getPresentState()) });
+                store.dispatch({ type: 'GRAPH_SET', payload: applyEdgesConditions(store.getPresentState()) });
             },
-            updateConditionExpression: function(condition) {
-                store.dispatch({ type: 'GRAPH_SET', payload: updateConditionExpression(store.getPresentState().graph, condition) });                
+            updateConditionExpression: function (condition) {
+                store.dispatch({ type: 'GRAPH_SET', payload: updateConditionExpression(store.getPresentState().graph, condition) });
             },
             traverse: function (n?: Number) {
-                 store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState())});
+                store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState()) });
             },
             deleteNode: function (id: String) {
-                 store.dispatch({ type: 'DELETE_NODE', payload: id });
+                store.dispatch({ type: 'DELETE_NODE', payload: id });
             },
             deleteEdge: function (eid: String) {
-                store.dispatch({ type: 'DELETE_EDGE', payload: deleteEdge(store.getPresentState().graph, eid)});
-           },
-           updateEdgeData: function (ed: EdgeData) {
-                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: updateEdgeData(store.getPresentState().graph, ed)});
-            // return store;
+                store.dispatch({ type: 'DELETE_EDGE', payload: deleteEdge(store.getPresentState().graph, eid) });
             },
-            toggleEdgeActivation: function(id: String) {
-                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id)});
+            addEdge: function (source, target) {
+                store.dispatch({ type: 'EDGE_ADD', payload: addEdge(store.getPresentState().graph, source, target) });
             },
-            setGraph: function(g) {
-                 store.dispatch({ type: 'GRAPH_SET', payload: g});                                
+            updateEdgeData: function (ed: EdgeData) {
+                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: updateEdgeData(store.getPresentState().graph, ed) });
+                // return store;
+            },
+            toggleEdgeActivation: function (id: String) {
+                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id) });
+            },
+            setGraph: function (g) {
+                store.dispatch({ type: 'GRAPH_SET', payload: g });
             },
             addNode: function () {
                 store.dispatch({ type: 'ADD_NODE' });
-               // return store;
+                // return store;
             }
         }
     }
@@ -85,7 +90,7 @@ function graphReducer(state = null, action) {
             return { ...state, ...nodePropertySet(state, action.payload.nodeData) }
         }
         case 'EDGE_ADD': {
-            return { ...state, ...addNewEdge(state, action.payload) };
+            return action.payload;
         }
         case 'EDGE_DATA_UPDATE': {
             return action.payload;
@@ -100,9 +105,11 @@ function graphReducer(state = null, action) {
 
 }
 
-let undoableGraphReducer = undoable(graphReducer, {undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function(x, prev, next){
-    return (next !== null && prev !== null) && next !== prev;
-}});
+let undoableGraphReducer = undoable(graphReducer, {
+    undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function (x, prev, next) {
+        return (next !== null && prev !== null) && next !== prev;
+    }
+});
 
 
 

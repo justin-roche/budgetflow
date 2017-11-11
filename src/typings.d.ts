@@ -9,8 +9,10 @@ declare interface AppState {
 declare interface Graph {
     id: string,
     data: GraphData
+    nodesIds: Array<string>
     nodes: Nodes
     nodesData: NodesData,
+    edgesIds: Array<string>
     edges: Edges
     edgesData: EdgesData,
     conditions: ConditionsData,

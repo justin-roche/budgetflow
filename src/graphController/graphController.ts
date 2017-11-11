@@ -409,7 +409,7 @@ export class GraphController {
                     self.store.actions.ui.selectNode(null)
                 } 
                 if(previous !== d.id) {
-                    //self.store.dispatch({ type: 'EDGE_ADD', payload: {edge:{ source: previous, target: d.id }} });
+                    self.store.actions.graph.addEdge(previous, d.id);
                     self.store.actions.ui.selectNode(d.id)
                 }
             }

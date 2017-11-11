@@ -5,6 +5,7 @@ let conditionalGraph: Graph = {
         name: 'conditional',
         displayFunctions: { nodes: [{ name: 'labelById' }, {name: 'inactivateByLinks'}] }
     },
+    nodesIds: ['n0','n1','n2'],
     nodes: {
         'n0': {
             id: 'n0',
@@ -51,7 +52,7 @@ let conditionalGraph: Graph = {
             displayData: {},
         }
     },
-   
+    edgesIds: ['e0','e1'],
     edges: {
         'e0': {
             id: 'e0',

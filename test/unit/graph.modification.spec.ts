@@ -27,9 +27,18 @@ fdescribe('graph modification', () => {
             expect(s1.graph.nodes['n0'].outEdges.length).toBe(1);
             expect(s1.graph.nodes['n1'].inEdges.length).toBe(1);
             let s2 = store.actions.graph.deleteEdge('e0').getPresentState();
-            expect(!s2.graph.edges['e1']);
+            expect(!s2.graph.edges['e0']);
             expect(s2.graph.nodes['n0'].outEdges.length).toBe(0);
             expect(s2.graph.nodes['n1'].inEdges.length).toBe(0);
+        });
+
+        it('adds an edge', () => {
+            expect(s1.graph.edgesData['e0']).toBeDefined();
+            let s2 = store.actions.graph.deleteEdge('e0').getPresentState();
+            expect(!s2.graph.edges['e0']);
+            console.log(s2.graph.edgesIds)
+            let s3 = store.actions.graph.addEdge('n0','n1').getPresentState();
+            expect(s2.graph.edges['e0']);
         });
 
     });
