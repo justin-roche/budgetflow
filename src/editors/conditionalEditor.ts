@@ -46,12 +46,6 @@ export class ConditionalEditor {
         console.log('nm changed', this.nodeModel)
     }
 
-    toggleActive() {
-        let nodeData = { id: this.nodeModel.node.id, active: !this.nodeModel.nodeData.active };
-        this.store.dispatch({ type: 'NODE_PROPERTY_SET', payload: { nodeData: nodeData } });
-        this.store.dispatch({ type: 'DISPLAY_FUNCTIONS_APPLY'});
-    }
-
     selectActivationSource() {
 
     }

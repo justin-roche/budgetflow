@@ -27,7 +27,7 @@ describe('graph reducer', () => {
 
         it('graph traversal does not mutate original state', () => {
             let original = JSON.stringify(s1);
-            store.actions.graph.conditionsUpdate();
+            store.actions.graph.traverse();
             expect(original === JSON.stringify(s1)).toBe(true);
         })
 

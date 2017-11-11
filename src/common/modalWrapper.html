@@ -9,9 +9,8 @@
                 <div  show.bind="!collapsed" class="modal-body">
                     <slot name="modalbody"></slot>   
                 </div>
-                <div if.bind="!collapsed" class="modal-footer">
-                    <button type="button" class="btn btn-default" click.trigger="close()">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                <div show.bind="!collapsed" class="modal-footer">
+                    <slot name="modalfooter"></slot>
                 </div>
             </div>
         </div>

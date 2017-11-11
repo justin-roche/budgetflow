@@ -1,7 +1,6 @@
 <template>
     <require from="../common/modalWrapper"></require>
     <require from="../common/typeAhead"></require>
-    <require from="./../editors/conditionalEditor"></require>
     <modal-wrapper selector.bind="'ui.edgeEditor.modalSettings'">
         <div slot="modalbody">
             <aubs-tabset>
@@ -9,9 +8,14 @@
                     <compose view="./profile-tab.html"></compose>
                 </aubs-tab>
                 <aubs-tab header="Conditions">
-                    <compose view="./conditions-tab.html"></compose>
+                    <compose view="./conditional-editor.html"></compose>
+                    <!-- <conditional-editor></conditional-editor> -->
                 </aubs-tab>
             </aubs-tabset>
+        </div>
+        <div slot="modalfooter">
+            <button type="button" class="btn btn-default" click.trigger="close()">Cancel</button>
+            <button type="button" click.trigger="save()" class="btn btn-primary">Save</button>
         </div>
     </modal-wrapper>
 </template>

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/conditionsUpdate.ts</title>
+    <title>Code coverage report for src/conditionsApply.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">src</a> conditionsUpdate.ts
+      <a href="../index.html">All files</a> / <a href="index.html">src</a> conditionsApply.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96.55% </span>
+        <span class="strong">90.91% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>28/29</span>
+        <span class='fraction'>30/33</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.33% </span>
+        <span class="strong">71.43% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/12</span>
+        <span class='fraction'>10/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">92.59% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>24/24</span>
+        <span class='fraction'>25/27</span>
       </div>
     </div>
   </div>
@@ -105,7 +105,16 @@
 60
 61
 62
-63</td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+63
+64
+65
+66
+67
+68
+69
+70</td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -114,19 +123,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -165,23 +173,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span></td><td class="text"><pre class="prettyprint lang-js">import { ArrayById, ArrayToObject } from '../utilities';
 &nbsp;
 import { linkFunctions } from '../../parser/linkFunctions';
 import { _ } from 'underscore';
+import { extend } from './../utilities';
 &nbsp;
 <span class="fstat-no" title="function not covered" >function updateAllConditions(</span>state, conditions) {
 &nbsp;
 }
 &nbsp;
-function updateEdgesConditions(state: AppState) {
+function applyEdgesConditions(state: AppState) {
     state = Object.freeze(state)
     let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
 &nbsp;
     let { edgesData, conditions } = ArrayById(state.graph.edgesData).reduce((acc, ed) =&gt; {
-        let { conditions, edgeData } = updateEdgeConditions(state, {...ed});
+        let { conditions, edgeData } = applyEdgeConditions(state, {...ed});
 &nbsp;
         let c = { ...acc.conditions, ...conditions };
         let e = { ...acc.edgesData, [edgeData.id]: edgeData };
@@ -196,15 +211,15 @@ declare interface update_edge_conditions {
     conditions: Array&lt;Condition&gt;
 }
 &nbsp;
-function updateEdgeConditions(state: AppState, edgeData) {
+function applyEdgeConditions(state: AppState, edgeData) {
     let conditionsIds = selectEdgeConditions(state, edgeData);
     if (conditionsIds.length === 0) {
         return { edgeData: edgeData, conditions: conditionsIds.map(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >id =&gt; </span>state.graph.conditions[id]) };</span>
     }
-    return updateConditions(state, conditionsIds, edgeData);
+    return applyConditions(state, conditionsIds, edgeData);
 }
 &nbsp;
-function updateConditions(state, conditionIds, edgeData) {
+function applyConditions(state, conditionIds, edgeData) {
     let updatedConds = conditionIds.map(condId =&gt; {
         let cond = state.graph.conditions[condId];
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
@@ -229,13 +244,19 @@ function selectEdgeConditions(state, edgeData) {
     return conditionsIds;
 }
 &nbsp;
-export { updateEdgesConditions };</pre></td></tr>
+<span class="fstat-no" title="function not covered" >function updateConditionExpression(</span>state: Graph, condition) {
+<span class="cstat-no" title="statement not covered" >    return e</span>xtend(state).select(`conditions.${condition.id}`).data(<span class="fstat-no" title="function not covered" >(</span>obj: any) =&gt; {
+<span class="cstat-no" title="statement not covered" >        return { ...obj, expression: condition.e</span>xpression };
+    });
+}
+&nbsp;
+export { applyEdgesConditions, updateConditionExpression };</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 13:03:47 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 21:00:52 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

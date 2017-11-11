@@ -15,6 +15,9 @@ export class EdgeEditor {
             if (id !== null) {
                 let s = this.store.getPresentState();
                 this.edgeData = {...s.graph.edgesData[id]};
+                this.conditions = s.graph.conditionsIds
+                    .map(id => s.graph.conditions[id])
+                    .filter(cond => cond.target === this.edgeData.id);
                 this.store.select(`graph.edgesData.${id}`, {log: true, bind: [this, 'edgeData']})
                 this.store.select('graph.conditions').subscribe(conds => {
                     
@@ -28,6 +31,15 @@ export class EdgeEditor {
     toggleActive(x) {
         this.store.actions.graph.toggleEdgeActivation(this.edgeData.id)
             .actions.graph.applyDisplayFunctions();
+    }
+
+    save() {
+        console.log(this.conditions);
+        this.conditions.forEach(cond => {
+            this.store.actions.graph.updateConditionExpression(cond);
+        })
+        this.store.actions.graph.applyConditions();
+        this.store.actions.graph.applyDisplayFunctions();
     }
 
 }

@@ -2,12 +2,12 @@ import { traverseGraph } from './graphFunctions/traverse';
 import { addNewNode, addNewEdge, updateEdgeData, deleteNode, 
     deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation } from './graphFunctions/graphManipulationFunctions';
 import { displayUpdate } from './graphFunctions/displayUpdate'
-import { updateEdgesConditions } from './graphFunctions/conditionsUpdate';
+import { applyEdgesConditions, updateConditionExpression } from './graphFunctions/conditionsApply';
 import undoable, { distinctState } from 'redux-undo'
 
 declare interface GraphActions {
     applyDisplayFunctions: Function,
-    conditionsUpdate: Function,
+    applyConditions: Function,
     traverse: Function,
     deleteNode: Function,
     addNode: Function,
@@ -22,8 +22,11 @@ let graphActions = function (store) {
             applyDisplayFunctions: function() {
                  store.dispatch({ type: 'DISPLAY_UPDATE', payload: displayUpdate(store.getPresentState())}); 
             },
-            conditionsUpdate: function (simulation) {
-                 store.dispatch({ type: 'GRAPH_SET', payload: updateEdgesConditions(store.getPresentState()) });
+            applyConditions: function (simulation) {
+                 store.dispatch({ type: 'GRAPH_SET', payload: applyEdgesConditions(store.getPresentState()) });
+            },
+            updateConditionExpression: function(condition) {
+                store.dispatch({ type: 'GRAPH_SET', payload: updateConditionExpression(store.getPresentState().graph, condition) });                
             },
             traverse: function (n?: Number) {
                  store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState())});

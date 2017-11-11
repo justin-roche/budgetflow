@@ -2,17 +2,18 @@ import { ArrayById, ArrayToObject } from '../utilities';
 
 import { linkFunctions } from '../../parser/linkFunctions';
 import { _ } from 'underscore';
+import { extend } from './../utilities';
 
 function updateAllConditions(state, conditions) {
 
 }
 
-function updateEdgesConditions(state: AppState) {
+function applyEdgesConditions(state: AppState) {
     state = Object.freeze(state)
     let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
 
     let { edgesData, conditions } = ArrayById(state.graph.edgesData).reduce((acc, ed) => {
-        let { conditions, edgeData } = updateEdgeConditions(state, {...ed});
+        let { conditions, edgeData } = applyEdgeConditions(state, {...ed});
 
         let c = { ...acc.conditions, ...conditions };
         let e = { ...acc.edgesData, [edgeData.id]: edgeData };
@@ -27,15 +28,15 @@ declare interface update_edge_conditions {
     conditions: Array<Condition>
 }
 
-function updateEdgeConditions(state: AppState, edgeData) {
+function applyEdgeConditions(state: AppState, edgeData) {
     let conditionsIds = selectEdgeConditions(state, edgeData);
     if (conditionsIds.length === 0) {
         return { edgeData: edgeData, conditions: conditionsIds.map(id => state.graph.conditions[id]) };
     }
-    return updateConditions(state, conditionsIds, edgeData);
+    return applyConditions(state, conditionsIds, edgeData);
 }
 
-function updateConditions(state, conditionIds, edgeData) {
+function applyConditions(state, conditionIds, edgeData) {
     let updatedConds = conditionIds.map(condId => {
         let cond = state.graph.conditions[condId];
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
@@ -60,4 +61,10 @@ function selectEdgeConditions(state, edgeData) {
     return conditionsIds;
 }
 
-export { updateEdgesConditions };
+function updateConditionExpression(state: Graph, condition) {
+    return extend(state).select(`conditions.${condition.id}`).data((obj: any) => {
+        return { ...obj, expression: condition.expression };
+    });
+}
+
+export { applyEdgesConditions, updateConditionExpression };

@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/48</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>0/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/31</span>
+        <span class='fraction'>0/41</span>
       </div>
     </div>
   </div>
@@ -75,7 +75,19 @@
 30
 31
 32
-33</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -107,7 +119,19 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
 import $ from '<span class="cstat-no" title="statement not covered" >jquery'<span class="fstat-no" title="function not covered" ></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt * as Rx from 'rxjs';</span>
 import {<span class="cstat-no" title="statement not covered" > Store } from '../</span>services/reduxStore';
@@ -124,28 +148,40 @@ export class EdgeEditor {
             if (id !== null) {
                 l<span class="cstat-no" title="statement not covered" >et s = this.store.getPresen<span class="fstat-no" title="function not covered" >tS</span>tate();</span>
 <span class="cstat-no" title="statement not covered" >                this.edgeData = {...s.graph.edgesData[id]};<span class="cstat-no" title="statement not covered" ></span></span>
-                this.store.select(`graph.edgesData.${id}`, {log: true, bind: [this, 'edgeData']})
-<span class="cstat-no" title="statement not covered" >                this.store.select('graph.conditions').subscribe</span>(conds =&gt; {
-                    <span class="cstat-no" title="statement not covered" ></span>
+                this.conditions = s.graph.conditionsIds
+<span class="cstat-no" title="statement not covered" >                    .map(id =&gt; s.graph.conditions[id])</span>
+                    .filte<span class="cstat-no" title="statement not covered" >r(cond =&gt; cond.target === thi</span>s.edgeData.id);
+                thi<span class="cstat-no" title="statement not covered" >s.store.select(`graph.edgesData.${</span>id}`, {log: true, bind: [this, 'edgeData']})
+                t<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >hi</span>s.store.select('graph.conditions').subscribe(conds =&gt; {</span>
+             <span class="fstat-no" title="function not covered" >       </span>
                 })<span class="cstat-no" title="statement not covered" ></span>
-                <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-            <span class="fstat-no" title="function not covered" ></span>
-            }<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >        })</span>
+        <span class="cstat-no" title="statement not covered" >        </span>
+        <span class="cstat-no" title="statement not covered" >    </span>
+            }<span class="fstat-no" title="function not covered" ></span>
+        })<span class="cstat-no" title="statement not covered" ></span>
     }<span class="cstat-no" title="statement not covered" ></span>
-<span class="fstat-no" title="function not covered" ></span>
-    toggleAc<span class="cstat-no" title="statement not covered" >tive(x) {</span>
-        this.store.actio<span class="cstat-no" title="statement not covered" >ns.graph.toggleEdgeActivation(</span>this.edgeData.id)
-            .act<span class="cstat-no" title="statement not covered" >ions.graph.applyDisplayFunctions();</span>
+<span class="cstat-no" title="statement not covered" ></span>
+    toggleActive<span class="cstat-no" title="statement not covered" >(x) {</span>
+        this.store.a<span class="fstat-no" title="function not covered" >ct</span>ions.graph.to<span class="cstat-no" title="statement not covered" >ggleEdgeActivation(this.edgeData.</span>id)
+            .actions.gr<span class="fstat-no" title="function not covered" >ap</span>h.applyDisplayF<span class="cstat-no" title="statement not covered" >unctions();</span>
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-}</pre></td></tr>
+    save() {
+        console.log(this.conditions);
+        this.conditions.forEach(cond =&gt; {
+            this.store.actions.graph.updateConditionExpression(cond);
+<span class="cstat-no" title="statement not covered" >        })<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        this.store.actions.graph.applyConditions();</span>
+        this.store.actions.graph.applyDisplayFunctions();
+    }
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+}<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 13:03:47 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 21:00:52 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

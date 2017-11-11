@@ -28,11 +28,19 @@ export class NavBar {
         downloadText(this.graph.data.name + '.txt', JSON.stringify(this.graph))        
     }
 
+    updateDisplay() {
+        this.store.actions.graph.applyDisplayFunctions();
+    }
+
+    evaluateConditions() {
+        this.store.actions.graph.conditionsApply();
+    }
+
     test() {
         // this.store.actions.graph.traverse();
-        //this.store.actions.graph.applyDisplayFunctions();
+        //
         //this.store.actions.graph.deleteEdge('e0')
-        this.store.actions.graph.conditionsUpdate();
+        
     }
 
 }

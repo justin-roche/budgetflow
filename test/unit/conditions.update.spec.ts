@@ -19,7 +19,7 @@ describe('graph reducer', () => {
    
         it('conditions update does not mutate original state', ()=> {
             let original = JSON.stringify(s1);
-            store.actions.graph.conditionsUpdate();
+            store.actions.graph.applyConditions();
             expect(original === JSON.stringify(s1)).toBe(true);
         })
 
@@ -27,7 +27,7 @@ describe('graph reducer', () => {
             s1.graph.edgesData.e1.active = false;
             s1.graph.conditions['c0'].expression = 'true';
             s1.graph.conditions['c0'].scope = 'sufficient';
-            store.actions.graph.conditionsUpdate();
+            store.actions.graph.applyConditions();
             let s2 = store.getPresentState();
             expect(s2.graph.edgesData.e1.active).toBe(true);
         })
@@ -36,7 +36,7 @@ describe('graph reducer', () => {
             s1.graph.edgesData.e1.active = true;
             s1.graph.conditions['c0'].scope = 'necessary';
             s1.graph.conditions['c0'].expression = 'false';
-            store.actions.graph.conditionsUpdate();
+            store.actions.graph.applyConditions();
             let s2 = store.getPresentState();
             expect(s2.graph.edgesData.e1.active).toBe(false);
         })
@@ -45,7 +45,7 @@ describe('graph reducer', () => {
             s1.graph.edgesData.e1.active = true;
             s1.graph.conditions['c0'].scope = 'necessary';
             s1.graph.conditions['c0'].expression = "state.simulation.time === 'a'";
-            store.actions.graph.conditionsUpdate();
+            store.actions.graph.applyConditions();
             let s2 = store.getPresentState();
             expect(s2.graph.edgesData.e1.active).toBe(false);
         })

@@ -1,39 +1,35 @@
 <template>
     <require from="../common/typeAhead"></require>
     <div>
-      
         <aubs-accordion close-others.bind="closeOthers">
             <aubs-accordion-group title="Activation Conditions" is-open.bind="firstTabState">
                 <div>
                     <table class="table">
                         <thead>
                             <tr>
+                                <td>
+                                    expression
+                                </td>
 
                             </tr>
                         </thead>
                         <tbody>
-                                <li repeat.for="conditional of conditionals">
-                                    ${conditional}
-                                </li>
-                            <tr>
+                            <tr repeat.for="condition of conditions">
+                                ${condition.expression}
                                 <td>
-                                    <input type="text" value.bind="inputConditional" class="form-control">
+                                    <input type="text" value.bind="condition.expression" class="form-control">
                                 </td>
                                 <td>
                                     <i class="glyphicon glyphicon-plus" click.trigger="addConditional()"></i>
                                 </td>
                             </tr>
-                            <!-- <tr repeat.for="conditional of conditionals">
-                                ${conditional}
-                                
-                            </tr> -->
 
                         </tbody>
                     </table>
                 </div>
             </aubs-accordion-group>
 
-            <aubs-accordion-group title="Deactivation Conditions" disabled.bind="secondDisabled">
+            <!-- <aubs-accordion-group title="Deactivation Conditions" disabled.bind="secondDisabled">
                 <tr>
                     <td>
                         <input type="text" class="form-control">
@@ -42,7 +38,7 @@
                         <i class="glyphicon glyphicon-plus timeline-button"></i>
                     </td>
                 </tr>
-            </aubs-accordion-group>
+            </aubs-accordion-group> -->
         </aubs-accordion>
     </div>
 </template>
