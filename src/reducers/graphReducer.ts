@@ -44,7 +44,6 @@ let graphActions = function (store) {
             },
             updateEdgeData: function (ed: EdgeData) {
                 store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: updateEdgeData(store.getPresentState().graph, ed) });
-                // return store;
             },
             toggleEdgeActivation: function (id: String) {
                 store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id) });
@@ -54,7 +53,9 @@ let graphActions = function (store) {
             },
             addNode: function () {
                 store.dispatch({ type: 'ADD_NODE' });
-                // return store;
+            },
+            undo: function () {
+                store.dispatch({ type: 'GRAPH_UNDO' });
             }
         }
     }

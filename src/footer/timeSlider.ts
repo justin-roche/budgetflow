@@ -1,3 +1,4 @@
+import { TimeSlider } from './timeSlider';
 import { SimulationService } from './../services/simulationService';
 import { Store } from './../services/reduxStore';
 import *  as Rx from 'rxjs';
@@ -12,45 +13,38 @@ export class TimeSlider {
     _simulation: Simulation;
     ref;
     displayedSelectedDate;
+    sliderSettings;
 
     constructor(private store: Store, private sim: SimulationService) {
-        store.select('simulation', { log: true, bind: [this, '_simulation'] }).subscribe(_ => {
-            this.updateDisplay();
+        this.store.actions.ui.updateSliderSettings();
+        
+        this.store.select('simulation', {bind: [this, '_simulation'] }).subscribe(_ => {
+            this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');            
         });
+        
     }
 
     updateDisplay() {
-        this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');
+        
     }
 
     attached() {
-        let pipSize = 7 * 24 * 60 * 60 * 1000;
-        let min = this._simulation.beginRangeTime;
-        let max = this._simulation.endRangeTime;
-
-        this.createSlider(min, max, pipSize);
-        this.formatPips();
-        this.addListeners();
-
+        this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {log: true, bind: [this, 'sliderSettings']}).subscribe(settings => {
+            this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
+        });
+        this.store.select('simulation.currentTime', {log: true}).subscribe(t => {
+            this.ref.noUiSlider.set(t);
+        })        
     }
 
-    createSlider(min, max, pipSize) {
-        this.ref = document.getElementById('date-slider');
-        noUiSlider.create(this.ref, {
-            start: [this._simulation.beginRangeTime],
+    createSlider(settings) {
+         this.ref = document.getElementById('date-slider');
+         noUiSlider.create(this.ref, settings);
+         this.formatPips();
+         this.addListeners();
 
-            range: {
-                min: min,
-                max: max
-            },
-
-            pips: {
-                mode: 'positions',
-                values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                density: 4
-            },
-
-            step: pipSize,
+         $('.noUi-handle').dblclick(()=>{
+            this.store.dispatch({ type: 'SIMULATION_ON_TOGGLE'})
         });
     }
 
@@ -63,14 +57,11 @@ export class TimeSlider {
     }
 
     addListeners() {
-        $('.noUi-handle').dblclick(()=>{
-            this.store.dispatch({ type: 'SIMULATION_ON_TOGGLE'})
-        });
-
-        this.ref.noUiSlider.on('update', function (values, handle) {
+        this.ref.noUiSlider.on('slide', function (values, handle) {
             this.displayedSelectedDate = this.formatFromMsString(values[0]);
-            let nextTime = Number(values[0]);
-            this.sim.setTargetTime(nextTime);
+            let t = Number(values[0]);
+            console.log('user update', t)
+            this.store.actions.simulation.setTargetTime(t)
         }.bind(this));
     }
 

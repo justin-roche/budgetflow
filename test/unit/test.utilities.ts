@@ -4,11 +4,12 @@ import { graphActions } from '../../src/reducers/graphReducer';
 import { state } from '../../src/state'
 import { createStore } from 'redux';
 import { rootReducer } from '../../src/reducers/root';
+import { simulationActions } from 'reducers/simulationReducer';
 
 function createTestStore() {
     let store = new Store();
     store.provideStore(createStore(rootReducer));
-    store.provideActions([graphActions]);
+    store.provideActions([graphActions, simulationActions]);
     store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});
     store.dispatch({type: 'GRAPH_SET', payload: state.graph});
     store.dispatch({type: 'UI_SET', payload: state.ui});

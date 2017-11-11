@@ -36,7 +36,7 @@ export class GraphController {
         this.store.select('graph', {bind: [this, 'graph']}).subscribe(d => {
             this.refresh(d);
         })
-        this.store.select('ui', {bind: [this, 'ui']}).subscribe(d => {
+        this.store.select('ui.graphContainer', {bind: [this, 'ui']}).subscribe(d => {
             if(this.container && this.graph) {
                 this.refresh(this.graph);
             }
@@ -187,7 +187,7 @@ export class GraphController {
 
     renderNodes() {
         let d3 = this.d3;
-        let selectedNodeId = this.ui.graphContainer.selectedNodeId;
+        let selectedNodeId = this.ui.selectedNodeId;
         let data = this.graph; 
         
         this.svg.
@@ -247,7 +247,7 @@ export class GraphController {
     }
 
     renderLinks(data) {
-        let selectedEdgeId = this.ui.graphContainer.selectedEdgeId;
+        let selectedEdgeId = this.ui.selectedEdgeId;
         let d3 = this.d3;
 
         this.container.selectAll('line')
@@ -402,7 +402,7 @@ export class GraphController {
         nodes.on('click', function (d) {
             d3.event.preventDefault();
             d3.event.stopPropagation();
-            let previous = self.ui.graphContainer.selectedNodeId; 
+            let previous = self.ui.selectedNodeId; 
             
             if(previous) {
                 if(previous === d.id) {
@@ -425,7 +425,7 @@ export class GraphController {
         links.on('click', function (d) {
             d3.event.preventDefault();
             d3.event.stopPropagation();
-            let previous = self.ui.graphContainer.selectedEdgeId; 
+            let previous = self.ui.selectedEdgeId; 
             if(previous === d.id) {
                 self.store.actions.ui.selectEdge(null);            
             } else {
@@ -454,9 +454,6 @@ export class GraphController {
         this.store.dispatch({ type: 'ADD_NODE', payload: { x: e.offsetX, y: e.offsetY } });
     }
 
-    addEdge() {
-        this.store.dispatch({ type: 'ADD_EDGE', payload: { source: 'n6', target: 'n7' } });
-    }
 
     addKeyListeners() {
         let self = this;

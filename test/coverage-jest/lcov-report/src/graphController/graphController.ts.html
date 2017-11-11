@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/240</span>
+        <span class='fraction'>0/238</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/62</span>
+        <span class='fraction'>0/61</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/228</span>
+        <span class='fraction'>0/226</span>
       </div>
     </div>
   </div>
@@ -514,10 +514,7 @@
 469
 470
 471
-472
-473
-474
-475</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+472</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -902,9 +899,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1029,7 +1023,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
         this<span class="cstat-no" title="statement not covered" >.store.select('gra</span>ph', {bind: [this, 'graph']}).subscribe(d =&gt; {
             this.refresh(d);
 <span class="cstat-no" title="statement not covered" >        })<span class="fstat-no" title="function not covered" ></span></span>
-        this<span class="cstat-no" title="statement not covered" >.store.select('ui', {bind: [this, 'ui']}).subscribe(d =&gt; {</span>
+        this<span class="cstat-no" title="statement not covered" >.store.select('ui.graphContainer', {bind: [this, 'ui']}).subscribe(d =&gt; {</span>
             if(t<span class="cstat-no" title="statement not covered" >his.container &amp;&amp; this.graph)</span> {
                 this.refresh(this.graph);
             }
@@ -1180,7 +1174,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
 &nbsp;
     renderNo<span class="cstat-no" title="statement not covered" >des() {</span>
         let d3 =<span class="cstat-no" title="statement not covered" > this.d3;</span>
-        let selectedNodeId = this.ui.graphContainer.selectedNodeId;
+        let selectedNodeId = this.ui.selectedNodeId;
         let data = this.graph; 
         
         this.svg.
@@ -1240,7 +1234,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
     }
 &nbsp;
     renderLinks(d<span class="fstat-no" title="function not covered" >ata) {</span>
-        let selectedEdge<span class="cstat-no" title="statement not covered" >Id = this.ui.graphConta</span>iner.selectedEdgeId;
+        let selectedEdge<span class="cstat-no" title="statement not covered" >Id = this.ui.selectedEd</span>geId;
         let d3 = this.d3<span class="cstat-no" title="statement not covered" >;</span>
 <span class="cstat-no" title="statement not covered" ></span>
         this<span class="cstat-no" title="statement not covered" >.container.selectAll('line')</span>
@@ -1381,27 +1375,27 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
             d.fy = d3.event.y;
 <span class="cstat-no" title="statement not covered" >        }<span class="fstat-no" title="function not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-        function dragended(d) {
-<span class="cstat-no" title="statement not covered" >            self.simulation.alphaTarget(0);<span class="fstat-no" title="function not covered" ></span></span>
-            d.fx = <span class="cstat-no" title="statement not covered" >null;</span>
-<span class="cstat-no" title="statement not covered" >            d.fy = null;<span class="fstat-no" title="function not covered" ></span></span>
-        }<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >        function dragended(d)<span class="fstat-no" title="function not covered" > {</span></span>
+<span class="cstat-no" title="statement not covered" >            self.simulation.</span>alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
     }
 &nbsp;
     addClickListener() {
         let d3 = this.d3;
         let nodes = this.container.selectAll('.node')
-        let self = this;
+<span class="cstat-no" title="statement not covered" >        let self = this;</span>
         nodes.on('click', function (d) {
             d3.event.preventDefault();
-<span class="cstat-no" title="statement not covered" >            d3.event.stopPropagation();</span>
-            let previous = self.ui.graphContainer.selectedNodeId; 
+            d3.event.stopPropagation();
+<span class="cstat-no" title="statement not covered" >            let previous = s</span>elf.ui.selectedNodeId; 
             
             if(previous) {
-<span class="cstat-no" title="statement not covered" >                if(previous </span>=== d.id) {
+<span class="cstat-no" title="statement not covered" >                if(previous === d.id) {</span>
                     self.store.actions.ui.selectNode(null)
                 } 
-<span class="cstat-no" title="statement not covered" >                if(previous !== d.id) {</span>
+                if(previous !== d.id) {
                     self.store.actions.graph.addEdge(previous, d.id);
                     self.store.actions.ui.selectNode(d.id)
                 }
@@ -1418,7 +1412,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
         links.on('click', function (d) {
             d3.event.preventDefault();
             d3.event.stopPropagation();
-            let previous = self.ui.graphContainer.selectedEdgeId; 
+            let previous = self.ui.selectedEdgeId; 
             if(previous === d.id) {
                 self.store.actions.ui.selectEdge(null);            
             } else {
@@ -1447,9 +1441,6 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
         this.store.dispatch({ type: 'ADD_NODE', payload: { x: e.offsetX, y: e.offsetY } });
     }
 &nbsp;
-    addEdge() {
-        this.store.dispatch({ type: 'ADD_EDGE', payload: { source: 'n6', target: 'n7' } });
-    }
 &nbsp;
     addKeyListeners() {
         let self = this;
@@ -1471,7 +1462,7 @@ expo<span class="cstat-no" title="statement not covered" >rt class GraphControll
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 10 2017 23:04:17 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 16:13:39 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

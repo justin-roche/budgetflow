@@ -1,3 +1,4 @@
+import { TimeSlider } from './../footer/timeSlider';
 import { ScenarioEditor } from './../editors/scenarioEditor';
 import { extend } from './utilities';
 
@@ -31,13 +32,25 @@ let uiActions = function (store) {
                 let state = store.getPresentState().ui;
                 let s = {
                     ...state,
-                    edgeEditor: { ...state.edgeEditor, ...{ show: !!id } },                    
+                    edgeEditor: { ...state.edgeEditor, ...{ show: !!id } },
                     graphContainer: { ...state.graphContainer, selectedEdgeId: id }
                 };
                 return store.dispatch({ type: 'UI_SELECT_EDGE', payload: s });
             },
             toggleEdgeEditor() {
-                return store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE'});
+                return store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE' });
+            },
+            updateSliderSettings() {
+                let s = store.getPresentState();
+                let ui = s.ui;
+                let sim = s.simulation;
+                let sliderSettings = { ...s.ui.timeSlider.sliderSettings };
+                sliderSettings.range = { ...sliderSettings.range, ...{ min: sim.beginRangeTime, max: sim.endRangeTime } }
+                sliderSettings.start = sim.beginRangeTime;
+                sliderSettings.step = sim.cycleTime;
+                ui = { ...ui, timeSlider: { ...ui.TimeSlider, sliderSettings: sliderSettings } };
+                return store.dispatch({ type: 'UI_UPDATE_SLIDER_SETTINGS', payload: ui });
+
             }
         }
     }
@@ -76,6 +89,9 @@ function uiReducer(state = null, action) {
                 return { ...obj, show: !obj.show };
             });
         }
+        case 'UI_UPDATE_SLIDER_SETTINGS':
+            return action.payload;
+
         default:
             return state;
     }

@@ -1,7 +1,7 @@
 import { ScenarioEditor } from './../editors/scenarioEditor';
 import { _ } from 'underscore';
 import {undoableGraphReducer} from './graphReducer';
-import {simulationReducer} from './simulationReducer';
+import {simulationReducer, undoableSimulationReducer} from './simulationReducer';
 
 import { uiReducer } from './uiReducer';
 import undoable, { distinctState } from 'redux-undo'
@@ -17,7 +17,6 @@ let defaultState = {
 
 let undoableUiReducer = undoable(uiReducer);
 
-let undoableSimulationReducer = undoable(simulationReducer);
 let undoableGraphsReducer = undoable(graphsReducer);
 let undoableCombinedReducer = undoable(combinedReducer)
 

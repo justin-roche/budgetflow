@@ -21,11 +21,12 @@ export class Footer {
   }
 
   forward() { 
-    this.sim.goForward();
+    this.store.actions.simulation.incrementTargetTime()
+    
   }
 
   backward() { 
-    this.sim.goBackward();
+    this.store.actions.simulation.decrementTargetTime()
   }
 
   

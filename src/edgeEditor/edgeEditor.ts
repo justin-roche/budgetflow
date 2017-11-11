@@ -10,7 +10,7 @@ export class EdgeEditor {
    conditions;
 
     constructor(private store: Store) {
-        this.store.select('ui.graphContainer.selectedEdgeId', {log: true, bind: [this, 'edgeId']})
+        this.store.select('ui.graphContainer.selectedEdgeId', {bind: [this, 'edgeId']})
         .subscribe(id => {
             if (id !== null) {
                 let s = this.store.getPresentState();
@@ -18,7 +18,7 @@ export class EdgeEditor {
                 this.conditions = s.graph.conditionsIds
                     .map(id => s.graph.conditions[id])
                     .filter(cond => cond.target === this.edgeData.id);
-                this.store.select(`graph.edgesData.${id}`, {log: true, bind: [this, 'edgeData']})
+                this.store.select(`graph.edgesData.${id}`, {bind: [this, 'edgeData']})
                 this.store.select('graph.conditions').subscribe(conds => {
                     
                 })

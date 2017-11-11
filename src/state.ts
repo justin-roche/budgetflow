@@ -59,10 +59,28 @@ let state = {
             selectedNode: null,
             selectedEdge: null,
         },
+        timeSlider: {
+            sliderSettings: {
+                start: [],
+    
+                range: {
+                    min: null, //simulation begin range time
+                    max: null 
+                },
+    
+                pips: {
+                    mode: 'positions',
+                    values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                    density: 4
+                },
+    
+                step: null,
+            }
+        }
     },
     simulation: <Simulation>{
         on: false,
-        cycleTime: 24 * 60 * 60 * 1000,
+        cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
         beginRangeTime: new Date().getTime(),
         endRangeTime: new Date('2019').getTime(),
         currentTime: new Date().getTime(),

@@ -37,9 +37,9 @@ export class NavBar {
     }
 
     test() {
-        // this.store.actions.graph.traverse();
-        //
-        //this.store.actions.graph.deleteEdge('e0')
+        for(let i = 0; i< 10; i++) {
+            this.store.actions.simulation.incrementTargetTime();
+        }
         
     }
 

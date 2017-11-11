@@ -17,7 +17,7 @@ export class ModalWrapper {
     }
 
     attached() {
-        this.store.select(this.selector, {bind: [this,'settings'], log: true}).subscribe(_ => {
+        this.store.select(this.selector, {bind: [this,'settings']}).subscribe(_ => {
             //this.update();
         });
     }
