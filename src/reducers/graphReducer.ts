@@ -1,7 +1,8 @@
 import { traverseGraph } from './graphFunctions/traverse';
 import {
     addNewNode, addEdge, updateEdgeData, deleteNode,
-    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation
+    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation,
+    updateNodeData
 } from './graphFunctions/graphManipulationFunctions';
 import { displayUpdate } from './graphFunctions/displayUpdate'
 import { applyEdgesConditions, updateConditionExpression } from './graphFunctions/conditionsApply';
@@ -44,6 +45,9 @@ let graphActions = function (store) {
             },
             updateEdgeData: function (ed: EdgeData) {
                 store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: updateEdgeData(store.getPresentState().graph, ed) });
+            },
+            updateNodeData: function (nd: NodeData) {
+                store.dispatch({ type: 'GRAPH_NODE_DATA_UPDATE', payload: updateNodeData(store.getPresentState().graph, nd) });
             },
             toggleEdgeActivation: function (id: String) {
                 store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id) });
@@ -98,6 +102,9 @@ function graphReducer(state = null, action) {
         }
         case 'EDGE_LINK_FUNCTION_ADD': {
             return { ...state, ...addLinkFunction(state, action.payload.edge, action.payload.function) }
+        }
+        case 'GRAPH_NODE_DATA_UPDATE': {
+            return action.payload;
         }
 
         default:

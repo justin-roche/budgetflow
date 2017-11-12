@@ -1,13 +1,13 @@
 <template style="display: flex; flex-direction: row; width: 100%">
         <require from="./timeSlider"></require>
-
+        <div style="flex: 1; align-self:flex-end">
+                <div style="margin-left: 10px; margin-right: 50px">
+                    <i click.trigger="toggleConditionalTable()" class="${conditionalTable.show? 'glyphicon glyphicon-chevron-down' : 'glyphicon glyphicon-chevron-up'}"></i>
+                </div>
+            </div>
         <time-slider></time-slider>
         
-        <div style="flex: 1; align-self:flex-end">
-            <div style="margin-left: 100px">
-                <i click.trigger="toggleConditionalTable()" class="${conditionalTable.show? 'glyphicon glyphicon-chevron-down' : 'glyphicon glyphicon-chevron-up'}"></i>
-            </div>
-        </div>
+       
 
         
 

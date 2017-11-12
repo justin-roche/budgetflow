@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.43% </span>
+        <span class="strong">67.57% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>25/35</span>
+        <span class='fraction'>25/37</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">64.71% </span>
+        <span class="strong">61.11% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>11/17</span>
+        <span class='fraction'>11/18</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">62.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/15</span>
+        <span class='fraction'>10/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">69.7% </span>
+        <span class="strong">65.71% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>23/33</span>
+        <span class='fraction'>23/35</span>
       </div>
     </div>
   </div>
@@ -161,8 +161,16 @@
 116
 117
 118
-119</td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+119
+120
+121
+122
+123
+124
+125
+126</td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -204,6 +212,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -263,6 +274,9 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">176x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -282,7 +296,8 @@
 <span class="cline-any cline-yes">6x</span></td><td class="text"><pre class="prettyprint lang-js">import { traverseGraph } from './graphFunctions/traverse';
 import {
     addNewNode, addEdge, updateEdgeData, deleteNode,
-    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation
+    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation,
+    updateNodeData
 } from './graphFunctions/graphManipulationFunctions';
 import { displayUpdate } from './graphFunctions/displayUpdate'
 import { applyEdgesConditions, updateConditionExpression } from './graphFunctions/conditionsApply';
@@ -325,6 +340,9 @@ let graphActions = function (store) {
             },
             updateEdgeData: <span class="fstat-no" title="function not covered" >function (</span>ed: EdgeData) {
 <span class="cstat-no" title="statement not covered" >                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: updateEdgeData(store.getPresentState().graph, e</span>d) });
+            },
+            updateNodeData: <span class="fstat-no" title="function not covered" >function (</span>nd: NodeData) {
+<span class="cstat-no" title="statement not covered" >                store.dispatch({ type: 'GRAPH_NODE_DATA_UPDATE', payload: updateNodeData(store.getPresentState().graph, n</span>d) });
             },
             toggleEdgeActivation: <span class="fstat-no" title="function not covered" >function (</span>id: String) {
 <span class="cstat-no" title="statement not covered" >                store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, i</span>d) });
@@ -380,6 +398,9 @@ function graphReducer(<span class="missing-if-branch" title="if path not taken" 
 <span class="branch-10 cbranch-no" title="branch not covered" >        case 'EDGE_LINK_FUNCTION_ADD': {</span>
 <span class="cstat-no" title="statement not covered" >            return { ...state, ...addLinkFunction(state, action.payload.edge, action.payload.f</span>unction) }
         }
+<span class="branch-11 cbranch-no" title="branch not covered" >        case 'GRAPH_NODE_DATA_UPDATE': {</span>
+<span class="cstat-no" title="statement not covered" >            return action.p</span>ayload;
+        }
 &nbsp;
         default:
             return state;
@@ -403,7 +424,7 @@ export { graphReducer, graphActions, undoableGraphReducer }</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 16:13:39 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 20:00:37 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

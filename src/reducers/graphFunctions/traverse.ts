@@ -131,7 +131,7 @@ declare interface LinkPair {
 function linkTarget(state:AppState, source: NodeData, target: NodeData, edge): LinkPair {
 
     return edge.linkFunctions.reduce((acc, functionSettings) => {
-        let fn = linkFunctions[functionSettings.name];
+        let fn = linkFunctions[functionSettings.name].fn;
 
         let linkPair = fn(acc.linkedSource, target, ...functionSettings.arguments);
         return {

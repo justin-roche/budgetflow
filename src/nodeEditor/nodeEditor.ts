@@ -7,13 +7,13 @@ import { Store } from '../services/reduxStore';
 export class NodeEditor {
     collapsed = false;
     nodeId;
-    testId ='x'
-    
+    testId = 'x'
+    form: any = {}; 
+    nodeData;
+
     constructor(private store: Store) {
-        this.store.select('ui.graphContainer.selectedNodeId', {lot: true, bind: [this, 'nodeId']}).subscribe(id => {
-            if (id !== null) {
-                // this.update(id);
-            }
+        this.store.select('ui.graphContainer.selectedNodeId', { state: true, bind: [this, 'nodeId'] }).subscribe(id => {
+            if(id !== null) this.update(id);
         })
     }
 
@@ -34,12 +34,14 @@ export class NodeEditor {
     }
 
     buildNodeModel(id) {
-        this.testId = id;
-        alert(this.testId)
-        // let graph = this.store.getPresentState().graph;
+        let graph = this.store.getPresentState().graph;
 
-        // let node = graph.nodes[id];
-        // let nodeData = graph.nodesData[id];
+        let node = graph.nodes[id];
+        this.nodeData = graph.nodesData[id];
+        this.form.name = this.nodeData.name;
+
+
+
         // let outEdges = node.outEdges.map(en => graph.edges[en]);
         // let outEdgesData = outEdges.map(ed => graph.edgesData[ed.id]);
         // let inEdges = node.inEdges.map(en => graph.edges[en]);
@@ -48,44 +50,30 @@ export class NodeEditor {
         // let outNodesData = outNodes.map(e => graph.nodesData[e.id]);
         // let inNodes = inEdges.map(e => graph.nodes[e.source]);
         // let inNodesData = inNodes.map(e => graph.nodesData[e.id]);
-
-        // this.nodeModel = JSON.parse(JSON.stringify({
-        //     node: node,
-        //     nodeData: nodeData,
-        //     outEdges: outEdges,
-        //     outEdgesData: outEdgesData,
-        //     inEdges: inEdges,
-        //     inEdgesData: inEdgesData,
-        //     outNodes: outNodes,
-        //     outNodesData: outNodesData,
-        //     inNodes: inNodes,
-        //     inNodesData: inNodesData,
-        // }));
-        // this.nodeModel = JSON.parse(JSON.stringify(this.nodeModel));
-        // this.store.dispatch({type: 'NODE_EDITOR_MODEL_SET', payload: this.nodeModel})
+        
     }
 
-    matchEdgeData(nodeId) {
-        let edge = this.nodeModel.outEdges.filter(ed => ed.target === nodeId)[0];
-        let edgeData = this.nodeModel.outEdgesData.filter(ed => ed.id === edge.id)[0];
-        return edgeData
+    submit() {
+        console.log(this.form);
+        this.store.actions.graph.updateNodeData({...this.nodeData, ...this.form});
+        this.store.actions.graph.applyDisplayFunctions();
     }
 
-    matchInEdgeData(nodeId) {
+    // matchEdgeData(nodeId) {
+    //     let edge = this.nodeModel.outEdges.filter(ed => ed.target === nodeId)[0];
+    //     let edgeData = this.nodeModel.outEdgesData.filter(ed => ed.id === edge.id)[0];
+    //     return edgeData
+    // }
+
+    //matchInEdgeData(nodeId) {
         // let edge = this.inEdges.filter(ed => ed.source === nodeId)[0];
         // let edgeData = this.inEdgesData.filter(ed => ed.id === edge.id)[0];
         // console.log('in edges', edgeData)
         // return edgeData
-    }
+    //}
 
     save() {
 
     }
 
-}
-
-export class KeysValueConverter {
-    toView(obj) {
-        return Reflect.ownKeys(obj);
-    }
 }

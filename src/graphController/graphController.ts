@@ -181,8 +181,12 @@ export class GraphController {
                 }
             })
 
-        newGroups.append("text")
+        newGroups.append("text").attr('class', 'icon')
+        .style('font-family', 'FontAwesome')
+        .style('font-size', function(d) { return 1+'em'} )
 
+        newGroups.append("text").attr('class', 'label')
+            
     }
 
     renderNodes() {
@@ -191,12 +195,17 @@ export class GraphController {
         let data = this.graph; 
         
         this.svg.
-            selectAll("text")
-            .attr('class', 'label')
+            selectAll(".label")
             .text(function (d) {
                 let dd = data.nodesData[d.id].displayData;
                 return dd.label;
             })
+
+        this.svg
+            .selectAll(".icon")
+            //.text(function(d) { return '\uf118' }); //smiley
+            .text(function(d) { return '\uf155' }); //dollar
+            
 
         this.svg
             .selectAll(".node")
@@ -287,6 +296,7 @@ export class GraphController {
             let nodes = svg.selectAll('.node');
             let links = svg.selectAll('.link')
             let labels = svg.selectAll('.label')
+            let icons = svg.selectAll('.icon')
 
             links
                 .attr("x1", function (d) {
@@ -320,6 +330,9 @@ export class GraphController {
 
             labels.attr("transform", function (d) {
                 return "translate(" + (d.x + 20) + "," + (d.y + 20) + ")";
+            });
+            icons.attr("transform", function (d) {
+                return "translate(" + (d.x) + "," + (d.y) + ")";
             });
         }
     }

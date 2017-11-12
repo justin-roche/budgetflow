@@ -4,7 +4,7 @@ let twoNodes = {
         id: 'g2',
         name: 'twoNodes',
         displayFunctions: {
-            nodes: [{ name: 'labelById', arguments: [] }],
+            nodes: [{ name: 'labelByName', arguments: [] }],
         }
     },
     nodesIds: ['n0','n1'],
@@ -23,6 +23,7 @@ let twoNodes = {
     nodesData: <NodesData>{
         'n0': {
             type: 'source',
+            name: null,
             id: 'n0',
             active: true,
             value: 10,
@@ -33,6 +34,7 @@ let twoNodes = {
         'n1': {
             type: 'sink',
             id: 'n1',
+            name: null,
             active: true,
             value: 0,
             stepFunctions: [],

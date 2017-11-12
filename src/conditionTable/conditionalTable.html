@@ -1,0 +1,26 @@
+<template class="footer-top">
+    <require from="../common/typeAhead"></require>
+    <div>
+        <type-ahead></type-ahead>
+    </div>
+    <div style="display: flex; flex-direction: row">
+        <div flex="1">
+            <table class="table table-striped">
+
+                <tr repeat.for="condition of conditions">
+                    <td>
+                        ${condition.target}
+                    </td>
+                    <td>
+                        ${condition.expression}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div flex="9">
+            xxxxxxx
+        </div>
+    </div>
+
+
+</template>

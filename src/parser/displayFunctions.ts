@@ -4,6 +4,11 @@ let displayFunctions = {
         let newNodeData = {...nodeData }
         return {...nodeData.displayData, label: nodeData.id + ':' + nodeData.value};
     },
+
+    labelByName: function(s: AppState, nodeData) : NodeDisplayData {
+        let newNodeData = {...nodeData }
+        return {...nodeData.displayData, label: nodeData.name + ':' + nodeData.value};
+    },
     
     inactivateByLinks: function(s: AppState, nodeData) : NodeDisplayData {
         let nodeId= nodeData.id;

@@ -12,7 +12,6 @@ function deleteNode(g, nid) {
 
     let updatedNodesArray = removeEdgeAssociations(retainedNodes, exludedEdges);
 
-   
     let nodes = ArrayToObject(updatedNodesArray);
     let nodesData = ArrayToObject(retainedNodesData);
     
@@ -75,6 +74,7 @@ function createBaseNodeData() : NodeData {
     return {
         active: true,
         id: null,
+        name: null,
         type: 'sink',
         displayFunctions: [],
         stepFunctions: [],
@@ -89,6 +89,12 @@ function nodePropertySet(g, nodeData: NodeData): Graph {
     let nodesData = { ...g.nodesData, [nd.id]: nd };
     console.log('new nodes data', nodesData);
     return { ...g, nodesData: nodesData };
+}
+
+function updateNodeData(g: Graph, nodeData) {
+    return extend(g).select(`nodesData.${nodeData.id}`).data(obj => {
+        return {...obj, ...nodeData};
+    });
 }
 
 /* EDGE */
@@ -160,4 +166,4 @@ function toggleEdgeActivation(g, eid) {
     });
 }
 
-export { addNewNode, addEdge, updateEdgeData, toggleEdgeActivation, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }
+export { addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }

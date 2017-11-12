@@ -58,6 +58,7 @@ declare interface NodeData {
     type: string,
     active?: Boolean,
     value: Number,
+    name: string,
     stepFunctions: Array<FunctionItem>,
     displayFunctions: Array<FunctionItem>,
     displayData: NodeDisplayData,

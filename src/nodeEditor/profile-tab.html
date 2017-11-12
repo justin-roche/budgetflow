@@ -1,9 +1,12 @@
 <template>
     
         <label>name</label>
-        <input class="form-control" type="text" value.bind="nodeModel.nodeData.name || 'untitled'" placeholder="name">
+        <input class="form-control" type="text" blur.trigger="submit()" value.bind="form.name" placeholder="name">
         <label>type</label>
-        <input class="form-control" type="text" value.bind="nodeModel.nodeData.type" placeholder="type">
-        <label>step function</label>
+        <input class="form-control" type="text" blur.trigger="submit()" value.bind="form.type" placeholder="type">
+        <label>values</label>
+        <label>step functions</label>
+        <type-ahead></type-ahead>
+        <label>icon</label>
         <type-ahead></type-ahead>
 </template>
