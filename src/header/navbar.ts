@@ -37,13 +37,21 @@ export class NavBar {
     }
 
     test() {
-      let sim = this.store.getPresentState().simulation
+      let sim = this.store.getPresentState().graph.simulation
       let d = sim.cycleTime * 2;
       let ct = sim.currentTime; 
-      this.store.actions.simulation.setTargetTime(ct+d);
-      setTimeout(function(){
-        this.store.actions.simulation.setTargetTime(ct+sim.cycleTime);
-      }.bind(this),1000)
+      this.store.actions.graph.setTargetTime(ct+d);
+      this.store.actions.graph.simulate();
+    //   setTimeout(function(){
+    //     this.store.actions.simulation.setTargetTime(ct+sim.cycleTime);
+    //   }.bind(this),1000)
     }
+
+    // test() {
+    //     this.store.actions.graph.incrementTargetTime();
+    //     store.actions.graph.setTargetTime(s1.simulation.currentTime+(s1.simulation.cycleTime*3));
+        
+    //     this.store.actions.graph.simulate();
+    // }
 
 }

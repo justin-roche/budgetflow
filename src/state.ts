@@ -61,13 +61,11 @@ let state = {
         },
         timeSlider: {
             sliderSettings: {
-                start: [],
-    
                 range: {
-                    min: null, //simulation begin range time
-                    max: null 
+                    min:  1510515607649,
+                    max:  new Date('2019').getTime() 
                 },
-    
+                start: [1510515607649],
                 pips: {
                     mode: 'positions',
                     values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -78,15 +76,15 @@ let state = {
             }
         }
     },
-    simulation: <Simulation>{
-        on: false,
-        cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
-        beginRangeTime: new Date().getTime(),
-        endRangeTime: new Date('2019').getTime(),
-        currentTime: new Date().getTime(),
-        targetTime: null,
-        remainingCycles: 0,
-    },
+    // simulation: <Simulation>{
+    //     on: false,
+    //     cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
+    //     beginRangeTime: new Date().getTime(),
+    //     endRangeTime: new Date('2019').getTime(),
+    //     currentTime: new Date().getTime(),
+    //     targetTime: null,
+    //     remainingCycles: 0,
+    // },
     graph: null,
     graphs: <Array<Graph>>[
         conditionalGraph, singleNode, twoNodes, tree

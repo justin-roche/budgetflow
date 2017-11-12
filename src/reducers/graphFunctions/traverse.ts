@@ -8,15 +8,15 @@ import { _ } from 'underscore';
 
 /* TRAVERSAL */
 
-function traverseGraph(s: AppState) {
+function traverseGraph(s: Graph) {
     let state = { ...s}
 
-    let sources = getSources(state.graph.nodesData);
+    let sources = getSources(state.nodesData);
     let {linkedNodes, linkedEdges} = breadthTraverse(state, sources);
 
-    let nodesData = Object.assign({},state.graph.nodesData, linkedNodes);
-    let edgesData = Object.assign({},state.graph.edgesData, linkedEdges);
-    let graph = Object.assign({}, state.graph, {nodesData: nodesData, edgesData: edgesData});
+    let nodesData = Object.assign({},state.nodesData, linkedNodes);
+    let edgesData = Object.assign({},state.edgesData, linkedEdges);
+    let graph = Object.assign({}, state, {nodesData: nodesData, edgesData: edgesData});
     // let s2= Object.assign({}, state, {graph: graph});
 
     /* update the display */
@@ -25,7 +25,7 @@ function traverseGraph(s: AppState) {
     return graph;
 }
 
-function breadthTraverse(state, current, _linkedSources = []) {
+function breadthTraverse(state: Graph, current, _linkedSources = []) {
 
     /* apply step function to nodes */
 
@@ -36,7 +36,7 @@ function breadthTraverse(state, current, _linkedSources = []) {
     })
 
     let nestedTargets: Array<Array<NodeData>> = _.map(current,(nodeData, i) => { 
-        return getOutNodes(nodeData, state.graph);
+        return getOutNodes(nodeData, state);
     });
 
     /* apply graph step function */
@@ -65,7 +65,7 @@ declare interface LinkedSources {
     linkedEdges: EdgesData
 }
 
-function linkSources(state:AppState, steppedSources: Array<NodeData>, nestedTargets, sourcesAlreadyLinked): LinkedSources {
+function linkSources(state:Graph, steppedSources: Array<NodeData>, nestedTargets, sourcesAlreadyLinked): LinkedSources {
 
     return steppedSources.reduce(function (acc, sourceData, i) {
         let outNodes: Array<NodeData> = nestedTargets[i]; 
@@ -100,7 +100,7 @@ declare interface LinkedSource {
 
 /* link from a single source to it's multiple targets */
 
-function linkSource(state:AppState, _source: NodeData, targets: Array<NodeData>) {
+function linkSource(state:Graph, _source: NodeData, targets: Array<NodeData>) {
 
     return targets.reduce((acc: any, target, i) => {
 
@@ -128,7 +128,7 @@ declare interface LinkPair {
     linkedSource: NodeData,
     linkedTarget: NodeData
 }
-function linkTarget(state:AppState, source: NodeData, target: NodeData, edge): LinkPair {
+function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): LinkPair {
 
     return edge.linkFunctions.reduce((acc, functionSettings) => {
         let fn = linkFunctions[functionSettings.name].fn;
@@ -142,7 +142,7 @@ function linkTarget(state:AppState, source: NodeData, target: NodeData, edge): L
     }, { linkedSource: source, linkedTarget: target });
 }
 
-function applyStepFunction(state, nodeData) {
+function applyStepFunction(state: Graph, nodeData) {
     let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
         let fn = stepFunctions[functionSettings.name].fn;
         let newSlice = fn(state, nodeData, ...functionSettings.arguments);
@@ -161,7 +161,7 @@ function getSources(g) {
     return _.filter(g, n => n.type === 'source');
 }
 
-function getOutNodes(nodeData, g) {
+function getOutNodes(nodeData, g: Graph) {
     return g.nodes[nodeData.id].outEdges
         .map(edgeName => {
             return g.edges[edgeName]
@@ -174,10 +174,10 @@ function getOutNodes(nodeData, g) {
         });
 }
 
-function getEdge(state, source, target) {
-    return state.graph.nodes[source.id].outEdges.map(edge => state.graph.edges[edge])
+function getEdge(state: Graph, source, target) {
+    return state.nodes[source.id].outEdges.map(edge => state.edges[edge])
         .filter(g => g.target === target.id)
-        .map(edgeDescription => state.graph.edgesData[edgeDescription.id])
+        .map(edgeDescription => state.edgesData[edgeDescription.id])
         .pop();
 }
 

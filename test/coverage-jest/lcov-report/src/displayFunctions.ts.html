@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">23.08% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>3/13</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/6</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">27.27% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/11</span>
+        <span class='fraction'>11/11</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -94,22 +94,22 @@
 49</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">54x</span>
+<span class="cline-any cline-yes">54x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -141,23 +141,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span></td><td class="text"><pre class="prettyprint lang-js">let displayFunctions = {
 &nbsp;
-    labelById: function(s: AppState, nodeData) : NodeDisplayData {
+    labelById: function(s: Graph, nodeData) : NodeDisplayData {
         let newNodeData = {...nodeData }
         return {...nodeData.displayData, label: nodeData.id + ':' + nodeData.value};
     },
 &nbsp;
-    labelByName: <span class="fstat-no" title="function not covered" >function(</span>s: AppState, nodeData) : NodeDisplayData {
-        let <span class="cstat-no" title="statement not covered" >newNodeData = {...</span>nodeData }
-<span class="cstat-no" title="statement not covered" >        return {...nodeData.displayData, label: nodeData.name + ':' + nodeData.v</span>alue};
+    labelByName: function(s: Graph, nodeData) : NodeDisplayData {
+        let newNodeData = {...nodeData }
+        return {...nodeData.displayData, label: nodeData.name + ':' + nodeData.value};
     },
     
-    inactivateByLinks: <span class="fstat-no" title="function not covered" >function(</span>s: AppState, nodeData) : NodeDisplayData {
-        let <span class="cstat-no" title="statement not covered" >nodeId= </span>nodeData.id;
-        let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >outEdges = </span>s.<span class="cstat-no" title="statement not covered" >graph.nodes[nodeId].outEdges.map(e</span></span>dgeId =&gt; s.graph.edgesData[edgeId]);
-        let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >inEdges = </span>s.<span class="cstat-no" title="statement not covered" >graph.nodes[nodeId].inEdges.map(e</span></span>dgeId =&gt; s.graph.edgesData[edgeId]);
-        let <span class="cstat-no" title="statement not covered" >edges = </span>outEdges.concat(inEdges);
-        let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >active = </span>edges.s</span>ome(edge =&gt; edge.active === true);
-<span class="cstat-no" title="statement not covered" >        return {...nodeData.displayData, active: a</span>ctive};
+    inactivateByLinks: function(s: Graph, nodeData) : NodeDisplayData {
+        let nodeId= nodeData.id;
+        let outEdges = s.nodes[nodeId].outEdges.map(edgeId =&gt; s.edgesData[edgeId]);
+        let inEdges = s.nodes[nodeId].inEdges.map(edgeId =&gt; s.edgesData[edgeId]);
+        let edges = outEdges.concat(inEdges);
+        let active = edges.some(edge =&gt; edge.active === true);
+        return {...nodeData.displayData, active: active};
     },
 &nbsp;
     // idByIndex: function(node,i){
@@ -193,7 +193,7 @@ export { displayFunctions };</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 14:26:09 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

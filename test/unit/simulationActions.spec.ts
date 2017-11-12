@@ -46,7 +46,7 @@ describe('graph simulation actions', () => {
             expect(s2.remainingCycles).toBe(1);
         })
 
-        it('reset current time', () => {
+        it('reset time', () => {
             store.actions.graph.incrementTargetTime()
             let s2 = store.actions.graph.resetTime().getPresentState().graph.simulation;
             expect(s2.currentTime - s1.currentTime === s1.cycleTime).toBe(true);

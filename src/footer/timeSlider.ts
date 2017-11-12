@@ -1,4 +1,3 @@
-import { SimulationService } from './../services/simulationService';
 import { Store } from './../services/reduxStore';
 import *  as Rx from 'rxjs';
 import { inject } from 'aurelia-framework';
@@ -7,19 +6,19 @@ import wNumb from 'wnumb';
 import $ from 'jquery';
 import * as moment from 'moment';
 
-@inject(Store, SimulationService)
+@inject(Store)
 export class TimeSlider {
     _simulation: Simulation;
     ref;
     displayedSelectedDate;
     sliderSettings;
 
-    constructor(private store: Store, private sim: SimulationService) {
-        this.store.actions.ui.updateSliderSettings();
+    constructor(private store: Store) {
+        // this.store.actions.ui.updateSliderSettings();
         
-        this.store.select('simulation', {bind: [this, '_simulation'] }).subscribe(_ => {
-            this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');            
-        });
+        // this.store.select('graph.simulation', {bind: [this, '_simulation'] }).subscribe(_ => {
+        //     this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');            
+        // });
         
     }
 
@@ -28,13 +27,13 @@ export class TimeSlider {
     }
 
     attached() {
-        this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {bind: [this, 'sliderSettings']}).subscribe(settings => {
-            this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
-        });
-        this.store.select('simulation.currentTime', {log: true}).subscribe(t => {
-            console.log('new time', this.formatFromMsString(t));
-            this.ref.noUiSlider.set(t);
-        })        
+        //this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
+        // this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {bind: [this, 'sliderSettings']}).subscribe(settings => {
+        //     this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
+        // });
+        // this.store.select('graph.simulation.currentTime').subscribe(t => {
+        //     this.ref.noUiSlider.set(t);
+        // })        
     }
 
     createSlider(settings) {

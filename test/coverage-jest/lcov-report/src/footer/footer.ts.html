@@ -22,12 +22,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/33</span>
+        <span class='fraction'>0/31</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/41</span>
+        <span class='fraction'>0/36</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/27</span>
+        <span class='fraction'>0/25</span>
       </div>
     </div>
   </div>
@@ -75,8 +75,7 @@
 30
 31
 32
-33
-34</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+33</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -90,9 +89,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -109,46 +106,46 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Simu<span class="cstat-no" title="statement not covered" >lationService } from './../se<span class="cstat-no" title="statement not covered" >r</span>vices/simulat</span>ionService';
-import { inject, <span class="cstat-no" title="statement not covered" >bindable } from 'aurelia-fr<span class="fstat-no" title="function not covered" >am</span>ework';</span>
-import $ fro<span class="cstat-no" title="statement not covered" >m 'jquery'<span class="cstat-no" title="statement not covered" ></span></span>
-impo<span class="cstat-no" title="statement not covered" >rt { Store } from '../services/reduxStore';<span class="cstat-no" title="statement not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
-@inj<span class="cstat-no" title="statement not covered" >ect(Store, SimulationService)</span>
-export class Footer {
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  co<span class="cstat-no" title="statement not covered" >nditionalTable;<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
+import $ from 'jq<span class="cstat-no" title="statement not covered" >uery'<span class="fstat-no" title="function not covered" ></span></span>
+import { Sto<span class="cstat-no" title="statement not covered" >re } from '../ser</span>vice<span class="cstat-no" title="statement not covered" >s/reduxStore';</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
+@inj<span class="cstat-no" title="statement not covered" >ect(Store)<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+expo<span class="cstat-no" title="statement not covered" >rt class Footer {</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  constructor(private store: Store, private sim: SimulationServ</span>ice) {
-    this.store.select('ui.<span class="cstat-no" title="statement not covered" >conditionalTable').subscribe(d =&gt; {</span>
+  conditionalTabl<span class="cstat-no" title="statement not covered" >e;<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
+  constructor(private store: Store) {
+<span class="cstat-no" title="statement not covered" >    this.store.select('ui.conditionalTable').subscribe(d =&gt; {</span>
       if (d !== null) {<span class="cstat-no" title="statement not covered" ></span>
         this.condit<span class="cstat-no" title="statement not covered" >ionalTable = d;</span>
       }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
     })<span class="fstat-no" title="function not covered" ></span>
   }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  attach<span class="cstat-no" title="statement not covered" >ed() {</span>
-    <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+  attach<span class="cstat-no" title="statement not covered" >ed() {<span class="fstat-no" title="function not covered" ></span></span>
+    <span class="cstat-no" title="statement not covered" ></span>
   }<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
   forward() { 
     this.store.actions.simulation.incrementTargetTime()
-    
-  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-&nbsp;
-  ba<span class="cstat-no" title="statement not covered" >ckward() { <span class="fstat-no" title="function not covered" ></span></span>
-    this<span class="cstat-no" title="statement not covered" >.store.actions.simulation.decrementTargetTime()</span>
+    <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
   }
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  <span class="cstat-no" title="statement not covered" ></span>
-&nbsp;
-}<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
+  backwa<span class="cstat-no" title="statement not covered" >rd() { </span>
+    this.store.actions.simulation.decrementTargetTime()
+  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  
+<span class="cstat-no" title="statement not covered" ></span>
+}</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 14:26:09 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

@@ -11,7 +11,6 @@ let defaultState = {
     ui: null,
     graphs: null,
     graph: null,
-    simulation: null,
 }
 
 
@@ -29,7 +28,7 @@ function rootReducer(s: AppState = defaultState, action) {
         ui: undoableUiReducer(s.ui, action),
         graphs: undoableGraphsReducer(s.graphs, action),
         graph: undoableGraphReducer(s.graph, action),
-        simulation: undoableSimulationReducer(s.simulation, action)
+       // simulation: undoableSimulationReducer(s.simulation, action)
     }}
 
 }

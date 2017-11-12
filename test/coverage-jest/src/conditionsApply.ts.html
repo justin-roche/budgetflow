@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">90.91% </span>
+        <span class="strong">90.63% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>30/33</span>
+        <span class='fraction'>29/32</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -123,18 +123,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">42x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,37 +134,45 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">40x</span>
+<span class="cline-any cline-yes">30x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,11 +191,11 @@ import { extend } from './../utilities';
 &nbsp;
 }
 &nbsp;
-function applyEdgesConditions(state: AppState) {
+function applyEdgesConditions(state: Graph) {
     state = Object.freeze(state)
-    let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
+    let acc = { conditions: { ...state.conditions }, edgesData: { ...state.edgesData } };
 &nbsp;
-    let { edgesData, conditions } = ArrayById(state.graph.edgesData).reduce((acc, ed) =&gt; {
+    let { edgesData, conditions } = ArrayById(state.edgesData).reduce((acc, ed) =&gt; {
         let { conditions, edgeData } = applyEdgeConditions(state, {...ed});
 &nbsp;
         let c = { ...acc.conditions, ...conditions };
@@ -203,7 +203,7 @@ function applyEdgesConditions(state: AppState) {
         return { ...acc, conditions: c, edgesData: e };
     }, acc);
 &nbsp;
-    return { ...state.graph, conditions: conditions, edgesData: edgesData };
+    return { ...state, conditions: conditions, edgesData: edgesData };
 }
 &nbsp;
 declare interface update_edge_conditions {
@@ -211,17 +211,17 @@ declare interface update_edge_conditions {
     conditions: Array&lt;Condition&gt;
 }
 &nbsp;
-function applyEdgeConditions(state: AppState, edgeData) {
+function applyEdgeConditions(state: Graph, edgeData) {
     let conditionsIds = selectEdgeConditions(state, edgeData);
     if (conditionsIds.length === 0) {
-        return { edgeData: edgeData, conditions: conditionsIds.map(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >id =&gt; </span>state.graph.conditions[id]) };</span>
+        return { edgeData: edgeData, conditions: conditionsIds.map(<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >id =&gt; </span>state.conditions[id]) };</span>
     }
     return applyConditions(state, conditionsIds, edgeData);
 }
 &nbsp;
-function applyConditions(state, conditionIds, edgeData) {
+function applyConditions(state: Graph, conditionIds, edgeData) {
     let updatedConds = conditionIds.map(condId =&gt; {
-        let cond = state.graph.conditions[condId];
+        let cond = state.conditions[condId];
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
     })
 &nbsp;
@@ -239,8 +239,8 @@ function applyConditions(state, conditionIds, edgeData) {
     return { edgeData: edgeData, conditions: updatedConds };
 }
 &nbsp;
-function selectEdgeConditions(state, edgeData) {
-    let conditionsIds = state.graph.conditionsIds.filter(condId =&gt; state.graph.conditions[condId].target === edgeData.id);
+function selectEdgeConditions(state: Graph, edgeData) {
+    let conditionsIds = state.conditionsIds.filter(condId =&gt; state.conditions[condId].target === edgeData.id);
     return conditionsIds;
 }
 &nbsp;
@@ -256,7 +256,7 @@ export { applyEdgesConditions, updateConditionExpression };</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 14:26:09 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -8,11 +8,11 @@ function updateAllConditions(state, conditions) {
 
 }
 
-function applyEdgesConditions(state: AppState) {
+function applyEdgesConditions(state: Graph) {
     state = Object.freeze(state)
-    let acc = { conditions: { ...state.graph.conditions }, edgesData: { ...state.graph.edgesData } };
+    let acc = { conditions: { ...state.conditions }, edgesData: { ...state.edgesData } };
 
-    let { edgesData, conditions } = ArrayById(state.graph.edgesData).reduce((acc, ed) => {
+    let { edgesData, conditions } = ArrayById(state.edgesData).reduce((acc, ed) => {
         let { conditions, edgeData } = applyEdgeConditions(state, {...ed});
 
         let c = { ...acc.conditions, ...conditions };
@@ -20,7 +20,7 @@ function applyEdgesConditions(state: AppState) {
         return { ...acc, conditions: c, edgesData: e };
     }, acc);
 
-    return { ...state.graph, conditions: conditions, edgesData: edgesData };
+    return { ...state, conditions: conditions, edgesData: edgesData };
 }
 
 declare interface update_edge_conditions {
@@ -28,17 +28,17 @@ declare interface update_edge_conditions {
     conditions: Array<Condition>
 }
 
-function applyEdgeConditions(state: AppState, edgeData) {
+function applyEdgeConditions(state: Graph, edgeData) {
     let conditionsIds = selectEdgeConditions(state, edgeData);
     if (conditionsIds.length === 0) {
-        return { edgeData: edgeData, conditions: conditionsIds.map(id => state.graph.conditions[id]) };
+        return { edgeData: edgeData, conditions: conditionsIds.map(id => state.conditions[id]) };
     }
     return applyConditions(state, conditionsIds, edgeData);
 }
 
-function applyConditions(state, conditionIds, edgeData) {
+function applyConditions(state: Graph, conditionIds, edgeData) {
     let updatedConds = conditionIds.map(condId => {
-        let cond = state.graph.conditions[condId];
+        let cond = state.conditions[condId];
         return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
     })
 
@@ -56,8 +56,8 @@ function applyConditions(state, conditionIds, edgeData) {
     return { edgeData: edgeData, conditions: updatedConds };
 }
 
-function selectEdgeConditions(state, edgeData) {
-    let conditionsIds = state.graph.conditionsIds.filter(condId => state.graph.conditions[condId].target === edgeData.id);
+function selectEdgeConditions(state: Graph, edgeData) {
+    let conditionsIds = state.conditionsIds.filter(condId => state.conditions[condId].target === edgeData.id);
     return conditionsIds;
 }
 

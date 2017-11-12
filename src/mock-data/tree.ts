@@ -1,4 +1,4 @@
-let tree = {
+let tree: Graph = {
 
     id: 'g7',
     data: <GraphData> {
@@ -6,6 +6,7 @@ let tree = {
         name: 'tree',
         displayFunctions: { nodes: [{ name: 'labelById', arguments: []}] }
     },
+    nodesIds: ['n0', 'n1', 'n2', 'n3','n4','n5','n6'],
     nodes: <Nodes> {
         'n0': {
             id: 'n0',
@@ -130,6 +131,7 @@ let tree = {
             displayData: {},
         },
     },
+    edgesIds: ['e0', 'e00', 'e1', 'e2','e3','e4'],
     edges: <Edges> {
         'e0': {
             id: 'e0',
@@ -226,7 +228,12 @@ let tree = {
         currentTime: new Date().getTime(),
         targetTime: null,
         remainingCycles: 0,
+        forward: null,
     },
+    conditions: {
+
+    },
+    conditionsIds: [],
 }
 
 export { tree };

@@ -1,4 +1,7 @@
 import { formatFromMsString, extend } from '../utilities'
+import { traverseGraph } from './traverse';
+import { applyEdgesConditions, updateConditionExpression } from './conditionsApply';
+import { displayUpdate } from './displayUpdate'
 
 function incrementTargetTime(state) {
 
@@ -57,24 +60,25 @@ function resetTime(state) {
 
 }
 
-function simulate(store, state) {
+function simulate(state: Graph) {
     if (state.simulation.forward === true) {
-        store.dispatch({ type: 'GRAPH_SIMULATE', payload: simulateForward(store, state) });
+        return simulateForward(state);
     } else {
-        simulateBackward(store, state);
+        //simulateBackward(store, state);
     }
 }
 
-function simulateForward(store, state) {
+function simulateForward(state: Graph) {
+    let g = {...state};
     for (let i = 0; i < state.simulation.remainingCycles; i++) {
-        store.actions.graph.traverse();
-        store.actions.graph.applyConditions();
-        store.actions.graph.applyDisplayFunctions()
-        store.actions.simulation.incrementCurrentTime();
+        g = {...g, ...traverseGraph(g)}
+        g = {...g, ...applyEdgesConditions(g)}
+        g = {...g, ...displayUpdate(g)}
+        g = {...g, ...incrementCurrentTime(g)}
     }
 
-    
-    this.store.actions.simulation.updateCurrentTime();
+    g = {...g, ...resetTime(g)};
+    return g;
 }
 
 function simulateBackward(store, state) {

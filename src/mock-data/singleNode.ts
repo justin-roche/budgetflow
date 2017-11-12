@@ -36,7 +36,17 @@ let singleNode = {
     },
     edgesData: {
 
-    }
+    },
+    simulation: <Simulation>{
+        on: false,
+        cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
+        beginRangeTime: new Date().getTime(),
+        endRangeTime: new Date('2019').getTime(),
+        currentTime: new Date().getTime(),
+        targetTime: null,
+        remainingCycles: 0,
+        forward: null,
+    },
 }
 
 export { singleNode }

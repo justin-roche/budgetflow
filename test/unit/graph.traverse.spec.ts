@@ -19,6 +19,7 @@ describe('graph reducer', () => {
             store = createTestStore();
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === '1 node').pop());
             s1 = store.getPresentState();
+            store.actions.graph.incrementTargetTime();
         });
 
         it('sanity', () => {
@@ -27,25 +28,27 @@ describe('graph reducer', () => {
 
         it('graph traversal does not mutate original state', () => {
             let original = JSON.stringify(s1);
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             expect(original === JSON.stringify(s1)).toBe(true);
         })
 
         it('applies step function to a single node', () => {
             s1.graph.nodesData['n0'].value = 0;
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(1);
         });
 
         it('applies step function multiple times to a single node', () => {
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(1);
-            store.actions.graph.traverse();
+            store.actions.graph.incrementTargetTime();
+            store.actions.graph.simulate();
             s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(2);
-            store.actions.graph.traverse();
+            store.actions.graph.incrementTargetTime();            
+            store.actions.graph.simulate();
             s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(3);
         });
@@ -53,14 +56,14 @@ describe('graph reducer', () => {
         it('applies step function arguments', () => {
             let fd = s1.graph.nodesData['n0'].stepFunctions.filter(fd => fd.name === 'add')[0];
             fd.arguments = {amount: 2};
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(2);
         });
 
         it('graph traverse creates new objects along slice', () => {
 
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodes === s1.graph.nodes);
             expect(s2.graph.edges === s1.graph.edges);
@@ -81,16 +84,17 @@ describe('graph reducer', () => {
             store = createTestStore();
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'twoNodes').pop());
             s1 = store.getPresentState();
+            store.actions.graph.incrementTargetTime();            
         });
 
         it('does not mutate original state', () => {
             let original = JSON.stringify(s1);
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             expect(original === JSON.stringify(s1)).toBe(true);
         })
 
         it('graph traverse applies link function', () => {
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(9);
             expect(s2.graph.nodesData['n1'].value).toBe(1);
@@ -104,6 +108,7 @@ describe('graph reducer', () => {
             store = createTestStore();
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'tree').pop());
             s1 = store.getPresentState();
+            store.actions.graph.incrementTargetTime();
         });
 
         //     it('does not mutate original state', ()=> {
@@ -114,7 +119,7 @@ describe('graph reducer', () => {
         //     })
 
         it('applies link function to all active links', () => {
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(44);
             expect(s2.graph.nodesData['n1'].value).toBe(1);
@@ -129,7 +134,7 @@ describe('graph reducer', () => {
             _.each(s1.graph.nodesData, function (nodeData) {
                 nodeData.stepFunctions = [{ name: 'add', arguments: {amount: 1} }]
             });
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(45);
             expect(s2.graph.nodesData['n1'].value).toBe(2);
@@ -141,7 +146,7 @@ describe('graph reducer', () => {
         });
 
         it('creates new objects along slice', () => {
-            store.actions.graph.traverse();
+            store.actions.graph.simulate();
             let s2 = store.getPresentState();
 
             expect(s2.graph.nodes === s1.graph.nodes);
@@ -161,13 +166,15 @@ describe('graph reducer', () => {
             store = createTestStore();
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'conditional').pop());
             s1 = store.getPresentState();
+            store.actions.graph.incrementTargetTime();
+            
         });
 
         describe('inactive links', () => {
 
             it('does not apply on inactive links', () => {
                 let v = s1.graph.nodesData['n2'].value;
-                store.actions.graph.traverse();
+                store.actions.graph.simulate();
                 let s2 = store.getPresentState();
                 expect(s2.graph.nodesData['n2'].value).toBe(v);
             });

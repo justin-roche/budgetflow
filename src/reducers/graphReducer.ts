@@ -73,8 +73,7 @@ let graphActions = function (store) {
             },
 
             simulate: function (t) {
-                let state = store.getPresentState().graph;
-                simulate(store, state);
+                store.dispatch({ type: 'SIMULATE', payload: simulate(store.getPresentState().graph)});
             },
             traverse: function (n?: Number) {
                 store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState()) });
@@ -82,7 +81,7 @@ let graphActions = function (store) {
 
             /* iterative updates */
             applyDisplayFunctions: function () {
-                store.dispatch({ type: 'GRAPH_DISPLAY_FUNCTIONS_APPLY', payload: displayUpdate(store.getPresentState()) });
+                store.dispatch({ type: 'GRAPH_DISPLAY_FUNCTIONS_APPLY', payload: displayUpdate(store.getPresentState().graph) });
             },
             applyConditions: function (simulation) {
                 store.dispatch({ type: 'GRAPH_CONDITIONS_APPLY', payload: applyEdgesConditions(store.getPresentState()) });
@@ -151,6 +150,9 @@ function graphReducer(state = null, action) {
             return action.payload;
         }
         case 'GRAPH_SET_TARGET_TIME': {
+            return action.payload;
+        }
+        case 'SIMULATE': {
             return action.payload;
         }
 

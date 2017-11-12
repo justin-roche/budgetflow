@@ -1,7 +1,6 @@
 declare interface AppState {
     graphs: Array<Graph>,
     ui: UI
-    simulation: Object
     graph: Graph
     
 }
@@ -16,7 +15,8 @@ declare interface Graph {
     edges: Edges
     edgesData: EdgesData,
     conditions: ConditionsData,
-    conditionsIds: Array<String>    
+    conditionsIds: Array<String>  
+    simulation: Simulation,  
 }
 
 declare interface Nodes {
@@ -111,6 +111,7 @@ declare interface Simulation {
     targetTime: Number,
     cycleTime: Number,
     remainingCycles: Number,
+    forward: Boolean
 }
 
 declare interface NodeModel {

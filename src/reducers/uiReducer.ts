@@ -43,7 +43,7 @@ let uiActions = function (store) {
             updateSliderSettings() {
                 let s = store.getPresentState();
                 let ui = s.ui;
-                let sim = s.simulation;
+                let sim = s.graph.simulation;
                 let sliderSettings = { ...s.ui.timeSlider.sliderSettings };
                 sliderSettings.range = { ...sliderSettings.range, ...{ min: sim.beginRangeTime, max: sim.endRangeTime } }
                 sliderSettings.start = sim.beginRangeTime;
