@@ -51,8 +51,8 @@ describe('graph reducer', () => {
         });
 
         it('applies step function arguments', () => {
-            let fd = s1.graph.nodesData['n0'].stepFunctions.filter(fd => fd.name === 'increment')[0];
-            fd.arguments = [2];
+            let fd = s1.graph.nodesData['n0'].stepFunctions.filter(fd => fd.name === 'add')[0];
+            fd.arguments = {amount: 2};
             store.actions.graph.traverse();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(2);
@@ -127,7 +127,7 @@ describe('graph reducer', () => {
 
         it('applies step function to all nodes', () => {
             _.each(s1.graph.nodesData, function (nodeData) {
-                nodeData.stepFunctions = [{ name: 'increment', arguments: [1] }]
+                nodeData.stepFunctions = [{ name: 'add', arguments: {amount: 1} }]
             });
             store.actions.graph.traverse();
             let s2 = store.getPresentState();

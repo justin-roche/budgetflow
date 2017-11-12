@@ -61,6 +61,7 @@ let tree = {
     nodesData: {
         'n0':  <NodeData> {
             id: 'n0',
+            name: null,
             type: 'source',
             active: true,
             value: 50,
@@ -70,6 +71,7 @@ let tree = {
         },
         'n1':  <NodeData> {
             id: 'n1',
+            name: null,
             type: 'sink',
             active: true,
             value: 0,
@@ -79,6 +81,7 @@ let tree = {
         },
         'n2':  <NodeData> {
             id: 'n2',
+            name: null,
             type: 'sink',
             active: true,
             value: 0,
@@ -88,6 +91,7 @@ let tree = {
         },
         'n3':  <NodeData> {
             type: 'sink',
+            name: null,
             id: 'n3',
             active: true,
             value: 0,
@@ -97,6 +101,7 @@ let tree = {
         },
         'n4':  <NodeData> {
             type: 'sink',
+            name: null,
             id: 'n4',
             active: true,
             value: 0,
@@ -106,6 +111,7 @@ let tree = {
         },
         'n5':  <NodeData> {
             id: 'n5',
+            name: null,
             type: 'sink',
             active: true,
             value: 0,
@@ -115,6 +121,7 @@ let tree = {
         },
         'n6': <NodeData> {
             type: 'sink',
+            name: null,
             id: 'n6',
             active: true,
             value: 0,

@@ -32,7 +32,7 @@ function breadthTraverse(state, current, _linkedSources = []) {
     // g = iterateLevel(g);
 
     let steppedSources = _.map(current, (nodeData) => {
-        return { ...nodeData, ...applyStepFunction(nodeData) };
+        return { ...nodeData, ...applyStepFunction(state, nodeData) };
     })
 
     let nestedTargets: Array<Array<NodeData>> = _.map(current,(nodeData, i) => { 
@@ -142,10 +142,10 @@ function linkTarget(state:AppState, source: NodeData, target: NodeData, edge): L
     }, { linkedSource: source, linkedTarget: target });
 }
 
-function applyStepFunction(nodeData) {
+function applyStepFunction(state, nodeData) {
     let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
-        let fn = stepFunctions[functionSettings.name];
-        let newSlice = fn(nodeData, ...functionSettings.arguments);
+        let fn = stepFunctions[functionSettings.name].fn;
+        let newSlice = fn(state, nodeData, ...functionSettings.arguments);
         let updated = { ...acc, ...newSlice };
         return updated;
     }, { ...nodeData });

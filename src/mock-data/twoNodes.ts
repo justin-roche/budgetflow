@@ -23,6 +23,7 @@ let twoNodes = {
     nodesData: <NodesData>{
         'n0': {
             type: 'source',
+            dataType: 'money',
             name: null,
             id: 'n0',
             active: true,
@@ -33,6 +34,7 @@ let twoNodes = {
         },
         'n1': {
             type: 'sink',
+            dataType: 'money',
             id: 'n1',
             name: null,
             active: true,

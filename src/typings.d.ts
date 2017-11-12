@@ -100,7 +100,7 @@ declare interface Edge {
 
 declare interface FunctionItem {
     name: string,
-    arguments?: Array<any>
+    arguments?: Object
 }
 
 declare interface Simulation {

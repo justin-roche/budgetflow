@@ -17,13 +17,14 @@ let singleNode = {
     nodesData: <NodesData>{
         'n0': <NodeData>{
             id: 'n0',
+            name: null,
             type: 'source',
             active: true,
             value: 0,
             stepFunctions: [
                 {
-                    name: 'increment',
-                    arguments: [1]
+                    name: 'add',
+                    arguments: {amount: 1},
                 }
             ],
             displayFunctions: [],
