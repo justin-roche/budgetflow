@@ -37,10 +37,13 @@ export class NavBar {
     }
 
     test() {
-        for(let i = 0; i< 10; i++) {
-            this.store.actions.simulation.incrementTargetTime();
-        }
-        
+      let sim = this.store.getPresentState().simulation
+      let d = sim.cycleTime * 2;
+      let ct = sim.currentTime; 
+      this.store.actions.simulation.setTargetTime(ct+d);
+      setTimeout(function(){
+        this.store.actions.simulation.setTargetTime(ct+sim.cycleTime);
+      }.bind(this),1000)
     }
 
 }

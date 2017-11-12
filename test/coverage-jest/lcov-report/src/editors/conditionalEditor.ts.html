@@ -83,20 +83,7 @@
 38
 39
 40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+41</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -124,18 +111,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,8 +123,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { inje<span class="cstat-no" title="statement not covered" >ct, bindable } from 'aurelia-<span class="cstat-no" title="statement not covered" >f</span>ramework';</span>
 import { Store } <span class="cstat-no" title="statement not covered" >from './../services/reduxSt<span class="fstat-no" title="function not covered" >or</span>e';</span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
@@ -173,42 +147,29 @@ expo<span class="cstat-no" title="statement not covered" >rt class ConditionalEd
     }<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
     pars<span class="cstat-no" title="statement not covered" >eStatement(statement) {</span>
-<span class="cstat-no" title="statement not covered" >        // let [subject, predicate, </span>object] = statement.split(' ');
-        // let fn = { name: 'derive', phase: 'prelink', arguments: ['active', 'source.value ' + predicate + ' ' + object] };
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-        // let inEdge = this.nodeModel.inEdges.filter(ed =&gt; ed.source === subject)[0];
-        // let inEdgeData = this.nodeModel.inEdgesData.filter(ed =&gt; ed.id === inEdge.id)[0];
-&nbsp;
-        // if (inEdge) {
-        //     inEdgeData = {...inEdgeData, linkFunctions: {...inEdgeData.linkFunctions, }}
-        //     this.store.dispatch({ type: 'EDGE_LINK_FUNCTION_ADD', payload: { edge: inEdge, function: fn } });
-        // } else {
-        //     let edge = { source: subject, target: this.nodeModel.node.id };
-        //     let edgeData = { linkFunctions: [fn] };
-        //     this.store.dispatch({ type: 'EDGE_ADD', payload: { description: edge, data: edgeData } });
-        // }
-    }
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    getConditionals() {<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" >        return this.conditionals;</span>
+        <span class="cstat-no" title="statement not covered" ></span>
     }
 <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-    node<span class="cstat-no" title="statement not covered" >ModelChanged() {</span>
-        console.log('nm changed', this.nodeModel)
-<span class="cstat-no" title="statement not covered" >    }<span class="fstat-no" title="function not covered" ></span></span>
+    getConditionals() {
+<span class="cstat-no" title="statement not covered" >        return this.conditionals;<span class="fstat-no" title="function not covered" ></span></span>
+    }<span class="cstat-no" title="statement not covered" ></span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    selectActivationSource() {</span>
-&nbsp;
+<span class="cstat-no" title="statement not covered" >    nodeModelChanged() {<span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('nm changed', this.nodeModel)</span>
     }
-&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+    selectActivationSource() {
 <span class="cstat-no" title="statement not covered" ></span>
-}</pre></td></tr>
+    }
+&nbsp;
+&nbsp;
+}<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 20:28:15 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

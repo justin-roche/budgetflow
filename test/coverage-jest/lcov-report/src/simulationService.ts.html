@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.71% </span>
+        <span class="strong">86.21% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>24/28</span>
+        <span class='fraction'>25/29</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">80% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>4/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">87.5% </span>
+        <span class="strong">84.62% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>21/24</span>
+        <span class='fraction'>22/26</span>
       </div>
     </div>
   </div>
@@ -108,13 +108,7 @@
 63
 64
 65
-66
-67
-68
-69
-70
-71
-72</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+66</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,15 +153,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -178,9 +168,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,10 +185,10 @@ export class SimulationService {
     simulation;
 &nbsp;
     constructor(private store: Store) {
-        this.store.select('simulation.targetTime',{bind: [this, 'targetTime']}).subscribe(t =&gt; {
+        this.store.select('simulation.targetTime', { log: true, bind: [this, 'targetTime'] }).subscribe(t =&gt; {
             this.state = this.store.getPresentState();
             this.simulation = this.state.simulation;
-            if(this.simulation.on &amp;&amp; t!==null) {
+            if (this.simulation.on &amp;&amp; t !== null) {
                 this.simulate();
             }
         })
@@ -221,39 +209,33 @@ export class SimulationService {
     // }
 &nbsp;
     simulate() {
-        if(this.simulation.forward === true) {
+        if (this.simulation.forward === true) {
             this.simulateForward()
-        } 
-        if(this.simulation.forward === false) {
+        }
+        if (this.simulation.forward === false) {
             this.simulateBackward()
         }
     }
 &nbsp;
     simulateForward() {
-        // if(this.simulation.remainingCycles === 1) {
-        //     this.store.actions.graph.traverse()
-        //     this.store.actions.graph.applyConditions();
-        // } else {
-            for(let i = 0; i&lt; this.simulation.remainingCycles; i++) {
-                this.store.actions.graph.traverse();
-                this.store.actions.graph.applyConditions();
-                this.store.actions.simulation.incrementCurrentTime();
-            }
-        //}
+        for (let i = 0; i &lt; this.simulation.remainingCycles; i++) {
+            this.store.actions.graph.traverse();
+            this.store.actions.graph.applyConditions();
+            this.store.actions.graph.applyDisplayFunctions()
+            this.store.actions.simulation.incrementCurrentTime();
+        }
+&nbsp;
         
-        this.store.actions.graph.applyDisplayFunctions()
         this.store.actions.simulation.updateCurrentTime();
     }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    simulateBackward() {</span>
-<span class="cstat-no" title="statement not covered" >        if(this.simulation.currentTime !== this.simulation.beginRangeTime) <span class="cstat-no" title="statement not covered" >{</span></span>
-<span class="cstat-no" title="statement not covered" >            this.store.actions.graph.u</span>ndo()
-<span class="cstat-no" title="statement not covered" >            this.store.actions.graph.u</span>ndo() // undo conditions application
-            this.store.actions.graph.undo()  //undo display function application
-            // .actions.graph.applyDisplayFunctions()
-            .actions.simulation.updateCurrentTime();
+<span class="cstat-no" title="statement not covered" >        if (this.simulation.currentTime !== this.simulation.beginRangeTime) {</span>
+            let <span class="cstat-no" title="statement not covered" >c = </span>this.simulation.remainingCycles;
+<span class="cstat-no" title="statement not covered" >            this.store.actions.graph.undo((c * 3)) </span>
+<span class="cstat-no" title="statement not covered" >            this.store.actions.simulation.undo((c)+3</span>)
         }
-        
+&nbsp;
     }
 &nbsp;
 }</pre></td></tr>
@@ -262,7 +244,7 @@ export class SimulationService {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 20:28:15 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

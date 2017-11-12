@@ -10,10 +10,10 @@ export class SimulationService {
     simulation;
 
     constructor(private store: Store) {
-        this.store.select('simulation.targetTime',{bind: [this, 'targetTime']}).subscribe(t => {
+        this.store.select('simulation.targetTime', { log: true, bind: [this, 'targetTime'] }).subscribe(t => {
             this.state = this.store.getPresentState();
             this.simulation = this.state.simulation;
-            if(this.simulation.on && t!==null) {
+            if (this.simulation.on && t !== null) {
                 this.simulate();
             }
         })
@@ -34,39 +34,33 @@ export class SimulationService {
     // }
 
     simulate() {
-        if(this.simulation.forward === true) {
+        if (this.simulation.forward === true) {
             this.simulateForward()
-        } 
-        if(this.simulation.forward === false) {
+        }
+        if (this.simulation.forward === false) {
             this.simulateBackward()
         }
     }
 
     simulateForward() {
-        // if(this.simulation.remainingCycles === 1) {
-        //     this.store.actions.graph.traverse()
-        //     this.store.actions.graph.applyConditions();
-        // } else {
-            for(let i = 0; i< this.simulation.remainingCycles; i++) {
-                this.store.actions.graph.traverse();
-                this.store.actions.graph.applyConditions();
-                this.store.actions.simulation.incrementCurrentTime();
-            }
-        //}
+        for (let i = 0; i < this.simulation.remainingCycles; i++) {
+            this.store.actions.graph.traverse();
+            this.store.actions.graph.applyConditions();
+            this.store.actions.graph.applyDisplayFunctions()
+            this.store.actions.simulation.incrementCurrentTime();
+        }
+
         
-        this.store.actions.graph.applyDisplayFunctions()
         this.store.actions.simulation.updateCurrentTime();
     }
 
     simulateBackward() {
-        if(this.simulation.currentTime !== this.simulation.beginRangeTime) {
-            this.store.actions.graph.undo()
-            this.store.actions.graph.undo() // undo conditions application
-            this.store.actions.graph.undo()  //undo display function application
-            // .actions.graph.applyDisplayFunctions()
-            .actions.simulation.updateCurrentTime();
+        if (this.simulation.currentTime !== this.simulation.beginRangeTime) {
+            let c = this.simulation.remainingCycles;
+            this.store.actions.graph.undo((c * 3)) 
+            this.store.actions.simulation.undo((c)+3)
         }
-        
+
     }
 
 }

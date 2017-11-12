@@ -1,7 +1,7 @@
 import undoable, { distinctState } from 'redux-undo'
-
+import { ActionCreators } from 'redux-undo';
+import { formatFromMsString } from './utilities'
 let simulationActions = function (store) {
-
     return {
         name: 'simulation',
         actions: {
@@ -12,7 +12,7 @@ let simulationActions = function (store) {
                 store.dispatch({ type: 'SIMULATION_SET_TARGET_TIME', payload: setTargetTime(store.getPresentState(), t) });
             },
             updateCurrentTime: function (t) {
-                store.dispatch({ type: 'SIMULATION_SET', payload: updateCurrentTime(store.getPresentState()) });
+                store.dispatch({ type: 'SIMULATION_CURRENT_TIME_UPDATE', payload: updateCurrentTime(store.getPresentState()) });
             },
             incrementTargetTime: function () {
                 store.dispatch({ type: 'SIMULATION_SET', payload: incrementTargetTime(store.getPresentState()) });
@@ -23,8 +23,15 @@ let simulationActions = function (store) {
             incrementCurrentTime: function () {
                 store.dispatch({ type: 'SIMULATION_INCREMENT_CURRENT_TIME', payload: incrementCurrentTime(store.getPresentState()) });
             },
-            undo: function () {
-                store.dispatch({ type: 'SIMULATION_UNDO' });
+            undo: function (c = 1) {
+                if(c === 1) {
+                    store.dispatch({ type: 'SIMULATION_UNDO' });
+                } else {
+                    let currentIndex = store.getState().simulation.past.length;
+                    let nextIndex = currentIndex - c;
+                    store.dispatch({type: 'SIMULATION_JUMP_TO_PAST', index: nextIndex});
+                }
+                
             }
         }
     }
@@ -57,7 +64,7 @@ function incrementCurrentTime(state) {
 
     sim.currentTime = sim.currentTime + sim.cycleTime;
     sim.remainingCycles = sim.currentCycles - 1;
-
+    sim.currentTimeFormatted = formatFromMsString(sim.currentTime);
     return sim;
 }
 
@@ -65,9 +72,10 @@ function setTargetTime(state, t) {
     let sim = { ...state.simulation };
 
     sim.targetTime = t;
-    sim.remainingCycles = (t - sim.currentTime) / sim.cycleTime;
+    sim.remainingCycles = Math.abs((t - sim.currentTime) / sim.cycleTime);
     sim.forward = t > sim.currentTime;
-
+    sim.targetTimeFormatted = formatFromMsString(sim.targetTime);
+    
     return sim;
 }
 
@@ -76,9 +84,11 @@ function updateCurrentTime(state) {
 
     sim.currentTime = sim.targetTime;
     sim.targetTime = null;
+    sim.targetTimeFormatted = null;
     sim.remainingCycles = null;
     sim.forward = null;
-
+    sim.currentTimeFormatted = formatFromMsString(sim.currentTime);
+    
     return sim;
 }
 
@@ -114,6 +124,9 @@ function simulationReducer(state: Simulation = null, action) {
         case 'SIMULATION_OFF': {
             return { ...state, simulating: false };
         }
+        case 'SIMULATION_CURRENT_TIME_UPDATE': {
+            return action.payload;
+        }
         default:
             return state;
     }
@@ -121,9 +134,11 @@ function simulationReducer(state: Simulation = null, action) {
 }
 
 let undoableSimulationReducer = undoable(simulationReducer, {
-    undoType: 'SIMULATION_UNDO', redoType: 'SIMULATION_REDO', filter: function (x, prev, next) {
+    undoType: 'SIMULATION_UNDO', 
+    redoType: 'SIMULATION_REDO', filter: function (x, prev, next) {
         return (next !== null && prev !== null) && next !== prev;
-    }
+    },
+    jumpToPastType: 'SIMULATION_JUMP_TO_PAST'
 });
 
 export { simulationReducer, undoableSimulationReducer, simulationActions };

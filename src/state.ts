@@ -86,7 +86,6 @@ let state = {
         currentTime: new Date().getTime(),
         targetTime: null,
         remainingCycles: 0,
-        cache: {},
     },
     graph: null,
     graphs: <Array<Graph>>[

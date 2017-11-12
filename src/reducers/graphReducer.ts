@@ -1,9 +1,10 @@
 import { traverseGraph } from './graphFunctions/traverse';
 import {
     addNewNode, addEdge, updateEdgeData, deleteNode,
-    deleteEdge, nodePropertySet, addLinkFunction, toggleEdgeActivation,
+    deleteEdge, toggleEdgeActivation,
     updateNodeData
 } from './graphFunctions/graphManipulationFunctions';
+import { resetTime, incrementCurrentTime, incrementTargetTime, decrementTargetTime, setTargetTime, simulate } from './graphFunctions/simulationFunctions'
 import { displayUpdate } from './graphFunctions/displayUpdate'
 import { applyEdgesConditions, updateConditionExpression } from './graphFunctions/conditionsApply';
 import undoable, { distinctState } from 'redux-undo'
@@ -22,18 +23,11 @@ let graphActions = function (store) {
     return {
         name: 'graph',
         actions: {
-            applyDisplayFunctions: function () {
-                store.dispatch({ type: 'DISPLAY_UPDATE', payload: displayUpdate(store.getPresentState()) });
-            },
-            applyConditions: function (simulation) {
-                store.dispatch({ type: 'GRAPH_SET', payload: applyEdgesConditions(store.getPresentState()) });
-            },
+            
             updateConditionExpression: function (condition) {
                 store.dispatch({ type: 'GRAPH_SET', payload: updateConditionExpression(store.getPresentState().graph, condition) });
             },
-            traverse: function (n?: Number) {
-                store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState()) });
-            },
+            
             deleteNode: function (id: String) {
                 store.dispatch({ type: 'DELETE_NODE', payload: id });
             },
@@ -58,8 +52,44 @@ let graphActions = function (store) {
             addNode: function () {
                 store.dispatch({ type: 'ADD_NODE' });
             },
-            undo: function () {
-                store.dispatch({ type: 'GRAPH_UNDO' });
+
+            /* simulation functions */
+            
+            incrementTargetTime: function () {
+                store.dispatch({ type: 'GRAPH_INCREMENT_TARGET_TIME', payload: incrementTargetTime(store.getPresentState().graph) });
+            },
+            resetTime: function (t) {
+                store.dispatch({ type: 'GRAPH_RESET_TIME', payload: resetTime(store.getPresentState().graph) });
+            },
+            decrementTargetTime: function () {
+                store.dispatch({ type: 'GRAPH_DECREMENT_TARGET_TIME', payload: decrementTargetTime(store.getPresentState().graph) });
+            },
+            incrementCurrentTime: function () {
+                store.dispatch({ type: 'GRAPH_INCREMENT_CURRENT_TIME', payload: incrementCurrentTime(store.getPresentState().graph) });
+            },
+
+            setTargetTime: function (t) {
+                store.dispatch({ type: 'GRAPH_SET_TARGET_TIME', payload: setTargetTime(store.getPresentState().graph, t) });
+            },
+
+            simulate: function (t) {
+                let state = store.getPresentState().graph;
+                simulate(store, state);
+            },
+            traverse: function (n?: Number) {
+                store.dispatch({ type: 'TRAVERSE', payload: traverseGraph(store.getPresentState()) });
+            },
+
+            /* iterative updates */
+            applyDisplayFunctions: function () {
+                store.dispatch({ type: 'GRAPH_DISPLAY_FUNCTIONS_APPLY', payload: displayUpdate(store.getPresentState()) });
+            },
+            applyConditions: function (simulation) {
+                store.dispatch({ type: 'GRAPH_CONDITIONS_APPLY', payload: applyEdgesConditions(store.getPresentState()) });
+            },
+
+            undo: function (c = 1) {
+                
             }
         }
     }
@@ -74,6 +104,12 @@ function graphReducer(state = null, action) {
             return action.payload;
         }
         case 'DISPLAY_UPDATE': {
+            return action.payload;
+        }
+        case 'GRAPH_DISPLAY_FUNCTIONS_APPLY': {
+            return action.payload;
+        }
+        case 'GRAPH_CONDITIONS_APPLY': {
             return action.payload;
         }
         case 'TRAVERSE': {
@@ -91,19 +127,30 @@ function graphReducer(state = null, action) {
         case 'DELETE_EDGE': {
             return { ...state, ...action.payload }
         }
-        case 'NODE_PROPERTY_SET': {
-            return { ...state, ...nodePropertySet(state, action.payload.nodeData) }
-        }
         case 'EDGE_ADD': {
             return action.payload;
         }
         case 'EDGE_DATA_UPDATE': {
             return action.payload;
         }
-        case 'EDGE_LINK_FUNCTION_ADD': {
-            return { ...state, ...addLinkFunction(state, action.payload.edge, action.payload.function) }
-        }
         case 'GRAPH_NODE_DATA_UPDATE': {
+            return action.payload;
+        }
+
+        /*simulation */
+        case 'GRAPH_INCREMENT_TARGET_TIME': {
+            return action.payload;
+        }
+        case 'GRAPH_RESET_TIME': {
+            return action.payload;
+        }
+        case 'GRAPH_DECREMENT_TARGET_TIME': {
+            return action.payload;
+        }
+        case 'GRAPH_INCREMENT_CURRENT_TIME': {
+            return action.payload;
+        }
+        case 'GRAPH_SET_TARGET_TIME': {
             return action.payload;
         }
 
@@ -114,9 +161,11 @@ function graphReducer(state = null, action) {
 }
 
 let undoableGraphReducer = undoable(graphReducer, {
-    undoType: 'GRAPH_UNDO', redoType: 'GRAPH_REDO', filter: function (x, prev, next) {
+    undoType: 'GRAPH_UNDO', 
+    redoType: 'GRAPH_REDO', filter: function (x, prev, next) {
         return (next !== null && prev !== null) && next !== prev;
-    }
+    },
+    jumpToPastType: 'GRAPH_JUMP_TO_PAST'
 });
 
 

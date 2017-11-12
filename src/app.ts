@@ -27,7 +27,7 @@ export class App {
     this.store.dispatch({type: 'UI_SET', payload: state.ui});
     this.store.dispatch({type: 'SIMULATION_SET', payload: state.simulation});
     setTimeout(function(){
-      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'conditional').pop());
+      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === '1 node').pop());
       this.store.actions.graph.applyDisplayFunctions();
     }.bind(this),0)
 }

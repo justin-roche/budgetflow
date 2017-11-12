@@ -1,4 +1,3 @@
-import { TimeSlider } from './timeSlider';
 import { SimulationService } from './../services/simulationService';
 import { Store } from './../services/reduxStore';
 import *  as Rx from 'rxjs';
@@ -29,10 +28,11 @@ export class TimeSlider {
     }
 
     attached() {
-        this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {log: true, bind: [this, 'sliderSettings']}).subscribe(settings => {
+        this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {bind: [this, 'sliderSettings']}).subscribe(settings => {
             this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
         });
         this.store.select('simulation.currentTime', {log: true}).subscribe(t => {
+            console.log('new time', this.formatFromMsString(t));
             this.ref.noUiSlider.set(t);
         })        
     }

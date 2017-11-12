@@ -27,8 +27,6 @@ export class Store {
         },{});
     }
 
-    
-
     setState(s) {
         this.store.dispatch({type: 'SET_STATE', payload: s});
     }
@@ -52,19 +50,9 @@ export class Store {
         }
     }
 
-    dispatchSequence(...actions) {
-        actions.reduce((acc, action) => {
-            this.dispatch(...action);
-            console.log('new store', this.store);
-            return this.store;
-        }, null)
-    }
-
     subscribe(...args) {
         return this.store.subscribe(...args);
     }
-
-    
 
     getPresentState(): AppState {
         let s = this.store.getState();

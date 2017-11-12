@@ -27,12 +27,12 @@ export class ConditionSlider {
     }
 
     attached() {
-        this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {log: true, bind: [this, 'sliderSettings']}).subscribe(settings => {
-            this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
-        });
-        this.store.select('simulation.currentTime', {log: true}).subscribe(t => {
-            this.ref.noUiSlider.set(t);
-        })        
+        // this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {log: true, bind: [this, 'sliderSettings']}).subscribe(settings => {
+        //     this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
+        // });
+        // this.store.select('simulation.currentTime').subscribe(t => {
+        //     this.ref.noUiSlider.set(t);
+        // })        
     }
 
     createSlider(settings) {

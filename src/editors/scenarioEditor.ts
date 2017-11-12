@@ -36,28 +36,7 @@ export class ScenarioEditor {
 
   /* SIMULATION */
 
-  simulationTimeSet(t) {
-    this.store.dispatch({ type: 'SIMULATION_TIME_SET', payload: t });
-  }
-
-  simulationCyclesSet(c) {
-    this.store.dispatch({ type: 'REMAINING_CYCLES_SET', payload: c });
-  }
-
-  simulate() {
-    this.store.dispatch({ type: 'SIMULATION_ON' });
-  }
-
   attached() {
-
-    // $("#ex8").bootstrapSlider({
-    //   tooltip: 'always'
-    // });
-
-    // $('#ex8').on('slideStop', (v) => {
-    //   console.log(v.target.value)
-    //   this.simulationCyclesSet(Number(v.target.value));
-    // })
 
   }
 

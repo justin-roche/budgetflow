@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">68.29% </span>
+        <span class="strong">77.14% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>56/82</span>
+        <span class='fraction'>54/70</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">30% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>3/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>20/32</span>
+        <span class='fraction'>20/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">63.77% </span>
+        <span class="strong">74.58% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>44/69</span>
+        <span class='fraction'>44/59</span>
       </div>
     </div>
   </div>
@@ -194,24 +194,7 @@
 149
 150
 151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169</td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+152</td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -299,14 +282,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -346,15 +321,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -464,14 +430,6 @@ function removeEdgeAssociations(retainedNodes, removedEdges) : Nodes {
     }
 }
 &nbsp;
-<span class="fstat-no" title="function not covered" >function nodePropertySet(</span>g, nodeData: NodeData): Graph {
-    let <span class="cstat-no" title="statement not covered" >nd = </span>g.nodesData[nodeData.id];
-<span class="cstat-no" title="statement not covered" >    nd = { ...nd, ...n</span>odeData };
-    let <span class="cstat-no" title="statement not covered" >nodesData = { ...</span>g.nodesData, [nd.id]: nd };
-<span class="cstat-no" title="statement not covered" >    console.log('new nodes data', n</span>odesData);
-<span class="cstat-no" title="statement not covered" >    return { ...g, nodesData: n</span>odesData };
-}
-&nbsp;
 <span class="fstat-no" title="function not covered" >function updateNodeData(</span>g: Graph, nodeData) {
 <span class="cstat-no" title="statement not covered" >    return e</span>xtend(g).select(`nodesData.${nodeData.id}`).data(<span class="fstat-no" title="function not covered" >obj =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >        return {...obj, ...n</span>odeData};
@@ -516,15 +474,6 @@ function updateEdgeReferences(g, e) {
     return { ...g.nodes, [e.target]: targetNode, [e.source]: sourceNode };
 }
 &nbsp;
-&nbsp;
-<span class="fstat-no" title="function not covered" >function addLinkFunction(</span>g, edge: Edge, linkFunction: FunctionItem) : AppState {
-    let <span class="cstat-no" title="statement not covered" >id = </span>edge.id;
-    let <span class="cstat-no" title="statement not covered" >currentEdgeData = </span>g.edgesData[id];
-    let <span class="cstat-no" title="statement not covered" >currentLinkFunctions = </span>currentEdgeData.linkFunctions;
-    let <span class="cstat-no" title="statement not covered" >updatedEdgeData = {...currentEdgeData, l</span>inkFunctions: currentLinkFunctions.concat(linkFunction)}
-<span class="cstat-no" title="statement not covered" >    return {...g, edgesData: {...g.edgesData, [id]: updatedEdgeData}};</span>
-}
-&nbsp;
 function shareEdge(g, source, target) {
     return g.edgesIds.some(<span class="fstat-no" title="function not covered" >test =&gt; {</span>
         let <span class="cstat-no" title="statement not covered" >ts = </span>g.edges[test].source;
@@ -547,13 +496,13 @@ function shareEdge(g, source, target) {
     });
 }
 &nbsp;
-export { addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }</pre></td></tr>
+export { addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 20:28:15 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

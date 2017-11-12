@@ -18,7 +18,7 @@ let defaultState = {
 let undoableUiReducer = undoable(uiReducer);
 
 let undoableGraphsReducer = undoable(graphsReducer);
-let undoableCombinedReducer = undoable(combinedReducer)
+//let undoableCombinedReducer = undoable(combinedReducer)
 
 function rootReducer(s: AppState = defaultState, action) {
 
@@ -34,18 +34,6 @@ function rootReducer(s: AppState = defaultState, action) {
 
 }
 
-function combinedReducer(state, action) {
-    switch (action.type) {
-        
-                case 'SET_STATE': {
-                    return {...action.payload};
-                }
-                default:
-                    return state;
-            }
-   
-}
-
 function graphsReducer(state = null, action) {
     switch (action.type) {
 
@@ -56,16 +44,5 @@ function graphsReducer(state = null, action) {
             return state;
     }
 }
-
-
-function dataReducer(state = {}, action) {
-    switch (action.type) {
-
-    }
-}
-
-
-
-
 
 export { rootReducer };

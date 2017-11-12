@@ -1,0 +1,24 @@
+<template>
+        <div>
+            <aubs-accordion close-others.bind="closeOthers">
+                <aubs-accordion-group repeat.for="fn of form.stepFunctions" title="${fn.name}" is-open.bind="firstTabState">
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td repeat.for="arg of fn._arguments">
+                                        ${arg.name}
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td repeat.for="arg of fn._arguments">
+                                    <input class="form-control" type="text" blur.trigger="submit()" value.bind="fn.arguments[arg.name]" placeholder="name">                                        
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
+                </aubs-accordion-group>
+            </aubs-accordion>
+        </div>
+    </template>

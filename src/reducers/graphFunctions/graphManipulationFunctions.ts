@@ -83,14 +83,6 @@ function createBaseNodeData() : NodeData {
     }
 }
 
-function nodePropertySet(g, nodeData: NodeData): Graph {
-    let nd = g.nodesData[nodeData.id];
-    nd = { ...nd, ...nodeData };
-    let nodesData = { ...g.nodesData, [nd.id]: nd };
-    console.log('new nodes data', nodesData);
-    return { ...g, nodesData: nodesData };
-}
-
 function updateNodeData(g: Graph, nodeData) {
     return extend(g).select(`nodesData.${nodeData.id}`).data(obj => {
         return {...obj, ...nodeData};
@@ -135,15 +127,6 @@ function updateEdgeReferences(g, e) {
     return { ...g.nodes, [e.target]: targetNode, [e.source]: sourceNode };
 }
 
-
-function addLinkFunction(g, edge: Edge, linkFunction: FunctionItem) : AppState {
-    let id = edge.id;
-    let currentEdgeData = g.edgesData[id];
-    let currentLinkFunctions = currentEdgeData.linkFunctions;
-    let updatedEdgeData = {...currentEdgeData, linkFunctions: currentLinkFunctions.concat(linkFunction)}
-    return {...g, edgesData: {...g.edgesData, [id]: updatedEdgeData}};
-}
-
 function shareEdge(g, source, target) {
     return g.edgesIds.some(test => {
         let ts = g.edges[test].source;
@@ -166,4 +149,4 @@ function toggleEdgeActivation(g, eid) {
     });
 }
 
-export { addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge, nodePropertySet, addLinkFunction }
+export { addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge }

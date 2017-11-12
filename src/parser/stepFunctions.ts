@@ -23,10 +23,6 @@ let stepFunctions = {
         },
     },
 
-    equal: function (value, node) {
-        return value;
-    },
-
 }
 
 

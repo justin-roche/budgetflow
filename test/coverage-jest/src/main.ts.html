@@ -79,19 +79,7 @@
 34
 35
 36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+37</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -127,18 +115,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">﻿/// &lt;referen<span class="cstat-no" title="statement not covered" >ce types="aurelia-loader-webp<span class="cstat-no" title="statement not covered" >a</span>ck/src/webpac</span>k-hot-interface"/&gt;
 // we want font-<span class="cstat-no" title="statement not covered" >awesome to load as soon as<span class="fstat-no" title="function not covered" > p</span>ossible to show the fa-spinner</span>
 impo<span class="cstat-no" title="statement not covered" >rt '../static/styles.css';<span class="fstat-no" title="function not covered" ></span></span>
@@ -149,51 +125,39 @@ import {<span class="cstat-no" title="statement not covered" > PLATFORM } from '
 import * as Bluebird from 'bluebird';
 import { rootReducer } from './reducers/root';
 import { createSto<span class="cstat-no" title="statement not covered" >re } from 'redux';<span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span></span></span>
-//  <span class="cstat-no" title="statement not covered" >require('jquery-ui/ui/widgets/draggable.js');<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-//  require('<span class="fstat-no" title="function not covered" >jquer</span>y-ui<span class="cstat-no" title="statement not covered" >/ui/wid<span class="fstat-no" title="function not covered" >ge</span>ts/resizable<span class="cstat-no" title="statement not covered" >.js');</span></span>
-//  require('<span class="fstat-no" title="function not covered" >jquer</span>y-ui/ui/widgets/droppable.js')
-require(<span class="cstat-no" title="statement not covered" >'jquery<span class="cstat-no" title="statement not covered" >-ui-dist/jquery-ui.js')</span></span>
-require(<span class="cstat-no" title="statement not covered" >'jquery-ui<span class="cstat-no" title="statement not covered" >-dist/jquery-ui.css')</span></span>
-require('boo<span class="cstat-no" title="statement not covered" >tstrap'); // reference window.jQuery<span class="cstat-no" title="statement not covered" ></span></span>
-// require('<span class="cstat-no" title="statement not covered" >bootstrap-slid<span class="cstat-no" title="statement not covered" >er/dist/css/bootstr</span></span>ap-slider.css');
-require('nou<span class="cstat-no" title="statement not covered" >islider/distribute/nouislider.css');</span>
-require('nouislider/distribute<span class="cstat-no" title="statement not covered" >/nouisl<span class="cstat-no" title="statement not covered" >i</span>der.js</span>');
-require('wnumb/wNumb.js<span class="cstat-no" title="statement not covered" >');<span class="cstat-no" title="statement not covered" ></span></span>
-require('moment');<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
-// require('bootstrap-slider')
-require('aurelia-asy<span class="cstat-no" title="statement not covered" >nc')<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
-//require('d3');<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span></span>
-//  (&lt;any&gt;require).c<span class="cstat-no" title="statement not covered" >ontext(<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span></span>
-//   "sigma/plugins"<span class="cstat-no" title="statement not covered" >, // conte<span class="cstat-no" title="statement not covered" >xt folder</span></span>
-//   true, // includ<span class="cstat-no" title="statement not covered" >e subdirector<span class="cstat-no" title="statement not covered" >i</span>es</span>
-//   /.*/ // RegExp
-// );<span class="cstat-no" title="statement not covered" ></span>
-// remove out if you <span class="cstat-no" title="statement not covered" >don't want a<span class="cstat-no" title="statement not covered" > </span>Promis</span>e polyfill<span class="cstat-no" title="statement not covered" > (remove al</span>so from webpack.config.js)
-Bluebird<span class="cstat-no" title="statement not covered" >.config({ warni<span class="cstat-no" title="statement not covered" >ngs: { wForg<span class="cstat-no" title="statement not covered" >o</span></span>ttenReturn: false } });</span>
-//console.log('platform locates:', PLATFORM.moduleName('aurelia-async/dist/aurelia-async.js'))
-export async function configure(aurelia: Aurelia) {
-<span class="cstat-no" title="statement not covered" >  aurelia.use</span>
-    .standardConfiguration()
-    .developmentLogging();
+ <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span></span></span>
+requ<span class="cstat-no" title="statement not covered" >ire('jquery-ui-dist/jquery-ui.js')<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+require('jque<span class="fstat-no" title="function not covered" >ry-ui</span>-dis<span class="cstat-no" title="statement not covered" >t/jquer<span class="fstat-no" title="function not covered" >y-</span>ui.css')<span class="cstat-no" title="statement not covered" ></span></span>
+require('boot<span class="fstat-no" title="function not covered" >strap</span>'); // reference window.jQuery
+require(<span class="cstat-no" title="statement not covered" >'nouisl<span class="cstat-no" title="statement not covered" >ider/distribute/nouislider.css');</span></span>
+require(<span class="cstat-no" title="statement not covered" >'nouislide<span class="cstat-no" title="statement not covered" >r/distribute/nouislider.js');</span></span>
+require('wnu<span class="cstat-no" title="statement not covered" >mb/wNumb.js');<span class="cstat-no" title="statement not covered" ></span></span>
+require('mom<span class="cstat-no" title="statement not covered" >ent');<span class="cstat-no" title="statement not covered" ></span></span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  aurelia.use.plugin(PLATFORM.moduleName('aure</span>lia-bootstrap'));
-<span class="cstat-no" title="statement not covered" >  aurelia.use.plugin(PLATFORM.moduleName('aur</span>elia-dialog'));
-  aurelia.use.plugin<span class="cstat-no" title="statement not covered" >(PLATFORM.moduleName('a</span>urelia-binding-functions'));
-  aurelia.use.p<span class="cstat-no" title="statement not covered" >lugin(PLATFORM.modul</span>eName('aurelia-async')); 
-  // aurelia.use.plugin(PLATFORM.moduleName('aurelia-redux-plugin'));
-  await aurelia.start();
+require('aurelia-async')<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span>
+Bluebird.config({ warni<span class="cstat-no" title="statement not covered" >ngs: { wFo<span class="cstat-no" title="statement not covered" >r</span>gottenReturn: false } });</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span></span>
+export async function c<span class="cstat-no" title="statement not covered" >onfigure(aurelia:<span class="cstat-no" title="statement not covered" > </span>Aurelia) {<span class="cstat-no" title="statement not covered" ></span></span>
+  aurelia.use
+    .standardConfigu<span class="cstat-no" title="statement not covered" >ration()<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+    .developmentLogg<span class="cstat-no" title="statement not covered" >ing();<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span></span>
+  aurelia.use.plugin<span class="cstat-no" title="statement not covered" >(PLATFORM.moduleName('aure<span class="cstat-no" title="statement not covered" >lia-bootstrap')<span class="cstat-no" title="statement not covered" >)</span>;<span class="cstat-no" title="statement not covered" ></span></span></span>
+  aurelia.use.plugin<span class="cstat-no" title="statement not covered" >(PLATFORM.<span class="cstat-no" title="statement not covered" >moduleName('a</span></span>urelia-dialog'));
+  aurelia.use.plugin<span class="cstat-no" title="statement not covered" >(PLATFORM.mod<span class="cstat-no" title="statement not covered" >u</span>leName('a</span>urelia-binding-functions'));
+  aurelia.use.plugin(PLATFORM.moduleName('aurelia-async')); 
+ <span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
+  await <span class="cstat-no" title="statement not covered" >aurelia.start()<span class="cstat-no" title="statement not covered" >;<span class="cstat-no" title="statement not covered" ></span></span></span>
   await aurelia.setRoot(PLATFORM.moduleName('app'));
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 <span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 11 2017 20:28:15 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 12:57:24 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

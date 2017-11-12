@@ -1,3 +1,6 @@
+import * as moment from 'moment';
+
+
 function ArrayById(o) {
     return Object.keys(o).map(k => o[k]);
 }
@@ -73,6 +76,11 @@ function extend(obj) {
         return new ExtensionMonad(obj);
 }
 
+function formatFromMsString(s: String) {
+    let d = new Date(Number(s));
+    return moment(d).format('MM/DD/YYYY');
+}
 
 
-export { ArrayById, ArrayToObject, extend };
+
+export { ArrayById, ArrayToObject, extend, formatFromMsString };

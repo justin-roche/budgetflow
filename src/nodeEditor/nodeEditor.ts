@@ -2,6 +2,7 @@ import { inject, bindable } from 'aurelia-framework';
 import $ from 'jquery'
 import * as Rx from 'rxjs';
 import { Store } from '../services/reduxStore';
+import { _ } from 'underscore';
 
 @inject(Store)
 export class NodeEditor {
@@ -12,7 +13,8 @@ export class NodeEditor {
     nodeData;
 
     constructor(private store: Store) {
-        this.store.select('ui.graphContainer.selectedNodeId', { state: true, bind: [this, 'nodeId'] }).subscribe(id => {
+        this.store.select('ui.graphContainer.selectedNodeId', { state: true, bind: [this, 'nodeId'] })
+        .subscribe(id => {
             if(id !== null) this.update(id);
         })
     }
@@ -39,8 +41,14 @@ export class NodeEditor {
         let node = graph.nodes[id];
         this.nodeData = graph.nodesData[id];
         this.form.name = this.nodeData.name;
-
-
+        this.form.type = this.nodeData.type;
+        this.form.stepFunctions = this.nodeData.stepFunctions.map(fn => 
+            { return {...fn, ...{_arguments: _.map(fn.arguments, (v, key) => {
+                return {name: key, value: v}
+            })
+        }}
+        });
+        console.log('ne form', this.form);
 
         // let outEdges = node.outEdges.map(en => graph.edges[en]);
         // let outEdgesData = outEdges.map(ed => graph.edgesData[ed.id]);
