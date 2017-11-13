@@ -6,21 +6,29 @@ let stepFunctions = {
         arguments: {
             amount: null,
         },
+        defaults: {
+            amount: 1
+        },
         fn: function (state, nodeData, args) {
             return { value: nodeData.value + args.amount }
         },
+        dataTypes: ['money']
+        
     },
 
     interest: {
 
         name: 'interest',
         arguments: {
-            rate: null,
-            frequency: null,
+            rate: .05,
+        },
+        defaults: {
+            rate: .06,
         },
         fn: function (args, nodeData) {
             return { value: nodeData.value + nodeData.value * args.rate }
         },
+        dataTypes: ['money']
     },
 
 }

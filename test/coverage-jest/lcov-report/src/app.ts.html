@@ -22,7 +22,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/45</span>
+        <span class='fraction'>0/43</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/38</span>
+        <span class='fraction'>0/36</span>
       </div>
     </div>
   </div>
@@ -85,8 +85,7 @@
 40
 41
 42
-43
-44</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+43</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -107,14 +106,12 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -129,56 +126,56 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Stor<span class="cstat-no" title="statement not covered" >e } from './services/reduxSto<span class="cstat-no" title="statement not covered" >r</span>e';</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Stor<span class="cstat-no" title="statement not covered" >e } from './services/reduxSto<span class="cstat-no" title="statement not covered" >r</span>e';</span>
 import { Aurelia,<span class="cstat-no" title="statement not covered" > inject } from 'aurelia-fra<span class="fstat-no" title="function not covered" >me</span>work';</span>
-import {Rout<span class="cstat-no" title="statement not covered" >er, RouterConfigu</span>rati<span class="cstat-no" title="statement not covered" >on} from 'aurelia-router';</span>
-impo<span class="cstat-no" title="statement not covered" >rt {PLATFORM} from 'aurelia-pal';<span class="cstat-no" title="statement not covered" ></span></span>
+import { Rou<span class="cstat-no" title="statement not covered" >ter, RouterConfig</span>urat<span class="cstat-no" title="statement not covered" >ion } from 'aurelia-router';</span>
+impo<span class="cstat-no" title="statement not covered" >rt { PLATFORM } from 'aurelia-pal';<span class="cstat-no" title="statement not covered" ></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt { createStore, applyMiddleware } from 'redux';<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ></span></span></span>
 impo<span class="cstat-no" title="statement not covered" >rt { rootReducer } from './reducers/root';</span>
 import { graphActions } from './reducers/graphReducer';
 import { uiAction<span class="cstat-no" title="statement not covered" >s } from './reducers/uiRedu<span class="fstat-no" title="function not covered" >ce</span>r';</span>
-impo<span class="cstat-no" title="statement not covered" >rt { simulationActions } from './reducers/simulationReducer';<span class="cstat-no" title="statement not covered" ></span></span>
-import { state } from './state';
-<span class="cstat-no" title="statement not covered" ></span>
-import logger from <span class="cstat-no" title="statement not covered" >'redux-logger'</span>
+impo<span class="cstat-no" title="statement not covered" >rt { state } from './state';<span class="cstat-no" title="statement not covered" ></span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >import logger from 'redux-logger'</span>
 <span class="cstat-no" title="statement not covered" ></span>
 @inject(Store)<span class="cstat-no" title="statement not covered" ></span>
-export class A<span class="cstat-no" title="statement not covered" >pp {</span>
-  router: Rou<span class="cstat-no" title="statement not covered" >ter;</span>
+export class App {<span class="cstat-no" title="statement not covered" ></span>
+  router: Rout<span class="cstat-no" title="statement not covered" >er;</span>
 <span class="cstat-no" title="statement not covered" ></span>
-  constructor(priv<span class="cstat-no" title="statement not covered" >ate store: (Store)) {</span>
-    store.provideStore(cre<span class="cstat-no" title="statement not covered" >ateStore(rootReducer, applyMiddleware(lo</span>gger)));
-    store.prov<span class="cstat-no" title="statement not covered" >ideActions([graphAc</span>tions, uiActions, simulationActions])
+  constructor(private<span class="cstat-no" title="statement not covered" > store: (Store)) {</span>
+    store.provideS<span class="cstat-no" title="statement not covered" >tore(createStore(rootReducer, ap</span>plyMiddleware(logger)));
+    store.prov<span class="cstat-no" title="statement not covered" >ideActions([graphAc</span>tions, uiActions])
     this.hydrateIniti<span class="cstat-no" title="statement not covered" >al();</span>
   }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
 <span class="fstat-no" title="function not covered" ></span>
   hydrat<span class="cstat-no" title="statement not covered" >eInitial() {</span>
-    this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: 'GRAPHS_SET', payload: state.graphs});</span>
-    this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: 'GRAPH_SET', payload: state.graph});</span>
-    this<span class="cstat-no" title="statement not covered" >.store.dispatch({type: </span>'UI_SET', payload: state.ui});
+    this<span class="cstat-no" title="statement not covered" >.store.dispatch({ type: 'GRAPHS_SET', payload: state.graphs });</span>
+    <span class="cstat-no" title="statement not covered" ></span>
+    this<span class="cstat-no" title="statement not covered" >.store.dispatch({ type:</span> 'UI_SET', payload: state.ui });
     setTimeout(function(){
-<span class="cstat-no" title="statement not covered" >      this.store.actions.graph.setG<span class="fstat-no" title="function not covered" >ra</span>ph(state.graphs.filter(g =&gt; g.data.name === '1 node').pop());</span>
+<span class="cstat-no" title="statement not covered" >      this.store.actions.graph.setG<span class="fstat-no" title="function not covered" >ra</span>ph(state.graphs.filter(g =&gt; g.data.name === 'tree').pop());</span>
       th<span class="cstat-no" title="statement not covered" >is.store.actions.graph.applyDisplayFunctions();</span>
-    }.bi<span class="cstat-no" title="statement not covered" >nd(this),0)</span>
-}<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-  configureR<span class="cstat-no" title="statement not covered" >outer(config: RouterConfiguration, router: Router) {<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-    config.t<span class="cstat-no" title="statement not covered" >itle = 'Aurelia';</span>
+    }.bi<span class="cstat-no" title="statement not covered" >nd(this),0);</span>
+  }<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+  configureR<span class="cstat-no" title="statement not covered" >outer(config: RouterConfiguration, router: Router)</span> {
+    config.title = 'Aurelia';
     config.map([
-      { route: ['', 'test'], name: 'test',      moduleId: PLATFORM.moduleName('./home/home'),      nav: true, title: 'test' },
-<span class="cstat-no" title="statement not covered" >      // { route: 'users',         n<span class="fstat-no" title="function not covered" >am</span>e: 'users',        moduleId: PLATFORM.moduleName('./users'),        nav: true, title: 'Github Users' },</span>
-      //<span class="cstat-no" title="statement not covered" > { route: 'child-router', </span> name: 'child-router', moduleId: PLATFORM.moduleName('./child-router'), nav: true, title: 'Child Router' },
-    ]);<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >      { route: ['', 'test'], name: '<span class="fstat-no" title="function not covered" >te</span>st', moduleId: PLATFORM.moduleName('./home/home'), nav: true, title: 'test' },</span>
+      //<span class="cstat-no" title="statement not covered" > { route: 'users',        </span> name: 'users',        moduleId: PLATFORM.moduleName('./users'),        nav: true, title: 'Github Users' },
+      //<span class="cstat-no" title="statement not covered" > { route: 'child-router',  name: 'child-router', moduleId: PLATFORM.moduleName('./child-router'), nav: true, title: 'Child Router' },</span>
+    ]);
 &nbsp;
-    this.router = router;
-  }<span class="cstat-no" title="statement not covered" ></span>
-}</pre></td></tr>
+    this<span class="cstat-no" title="statement not covered" >.router = router;</span>
+  }
+}<span class="cstat-no" title="statement not covered" ></span></pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 14:26:09 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 15:35:05 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -16,9 +16,9 @@ export class TimeSlider {
     constructor(private store: Store) {
         // this.store.actions.ui.updateSliderSettings();
         
-        // this.store.select('graph.simulation', {bind: [this, '_simulation'] }).subscribe(_ => {
-        //     this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');            
-        // });
+        this.store.select('graph.simulation', {bind: [this, '_simulation'] }).subscribe(_ => {
+            this._simulation.on? $('.noUi-handle').addClass('active-simulation-handle') : $('.noUi-handle').removeClass('active-simulation-handle');            
+        });
         
     }
 
@@ -28,12 +28,12 @@ export class TimeSlider {
 
     attached() {
         //this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
-        // this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {bind: [this, 'sliderSettings']}).subscribe(settings => {
-        //     this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
-        // });
-        // this.store.select('graph.simulation.currentTime').subscribe(t => {
-        //     this.ref.noUiSlider.set(t);
-        // })        
+        this.store.select('ui.timeSlider.sliderSettings.beginRangeTime', {bind: [this, 'sliderSettings']}).subscribe(settings => {
+            this.createSlider(this.store.getPresentState().ui.timeSlider.sliderSettings);
+        });
+        this.store.select('graph.simulation.currentTime').subscribe(t => {
+            this.ref.noUiSlider.set(t);
+        })        
     }
 
     createSlider(settings) {

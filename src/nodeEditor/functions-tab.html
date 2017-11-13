@@ -1,0 +1,9 @@
+<template>
+        <i click.trigger="newStepFunction = {}" class="glyphicon glyphicon-plus timeline-button"></i>
+        <i click.trigger="mode = 'NEW'" class="glyphicon glyphicon-minus timeline-button"></i>
+      
+    <compose if.bind="newStepFunction" view="./function-editor.html"></compose>
+    <compose view="./step-functions-list.html"></compose>
+
+    
+</template>

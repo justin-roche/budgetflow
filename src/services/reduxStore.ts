@@ -80,8 +80,12 @@ export class Store {
             })
         }
 
-        let previous = selector.split('.').reduce((acc, prop) => {
-            // if(acc[options.time]) return acc[options.time][prop];
+        let previous = selector.split('.').reduce((acc, prop, i) => {
+            if(acc === null && i!== selector.length-1) {
+                console.log('selector parent domain not found', selector)
+                debugger;
+                return null;
+            }
             return acc[prop];
         }, this.store.getState());
 

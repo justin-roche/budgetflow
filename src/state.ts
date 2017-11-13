@@ -72,7 +72,7 @@ let state = {
                     density: 4
                 },
     
-                step: null,
+                step: 1000*60*60*24*7,
             }
         }
     },

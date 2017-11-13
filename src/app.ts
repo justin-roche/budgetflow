@@ -6,7 +6,6 @@ import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
 import { graphActions } from './reducers/graphReducer';
 import { uiActions } from './reducers/uiReducer';
-import { simulationActions } from './reducers/simulationReducer';
 import { state } from './state';
 
 import logger from 'redux-logger'
@@ -17,7 +16,7 @@ export class App {
 
   constructor(private store: (Store)) {
     store.provideStore(createStore(rootReducer, applyMiddleware(logger)));
-    store.provideActions([graphActions, uiActions, simulationActions])
+    store.provideActions([graphActions, uiActions])
     this.hydrateInitial();
   }
 
@@ -26,8 +25,10 @@ export class App {
     
     this.store.dispatch({ type: 'UI_SET', payload: state.ui });
     setTimeout(function(){
-      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'tree').pop());
+      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === '1 node').pop());
       this.store.actions.graph.applyDisplayFunctions();
+      this.store.actions.ui.selectNode('n0');
+      this.store.dispatch({ type: 'UI_NODE_EDITOR_TOGGLE' });
     }.bind(this),0);
   }
 

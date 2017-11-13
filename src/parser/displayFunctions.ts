@@ -5,7 +5,7 @@ let displayFunctions = {
         return {...nodeData.displayData, label: nodeData.id + ':' + nodeData.value};
     },
 
-    labelByName: function(s: Graph, nodeData) : NodeDisplayData {
+    labelByName: function(s: Graph, nodeData, args) : NodeDisplayData {
         let newNodeData = {...nodeData }
         return {...nodeData.displayData, label: nodeData.name + ':' + nodeData.value};
     },
@@ -18,10 +18,6 @@ let displayFunctions = {
         let active = edges.some(edge => edge.active === true);
         return {...nodeData.displayData, active: active};
     },
-
-    // idByIndex: function(node,i){
-    //     node.index = 'n'+i;
-    // },
 
     // toggle: function(node) {
     //     if (node.data.active) {

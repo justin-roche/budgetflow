@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">44.87% </span>
+        <span class="strong">42.68% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>35/78</span>
+        <span class='fraction'>35/82</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/22</span>
+        <span class='fraction'>0/26</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">52.63% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>10/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">44.62% </span>
+        <span class="strong">42.03% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>29/65</span>
+        <span class='fraction'>29/69</span>
       </div>
     </div>
   </div>
@@ -161,7 +161,11 @@
 116
 117
 118
-119</td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+119
+120
+121
+122
+123</td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
@@ -174,19 +178,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">31x</span>
-<span class="cline-any cline-yes">93x</span>
+<span class="cline-any cline-yes">62x</span>
 <span class="cline-any cline-yes">31x</span>
-<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">62x</span>
-<span class="cline-any cline-yes">806x</span>
-<span class="cline-any cline-yes">806x</span>
+<span class="cline-any cline-yes">31x</span>
+<span class="cline-any cline-yes">589x</span>
+<span class="cline-any cline-yes">589x</span>
 <span class="cline-any cline-yes">83x</span>
 <span class="cline-any cline-yes">83x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">62x</span>
+<span class="cline-any cline-yes">31x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -198,10 +202,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">207x</span>
-<span class="cline-any cline-yes">207x</span>
-<span class="cline-any cline-yes">207x</span>
-<span class="cline-any cline-yes">207x</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-yes">176x</span>
+<span class="cline-any cline-yes">176x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -243,6 +247,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -361,8 +369,12 @@ export class Store {
             })
         }
 &nbsp;
-        let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >previous = selector.</span>split('.').reduce((acc, prop) =&gt; {</span>
-            // if(acc[options.time]) return acc[options.time][prop];
+        let <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >previous = selector.</span>split('.').reduce((acc, prop, i) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            if(acc === null &amp;&amp; i!== selector.length-1) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('selector parent domain not found', s</span>elector)
+<span class="cstat-no" title="statement not covered" >                debugger;</span>
+<span class="cstat-no" title="statement not covered" >                return n</span>ull;
+            }
 <span class="cstat-no" title="statement not covered" >            return acc[p</span>rop];
         }, this.store.getState());
 &nbsp;
@@ -403,7 +415,7 @@ export class Store {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 14:26:09 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 12 2017 15:35:05 GMT-0500 (EST)
 </div>
 </div>
 <script src="../prettify.js"></script>

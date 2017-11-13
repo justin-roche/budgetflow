@@ -4,7 +4,7 @@ let singleNode = {
     data: {
         id: 'g1',
         name: '1 node',
-        displayFunctions: { nodes: [{ name: 'labelById', arguments: [] }] },
+        displayFunctions: { nodes: [{ name: 'labelByName', arguments: [] }] },
     },
     nodes: {
         'n0': {
@@ -19,6 +19,7 @@ let singleNode = {
             id: 'n0',
             name: null,
             type: 'source',
+            dataType: 'money',
             active: true,
             value: 0,
             stepFunctions: [
