@@ -1,0 +1,10 @@
+<template>
+       
+    <i click.trigger="newFunction = {}" class="glyphicon glyphicon-plus timeline-button"></i>
+    <i click.trigger="mode = 'NEW'" class="glyphicon glyphicon-minus timeline-button"></i>
+
+    <compose if.bind="newFunction" view="./function-editor-new.html"></compose>
+    <compose show.bind="true" view="./function-editor-list.html"></compose>
+
+
+</template>

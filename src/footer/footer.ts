@@ -20,12 +20,12 @@ export class Footer {
   }
 
   forward() { 
-    this.store.actions.simulation.incrementTargetTime()
-    
+    this.store.actions.graph.incrementTargetTime()
+    this.store.actions.graph.simulate();
   }
 
   backward() { 
-    this.store.actions.simulation.decrementTargetTime()
+    this.store.actions.graph.decrementTargetTime()
   }
 
   

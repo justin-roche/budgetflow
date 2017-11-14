@@ -6,6 +6,7 @@ let singleNode = {
         name: '1 node',
         displayFunctions: { nodes: [{ name: 'labelByName', arguments: [] }] },
     },
+    nodesIds: ['n0'],
     nodes: {
         'n0': {
             id: 'n0',
@@ -32,6 +33,7 @@ let singleNode = {
             displayData: { outlineColor: 'blue' },
         }
     },
+    edgesIds: [],
     edges: {
 
     },

@@ -25,8 +25,8 @@ let stepFunctions = {
         defaults: {
             rate: .06,
         },
-        fn: function (args, nodeData) {
-            return { value: nodeData.value + nodeData.value * args.rate }
+        fn: function (state, nodeData, args) {
+            return { value: nodeData.value + (nodeData.value * args.rate) }
         },
         dataTypes: ['money']
     },

@@ -145,7 +145,7 @@ function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): Link
 function applyStepFunction(state: Graph, nodeData) {
     let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
         let fn = stepFunctions[functionSettings.name].fn;
-        let newSlice = fn(state, nodeData, ...functionSettings.arguments);
+        let newSlice = fn(state, acc, ...functionSettings.arguments);
         let updated = { ...acc, ...newSlice };
         return updated;
     }, { ...nodeData });
