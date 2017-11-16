@@ -1,10 +1,8 @@
 <template>
         <require from="./IterableConverter"></require>
     <div>
-        the list
         <aubs-accordion show.bind="settings.currentFunctions" >
             <aubs-accordion-group repeat.for="fn of settings.currentFunctions" title="${fn.name}">
-                a fn
                 <div>
                     <table class="table">
                         <thead>

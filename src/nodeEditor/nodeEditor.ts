@@ -55,7 +55,7 @@ export class NodeEditor {
         this.form.type = this.nodeData.type;
         
         
-        console.log('reeeee', this.functionEditorSettings);
+        
 
         this.selectableStepFunctions = _.filter(stepFunctions, fn => {
             return fn.dataTypes.some(dt => {
@@ -67,6 +67,8 @@ export class NodeEditor {
             currentFunctions: this.nodeData.stepFunctions.map(fn =>JSON.parse(JSON.stringify(fn))),
             selectableFunctions: this.selectableStepFunctions;
         }
+
+        console.log('reeeee', this.functionEditorSettings);
 
         console.log('ne form', this.form);
 

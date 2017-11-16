@@ -56,16 +56,29 @@ class ExtensionMonad {
 
         extend(accessPath, obj, base, lastProp) {
             if(accessPath.length === 0) {
+                if (Array.isArray(obj)) {
+                    return [].concat(obj);
+                }
                 return {...obj};
             } else {
                 let oldSlice = this.access(accessPath);
                 let newSlice;
                 if(lastProp) {
-                    newSlice = {...oldSlice, [lastProp]: {...obj}} //extend on a prop
+                    if(Array.isArray(oldSlice)) {
+                        newSlice = [].concat(oldSlice.concat(obj));
+                    } else {
+                        newSlice = {...oldSlice, [lastProp]: {...obj}} //extend on a prop
+                    }
+                    
                 } else {
-                    newSlice = {...oldSlice, ...obj}  // merge over
+                    if(Array.isArray(oldSlice)){
+                        newSlice = [].concat(oldSlice.concat(obj));
+                    } else {
+                        newSlice = {...oldSlice, ...obj}  // merge over
+                    }
                 }
-                lastProp = accessPath.pop();
+                lastProp = accessPath.pop(); 
+                // the next call gets the next highest object in the access path and extends it with the new slice
                 return this.extend(accessPath, newSlice, base, lastProp)
             }
             

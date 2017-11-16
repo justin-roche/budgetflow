@@ -1,4 +1,4 @@
-let singleNode = {
+let singleNode: Graph = {
 
     id: 'g1',
     data: {
@@ -40,6 +40,8 @@ let singleNode = {
     edgesData: {
 
     },
+    conditions: [],
+    conditionsIds: [],
     simulation: <Simulation>{
         on: false,
         cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
