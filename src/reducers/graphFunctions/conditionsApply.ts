@@ -39,7 +39,7 @@ function applyEdgeConditions(state: Graph, edgeData) {
 function applyConditions(state: Graph, conditionIds, edgeData) {
     let updatedConds = conditionIds.map(condId => {
         let cond = state.conditions[condId];
-        return { ...cond, value: linkFunctions.evaluateEdgeCondition(state, edgeData, cond.expression) };
+        return { ...cond, value: evaluateEdgeCondition(state, edgeData, cond.expression) };
     })
 
     let necessary = updatedConds.filter(cond => cond.scope = "necessary");
@@ -65,6 +65,11 @@ function updateConditionExpression(state: Graph, condition) {
     return extend(state).select(`conditions.${condition.id}`).data((obj: any) => {
         return { ...obj, expression: condition.expression };
     });
+}
+
+function evaluateEdgeCondition (state: Graph, edgeData: EdgeData, expression: string) {
+    let testResult = eval(expression);
+    return testResult;
 }
 
 export { applyEdgesConditions, updateConditionExpression };

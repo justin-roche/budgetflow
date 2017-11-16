@@ -133,7 +133,7 @@ function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): Link
     return edge.linkFunctions.reduce((acc, functionSettings) => {
         let fn = linkFunctions[functionSettings.name].fn;
 
-        let linkPair = fn(acc.linkedSource, target, ...functionSettings.arguments);
+        let linkPair = fn(acc.linkedSource, target, functionSettings.arguments);
         return {
             linkedSource: linkPair.source,
             linkedTarget: linkPair.target

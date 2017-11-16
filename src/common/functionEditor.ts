@@ -18,43 +18,10 @@ export class FunctionEditor {
 
     }
 
-    // decorateCurrentFunctions() {
-    //     this.currentFunctions = this.currentFunctions.map(fn => {
-    //         return {
-    //             ...fn, ...{
-    //                 _arguments: _.map(fn.arguments, (v, key) => {
-    //                     return { name: key, value: v }
-    //                 })
-    //             }
-    //         }
-    //     });
-    // }
-
-    // decorateSelectableFunctions() {
-    //     this.selectableFunctions = this.selectableFunctions.map(fn => {
-    //         return {
-    //             ...fn, ...{
-    //                 _arguments: _.map(fn.arguments, (v, key) => {
-    //                     return { name: key, value: fn.defaults[key] }
-    //                 }),
-    //             }
-    //         }
-    //     })
-    // }
 
     newFunctionSelected(item) {
-        
-        // this.newFunction = this.settings.selectableFunctions[item.name];
-        // this.newFunction
-        
-        // this.newFunction = {
-        //     ... this.newFunction, ...{
-        //         arguments: _.map( this.newFunction.arguments, (v, key) => {
-        //             return { name: key, value:  this.newFunction.defaults[key] }
-        //         }), // iterable arguments for template
-        //     }
-        // };
-        // console.log('selected', this.newFunction)
+        this.settings.newFunction = item;
+       
     }
 
 }

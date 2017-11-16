@@ -54,9 +54,6 @@ export class NodeEditor {
         this.form.name = this.nodeData.name;
         this.form.type = this.nodeData.type;
         
-        
-        
-
         this.selectableStepFunctions = _.filter(stepFunctions, fn => {
             return fn.dataTypes.some(dt => {
                 return dt === this.nodeData.dataType;
@@ -65,31 +62,28 @@ export class NodeEditor {
 
         this.functionEditorSettings = {
             currentFunctions: this.nodeData.stepFunctions.map(fn =>JSON.parse(JSON.stringify(fn))),
-            selectableFunctions: this.selectableStepFunctions;
+            selectableFunctions: this.selectableStepFunctions
         }
-
-        console.log('reeeee', this.functionEditorSettings);
-
-        console.log('ne form', this.form);
 
     }
 
     
 
     submit() {
-        // if(this.tabMode === 'profile') {
-        //     this.store.actions.graph.updateNodeData({ ...this.nodeData, ...this.form });
-        // }
-        // if(this.tabMode === 'functions') {
-        //     if(this.newStepFunction) {
-        //         this.form.stepFunctions = this.nodeData.stepFunctions.concat({...this.newStepFunction});
-        //         this.store.actions.graph.updateNodeData({ ...this.nodeData, ...this.form });
-        //         this.newStepFunction = null;
+        if(this.tabMode === 'profile') {
+            this.store.actions.graph.updateNodeData({ ...this.nodeData, ...this.form });
+        }
+        if(this.tabMode === 'functions') {
+            if(this.functionEditorSettings.newFunction) {
+                this.form.stepFunctions = this.nodeData.stepFunctions.concat({...this.functionEditorSettings.newFunction});
                 
-        //     }
-        // }
+                this.store.actions.graph.updateNodeData({ ...this.nodeData, ...this.form });
+                this.newStepFunction = null;
+                
+            }
+        }
        
-        // this.store.actions.graph.applyDisplayFunctions();
+        this.store.actions.graph.applyDisplayFunctions();
     }
 
     save() {

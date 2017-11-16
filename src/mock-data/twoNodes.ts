@@ -59,7 +59,7 @@ let twoNodes: Graph = {
             id: 'e0',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: [1] }],
+            linkFunctions: [{ name: 'transfer', arguments: {amount: 1} }],
             stepFunctions: null,
             conditions: [],
         },
