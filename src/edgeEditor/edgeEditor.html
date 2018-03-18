@@ -4,8 +4,11 @@
     <modal-wrapper selector.bind="'ui.edgeEditor.modalSettings'">
         <div slot="modalbody">
             <aubs-tabset>
-                <aubs-tab header="Profile">
+                <aubs-tab on-select.call="tabMode = 'profile'" header="Profile">
                     <compose view="./profile-tab.html"></compose>
+                </aubs-tab>
+                <aubs-tab on-select.call="tabMode = 'functions'" header="Functions">
+                    <compose  view="./functions-tab.html"></compose>
                 </aubs-tab>
                 <aubs-tab header="Conditions">
                     <compose view="./conditional-editor.html"></compose>

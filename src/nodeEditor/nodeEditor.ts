@@ -17,6 +17,7 @@ export class NodeEditor {
     newStepFunction;
     selectableStepFunctions = [];
     mode = null;
+    functionEditorSettings;
 
     constructor(private store: Store) {
         this.store.select('ui.graphContainer.selectedNodeId', { state: true, bind: [this, 'nodeId'] })
@@ -49,59 +50,33 @@ export class NodeEditor {
     buildNodeModel(id) {
         let graph = this.store.getPresentState().graph;
 
-        let node = graph.nodes[id];
         this.nodeData = graph.nodesData[id];
         this.form.name = this.nodeData.name;
         this.form.type = this.nodeData.type;
-        this.form.stepFunctions = this.nodeData.stepFunctions.map(fn => {
-            return {
-                ...fn, ...{
-                    _arguments: _.map(fn.arguments, (v, key) => {
-                        return { name: key, value: v }
-                    })
-                }
-            }
-        });
-
+        
         this.selectableStepFunctions = _.filter(stepFunctions, fn => {
             return fn.dataTypes.some(dt => {
                 return dt === this.nodeData.dataType;
             })
-        }).map(fn => {
-            return {
-                ...fn, ...{
-                    _arguments: _.map(fn.arguments, (v, key) => {
-                        return { name: key, value: fn.defaults[key] }
-                    }),
-                }
-            }
         })
-        console.log('ne form', this.form);
+
+        this.functionEditorSettings = {
+            currentFunctions: this.nodeData.stepFunctions.map(fn =>JSON.parse(JSON.stringify(fn))),
+            selectableFunctions: this.selectableStepFunctions
+        }
 
     }
 
-    stepFunctionSelected(item) {
-        
-        this.newStepFunction = stepFunctions[item.name];
-        let defaultedArguments = {};
-        
-        this.newStepFunction = {
-            ... this.newStepFunction, ...{
-                _arguments: _.map( this.newStepFunction.arguments, (v, key) => {
-                    return { name: key, value:  this.newStepFunction.defaults[key] }
-                }), // iterable arguments for template
-            }
-        };
-        console.log('selected', this.newStepFunction)
-    }
+    
 
     submit() {
         if(this.tabMode === 'profile') {
             this.store.actions.graph.updateNodeData({ ...this.nodeData, ...this.form });
         }
         if(this.tabMode === 'functions') {
-            if(this.newStepFunction) {
-                this.form.stepFunctions = this.nodeData.stepFunctions.concat({...this.newStepFunction});
+            if(this.functionEditorSettings.newFunction) {
+                this.form.stepFunctions = this.nodeData.stepFunctions.concat({...this.functionEditorSettings.newFunction});
+                
                 this.store.actions.graph.updateNodeData({ ...this.nodeData, ...this.form });
                 this.newStepFunction = null;
                 

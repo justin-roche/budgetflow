@@ -83,7 +83,6 @@ export class Store {
         let previous = selector.split('.').reduce((acc, prop, i) => {
             if(acc === null && i!== selector.length-1) {
                 console.log('selector parent domain not found', selector)
-                debugger;
                 return null;
             }
             return acc[prop];

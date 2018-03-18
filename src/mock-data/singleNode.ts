@@ -1,4 +1,4 @@
-let singleNode = {
+let singleNode: Graph = {
 
     id: 'g1',
     data: {
@@ -6,6 +6,7 @@ let singleNode = {
         name: '1 node',
         displayFunctions: { nodes: [{ name: 'labelByName', arguments: [] }] },
     },
+    nodesIds: ['n0'],
     nodes: {
         'n0': {
             id: 'n0',
@@ -32,12 +33,15 @@ let singleNode = {
             displayData: { outlineColor: 'blue' },
         }
     },
+    edgesIds: [],
     edges: {
 
     },
     edgesData: {
 
     },
+    conditions: [],
+    conditionsIds: [],
     simulation: <Simulation>{
         on: false,
         cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
