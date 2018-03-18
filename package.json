@@ -101,7 +101,6 @@
     "webpack-dev-server": "2.5.1"
   },
   "dependencies": {
-    "aurelia-async": "^0.6.1",
     "aurelia-binding-functions": "^0.2.2",
     "aurelia-bootstrap": "^0.1.20",
     "aurelia-bootstrapper": "2.1.1",
@@ -132,11 +131,14 @@
     "isomorphic-fetch": "2.2.1",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
+    "jquery-ui-dist": "^1.12.1",
+    "nouislider": "^11.0.3",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-undo": "^0.6.1",
     "rxjs": "^5.4.3",
     "sigma": "^1.2.0",
+    "underscore": "^1.8.3",
     "wnumb": "^1.1.0"
   }
 }
