@@ -47,7 +47,7 @@ describe('graph reducer', () => {
             store.actions.graph.simulate();
             s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(2);
-            store.actions.graph.incrementTargetTime();            
+            store.actions.graph.incrementTargetTime();
             store.actions.graph.simulate();
             s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(3);
@@ -55,7 +55,7 @@ describe('graph reducer', () => {
 
         it('applies step function arguments', () => {
             //let fd = s1.graph.nodesData['n0'].stepFunctions.filter(fd => fd.name === 'add')[0];
-            s1.graph.functions.f1.arguments = (<any>{amount: {value: 2}});
+            s1.graph.functions.f1.arguments = (<any>{ amount: { value: 2 } });
             store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(2);
@@ -84,7 +84,7 @@ describe('graph reducer', () => {
             store = createTestStore();
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'twoNodes').pop());
             s1 = store.getPresentState();
-            store.actions.graph.incrementTargetTime();            
+            store.actions.graph.incrementTargetTime();
         });
 
         it('does not mutate original state', () => {
@@ -141,7 +141,7 @@ describe('graph reducer', () => {
                 // 
             });
             s1.graph.functions = Object.assign(s1.graph.functions,
-                {'f3': { name: 'add', arguments: {amount: {value: 1}} }});
+                { 'f3': { name: 'add', arguments: { amount: { value: 1 } } } });
             console.log(s1.graph)
             store.actions.graph.simulate();
             let s2 = store.getPresentState();
@@ -176,7 +176,7 @@ describe('graph reducer', () => {
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'conditional').pop());
             s1 = store.getPresentState();
             store.actions.graph.incrementTargetTime();
-            
+
         });
 
         describe('inactive links', () => {
