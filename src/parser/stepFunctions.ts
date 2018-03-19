@@ -1,31 +1,33 @@
 let stepFunctions = {
 
     add: {
-
-        name: 'add',
-        arguments: {
-            amount: 1,
+        config: {
+            name: 'add',
+            arguments: {
+                amount: 1,
+            },
+            dataTypes: ['money'],
         },
-        // defaults: {
-        //     amount: 1
-        // },
-        fn: function (state, nodeData, args) {
-            return { value: nodeData.value + args.amount }
+        fn: function (arg: FunctionArgs) {
+            let graph = arg.graph;
+            let nodeData = arg.target;
+            let args = arg.config.arguments;
+            console.warn('args', args)
+            return { value: nodeData.value + args.amount.value }
         },
-        dataTypes: ['money']
-        
     },
 
     interest: {
-
-        name: 'interest',
-        arguments: {
-            rate: .05,
+        config: {
+            name: 'interest',
+            arguments: {
+                rate: .05,
+            },
+            dataTypes: ['money'],
         },
         fn: function (state, nodeData, args) {
             return { value: nodeData.value + (nodeData.value * args.rate) }
         },
-        dataTypes: ['money']
     },
 
 }

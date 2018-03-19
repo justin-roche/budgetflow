@@ -26,7 +26,7 @@ let singleNode: Graph = {
             stepFunctions: [
                 {
                     name: 'add',
-                    arguments: {amount: 1},
+                    arguments: {amount: {value: 1}},
                 }
             ],
             displayFunctions: [],

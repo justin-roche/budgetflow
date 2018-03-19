@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/3</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -35,13 +35,13 @@
         <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/3</span>
+        <span class='fraction'>5/5</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -73,7 +73,20 @@
 28
 29
 30
-31</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -81,6 +94,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -95,7 +114,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -106,31 +132,44 @@
 <span class="cline-any cline-yes">6x</span></td><td class="text"><pre class="prettyprint lang-js">let linkFunctions = {
 &nbsp;
     transfer: {
-        name: 'transfer',
-        arguments: {
-            amount: 1,
+        config: {
+            name: 'transfer',
+            arguments: {
+                amount: 1,
+            },
+            dataTypes: ['money'],
         },
-        fn: function(sourceNode, targetNode, args) {
-            return {source: {...sourceNode, value: sourceNode.value - args.amount},
-                    target: {...targetNode, value: targetNode.value + args.amount}};
+        fn: function (arg: FunctionArgs) {
+            let sourceNode: any = arg.source;
+            let targetNode: any = arg.target;
+            let args: ArgumentData = arg.config.arguments;
+            console.warn('args', JSON.stringify(args));
+            return {
+                source: { ...sourceNode, value: sourceNode.value - args['amount'].value },
+                target: { ...targetNode, value: targetNode.value + args['amount'].value }
+            };
         },
-        dataTypes: ['money'],
     },
 &nbsp;
     /* a transducer does not subtract from the original node, only increases the target node, because it is a different type of information */
     transduce: {
-        name: 'transduce',
-        arguments: {
-            dataType: 1,
-            ratio: 1,
+        config: {
+            name: 'transduce',
+            arguments: {
+                dataType: 1,
+                ratio: 1,
+            },
+            dataTypes: [],
         },
-        fn: <span class="fstat-no" title="function not covered" >function(</span>sourceNode, targetNode, amount, integral) {
-<span class="cstat-no" title="statement not covered" >            return {source: sourceNode,</span>
-            target: {...targetNode, value: targetNode.value + (amount * integral || 1)}};
+        fn: <span class="fstat-no" title="function not covered" >function (</span>sourceNode, targetNode, amount, integral) {
+            return {
+                source: sourceNode,
+                target: { ...targetNode, value: targetNode.value + (amount * integral || 1) }
+            };
         },
-        dataTypes: [],
+&nbsp;
     }
-    
+&nbsp;
 }
 &nbsp;
 export { linkFunctions }</pre></td></tr>
@@ -139,7 +178,7 @@ export { linkFunctions }</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Mar 17 2018 14:31:01 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Mar 18 2018 20:38:10 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>

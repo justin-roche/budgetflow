@@ -87,12 +87,12 @@ let convergentSourcesGraph = {
         "e0": {
             "id": "e0",
             active: true,
-            linkFunctions: [{ name: 'transfer', arguments: [1] }],
+            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
         },
         "e1": {
             "id": "e1",
             active: true,
-            linkFunctions: [{ name: 'transfer', arguments: [1] }],
+            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
         }
     }
 }

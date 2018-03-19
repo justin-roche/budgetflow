@@ -68,13 +68,13 @@ let conditionalGraph: Graph = {
     edgesData: {
         'e0': {
             id: 'e0',
-            linkFunctions: [{ name: 'transfer', arguments: [1] }],
+            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
             active: true,
         },
 
         'e1': {
             id: 'e1',
-            linkFunctions: [{ name: 'transfer', arguments: [1] }],
+            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
             active: false,
         },
     },

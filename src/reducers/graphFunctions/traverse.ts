@@ -128,12 +128,21 @@ declare interface LinkPair {
     linkedSource: NodeData,
     linkedTarget: NodeData
 }
+
+/* apply link function from source node to target node
+return both updated */
+
 function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): LinkPair {
 
     return edge.linkFunctions.reduce((acc, functionSettings) => {
         let fn = linkFunctions[functionSettings.name].fn;
 
-        let linkPair = fn(acc.linkedSource, target, functionSettings.arguments);
+        let linkPair = fn({
+            graph: state,
+            target: target,
+            source: source,
+            config: functionSettings
+        });
         return {
             linkedSource: linkPair.source,
             linkedTarget: linkPair.target
@@ -145,15 +154,17 @@ function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): Link
 function applyStepFunction(state: Graph, nodeData) {
     let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
         let fn = stepFunctions[functionSettings.name].fn;
-        let newSlice = fn(state, acc, ...functionSettings.arguments);
+        let newSlice = fn({
+            graph: state,
+            target: acc,
+            config: functionSettings
+        });
         let updated = { ...acc, ...newSlice };
         return updated;
     }, { ...nodeData });
 
     return update;
 }
-
-
 
 /* helper functions */
 

@@ -2,7 +2,6 @@ declare interface AppState {
     graphs: Array<Graph>,
     ui: UI
     graph: Graph
-    
 }
 
 declare interface Graph {
@@ -101,6 +100,35 @@ declare interface Edge {
 declare interface FunctionItem {
     name: string,
     arguments?: Object
+}
+
+/* type of link functions, node functions, and conditions */
+declare interface FunctionConfig {
+        name: String,
+        target: String, /* id of the target (node/edge)*/
+        type: String, /* link, node, or condition */
+        precondition: String /* active/inactive prior to running */
+        arguments: ArgumentData, /* key value map */
+        data: Object /* condition scope, data types, etc. */
+        fnId: String, /* points to the executed function */
+}
+
+declare interface FunctionArgs {
+    graph: Graph,
+    target: any,
+    source: any, 
+    config: FunctionConfig /* the functions own config object */
+}
+
+declare interface ArgumentData {
+    [index: string]: ArgumentConfig
+}
+
+declare interface ArgumentConfig {
+    name: String, /*  name in function */
+    displayName: String,
+    displayType: String /* type of selector */
+    value: any /* currently selected value */
 }
 
 declare interface Simulation {
