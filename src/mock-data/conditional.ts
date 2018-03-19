@@ -68,15 +68,26 @@ let conditionalGraph: Graph = {
     edgesData: {
         'e0': {
             id: 'e0',
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
             active: true,
         },
 
         'e1': {
             id: 'e1',
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
             active: false,
         },
+    },
+    functions: {
+        'f1': {
+             name: 'transfer', 
+             arguments: {amount: {value: 1}}, 
+             target: null,
+            //  type: null,
+            //  precondition: null,
+            //  data: null
+            //  fnId: null,
+            },
     },
     conditionsIds: ['c0'],
     conditions: {
@@ -91,7 +102,7 @@ let conditionalGraph: Graph = {
         }
         
     },
-    simulation: <Simulation>{
+    simulation: <Simulation> {
         on: false,
         cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
         beginRangeTime: new Date().getTime(),
@@ -100,7 +111,7 @@ let conditionalGraph: Graph = {
         targetTime: null,
         remainingCycles: 0,
         forward: null,
-    },
+    }
     
 }
 

@@ -1,13 +1,13 @@
 let tree: Graph = {
 
     id: 'g7',
-    data: <GraphData> {
+    data: <GraphData>{
         id: 'g7',
         name: 'tree',
-        displayFunctions: { nodes: [{ name: 'labelById', arguments: []}] }
+        displayFunctions: { nodes: [{ name: 'labelById', arguments: [] }] }
     },
-    nodesIds: ['n0', 'n1', 'n2', 'n3','n4','n5','n6'],
-    nodes: <Nodes> {
+    nodesIds: ['n0', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
+    nodes: <Nodes>{
         'n0': {
             id: 'n0',
             x: 300,
@@ -60,7 +60,7 @@ let tree: Graph = {
         },
     },
     nodesData: {
-        'n0':  <NodeData> {
+        'n0': <NodeData>{
             id: 'n0',
             name: null,
             type: 'source',
@@ -70,7 +70,7 @@ let tree: Graph = {
             displayFunctions: [],
             displayData: {},
         },
-        'n1':  <NodeData> {
+        'n1': <NodeData>{
             id: 'n1',
             name: null,
             type: 'sink',
@@ -80,7 +80,7 @@ let tree: Graph = {
             displayFunctions: [],
             displayData: {},
         },
-        'n2':  <NodeData> {
+        'n2': <NodeData>{
             id: 'n2',
             name: null,
             type: 'sink',
@@ -90,7 +90,7 @@ let tree: Graph = {
             displayFunctions: [],
             displayData: {},
         },
-        'n3':  <NodeData> {
+        'n3': <NodeData>{
             type: 'sink',
             name: null,
             id: 'n3',
@@ -100,7 +100,7 @@ let tree: Graph = {
             displayFunctions: [],
             displayData: {},
         },
-        'n4':  <NodeData> {
+        'n4': <NodeData>{
             type: 'sink',
             name: null,
             id: 'n4',
@@ -110,7 +110,7 @@ let tree: Graph = {
             displayFunctions: [],
             displayData: {},
         },
-        'n5':  <NodeData> {
+        'n5': <NodeData>{
             id: 'n5',
             name: null,
             type: 'sink',
@@ -120,7 +120,7 @@ let tree: Graph = {
             displayFunctions: [],
             displayData: {},
         },
-        'n6': <NodeData> {
+        'n6': <NodeData>{
             type: 'sink',
             name: null,
             id: 'n6',
@@ -131,8 +131,8 @@ let tree: Graph = {
             displayData: {},
         },
     },
-    edgesIds: ['e0', 'e00', 'e1', 'e2','e3','e4'],
-    edges: <Edges> {
+    edgesIds: ['e0', 'e00', 'e1', 'e2', 'e3', 'e4'],
+    edges: <Edges>{
         'e0': {
             id: 'e0',
             source: 'n0',
@@ -182,43 +182,57 @@ let tree: Graph = {
             type: 'arrow'
         },
     },
-    edgesData: <EdgesData> {
+    edgesData: <EdgesData>{
         'e0': {
             active: true,
             id: 'e0',
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 3}} }],
+            linkFunctions: ['f2'],
         },
         'e00': {
             active: true,
             id: 'e00',
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 3}} }],
+            linkFunctions: ['f2'],
         },
         'e1': {
             id: 'e1',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
         'e2': {
             id: 'e2',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
         'e3': {
             id: 'e3',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
         'e4': {
             id: 'e4',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
+    },
+    functions: {
+        'f1': {
+            name: 'transfer',
+            arguments: { amount: { value: 1 } }
+        },
+        'f2': {
+            name: 'transfer',
+            arguments: { amount: { value: 3 } }
+        },
+        // 'f3': {
+        //     name: 'add',
+        //     arguments: { amount: { value: 1 } }
+        // }
     },
     simulation: <Simulation>{
         on: false,

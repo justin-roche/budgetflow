@@ -23,12 +23,7 @@ let singleNode: Graph = {
             dataType: 'money',
             active: true,
             value: 0,
-            stepFunctions: [
-                {
-                    name: 'add',
-                    arguments: {amount: {value: 1}},
-                }
-            ],
+            stepFunctions: ['f1'],
             displayFunctions: [],
             displayData: { outlineColor: 'blue' },
         }
@@ -39,6 +34,12 @@ let singleNode: Graph = {
     },
     edgesData: {
 
+    },
+    functions: {
+        'f1': {
+                name: 'add',
+                arguments: {amount: {value: 1}},
+        }
     },
     conditions: [],
     conditionsIds: [],

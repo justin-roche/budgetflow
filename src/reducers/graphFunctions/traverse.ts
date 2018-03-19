@@ -134,14 +134,15 @@ return both updated */
 
 function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): LinkPair {
 
-    return edge.linkFunctions.reduce((acc, functionSettings) => {
-        let fn = linkFunctions[functionSettings.name].fn;
+    return edge.linkFunctions.reduce((acc, linkFunctionId) => {
+        let functionConfig: any = state.functions[linkFunctionId];
+        let fn = linkFunctions[functionConfig.name].fn;
 
         let linkPair = fn({
             graph: state,
             target: target,
             source: source,
-            config: functionSettings
+            config: functionConfig
         });
         return {
             linkedSource: linkPair.source,
@@ -152,12 +153,15 @@ function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): Link
 }
 
 function applyStepFunction(state: Graph, nodeData) {
-    let update = nodeData.stepFunctions.reduce((acc, functionSettings) => {
-        let fn = stepFunctions[functionSettings.name].fn;
+    let update = nodeData.stepFunctions.reduce((acc, stepFunctionId) => {
+        
+        let functionConfig: any = state.functions[stepFunctionId];
+        let fn = stepFunctions[functionConfig.name].fn;
+        
         let newSlice = fn({
             graph: state,
             target: acc,
-            config: functionSettings
+            config: functionConfig
         });
         let updated = { ...acc, ...newSlice };
         return updated;

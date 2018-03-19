@@ -54,8 +54,8 @@ describe('graph reducer', () => {
         });
 
         it('applies step function arguments', () => {
-            let fd = s1.graph.nodesData['n0'].stepFunctions.filter(fd => fd.name === 'add')[0];
-            fd.arguments = {amount: {value: 2}};
+            //let fd = s1.graph.nodesData['n0'].stepFunctions.filter(fd => fd.name === 'add')[0];
+            s1.graph.functions.f1.arguments = (<any>{amount: {value: 2}});
             store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(2);
@@ -94,8 +94,12 @@ describe('graph reducer', () => {
         })
 
         it('graph traverse applies link function', () => {
+            let s1 = store.getPresentState();
+            console.log(s1.graph.nodesData);
             store.actions.graph.simulate();
             let s2 = store.getPresentState();
+            console.log(s2.graph.nodesData);
+
             expect(s2.graph.nodesData['n0'].value).toBe(9);
             expect(s2.graph.nodesData['n1'].value).toBe(1);
         });
@@ -132,8 +136,13 @@ describe('graph reducer', () => {
 
         it('applies step function to all nodes', () => {
             _.each(s1.graph.nodesData, function (nodeData) {
-                nodeData.stepFunctions = [{ name: 'add', arguments: {amount: {value: 1}} }]
+                nodeData.stepFunctions = ['f3'];
+                //nodeData.linkFunctions = ['f1'];
+                // 
             });
+            s1.graph.functions = Object.assign(s1.graph.functions,
+                {'f3': { name: 'add', arguments: {amount: {value: 1}} }});
+            console.log(s1.graph)
             store.actions.graph.simulate();
             let s2 = store.getPresentState();
             expect(s2.graph.nodesData['n0'].value).toBe(45);

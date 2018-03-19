@@ -57,7 +57,6 @@ let uiActions = function (store) {
 
 }
 
-
 function uiReducer(state = null, action) {
     switch (action.type) {
         case 'UI_SET':

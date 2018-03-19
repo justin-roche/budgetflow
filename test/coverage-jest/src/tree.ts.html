@@ -281,7 +281,35 @@
 236
 237
 238
-239</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -522,13 +550,13 @@
 <span class="cline-any cline-yes">6x</span></td><td class="text"><pre class="prettyprint lang-js">let tree: Graph = {
 &nbsp;
     id: 'g7',
-    data: &lt;GraphData&gt; {
+    data: &lt;GraphData&gt;{
         id: 'g7',
         name: 'tree',
-        displayFunctions: { nodes: [{ name: 'labelById', arguments: []}] }
+        displayFunctions: { nodes: [{ name: 'labelById', arguments: [] }] }
     },
-    nodesIds: ['n0', 'n1', 'n2', 'n3','n4','n5','n6'],
-    nodes: &lt;Nodes&gt; {
+    nodesIds: ['n0', 'n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
+    nodes: &lt;Nodes&gt;{
         'n0': {
             id: 'n0',
             x: 300,
@@ -581,7 +609,7 @@
         },
     },
     nodesData: {
-        'n0':  &lt;NodeData&gt; {
+        'n0': &lt;NodeData&gt;{
             id: 'n0',
             name: null,
             type: 'source',
@@ -591,7 +619,7 @@
             displayFunctions: [],
             displayData: {},
         },
-        'n1':  &lt;NodeData&gt; {
+        'n1': &lt;NodeData&gt;{
             id: 'n1',
             name: null,
             type: 'sink',
@@ -601,7 +629,7 @@
             displayFunctions: [],
             displayData: {},
         },
-        'n2':  &lt;NodeData&gt; {
+        'n2': &lt;NodeData&gt;{
             id: 'n2',
             name: null,
             type: 'sink',
@@ -611,7 +639,7 @@
             displayFunctions: [],
             displayData: {},
         },
-        'n3':  &lt;NodeData&gt; {
+        'n3': &lt;NodeData&gt;{
             type: 'sink',
             name: null,
             id: 'n3',
@@ -621,7 +649,7 @@
             displayFunctions: [],
             displayData: {},
         },
-        'n4':  &lt;NodeData&gt; {
+        'n4': &lt;NodeData&gt;{
             type: 'sink',
             name: null,
             id: 'n4',
@@ -631,7 +659,7 @@
             displayFunctions: [],
             displayData: {},
         },
-        'n5':  &lt;NodeData&gt; {
+        'n5': &lt;NodeData&gt;{
             id: 'n5',
             name: null,
             type: 'sink',
@@ -641,7 +669,7 @@
             displayFunctions: [],
             displayData: {},
         },
-        'n6': &lt;NodeData&gt; {
+        'n6': &lt;NodeData&gt;{
             type: 'sink',
             name: null,
             id: 'n6',
@@ -652,8 +680,8 @@
             displayData: {},
         },
     },
-    edgesIds: ['e0', 'e00', 'e1', 'e2','e3','e4'],
-    edges: &lt;Edges&gt; {
+    edgesIds: ['e0', 'e00', 'e1', 'e2', 'e3', 'e4'],
+    edges: &lt;Edges&gt;{
         'e0': {
             id: 'e0',
             source: 'n0',
@@ -703,43 +731,57 @@
             type: 'arrow'
         },
     },
-    edgesData: &lt;EdgesData&gt; {
+    edgesData: &lt;EdgesData&gt;{
         'e0': {
             active: true,
             id: 'e0',
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 3}} }],
+            linkFunctions: ['f2'],
         },
         'e00': {
             active: true,
             id: 'e00',
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 3}} }],
+            linkFunctions: ['f2'],
         },
         'e1': {
             id: 'e1',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
         'e2': {
             id: 'e2',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
         'e3': {
             id: 'e3',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
         'e4': {
             id: 'e4',
             active: true,
             preLinkFunctions: [],
-            linkFunctions: [{ name: 'transfer', arguments: {amount: {value: 1}} }],
+            linkFunctions: ['f1'],
         },
+    },
+    functions: {
+        'f1': {
+            name: 'transfer',
+            arguments: { amount: { value: 1 } }
+        },
+        'f2': {
+            name: 'transfer',
+            arguments: { amount: { value: 3 } }
+        },
+        // 'f3': {
+        //     name: 'add',
+        //     arguments: { amount: { value: 1 } }
+        // }
     },
     simulation: &lt;Simulation&gt;{
         on: false,
@@ -763,7 +805,7 @@ export { tree };</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Mar 18 2018 20:38:10 GMT-0400 (EDT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Mar 18 2018 21:48:47 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>
