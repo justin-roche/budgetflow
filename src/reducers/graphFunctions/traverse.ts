@@ -1,10 +1,8 @@
-import { stepFunctions } from '../../parser/stepFunctions';
-import { linkFunctions } from '../../parser/linkFunctions';
+import { stepFunctions } from '../../functions/stepFunctions';
+import { linkFunctions } from '../../functions/linkFunctions';
 
 import { ArrayById, ArrayToObject} from '../utilities';
 import { _ } from 'underscore';
-
-
 
 /* TRAVERSAL */
 

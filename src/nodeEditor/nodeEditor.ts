@@ -3,7 +3,7 @@ import $ from 'jquery'
 import * as Rx from 'rxjs';
 import { Store } from '../services/reduxStore';
 import { _ } from 'underscore';
-import { stepFunctions } from 'parser/stepFunctions';
+import { stepFunctions } from 'functions/stepFunctions';
 import { extend } from '../reducers/utilities';
 
 @inject(Store)

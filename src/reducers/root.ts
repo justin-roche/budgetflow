@@ -12,7 +12,6 @@ let defaultState = {
     graph: null,
 }
 
-
 let undoableUiReducer = undoable(uiReducer);
 
 let undoableGraphsReducer = undoable(graphsReducer);

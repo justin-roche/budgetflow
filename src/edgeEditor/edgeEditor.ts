@@ -2,7 +2,7 @@ import { inject, bindable } from 'aurelia-framework';
 import $ from 'jquery'
 import * as Rx from 'rxjs';
 import { Store } from '../services/reduxStore';
-import { linkFunctions } from '../parser/linkFunctions';
+import { linkFunctions } from '../functions/linkFunctions';
 import { _ } from 'underscore';
 
 @inject(Store)

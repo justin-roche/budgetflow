@@ -1,5 +1,5 @@
 import { ArrayById, ArrayToObject } from '../utilities';
-import { displayFunctions } from '../../parser/displayFunctions';
+import { displayFunctions } from '../../functions/displayFunctions';
 
 function displayUpdate(state: Graph): Graph {
     state = Object.freeze(state);

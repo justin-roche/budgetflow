@@ -75,6 +75,7 @@ let conditionalGraph: Graph = {
         'e1': {
             id: 'e1',
             linkFunctions: ['f1'],
+            conditionFunctions: ['c0'],
             active: false,
         },
     },
@@ -89,18 +90,16 @@ let conditionalGraph: Graph = {
             //  fnId: null,
             },
     },
-    conditionsIds: ['c0'],
     conditions: {
         'c0': {
+            name: 'timeActivate', 
+            fnId: 'timeActivate',
+            arguments: {targetTime: {value: 1521499680545}, operators: ['>']}, 
+            target: null,
             id: 'c0',
-            type: 'edge',
-            target: 'e1',
-            phase: 'simulation',
-            expression: 'true',
-            value: false,
+            type: 'condition',
             scope: 'sufficient'
         }
-        
     },
     simulation: <Simulation> {
         on: false,

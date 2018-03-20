@@ -1,6 +1,7 @@
+import { EdgeEditor } from './../../edgeEditor/edgeEditor';
 import { ArrayById, ArrayToObject } from '../utilities';
 
-import { linkFunctions } from '../../parser/linkFunctions';
+import { conditionFunctions } from '../../functions/conditionFunctions';
 import { _ } from 'underscore';
 import { extend } from './../utilities';
 
@@ -8,68 +9,65 @@ function updateAllConditions(state, conditions) {
 
 }
 
-function applyEdgesConditions(state: Graph) {
-    state = Object.freeze(state)
+/* apply edge conditions once per cycle */
+function applyEdgesConditions(state: Graph) : Graph {
+    state = Object.freeze(state);
+
     let acc = { conditions: { ...state.conditions }, edgesData: { ...state.edgesData } };
 
-    let { edgesData, conditions } = ArrayById(state.edgesData).reduce((acc, ed) => {
-        let { conditions, edgeData } = applyEdgeConditions(state, {...ed});
-
-        let c = { ...acc.conditions, ...conditions };
-        let e = { ...acc.edgesData, [edgeData.id]: edgeData };
-        return { ...acc, conditions: c, edgesData: e };
+    /* reduce state and edges data for all edges */
+    let { edgesData, conditions } = ArrayById(state.edgesData)
+    .reduce((acc, ed) => {
+        let edgeData = {...ed};
+        let configs: Array<FunctionConfig> = getEdgeConditions(state, {...ed});
+        if(configs.length > 0) {
+            edgeData = applyEdgeConditions(state, ed, configs);
+        }
+        let edgesData = { ...acc.edgesData, [edgeData.id]: edgeData };
+        return { ...acc, edgesData: edgesData };
     }, acc);
 
-    return { ...state, conditions: conditions, edgesData: edgesData };
+    return { ...state, edgesData: edgesData };
 }
 
-declare interface update_edge_conditions {
-    edgesData: EdgesData,
-    conditions: Array<Condition>
-}
+// declare interface update_edge_conditions {
+//     edgesData: EdgesData,
+//     conditions: Array<Condition>
+// }
 
-function applyEdgeConditions(state: Graph, edgeData) {
-    let conditionsIds = selectEdgeConditions(state, edgeData);
-    if (conditionsIds.length === 0) {
-        return { edgeData: edgeData, conditions: conditionsIds.map(id => state.conditions[id]) };
+function getEdgeConditions(state: Graph, edgeData) : Array<FunctionConfig>{
+    if(!edgeData.conditionFunctions) {
+        return [];
     }
-    return applyConditions(state, conditionsIds, edgeData);
+    return edgeData.conditionFunctions.map(id => state.conditions[id]);
 }
 
-function applyConditions(state: Graph, conditionIds, edgeData) {
-    let updatedConds = conditionIds.map(condId => {
-        let cond = state.conditions[condId];
-        return { ...cond, value: evaluateEdgeCondition(state, edgeData, cond.expression) };
-    })
+function applyEdgeConditions(_graph: Graph, edgeData, conditionConfigs) : EdgeData {
+    let acc = {...edgeData};
 
-    let necessary = updatedConds.filter(cond => cond.scope = "necessary");
-    let sufficient = updatedConds.filter(cond => cond.scope = "sufficient");
-
-    if (sufficient.some(cond => cond.value === true)) {
-        edgeData.active = true;
-    }
-    if (necessary.some(cond => cond.value === false)) {
-        edgeData.active = false;
-    } 
-
-    updatedConds = ArrayToObject(updatedConds);
-    return { edgeData: edgeData, conditions: updatedConds };
+    acc = conditionConfigs.reduce((acc, config) => {
+        let fn = conditionFunctions[config.name].fn;
+        let {graph, target } = fn({graph: _graph, target: edgeData, config });
+        return {...acc, ...target};
+    },acc);
+    
+    return acc;
 }
 
-function selectEdgeConditions(state: Graph, edgeData) {
-    let conditionsIds = state.conditionsIds.filter(condId => state.conditions[condId].target === edgeData.id);
-    return conditionsIds;
-}
+// function composeConditions() {
+//     let necessary = updatedConds.filter(cond => cond.scope = "necessary");
+//     let sufficient = updatedConds.filter(cond => cond.scope = "sufficient");
 
-function updateConditionExpression(state: Graph, condition) {
-    return extend(state).select(`conditions.${condition.id}`).data((obj: any) => {
-        return { ...obj, expression: condition.expression };
-    });
-}
+//     if (sufficient.some(cond => cond.value === true)) {
+//         edgeData.active = true;
+//     }
+//     if (necessary.some(cond => cond.value === false)) {
+//         edgeData.active = false;
+//     } 
 
-function evaluateEdgeCondition (state: Graph, edgeData: EdgeData, expression: string) {
-    let testResult = eval(expression);
-    return testResult;
-}
+//     updatedConds = ArrayToObject(updatedConds);
+// }
 
-export { applyEdgesConditions, updateConditionExpression };
+
+
+export { applyEdgesConditions };

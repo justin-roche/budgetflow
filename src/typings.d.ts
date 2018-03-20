@@ -13,8 +13,8 @@ declare interface Graph {
     edgesIds: Array<string>
     edges: Edges
     edgesData: EdgesData,
-    conditions: ConditionsData,
-    conditionsIds: Array<String>  
+    conditions: FunctionsData,
+    //conditionsIds: Array<String>  
     functions: FunctionsData,
     simulation: Simulation,  
 }
