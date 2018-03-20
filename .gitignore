@@ -2,6 +2,7 @@
 node_modules
 **/*.js.map
 **/*.log
-test/coverage-jest/**/*.html
-test/coverage-karma/**/*.html
+test/coverage-jest/*
+
+test/coverage-karma/*
 !webpack.config.js
