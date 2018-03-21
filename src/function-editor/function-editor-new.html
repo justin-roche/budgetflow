@@ -1,0 +1,30 @@
+<template>
+    <require from="./../common/IterableConverter"></require>
+
+    <div>
+        <aubs-accordion is-open="true">
+            <aubs-accordion-group title="${newFunction.name || 'new function'}" is-open.bind="true">
+                <div>
+                    <aubs-typeahead if.bind="settings.selectableFunctions" data.bind="settings.selectableFunctions" on-select.call="newFunctionSelected(item)"
+                        placeholder="Search for functions"></aubs-typeahead>
+                    <div if.bind="settings.newFunction">
+                        <table if.bind="settings.newFunction.arguments" class="table">
+                            <thead>
+                                <tr>
+                                    <td repeat.for="arg of settings.newFunction.arguments | iterable">
+                                        ${arg.prop}
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td repeat.for="arg of settings.newFunction.arguments | iterable">
+                                    <input class="form-control" type="text" value.bind="settings.newFunction.arguments[arg.prop]" placeholder="name">
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aubs-accordion-group>
+        </aubs-accordion>
+    </div>
+</template>

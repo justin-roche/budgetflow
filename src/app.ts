@@ -5,8 +5,8 @@ import { PLATFORM } from 'aurelia-pal';
 import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from './reducers/root';
 import { graphActions } from './reducers/graphReducer';
-import { uiActions } from './reducers/uiReducer';
-import { state } from './state';
+import { uiActions } from './reducers/ui/uiReducer';
+import { state } from './state/state';
 
 import logger from 'redux-logger'
 

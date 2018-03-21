@@ -1,0 +1,27 @@
+<template>
+        <require from="../common/modalWrapper"></require>
+        <require from="../common/typeAhead"></require>
+
+        <modal-wrapper selector.bind="'ui.nodeEditor.modalSettings'">
+                <div slot="modalbody">
+                        <aubs-tabset>
+                                <aubs-tab on-select.call="tabMode = 'profile'" header="Profile">
+                                        <compose view="./tabs/profile-tab.html"></compose>
+                                </aubs-tab>
+                                <aubs-tab on-select.call="tabMode = 'functions'" header="Functions">
+                                        <compose view="./tabs/functions-tab.html"></compose>
+                                </aubs-tab>
+                                <aubs-tab header="Out Nodes">
+                                        <compose view="./tabs/out-nodes-tab.html"></compose>
+                                </aubs-tab>
+                                <aubs-tab header="Out Nodes">
+                                        <compose view="./tabs/in-nodes-tab.html"></compose>
+                                </aubs-tab>
+                        </aubs-tabset>
+                </div>
+                <div slot="modalfooter">
+                        <button type="button" class="btn btn-default" click.trigger="close()">Cancel</button>
+                        <button type="button" click.trigger="submit()" class="btn btn-primary">Save</button>
+                </div>
+        </modal-wrapper>
+</template>

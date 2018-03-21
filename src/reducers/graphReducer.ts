@@ -1,13 +1,15 @@
-import { traverseGraph } from './graphFunctions/traverse';
+
+
 import {
     addNewNode, addEdge, updateEdgeData, deleteNode,
     deleteEdge, toggleEdgeActivation,
     updateNodeData
-} from './graphFunctions/graphManipulationFunctions';
-import { resetTime, incrementCurrentTime, incrementTargetTime, decrementTargetTime, setTargetTime, simulate } from './graphFunctions/simulationFunctions'
-import { displayUpdate } from './graphFunctions/displayUpdate'
-import { applyEdgesConditions, updateConditionExpression } from './graphFunctions/conditionsApply';
+} from './edit/graphManipulationFunctions';
+import { resetTime, incrementCurrentTime, incrementTargetTime, decrementTargetTime, setTargetTime, simulate } from './simulation/simulationFunctions'
+import { displayUpdate } from './display/displayUpdate'
+import { applyEdgesConditions } from './conditions/conditionsApply';
 import undoable, { distinctState } from 'redux-undo'
+import { traverseGraph } from './traversal/traverse';
 
 declare interface GraphActions {
     applyDisplayFunctions: Function,
@@ -24,9 +26,9 @@ let graphActions = function (store) {
         name: 'graph',
         actions: {
             
-            updateConditionExpression: function (condition) {
-                store.dispatch({ type: 'GRAPH_SET', payload: updateConditionExpression(store.getPresentState().graph, condition) });
-            },
+            // updateConditionExpression: function (condition) {
+            //     store.dispatch({ type: 'GRAPH_SET', payload: updateConditionExpression(store.getPresentState().graph, condition) });
+            // },
             
             deleteNode: function (id: String) {
                 store.dispatch({ type: 'DELETE_NODE', payload: id });

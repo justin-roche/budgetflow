@@ -1,8 +1,7 @@
-import { ScenarioEditor } from './../editors/scenarioEditor';
 import { _ } from 'underscore';
 import {undoableGraphReducer} from './graphReducer';
 
-import { uiReducer } from './uiReducer';
+import { uiReducer } from './ui/uiReducer';
 import undoable, { distinctState } from 'redux-undo'
 
 
