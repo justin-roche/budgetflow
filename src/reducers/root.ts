@@ -4,7 +4,6 @@ import {undoableGraphReducer} from './graphReducer';
 import { uiReducer } from './ui/uiReducer';
 import undoable, { distinctState } from 'redux-undo'
 
-
 let defaultState = {
     ui: null,
     graphs: null,
@@ -17,8 +16,6 @@ let undoableGraphsReducer = undoable(graphsReducer);
 //let undoableCombinedReducer = undoable(combinedReducer)
 
 function rootReducer(s: AppState = defaultState, action) {
-
-    
     //let s = undoableCombinedReducer(s, action);
 
     return {...s, ...{

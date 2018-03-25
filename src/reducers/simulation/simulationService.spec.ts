@@ -2,7 +2,7 @@ import { Store } from './../../services/reduxStore';
 import { undoableGraphReducer, graphActions } from './../../reducers/graphReducer';
 import { state } from './../../state/state'
 import { createStore } from 'redux';
-import { createTestStore } from 'services/test.utilities';
+import { createTestStore } from 'services/testUtilities';
 import { _ } from 'underscore';
 import * as Jasmine from 'jasmine';
 

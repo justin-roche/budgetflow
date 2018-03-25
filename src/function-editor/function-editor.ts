@@ -1,6 +1,6 @@
 import { Store } from './../services/reduxStore';
 import { inject, bindable } from 'aurelia-framework';
-import { uiActions } from '../reducers/uiReducer';
+import { uiActions } from '../reducers/ui/uiReducer';
 import { _ } from 'underscore';
 
 import $ from 'jquery'

@@ -90,20 +90,15 @@ let conditionalGraph: Graph = {
             //  fnId: null,
             },
     },
-    conditions: {
+    conditions: <ConditionsData> {
         'c0': {
             name: 'activate', 
-            fnId: 'activate',
             arguments: {
                 subjectPath: 'simulation.currentTime',
                 object: 1521499680545,
                 operator: '>',
                 effect: 'activate'
             }, 
-            target: null,
-            id: 'c0',
-            type: 'condition',
-            scope: 'sufficient'
         }
     },
     simulation: <Simulation> {

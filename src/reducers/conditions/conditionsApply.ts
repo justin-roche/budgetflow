@@ -1,6 +1,5 @@
 import { ArrayById, ArrayToObject, extend } from '../utilities/utilities';
 
-import { conditionFunctions } from '../../functions/conditionFunctions';
 import { _ } from 'underscore';
 import { evaluateCondition} from './conditionEvaluation';
 

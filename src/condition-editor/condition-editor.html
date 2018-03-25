@@ -1,0 +1,92 @@
+<template>
+
+
+    <div repeat.for="condition of dm.conditions">
+
+        <div if.bind="condition.editing">
+            <select if.bind="condition.editing" class="btn-group dropdown">
+                <option repeat.for="effect of tm.computed.availableEffects">
+                    ${effect.name}
+                </option>
+            </select>
+
+            <select if.bind="condition.editing" class="btn-group dropdown">
+                <option if.bind="condition.editing" repeat.for="subjectType of tm.computed.availableSubjectTypes">
+                    ${subjectType.name}
+                </option>
+            </select>
+
+            <select if.bind="condition.editing" class="btn-group dropdown">
+                <option repeat.for="operator of tm.computed.availableOperators">
+                    ${operator}
+                </option>
+            </select>
+
+            <select class="btn-group dropdown">
+                <option repeat.for="objectType of tm.computed.availableObjectTypes">
+                    ${objectType.name}
+                </option>
+            </select>
+
+        </div>
+
+        <div if.bind="!condition.editing">
+            <p>${condition._effectName}</p>
+            <p> ${condition._subjectTypeName}</p>
+            <p> ${condition.operator}</p>
+            <p> ${condition._objectTypeName}</p>
+        </div>
+
+    </div>
+
+</template>
+
+
+<!-- <template>
+        <require from="../common/typeAhead"></require>
+        <div>
+            <aubs-accordion close-others.bind="closeOthers">
+                <aubs-accordion-group title="Activation Conditions" is-open.bind="firstTabState">
+                    <div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        expression
+                                    </td>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr repeat.for="condition of conditions">
+                                    ${condition.expression}
+                                    <td>
+                                        <input type="text" value.bind="condition.expression" class="form-control">
+                                    </td>
+                                    <td>
+                                        <i class="glyphicon glyphicon-plus" coptionck.trigger="addConditional()"></i>
+                                    </td>
+                                </tr>
+    
+                            </tbody>
+                        </table>
+                    </div>
+                </aubs-accordion-group>
+    
+              
+            </aubs-accordion>
+        </div>
+</template> -->
+
+
+
+<!-- <aubs-accordion-group title="Deactivation Conditions" disabled.bind="secondDisabled">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control">
+                    </td>
+                    <td>
+                        <i class="glyphicon glyphicon-plus timeoptionne-button"></i>
+                    </td>
+                </tr>
+            </aubs-accordion-group> -->

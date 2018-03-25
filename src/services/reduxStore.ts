@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export class Store {
     public actions;
-    
+
     public store;
 
     public provideStore(reduxInstance) {
@@ -12,23 +12,23 @@ export class Store {
 
     provideActions(actionCreators) {
         let boundActionCreators = actionCreators.map(actionCreator => actionCreator(this));
-        this.actions = boundActionCreators.reduce((acc, actionCreator)=> {
+        this.actions = boundActionCreators.reduce((acc, actionCreator) => {
             acc[actionCreator.name] = actionCreator.actions;
 
-            for(let prop in actionCreator.actions){
+            for (let prop in actionCreator.actions) {
                 let boundAction = actionCreator.actions[prop];
-                actionCreator.actions[prop] = function(...args){
+                actionCreator.actions[prop] = function (...args) {
                     boundAction(...args);
                     return this;
-                }.bind(this) 
+                }.bind(this)
             }
 
             return acc;
-        },{});
+        }, {});
     }
 
     setState(s) {
-        this.store.dispatch({type: 'SET_STATE', payload: s});
+        this.store.dispatch({ type: 'SET_STATE', payload: s });
     }
 
     getState(): AppState {
@@ -37,7 +37,7 @@ export class Store {
 
     dispatch(...args) {
         this.store.dispatch(...args);
-        let self  = this;
+        let self = this;
         return nextMonad()
 
         function nextMonad() {
@@ -56,23 +56,23 @@ export class Store {
 
     getPresentState(): AppState {
         let s = this.store.getState();
-        let s2 = {} 
-        for(let prop in s) {
+        let s2 = {}
+        for (let prop in s) {
             s2[prop] = s[prop].present;
         }
         return (<AppState>s2);
     }
 
-    select(selector, options:any = {}): BehaviorSubject<any> {
+    select(selector, options: any = {}): BehaviorSubject<any> {
         let log = options.log || false;
         let time = options.time || 'present';
 
         let o = new BehaviorSubject({});
         let selectorArray = selector.split('.');
-        selectorArray.splice(1,0,time);
+        selectorArray.splice(1, 0, time);
         selector = selectorArray.join('.');
 
-        if(options.bind) {
+        if (options.bind) {
             let context = options.bind[0];
             let property = options.bind[1];
             o.subscribe(v => {
@@ -81,7 +81,7 @@ export class Store {
         }
 
         let previous = selector.split('.').reduce((acc, prop, i) => {
-            if(acc === null && i!== selector.length-1) {
+            if (acc === null && i !== selector.length - 1) {
                 console.log('selector parent domain not found', selector)
                 return null;
             }
@@ -91,7 +91,7 @@ export class Store {
         this.store.subscribe(() => {
             let state = this.store.getState();
             let slice = selector.split('.').reduce((acc, prop) => {
-                if(acc === undefined) {
+                if (acc === undefined) {
                     console.log('selector', selector, 'state', state)
                     debugger;
                 }
@@ -117,6 +117,40 @@ export class Store {
 
         return o;
 
+    }
+
+    mapStateToMethods(component, selectorsModel) {
+        if (!selectorsModel.selectors) {
+            throw new Error('no selectors on selectors model')
+        }
+        selectorsModel.selectors.forEach(selectorModel => {
+            this.select(selectorModel.path)
+                .map(d => {
+                    let computedValues;
+                    if (typeof selectorModel.compute === 'function') {
+                        computedValues = selectorModel.compute(d, this.getPresentState())
+                    }
+                    let methodStem = this.getMethodStem(selectorModel);
+                    let methodName = selectorModel.handler || methodStem + 'Updated';
+                    // try {
+                        component[methodName].call(component,
+                            Object.assign(
+                                {
+                                    [methodStem]: d,
+                                    state: this.getPresentState(),
+                                }, computedValues));
+                    // } catch (e) {
+                    //     throw new Error('no handler for state update: ' + methodName)
+                    // }
+                })
+                .subscribe();
+        })
+    }
+
+    getMethodStem(selectorModel) {
+        let path = selectorModel.path.split('.');
+        let stem = path[path.length - 1];
+        return stem;
     }
 
 }

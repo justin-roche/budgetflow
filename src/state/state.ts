@@ -2,7 +2,7 @@
 import {conditionalGraph} from '../reducers/conditions/conditional';
 import {singleNode} from '../mock-data/singleNode';
 import {twoNodes} from '../mock-data/twoNodes';
-import {tree} from '../mock-data/tree';
+import {tree} from '../reducers/simulation/tree';
 
 let state = {
 

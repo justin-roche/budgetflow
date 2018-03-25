@@ -87,13 +87,7 @@ declare interface EdgeData {
 }
 
 declare interface Condition {
-    id: string,
-    type: string,
-    target: string,
-    expression: string,
-    phase: string,
-    value: boolean,
-    scope: string
+    arguments: ConditionArguments
 }
 
 declare interface Edge {
@@ -134,6 +128,15 @@ declare interface ArgumentConfig {
     displayName: String,
     displayType: String /* type of selector */
     value: any /* currently selected value */
+}
+
+declare interface ConditionArguments {
+        subjectPath?: String,
+        subject?: any,
+        objectPath?: String,
+        object?: 1521499680545,
+        operator: String,
+        effect: String
 }
 
 declare interface Simulation {

@@ -1,5 +1,5 @@
-import { stepFunctions } from '../../functions/stepFunctions';
-import { linkFunctions } from '../../functions/linkFunctions';
+import { stepFunctions } from './stepFunctions';
+import { linkFunctions } from './linkFunctions';
 
 import { ArrayById, ArrayToObject} from '../utilities/utilities';
 import { _ } from 'underscore';

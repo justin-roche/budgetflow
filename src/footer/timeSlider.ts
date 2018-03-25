@@ -59,7 +59,6 @@ export class TimeSlider {
         this.ref.noUiSlider.on('slide', function (values, handle) {
             this.displayedSelectedDate = this.formatFromMsString(values[0]);
             let t = Number(values[0]);
-            console.log('user update', t)
             this.store.actions.simulation.setTargetTime(t)
         }.bind(this));
     }

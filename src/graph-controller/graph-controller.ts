@@ -168,7 +168,6 @@ export class GraphController {
 
         nodeGroups.exit().remove(); // remove all nodes for which no key exists in the d3 graph config
         let newGroups = nodeGroups.enter().append("g").attr("class", "nodeGroup") // add new nodes where no key exists in the Dom
-        console.log(newGroups);
 
         let newCircles = newGroups
             .each(function (d, i, groups) {
@@ -463,7 +462,6 @@ export class GraphController {
     }
 
     onBackgroundClick(e) {
-        console.log('background dlick')
         this.store.dispatch({ type: 'ADD_NODE', payload: { x: e.offsetX, y: e.offsetY } });
     }
 

@@ -73,7 +73,6 @@ let twoNodes: Graph = {
             arguments: {amount: {value: 1}} 
         }
     },
-    conditionsIds: [],
     simulation: <Simulation>{
         on: false,
         cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day

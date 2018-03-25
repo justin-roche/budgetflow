@@ -4,13 +4,13 @@
     <modal-wrapper selector.bind="'ui.edgeEditor.modalSettings'">
         <div slot="modalbody">
             <aubs-tabset>
-                <aubs-tab on-select.call="tabMode = 'profile'" header="Profile">
+                <aubs-tab disabled.bind="edgeData === false" on-select.call="tabMode = 'profile'" header="Profile">
                     <compose view="./tabs/profile-tab.html"></compose>
                 </aubs-tab>
-                <aubs-tab on-select.call="tabMode = 'functions'" header="Functions">
+                <aubs-tab disabled.bind="edgeData === false" on-select.call="tabMode = 'functions'" header="Functions">
                     <compose  view="./tabs/functions-tab.html"></compose>
                 </aubs-tab>
-                <aubs-tab header="Conditions">
+                <aubs-tab disabled.bind="edgeData === false" header="Conditions">
                     <compose view="./tabs/conditions-tab.html"></compose>
                 </aubs-tab>
             </aubs-tabset>

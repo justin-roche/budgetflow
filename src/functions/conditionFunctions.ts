@@ -1,8 +1,0 @@
-
-let conditionFunctions = {
-
-    
-
-}
-
-export { conditionFunctions };
