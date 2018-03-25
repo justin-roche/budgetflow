@@ -18,7 +18,7 @@ function applyEdgesConditions(state: Graph) : Graph {
     .reduce((acc, _ed) => {
         let original = JSON.stringify(_ed);
         let edgeData = {..._ed};
-        let configs: Array<FunctionConfig> = getEdgeConditions(state, {...edgeData});
+        let configs: Array<Condition> = getEdgeConditions(state, {...edgeData});
 
         if(configs.length > 0) {
             edgeData = applyEdgeConditions(state, edgeData, configs);
@@ -38,7 +38,7 @@ function applyEdgesConditions(state: Graph) : Graph {
 //     conditions: Array<Condition>
 // }
 
-function getEdgeConditions(state: Graph, edgeData) : Array<FunctionConfig>{
+function getEdgeConditions(state: Graph, edgeData) : Array<Condition>{
     if(!edgeData.conditionFunctions) {
         return [];
     }

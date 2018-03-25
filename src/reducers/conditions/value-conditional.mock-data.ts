@@ -92,21 +92,31 @@ let conditionalGraph: Graph = {
     },
     conditions: <ConditionsData> {
         'c0': {
-            name: 'activate', 
-            arguments: {
-                subjectPath: 'simulation.currentTime',
-                object: 1521499680545,
-                operator: '>',
-                effect: 'activate'
-            }, 
+            subject:{
+                value: 'nodesData.n1.value',
+                name: 'n1'
+            },
+            operator: {
+                value: '>',
+                name: '>'
+            },
+            object: {
+                value: 0,
+                name: '0',
+            },
+            effect: {
+                value: 'activate',
+                name: 'activate',
+            }
         }
+        
     },
     simulation: <Simulation> {
         on: false,
         cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day
-        beginRangeTime: new Date().getTime(),
-        endRangeTime: new Date('2019').getTime(),
-        currentTime: new Date().getTime(),
+        beginRangeTime: 2000000000,
+        endRangeTime: 2100000000,
+        currentTime: 2000000000,
         targetTime: null,
         remainingCycles: 0,
         forward: null,

@@ -10,7 +10,6 @@ import * as Rx from 'rxjs';
 
 @inject(Store)
 export class ConditionEditor {
-    @bindable @observable edgedata;
 
     public tm = new TemplateModel();
     public dm = new DataModel();
@@ -20,8 +19,6 @@ export class ConditionEditor {
     }
 
     selectedConditionsUpdated(d) {
-        1;
-        console.log(this.dm);
         this.dm.setData(d);
         this.tm.compute(this.dm);
     }

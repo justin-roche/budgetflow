@@ -20,7 +20,10 @@ export class Footer {
   }
 
   forward() { 
+    /* increase the simulation target time by one cycle */
     this.store.actions.graph.incrementTargetTime()
+
+    /* iterate through all remaining cycles (1) */
     this.store.actions.graph.simulate();
   }
 

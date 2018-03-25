@@ -1,5 +1,8 @@
 
-import {conditionalGraph} from '../reducers/conditions/conditional';
+import {conditionalGraph} from '../reducers/conditions/value-conditional.mock-data';
+
+import {timeConditional} from '../reducers/conditions/time-conditional.mock-data';
+
 import {singleNode} from '../mock-data/singleNode';
 import {twoNodes} from '../mock-data/twoNodes';
 import {tree} from '../reducers/simulation/tree';
@@ -62,10 +65,10 @@ let state = {
         timeSlider: {
             sliderSettings: {
                 range: {
-                    min:  1510515607649,
-                    max:  new Date('2019').getTime() 
+                    min:  2000000000*1000,
+                    max:  2100000000*1000 
                 },
-                start: [1510515607649],
+                start: [2000000000*1000],
                 pips: {
                     mode: 'positions',
                     values: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -87,7 +90,7 @@ let state = {
     // },
     graph: null,
     graphs: <Array<Graph>>[
-        conditionalGraph, singleNode, twoNodes, tree
+        conditionalGraph, timeConditional, singleNode, twoNodes, tree
     ],
 }
 

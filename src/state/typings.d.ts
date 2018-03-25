@@ -87,7 +87,23 @@ declare interface EdgeData {
 }
 
 declare interface Condition {
-    arguments: ConditionArguments
+    // arguments: ConditionArguments
+    subject:{
+        name: String,
+        value: any,
+    },
+    object: {
+        name: String,
+        value: any
+    },
+    operator: {
+        value: String,
+        name: String,
+    },
+    effect: {
+        value: String,
+        name: String,
+    }
 }
 
 declare interface Edge {
@@ -131,12 +147,7 @@ declare interface ArgumentConfig {
 }
 
 declare interface ConditionArguments {
-        subjectPath?: String,
-        subject?: any,
-        objectPath?: String,
-        object?: 1521499680545,
-        operator: String,
-        effect: String
+    
 }
 
 declare interface Simulation {

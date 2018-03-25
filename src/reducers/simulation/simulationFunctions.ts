@@ -3,8 +3,15 @@ import { traverseGraph } from '../traversal/traverse';
 import { applyEdgesConditions } from '../conditions/conditionsApply';
 import { displayUpdate } from './../display/displayUpdate'
 
-function incrementTargetTime(state) {
 
+
+/* BASIC SIMULATION 
+  1. increment
+  2. simulate
+  3. simulateForward
+*/
+
+function incrementTargetTime(state) {
     return extend(state).select('simulation').data(obj => {
         return {...obj, ...{
             targetTime: obj.currentTime + obj.cycleTime,
@@ -13,6 +20,29 @@ function incrementTargetTime(state) {
         }}
     });
 }
+
+function simulate(state: Graph) {
+    if (state.simulation.forward === true) {
+        return simulateForward(state);
+    } else {
+        //simulateBackward(store, state);
+    }
+}
+
+function simulateForward(state: Graph) {
+    let g = {...state};
+    for (let i = 0; i < state.simulation.remainingCycles; i++) {
+        g = {...g, ...incrementCurrentTime(g)}
+        g = {...g, ...traverseGraph(g)}
+        g = {...g, ...applyEdgesConditions(g)}
+        g = {...g, ...displayUpdate(g)}
+    }
+
+    g = {...g, ...resetTime(g)};
+    return g;
+}
+
+
 
 function decrementTargetTime(state) {
     return extend(state).select('simulation').data(obj => {
@@ -60,26 +90,7 @@ function resetTime(state) {
 
 }
 
-function simulate(state: Graph) {
-    if (state.simulation.forward === true) {
-        return simulateForward(state);
-    } else {
-        //simulateBackward(store, state);
-    }
-}
 
-function simulateForward(state: Graph) {
-    let g = {...state};
-    for (let i = 0; i < state.simulation.remainingCycles; i++) {
-        g = {...g, ...traverseGraph(g)}
-        g = {...g, ...applyEdgesConditions(g)}
-        g = {...g, ...displayUpdate(g)}
-        g = {...g, ...incrementCurrentTime(g)}
-    }
-
-    g = {...g, ...resetTime(g)};
-    return g;
-}
 
 function simulateBackward(store, state) {
     if (this.simulation.forward === false) {

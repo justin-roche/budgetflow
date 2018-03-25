@@ -5,20 +5,21 @@ let evaluateCondition = function({ config, graph, source, target }: FunctionArgs
 
     let tmpTarget = Object.assign({}, target);
 
-    let subjectPath: any = config.arguments.subjectPath;
-    let objectPath: any = config.arguments.objectPath;
+    let subject = config['subject'].value;
+    let object = config['object'].value; 
 
-    let subject = accessPath(graph, subjectPath);
-    let object = (<any>config).arguments.object || accessPath(graph, objectPath);
+        /* if the value is path, get the value from the state */
+
+    if(typeof subject === 'string') subject = accessPath(graph, subject);
+    if(typeof object === 'string') object = accessPath(graph, object);
     
-    let comparisonFunction = operators[(<any>config).arguments.operator];
+    let comparisonFunction = operators[(<any>config).operator.value];
     let evalResult = comparisonFunction(subject, object);
 
     if(evalResult) {
-        let effect: any = config.arguments.effect;
+        let effect: any = config['effect'].value;
         let effectFunction = operators[effect];
         tmpTarget = effectFunction(target);
-        
     }
 
     return { target: tmpTarget, config, graph, source };

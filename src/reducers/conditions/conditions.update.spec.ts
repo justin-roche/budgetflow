@@ -4,7 +4,7 @@ import { state } from './../../state/state'
 import { createStore } from 'redux';
 import { createTestStore } from 'services/testUtilities';
 
-describe('conditions application', () => {
+describe('value conditions application', () => {
     
     let store;
     let s1 : AppState;
@@ -44,15 +44,30 @@ describe('conditions application', () => {
         //     expect(s2.graph.edgesData.e1.active).toBe(false);
         // })
 
-        // it('tests global time conditions', () => {
-        //     s1.graph.edgesData.e1.active = true;
-        //     s1.graph.conditions['c0'].scope = 'necessary';
-        //     s1.graph.conditions['c0'].expression = "state.simulation.time === 'a'";
-        //     store.actions.graph.simulate();            
-        //     let s2 = store.getPresentState();
-        //     expect(s2.graph.edgesData.e1.active).toBe(false);
-        // })
+        
     });
 
 
 });
+
+describe('time conditions application', () => {
+    let store;
+    let s1;
+
+    beforeEach(() => {
+        store = createTestStore();
+        store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'time-conditional').pop());
+        s1 = store.getPresentState();
+        store.actions.graph.incrementTargetTime(); 
+    });
+
+    it('tests global time conditions', () => {
+        s1.graph.edgesData.e1.active = true;
+        //s1.graph.conditions['c0'].scope = 'necessary';
+        //s1.graph.conditions['c0'].expression = "state.simulation.time === 'a'";
+        store.actions.graph.simulate();            
+        let s2 = store.getPresentState();
+        expect(s2.graph.edgesData.e1.active).toBe(true);
+    })
+
+})
