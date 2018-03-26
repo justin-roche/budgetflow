@@ -10,13 +10,14 @@ import { extend } from '../reducers/utilities/utilities';
 export class NodeEditor {
     collapsed = false;
     nodeId;
-    testId = 'x'
-    form: any = {};
     nodeData;
-    tabMode = 'profile';
-    newStepFunction;
-    selectableStepFunctions = [];
-    mode = null;
+    // testId = 'x'
+    // form: any = {};
+    
+    // tabMode = 'profile';
+    // newStepFunction;
+    // selectableStepFunctions = [];
+    // mode = null;
     functionEditorSettings;
 
     constructor(private store: Store) {
@@ -24,11 +25,11 @@ export class NodeEditor {
             .subscribe(id => {
                 if (id !== null) this.update(id);
             })
-        this.store.select('graph.id')
-            .subscribe(id => {
-                this.form = {};
-                this.selectableStepFunctions = [];
-            })
+        // this.store.select('graph.id')
+        //     .subscribe(id => {
+        //         this.form = {};
+        //         this.selectableStepFunctions = [];
+        //     })
     }
 
     refresh() {
@@ -51,19 +52,19 @@ export class NodeEditor {
         let graph = this.store.getPresentState().graph;
 
         this.nodeData = graph.nodesData[id];
-        this.form.name = this.nodeData.name;
-        this.form.type = this.nodeData.type;
+        // this.form.name = this.nodeData.name;
+        // this.form.type = this.nodeData.type;
         
-        this.selectableStepFunctions = _.filter(stepFunctions, fn => {
-            return fn.dataTypes.some(dt => {
-                return dt === this.nodeData.dataType;
-            })
-        })
+        // this.selectableStepFunctions = _.filter(stepFunctions, fn => {
+        //     return fn.dataTypes.some(dt => {
+        //         return dt === this.nodeData.dataType;
+        //     })
+        // })
 
-        this.functionEditorSettings = {
-            currentFunctions: this.nodeData.stepFunctions.map(fn =>JSON.parse(JSON.stringify(fn))),
-            selectableFunctions: this.selectableStepFunctions
-        }
+        // this.functionEditorSettings = {
+        //     currentFunctions: this.nodeData.stepFunctions.map(fn =>JSON.parse(JSON.stringify(fn))),
+        //     selectableFunctions: this.selectableStepFunctions
+        // }
 
     }
 

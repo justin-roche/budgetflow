@@ -35,8 +35,8 @@ let conditionalGraph: Graph = {
         },
         'n1': {
             id: 'n1',
-            type: 'sink',
-            //active: true,
+            ype: 'sink',
+            active: true,
             value: 0,
             stepFunctions: [],
             displayFunctions: [],
@@ -45,7 +45,7 @@ let conditionalGraph: Graph = {
         'n2': {
             id: 'n2',
             type: 'sink',
-            //active: true,
+            active: true,
             value: 0,
             stepFunctions: [],
             displayFunctions: [],
@@ -76,7 +76,7 @@ let conditionalGraph: Graph = {
             id: 'e1',
             linkFunctions: ['f1'],
             conditionFunctions: ['c0'],
-            active: false,
+            active: true,
         },
     },
     functions: {
@@ -120,7 +120,7 @@ let conditionalGraph: Graph = {
         targetTime: null,
         remainingCycles: 0,
         forward: null,
-    }
+    }  
     
 }
 

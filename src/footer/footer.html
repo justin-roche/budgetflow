@@ -3,6 +3,11 @@
     <require from="./timeline"></require>
     <conditional-table if.bind="conditionalTable.show"> </conditional-table>
     <div class="footer-bottom fixed-bottom">
+            <div style="flex: 1; align-self:flex-end">
+                    <div style="margin-left: 10px; margin-right: 50px">
+                        <i click.trigger="toggleConditionalTable()" class="${conditionalTable.show? 'glyphicon glyphicon-chevron-down' : 'glyphicon glyphicon-chevron-up'}"></i>
+                    </div>
+                </div>
         <timeline></timeline>
         <div>
             <i class="glyphicon glyphicon-fast-backward timeline-button" click.trigger="backward()"></i>

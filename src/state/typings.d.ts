@@ -60,7 +60,7 @@ declare interface AppNode {
 declare interface NodeData {
     id: string,
     type: string,
-    active?: Boolean,
+    active: Boolean,
     value: Number,
     name: string,
     stepFunctions: Array<String>,

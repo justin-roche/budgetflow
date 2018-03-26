@@ -30,6 +30,7 @@ describe('value conditions application', () => {
 
         it('individual links from nodes are activated when sufficient conditions are met', () => {
             s1.graph.edgesData.e1.active = false;
+            s1.graph.nodesData.n2.active = true;
             store.actions.graph.simulate();            
             let s2 = store.getPresentState();
             expect(s2.graph.edgesData.e1.active).toBe(true);

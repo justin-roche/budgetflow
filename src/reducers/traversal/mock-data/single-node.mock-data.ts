@@ -12,7 +12,6 @@ let singleNode: Graph = {
             id: 'n0',
             outEdges: [],
             inEdges: [],
-
         },
     },
     nodesData: <NodesData>{
@@ -42,7 +41,6 @@ let singleNode: Graph = {
         }
     },
     conditions: [],
-    conditionsIds: [],
     simulation: <Simulation>{
         on: false,
         cycleTime: 24 * 60 * 60 * 1000, //cycle time is one day

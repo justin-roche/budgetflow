@@ -37,14 +37,9 @@ export class NavBar {
     }
 
     test() {
-      let sim = this.store.getPresentState().graph.simulation
-      let d = sim.cycleTime * 2;
-      let ct = sim.currentTime; 
-      this.store.actions.graph.setTargetTime(ct+d);
-      this.store.actions.graph.simulate();
-    //   setTimeout(function(){
-    //     this.store.actions.simulation.setTargetTime(ct+sim.cycleTime);
-    //   }.bind(this),1000)
+        let s = this.store.getPresentState();
+        this.store.actions.ui.updateSliderRange({max: s.ui.timeSlider.range.max + 1000000000})
+
     }
 
     // test() {

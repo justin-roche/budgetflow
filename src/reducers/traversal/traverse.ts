@@ -1,8 +1,7 @@
-import { stepFunctions } from './stepFunctions';
-import { linkFunctions } from './linkFunctions';
-
 import { ArrayById, ArrayToObject} from '../utilities/utilities';
 import { _ } from 'underscore';
+import { linkFunctions } from './linkFunctions';
+import { applyStepFunction } from './applyStepFunction';
 
 /* TRAVERSAL */
 
@@ -107,7 +106,7 @@ function linkSource(state:Graph, _source: NodeData, targets: Array<NodeData>) {
 
         let edge: EdgeData = getEdge(state, source, target);
         
-        if(edge.active) {
+        if(edge.active && target.active) {
             let { linkedSource, linkedTarget } = linkTarget(state, source, target, edge);
             return {
                 linkedTargets: { ...acc.linkedTargets, [linkedTarget.id]: linkedTarget},
@@ -148,24 +147,6 @@ function linkTarget(state:Graph, source: NodeData, target: NodeData, edge): Link
         };
 
     }, { linkedSource: source, linkedTarget: target });
-}
-
-function applyStepFunction(state: Graph, nodeData) {
-    let update = nodeData.stepFunctions.reduce((acc, stepFunctionId) => {
-        
-        let functionConfig: any = state.functions[stepFunctionId];
-        let fn = stepFunctions[functionConfig.name].fn;
-        
-        let newSlice = fn({
-            graph: state,
-            target: acc,
-            config: functionConfig
-        });
-        let updated = { ...acc, ...newSlice };
-        return updated;
-    }, { ...nodeData });
-
-    return update;
 }
 
 /* helper functions */

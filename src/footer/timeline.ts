@@ -15,9 +15,4 @@ export class Timeline {
 
     }
 
-    toggleConditionalTable() {
-        this.store.dispatch({ type: 'UI_CONDITIONAL_TABLE_TOGGLE' });
-    }
-
-
 }

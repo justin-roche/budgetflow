@@ -104,6 +104,65 @@ describe('graph reducer', () => {
 
     });
 
+    describe('inactive node behavior', () => {
+
+        beforeEach(() => {
+            store = createTestStore();
+            store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === '1 node').pop());
+            s1 = store.getPresentState();
+            s1.graph.nodesData.n0.active = false;
+            store.actions.graph.incrementTargetTime();
+        })
+
+        it('does not apply step function on inactive nodes', () => {
+            let v = s1.graph.nodesData['n0'].value;
+            store.actions.graph.simulate();
+            let s2 = store.getPresentState();
+            expect(s2.graph.nodesData['n0'].value).toBe(v);
+        });
+
+    });
+
+    describe('inactive node behavior', () => {
+
+        beforeEach(() => {
+            store = createTestStore();
+            store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'twoNodes').pop());
+            s1 = store.getPresentState();
+            
+            expect(s1.graph.edgesData.e0.active).toBe(true);
+            s1.graph.nodesData.n1.active = false;
+            store.actions.graph.incrementTargetTime();
+        })
+
+        it('does not apply link function on inactive nodes', () => {
+            let v = s1.graph.nodesData['n0'].value;
+            store.actions.graph.simulate();
+            let s2 = store.getPresentState();
+            expect(s2.graph.nodesData['n0'].value).toBe(v);
+        });
+
+    });
+
+    describe('inactive link behavior', () => {
+
+        beforeEach(() => {
+            store = createTestStore();
+            store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'conditional').pop());
+            s1 = store.getPresentState();
+            store.actions.graph.incrementTargetTime();
+        });
+
+        it('does not apply on inactive links', () => {
+            let v = s1.graph.nodesData['n2'].value;
+            s1.graph.edgesData.e1.active = false;
+            store.actions.graph.simulate();
+            let s2 = store.getPresentState();
+            expect(s2.graph.nodesData['n2'].value).toBe(v);
+        });
+
+    });
+
     describe('three level tree', () => {
 
         beforeEach(() => {
@@ -167,31 +226,10 @@ describe('graph reducer', () => {
 
     })
 
-    describe('conditional behavior', () => {
-        beforeEach(() => {
-            store = createTestStore();
-            store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'conditional').pop());
-            s1 = store.getPresentState();
-            store.actions.graph.incrementTargetTime();
-
-        });
-
-        describe('inactive links', () => {
-
-            it('does not apply on inactive links', () => {
-                let v = s1.graph.nodesData['n2'].value;
-                store.actions.graph.simulate();
-                let s2 = store.getPresentState();
-                expect(s2.graph.nodesData['n2'].value).toBe(v);
-            });
+});
 
 
-
-
-
-        });
-
-        // describe('cycles', () => {
+// describe('cycles', () => {
 
         // beforeEach(() => {
         //     g = state.graphs.filter(graph => graph.data.name === '1 node')[0];
@@ -235,11 +273,6 @@ describe('graph reducer', () => {
         //      expect(s2.nodesData['n3'].value).toBe(100000);
         //      expect(s2.nodesData['n0'].value).toBe(-599950);
         // }, 13428);
-
-    });
-
-
-});
 
  // })
 

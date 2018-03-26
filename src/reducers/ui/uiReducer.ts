@@ -42,13 +42,20 @@ let uiActions = function (store) {
                 let s = store.getPresentState();
                 let ui = s.ui;
                 let sim = s.graph.simulation;
-                let sliderSettings = { ...s.ui.timeSlider.sliderSettings };
-                sliderSettings.range = { ...sliderSettings.range, ...{ min: sim.beginRangeTime, max: sim.endRangeTime } }
-                sliderSettings.start = sim.beginRangeTime;
-                sliderSettings.step = sim.cycleTime;
-                ui = { ...ui, timeSlider: { ...ui.TimeSlider, sliderSettings: sliderSettings } };
-                return store.dispatch({ type: 'UI_UPDATE_SLIDER_SETTINGS', payload: ui });
 
+                let newSlider = { ...s.ui.timeSlider };
+                newSlider.range = {
+                    ...newSlider.range,
+                    ...{ min: sim.beginRangeTime, max: sim.endRangeTime }
+                }
+                newSlider.start = sim.beginRangeTime;
+                newSlider.step = sim.cycleTime;
+
+                ui = { ...ui, timeSlider: { ...ui.TimeSlider, ...newSlider } };
+                return store.dispatch({ type: 'UI_UPDATE_SLIDER_SETTINGS', payload: ui });
+            },
+            updateSliderRange(range) {
+                return store.dispatch({ type: 'UI_UPDATE_SLIDER_RANGE', payload: range });
             }
         }
     }
@@ -88,7 +95,13 @@ function uiReducer(state = null, action) {
         }
         case 'UI_UPDATE_SLIDER_SETTINGS':
             return action.payload;
-
+        case 'UI_UPDATE_SLIDER_RANGE':
+            let s = state;
+            let slider = state.timeSlider;
+            let range = slider.range;
+            let newRange = {...range, ...action.payload};
+            slider.range = newRange;
+            return state;
         default:
             return state;
     }

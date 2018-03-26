@@ -16,10 +16,13 @@ export class Footer {
   }
 
   attached() {
-    
+
+  }
+  toggleConditionalTable() {
+    this.store.dispatch({ type: 'UI_CONDITIONAL_TABLE_TOGGLE' });
   }
 
-  forward() { 
+  forward() {
     /* increase the simulation target time by one cycle */
     this.store.actions.graph.incrementTargetTime()
 
@@ -27,10 +30,10 @@ export class Footer {
     this.store.actions.graph.simulate();
   }
 
-  backward() { 
+  backward() {
     this.store.actions.graph.decrementTargetTime()
   }
 
-  
+
 
 }
