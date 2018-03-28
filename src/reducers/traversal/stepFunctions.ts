@@ -10,12 +10,9 @@ let stepFunctions = {
             },
             dataTypes: ['money'],
         },
-        fn: function (arg: FunctionArgs) {
-            let graph = arg.graph;
-            let nodeData = arg.target;
-            let args = arg.config.arguments;
-            console.warn('args', args)
-            return { value: nodeData.value + args.amount.value }
+        fn: function ({graph, target, config}) {
+            let args = config.arguments;
+            target.value = target.value + args.amount.value;
         },
     },
 

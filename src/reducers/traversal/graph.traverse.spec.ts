@@ -129,7 +129,7 @@ describe('graph reducer', () => {
             store = createTestStore();
             store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'twoNodes').pop());
             s1 = store.getPresentState();
-            
+
             expect(s1.graph.edgesData.e0.active).toBe(true);
             s1.graph.nodesData.n1.active = false;
             store.actions.graph.incrementTargetTime();
@@ -172,12 +172,12 @@ describe('graph reducer', () => {
             store.actions.graph.incrementTargetTime();
         });
 
-        //     it('does not mutate original state', ()=> {
-        //         let originalg = JSON.stringify(g);
-        //         let s2 = graphReducer(g, graphActions.graphTraverseCycles());
-        //         let unmutatedG = JSON.stringify(g);            
-        //         expect(originalg === unmutatedG).toBe(true);
-        //     })
+        it('does not mutate original state', () => {
+            let _s = store.getPresentState()
+            let _sString = JSON.stringify(_s);
+            store.actions.graph.simulate();        
+            expect(_sString === JSON.stringify(_s)).toBe(true);
+        })
 
         it('applies link function to all active links', () => {
             store.actions.graph.simulate();
@@ -224,57 +224,26 @@ describe('graph reducer', () => {
             expect(s2.graph.nodesData['n0'] !== s1.graph.nodesData['n0']);
         });
 
-    })
+    });
+
+    describe('handles cycles', () => {
+
+        beforeEach(() => {
+            store = createTestStore();
+            store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'cycle').pop());
+            s1 = store.getPresentState();
+            store.actions.graph.incrementTargetTime();
+        });
+
+        it('does not traverse the same node twice', () => {
+            
+        });
+
+    });
 
 });
 
 
-// describe('cycles', () => {
-
-        // beforeEach(() => {
-        //     g = state.graphs.filter(graph => graph.data.name === '1 node')[0];
-        //     expect(g.nodesData['n0'].value).toBe(0);
-        //     tree = state.graphs.filter(graph => graph.data.name === '1-2-3')[0];
-        // });
-
-        // it('does not mutate original state', ()=> {
-        //     let originalg = JSON.stringify(g);
-        //     let s2 = graphReducer(g, graphActions.graphTraverseCycles(100));
-        //     let unmutatedG = JSON.stringify(g);            
-        //     expect(originalg === unmutatedG).toBe(true);
-
-        //     originalg = JSON.stringify(tree);
-        //     s2 = graphReducer(g, graphActions.graphTraverseCycles(100));
-        //     unmutatedG = JSON.stringify(tree);            
-        //     expect(originalg === unmutatedG).toBe(true);
-        // })
-
-        // it('runs multiple cycles on 1 node with increment', () => {
-        //     let s2 = graphReducer(g, graphActions.graphTraverseCycles(100));
-        //     expect(s2.nodesData['n0'].value === 100).toBe(true);
-        // });
-
-        // it('runs multiple cycles on tree', () => {
-        //     let s2 = graphReducer(tree, graphActions.graphTraverseCycles(100));
-        //     expect(s2.nodesData['n0'].value).toBe(-550);
-        //     expect(s2.nodesData['n2'].value).toBe(100);
-        //     expect(s2.nodesData['n3'].value).toBe(100);
-        //     expect(s2.nodesData['n5'].value).toBe(100);
-        //     expect(s2.nodesData['n6'].value).toBe(100);
-        // });
-
-        // it('performance of cycles on single node', () => {
-        //     let s2 = graphReducer(g, graphActions.graphTraverseCycles(100000));
-        //     expect(s2.nodesData['n0'].value === 100000).toBe(true);
-        // }, 1750)
-
-        // it('performance on tree', () => {
-        //     let s2 = graphReducer(tree, graphActions.graphTraverseCycles(100000));
-        //      expect(s2.nodesData['n3'].value).toBe(100000);
-        //      expect(s2.nodesData['n0'].value).toBe(-599950);
-        // }, 13428);
-
- // })
 
    //DISPLAY UPDATE
 

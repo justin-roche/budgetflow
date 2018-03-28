@@ -13,9 +13,11 @@ let linkFunctions = {
             let targetNode: any = arg.target;
             let args: ArgumentData = arg.config.arguments;
             console.warn('args', JSON.stringify(args));
+            targetNode.value = targetNode.value + args['amount'].value
+            sourceNode.value = sourceNode.value - args['amount'].value
             return {
-                source: { ...sourceNode, value: sourceNode.value - args['amount'].value },
-                target: { ...targetNode, value: targetNode.value + args['amount'].value }
+                source: sourceNode,
+                target: targetNode
             };
         },
     },
@@ -31,9 +33,10 @@ let linkFunctions = {
             dataTypes: [],
         },
         fn: function (sourceNode, targetNode, amount, integral) {
+            targetNode.value = targetNode.value + (amount * integral || 1)
             return {
                 source: sourceNode,
-                target: { ...targetNode, value: targetNode.value + (amount * integral || 1) }
+                target: targetNode
             };
         },
 

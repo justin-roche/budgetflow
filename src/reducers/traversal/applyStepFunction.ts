@@ -1,25 +1,22 @@
 import { stepFunctions } from './stepFunctions';
 
 
-function applyStepFunction(state: Graph, nodeData) {
-    if(!nodeData.active) {
-        return {...nodeData};
+function applyStepFunction(state: Graph, node) {
+    if(!node.active) {
+        return;
     }
-    let update = nodeData.stepFunctions.reduce((acc, stepFunctionId) => {
-        
-        let functionConfig: any = state.functions[stepFunctionId];
+    node.stepFunctions.forEach(fnId => {
+        let functionConfig: any = state.functions[fnId];
         let fn = stepFunctions[functionConfig.name].fn;
         
-        let newSlice = fn({
+        fn({
             graph: state,
-            target: acc,
+            target: node,
             config: functionConfig
         });
-        let updated = { ...acc, ...newSlice };
-        return updated;
-    }, { ...nodeData });
 
-    return update;
+    });       
+       
 }
 
 export { applyStepFunction };

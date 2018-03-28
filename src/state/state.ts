@@ -3,6 +3,8 @@ import { conditionalGraph } from '../reducers/conditions/mock-data/value-conditi
 import { timeConditional } from '../reducers/conditions/mock-data/time-conditional.mock-data';
 import { timeEdgeConditional } from '../reducers/conditions/mock-data/time-conditional-edge';
 import { singleNode } from '../reducers/traversal/mock-data/single-node.mock-data';
+import { cycle } from '../reducers/traversal/mock-data/cycle.mock-data';
+
 import { twoNodes } from '../reducers/traversal/mock-data/two-nodes.mock-data';
 import { tree } from '../reducers/simulation/tree';
 
@@ -83,7 +85,8 @@ let state = {
         timeEdgeConditional, 
         singleNode, 
         twoNodes, 
-        tree
+        tree,
+        cycle
     ],
 }
 

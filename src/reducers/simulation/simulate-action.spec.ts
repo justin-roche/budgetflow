@@ -64,9 +64,10 @@ describe('simulation actions 2', () => {
             // })
 
             // it('applies conditions',()=>{
-            //     spyOn(store.actions.graph, 'applyConditions');
-            //     store.actions.simulation.incrementTargetTime();
-            //     expect(store.actions.graph.applyConditions).toHaveBeenCalledTimes(1);
+            //     let fn = jest.spyOn(store.actions.graph, 'applyConditions');
+            //     store.actions.graph.incrementTargetTime();
+            //     store.actions.graph.simulate();
+            //     expect(fn).toHaveBeenCalled();
             // })
 
         })
@@ -111,3 +112,50 @@ describe('simulation actions 2', () => {
     });
 
 });
+
+describe('cycles', () => {
+
+    // beforeEach(() => {
+    //     g = state.graphs.filter(graph => graph.data.name === '1 node')[0];
+    //     expect(g.nodesData['n0'].value).toBe(0);
+    //     tree = state.graphs.filter(graph => graph.data.name === '1-2-3')[0];
+    // });
+
+    // it('does not mutate original state', ()=> {
+    //     let originalg = JSON.stringify(g);
+    //     let s2 = graphReducer(g, graphActions.graphTraverseCycles(100));
+    //     let unmutatedG = JSON.stringify(g);            
+    //     expect(originalg === unmutatedG).toBe(true);
+
+    //     originalg = JSON.stringify(tree);
+    //     s2 = graphReducer(g, graphActions.graphTraverseCycles(100));
+    //     unmutatedG = JSON.stringify(tree);            
+    //     expect(originalg === unmutatedG).toBe(true);
+    // })
+
+    // it('runs multiple cycles on 1 node with increment', () => {
+    //     let s2 = graphReducer(g, graphActions.graphTraverseCycles(100));
+    //     expect(s2.nodesData['n0'].value === 100).toBe(true);
+    // });
+
+    // it('runs multiple cycles on tree', () => {
+    //     let s2 = graphReducer(tree, graphActions.graphTraverseCycles(100));
+    //     expect(s2.nodesData['n0'].value).toBe(-550);
+    //     expect(s2.nodesData['n2'].value).toBe(100);
+    //     expect(s2.nodesData['n3'].value).toBe(100);
+    //     expect(s2.nodesData['n5'].value).toBe(100);
+    //     expect(s2.nodesData['n6'].value).toBe(100);
+    // });
+
+    // it('performance of cycles on single node', () => {
+    //     let s2 = graphReducer(g, graphActions.graphTraverseCycles(100000));
+    //     expect(s2.nodesData['n0'].value === 100000).toBe(true);
+    // }, 1750)
+
+    // it('performance on tree', () => {
+    //     let s2 = graphReducer(tree, graphActions.graphTraverseCycles(100000));
+    //      expect(s2.nodesData['n3'].value).toBe(100000);
+    //      expect(s2.nodesData['n0'].value).toBe(-599950);
+    // }, 13428);
+
+// })

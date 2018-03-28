@@ -88,37 +88,6 @@ export class TimeSlider {
             this.store.actions.simulation.setTargetTime(t)
         }.bind(this));
 
-        // let self = this;
-        // $("#left-resize")
-        //     .mousedown(function (e) {
-        //         console.log('mousedown')
-        //         $(this).on("mousemove", function (e) {
-        //             var p1 = { x: e.pageX, y: e.pageY };
-        //             var p0 = $(this).data("p0") || p1;
-        //             console.log("dragging from x:" + p0.x + " y:" + p0.y + "to x:" + p1.x + " y:" + p1.y);
-                    
-        //             if(p0.x > p1.x) { 
-        //                 let {min, max} = self.store.getPresentState().ui.timeSlider.range;
-        //                 self.store.actions.ui.updateSliderRange({min: min - 1000000000});
-        //             }
-        //             if(p0.x < p1.x) {
-        //                 let {min, max} = self.store.getPresentState().ui.timeSlider.range;
-        //                 self.store.actions.ui.updateSliderRange({min: min + 1000000000});
-        //             }
-                    
-                    
-        //             $(this).data("p0", p1);
-                    
-                    
-                
-                   
-        //             // self.store.actions.ui.updateSliderRange({max: self.sliderSettings.min + 1000000})
-        //             // this.store.actions.updateSliderSettings();
-        //         });
-        //     })
-        //     .mouseup(function () {
-        //         $(this).off("mousemove");
-        //     });
     }
 
     formatFromMsString(s: String) {
