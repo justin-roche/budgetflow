@@ -18,11 +18,11 @@ let singleNode: Graph = {
         'n0': <NodeData>{
             id: 'n0',
             name: null,
-            type: 'source',
+            source: true,
             dataType: 'money',
             active: true,
             value: 0,
-            stepFunctions: ['f1'],
+            nodeFunctions: ['f1'],
             displayFunctions: [],
             displayData: { outlineColor: 'blue' },
         }
@@ -34,10 +34,14 @@ let singleNode: Graph = {
     edgesData: {
 
     },
-    functions: {
+    nodeFunctions: {
         'f1': {
-                name: 'add',
-                arguments: {amount: {value: 1}},
+            operator: {
+                value: '+',
+            },
+            object: {
+                value: 1,
+            }
         }
     },
     conditions: [],

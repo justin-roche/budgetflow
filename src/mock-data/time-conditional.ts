@@ -26,28 +26,28 @@ let conditionalGraph: Graph = {
     nodesData: {
         'n0': {
             id: 'n0',
-            type: 'source',
+            source: true,
             //active: true,
             value: 10,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {}
         },
         'n1': {
             id: 'n1',
-            type: 'sink',
+            source: false,
             //active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {}
         },
         'n2': {
             id: 'n2',
-            type: 'sink',
+            source: false,
             //active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         }

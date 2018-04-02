@@ -462,9 +462,8 @@ export class GraphController {
     }
 
     onBackgroundClick(e) {
-        this.store.dispatch({ type: 'ADD_NODE', payload: { x: e.offsetX, y: e.offsetY } });
+        this.store.dispatch({ type: 'ADD_NODE', payload: {node: { x: e.offsetX, y: e.offsetY } }});
     }
-
 
     addKeyListeners() {
         let self = this;

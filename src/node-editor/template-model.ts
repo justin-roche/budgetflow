@@ -1,16 +1,12 @@
 import { _ } from 'underscore';
+import { nodeTypes } from './node-types'
 
 export class TemplateModel {
     
     base = {
 
-        availableNodeTypes: [
-            {value: 'sum', name: 'sum' },
-            {value: 'salary', name: 'salary'},
-            {value: 'expense', name: 'expense'},
-        ],
+        availableNodeTypes: nodeTypes,
     
-       
     };
 
     computed = {}

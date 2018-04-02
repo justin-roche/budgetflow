@@ -26,10 +26,11 @@ let conditionalGraph: Graph = {
     nodesData: {
         'n0': {
             id: 'n0',
-            type: 'source',
-            //active: true,
+            
+            source: true,
+            active: true,
             value: 10,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {}
         },
@@ -38,16 +39,16 @@ let conditionalGraph: Graph = {
             ype: 'sink',
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {}
         },
         'n2': {
             id: 'n2',
-            type: 'sink',
+            source: false,
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         }
@@ -79,16 +80,14 @@ let conditionalGraph: Graph = {
             active: true,
         },
     },
-    functions: {
+    nodeFunctions: {
+
+    },
+    linkFunctions: {
         'f1': {
-             name: 'transfer', 
-             arguments: {amount: {value: 1}}, 
-             target: null,
-            //  type: null,
-            //  precondition: null,
-            //  data: null
-            //  fnId: null,
-            },
+             operator: {value: 'transfer'},
+             object: {value: 1}, 
+        }
     },
     conditions: <ConditionsData> {
         'c0': {

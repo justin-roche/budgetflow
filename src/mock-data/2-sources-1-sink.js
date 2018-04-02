@@ -43,7 +43,7 @@ let convergentSourcesGraph = {
             "type": "source",
             "active": true,
             "value": 10,
-            "stepFunctions": [
+            "nodeFunctions": [
                 
             ],
             "displayFunctions": [],
@@ -57,7 +57,7 @@ let convergentSourcesGraph = {
             "active": true,
             "type": "sink",
             "displayFunctions": [],
-            "stepFunctions": [],
+            "nodeFunctions": [],
             "displayData": {},
             "value": 0
         },
@@ -66,7 +66,7 @@ let convergentSourcesGraph = {
             "active": true,
             "type": "source",
             "displayFunctions": [],
-            "stepFunctions": [],
+            "nodeFunctions": [],
             "displayData": {},
             "value": 10
         }

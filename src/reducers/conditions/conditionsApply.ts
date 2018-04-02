@@ -9,34 +9,21 @@ function updateAllConditions(state, conditions) {
 
 /* apply edge conditions once per cycle */
 function applyEdgesConditions(state: Graph) : Graph {
-    state = Object.freeze(state);
+    let graph = JSON.parse(JSON.stringify(state))
 
-    let acc = { conditions: { ...state.conditions }, edgesData: { ...state.edgesData } };
 
     /* reduce state and edges data for all edges */
-    let { edgesData, conditions } = ArrayById(state.edgesData)
-    .reduce((acc, _ed) => {
-        let original = JSON.stringify(_ed);
-        let edgeData = {..._ed};
-        let configs: Array<Condition> = getEdgeConditions(state, {...edgeData});
-
+    ArrayById(state.edgesData)
+    .forEach((ed) => {
+        let configs: Array<Condition> = getEdgeConditions(state, ed);
         if(configs.length > 0) {
-            edgeData = applyEdgeConditions(state, edgeData, configs);
+            applyEdgeConditions(state, ed, configs);
         }
-        if(original !== JSON.stringify(_ed)) {
-            console.warn('EDGE DATA MUTATED')
-        }
-        let edgesData = { ...acc.edgesData, [edgeData.id]: edgeData };
-        return { ...acc, edgesData: edgesData };
-    }, acc);
-
-    return { ...state, edgesData: edgesData };
+    });
+  
+    return graph;
 }
 
-// declare interface update_edge_conditions {
-//     edgesData: EdgesData,
-//     conditions: Array<Condition>
-// }
 
 function getEdgeConditions(state: Graph, edgeData) : Array<Condition>{
     if(!edgeData.conditionFunctions) {
@@ -45,15 +32,12 @@ function getEdgeConditions(state: Graph, edgeData) : Array<Condition>{
     return edgeData.conditionFunctions.map(id => state.conditions[id]);
 }
 
-function applyEdgeConditions(_graph: Graph, edgeData, conditionConfigs) : EdgeData {
-    let acc = {...edgeData};
+function applyEdgeConditions(graph: Graph, target, conditionConfigs) {
 
-    acc = conditionConfigs.reduce((acc, config) => {
-        let {graph, target } = evaluateCondition({graph: _graph, target: edgeData, config, source: {} });
-        return {...acc, ...target};
-    },acc);
+    conditionConfigs.forEach(config => {
+        evaluateCondition({graph, target, config});
+    });
     
-    return acc;
 }
 
 // function composeConditions() {

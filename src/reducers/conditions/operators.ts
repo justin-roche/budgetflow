@@ -14,10 +14,10 @@ let operators = {
     },
 
     'activate': function(target) {
-        return Object.assign(target, {active: true});
+        target.active = true;
     },
     'deactivate': function(target) {
-        return Object.assign({}, target, {active: false});
+        target.active = false;
     }
 }
 

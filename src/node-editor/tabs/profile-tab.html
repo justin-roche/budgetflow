@@ -3,14 +3,10 @@
         <label>name</label>
         <input class="form-control" type="text" blur.trigger="submit()" value.bind="form.name" placeholder="name">
         <label>type</label>
-        <type-ahead data.bind="vm.availableNodeTypes" value.bind="nodeData.type" placeholder="Node Type">
+        <div if.bind="tm.computed.availableNodeTypes">
+                <aubs-typeahead data.bind="tm.computed.availableNodeTypes" 
+                on-select.call="selectNodeType(item)"
+                value.bind="selectedNodeType" placeholder="Node Type"></aubs-typeahead>
+        </div>
 
-        </type-ahead>
-        <label>link-type</label>
-        <input class="form-control" type="text" blur.trigger="submit()" value.bind="form.type" placeholder="type">
-        <!-- <label>values</label> -->
-        <!-- <type-ahead></type-ahead>
-        <label>icon</label>
-        <type-ahead></type-ahead> -->
-        
 </template>

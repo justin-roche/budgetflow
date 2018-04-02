@@ -3,7 +3,7 @@
         <require from="../common/typeAhead"></require>
 
         <modal-wrapper selector.bind="'ui.nodeEditor.modalSettings'">
-                <div slot="modalbody">
+                <div if.bind="nodeData" slot="modalbody">
                         <aubs-tabset>
                                 <aubs-tab on-select.call="tabMode = 'profile'" header="Profile">
                                         <compose view="./tabs/profile-tab.html"></compose>

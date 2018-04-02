@@ -1,7 +1,7 @@
 import { ArrayById, ArrayToObject } from '../utilities/utilities';
 import { _ } from 'underscore';
-import { linkFunctions } from './linkFunctions';
-import { applyStepFunction } from './applyStepFunction';
+import { applyNodeFunction } from '../functions/applyNodeFunction';
+import { applyLinkFunction } from '../functions/applyLinkFunction';
 
 /* TRAVERSAL */
 
@@ -18,7 +18,7 @@ function breadthTraverse(state: Graph) {
 
     while (q.length > 0) {
         let source = q.shift();
-        applyStepFunction(state, source);
+        applyNodeFunctions(state, source);
         let forwardNodes = getOutNodes(source, state);
         forwardNodes.forEach(target => {
             reduceTarget(state, source, target);
@@ -27,36 +27,41 @@ function breadthTraverse(state: Graph) {
     }
 }
 
+function applyNodeFunctions(graph, source) {
+    source.nodeFunctions.forEach(fnId => {
+        let config: any = graph.nodeFunctions[fnId];
+        applyNodeFunction({config, graph, source});
+    });
+}
 /* apply link function from source node to target node  */
 
-function reduceTarget(state: Graph, source: NodeData, target: NodeData) {
-    let edge: EdgeData = getEdge(state, source, target);
-    if (edge.active && target.active) {
+function reduceTarget(graph: Graph, source: NodeData, target: NodeData) {
+    let edge: EdgeData = getEdge(graph, source, target);
+    if(edge.active === false) return;
+    if(target.active === false) return;
         edge.linkFunctions.forEach(fnId => {
-            let [fn, functionConfig] = getLinkFunction(state, fnId)
-            fn({
-                graph: state,
-                target: target,
-                source: source,
-                config: functionConfig
+            let config = getLinkFunction(graph, fnId)
+            applyLinkFunction({
+                graph,
+                target,
+                source,
+                config
             });
         })
-    }
 }
 
 function getLinkFunction(state, id) {
-    let functionConfig: any = state.functions[id];
-    if (!functionConfig) {
+    let config: any = state.linkFunctions[id];
+    if (!config) {
         throw new Error('link function undefined: ' + id + ' for node ');
     }
-    let fn = linkFunctions[functionConfig.name].fn;
-    return [fn, functionConfig];
+    return config;
 }
 
 /* helper functions */
 
 function getSources(g) {
-    return _.filter(g, n => n.type === 'source');
+    return _.filter(g, n => n.source);
 }
 
 /* add cache removed on certain graph changes */

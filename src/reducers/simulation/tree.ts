@@ -1,3 +1,4 @@
+import { linkFunctions } from 'reducers/traversal/linkFunctions';
 let tree: Graph = {
 
     id: 'g7',
@@ -63,70 +64,70 @@ let tree: Graph = {
         'n0': <NodeData>{
             id: 'n0',
             name: null,
-            type: 'source',
+            source: true,
             active: true,
             value: 50,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
         'n1': <NodeData>{
             id: 'n1',
             name: null,
-            type: 'sink',
+            source: false,
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
         'n2': <NodeData>{
             id: 'n2',
             name: null,
-            type: 'sink',
+            source: false,
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
         'n3': <NodeData>{
-            type: 'sink',
+            source: false,
             name: null,
             id: 'n3',
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
         'n4': <NodeData>{
-            type: 'sink',
+            source: false,
             name: null,
             id: 'n4',
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
         'n5': <NodeData>{
             id: 'n5',
             name: null,
-            type: 'sink',
+            source: false,
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
         'n6': <NodeData>{
-            type: 'sink',
+            source: false,
             name: null,
             id: 'n6',
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {},
         },
@@ -220,14 +221,17 @@ let tree: Graph = {
             linkFunctions: ['f1'],
         },
     },
-    functions: {
+    nodeFunctions: {
+
+    },
+    linkFunctions: {
         'f1': {
-            name: 'transfer',
-            arguments: { amount: { value: 1 } }
+            operator: {value: 'transfer'},
+            object: { value: 1 } 
         },
         'f2': {
-            name: 'transfer',
-            arguments: { amount: { value: 3 } }
+            operator: {value: 'transfer'},
+            object: { value: 3 } 
         },
         // 'f3': {
         //     name: 'add',

@@ -1,9 +1,7 @@
 import { operators } from './operators';
 import { accessPath } from '../utilities/utilities';
 
-let evaluateCondition = function({ config, graph, source, target }: FunctionArgs): FunctionArgs {
-
-    let tmpTarget = Object.assign({}, target);
+let evaluateCondition = function({ config, graph, target }) {
 
     let subject = config['subject'].value;
     let object = config['object'].value; 
@@ -19,12 +17,8 @@ let evaluateCondition = function({ config, graph, source, target }: FunctionArgs
     if(evalResult) {
         let effect: any = config['effect'].value;
         let effectFunction = operators[effect];
-        tmpTarget = effectFunction(target);
+        effectFunction(target);
     }
-
-    return { target: tmpTarget, config, graph, source };
 };
-
-
 
 export { evaluateCondition };

@@ -52,10 +52,10 @@ let cycle: Graph = {
     "nodesData": {
         "n0": {
             "id": "n0",
-            "type": "source",
+            source: true,
             "value": 10,
             active: true,
-            "stepFunctions": [],
+            "nodeFunctions": [],
             "displayFunctions": [],
             "displayData": {
                 "label": "n0:10",
@@ -67,7 +67,7 @@ let cycle: Graph = {
             "type": "sink",
             "active": true,
             "value": 0,
-            "stepFunctions": [],
+            "nodeFunctions": [],
             "displayFunctions": [],
             "displayData": {
                 "label": "n1:0",
@@ -79,7 +79,7 @@ let cycle: Graph = {
             "type": "sink",
             "active": true,
             "value": 0,
-            "stepFunctions": [],
+            "nodeFunctions": [],
             "displayFunctions": [],
             "displayData": {
                 "label": "n2:0",
@@ -130,15 +130,11 @@ let cycle: Graph = {
             "linkFunctions": ['f1']
         }
     },
-    "functions": {
+    linkFunctions: {
         "f1": {
             "name": "transfer",
-            "arguments": {
-                "amount": {
-                    "value": 1
-                }
-            },
-            "target": null
+            "operator": {value: 'transfer'},
+            "object": {value: 1}
         }
     },
     "conditions": {

@@ -15,7 +15,8 @@ declare interface Graph {
     edgesData: EdgesData,
     conditions: FunctionsData,
     //conditionsIds: Array<String>  
-    functions: FunctionsData,
+    linkFunctions: FunctionsData,
+    nodeFunctions: FunctionsData,
     simulation: Simulation,  
 }
 
@@ -59,11 +60,12 @@ declare interface AppNode {
 
 declare interface NodeData {
     id: string,
-    type: string,
+    //type: string,
+    source: Boolean,
     active: Boolean,
     value: Number,
     name: string,
-    stepFunctions: Array<String>,
+    nodeFunctions: Array<String>,
     displayFunctions: Array<FunctionItem>,
     displayData: NodeDisplayData,
 }
@@ -82,7 +84,7 @@ declare interface NodeDisplayData {
 declare interface EdgeData {
     id: string
     linkFunctions: Array<String>,
-    stepFunctions?: Array<String>,
+    nodeFunctions?: Array<String>,
     active: boolean,
 }
 

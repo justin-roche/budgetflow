@@ -41,15 +41,15 @@
         //             type: 'source',
         //             active: true,
         //             value: 1,
-        //             stepFunctions: [{ name: 'increment', arguments: [1] }],
+        //             nodeFunctions: [{ name: 'increment', arguments: [1] }],
         //             displayFunctions: ['toggle'],
         //         },
         //         'n2': {
         //             id: 'n2',
-        //             type: 'sink',
+        //             source: false,
         //             active: false,
         //             value: 0,
-        //             stepFunctions: [],
+        //             nodeFunctions: [],
         //             displayFunctions: ['toggle'],
         //         },
         //         'n2': {
@@ -57,15 +57,15 @@
         //             id: 'n2',
         //             active: true,
         //             value: 1,
-        //             stepFunctions: [],
+        //             nodeFunctions: [],
         //             displayFunctions: ['toggle'],
         //         },
         //         'n4': {
-        //             type: 'sink',
+        //             source: false,
         //             id: 'n4',
         //             active: false,
         //             value: 0,
-        //             stepFunctions: [],
+        //             nodeFunctions: [],
         //             displayFunctions: ['toggle'],
         //         }
         //     },
@@ -90,7 +90,7 @@
         //     edgesData: {
         //         'e1': {
         //             linkFunction: 'transfer',
-        //             stepFunctions: null,
+        //             nodeFunctions: null,
         //             feedback: 'exponentialIncrease',
         //             feedbackArgument: .50,
         //         },

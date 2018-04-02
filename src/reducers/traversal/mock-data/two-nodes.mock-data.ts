@@ -22,24 +22,24 @@ let twoNodes: Graph = {
     },
     nodesData: <NodesData>{
         'n0': {
-            type: 'source',
+            source: true,
             dataType: 'money',
             name: null,
             id: 'n0',
             active: true,
             value: 10,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {}
         },
         'n1': {
-            type: 'sink',
+            source: false,
             dataType: 'money',
             id: 'n1',
             name: null,
             active: true,
             value: 0,
-            stepFunctions: [],
+            nodeFunctions: [],
             displayFunctions: [],
             displayData: {}
         }
@@ -60,17 +60,20 @@ let twoNodes: Graph = {
             active: true,
             preLinkFunctions: [],
             linkFunctions: ['f1'],
-            stepFunctions: null,
+            nodeFunctions: null,
             conditions: [],
         },
     },
     conditions: {
 
     },
-    functions: {
+    nodeFunctions: {
+
+    },
+    linkFunctions: {
         'f1': { 
-            name: 'transfer', 
-            arguments: {amount: {value: 1}} 
+            operator: {value: 'transfer'}, 
+            object: {value: 1},
         }
     },
     simulation: <Simulation>{
