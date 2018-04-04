@@ -3,12 +3,14 @@ import * as Rx from 'rxjs'
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Store } from '../services/reduxStore';
-import { createSimulation } from './force';
-import { renderLinks, renderNodes, addNodes, addLinks} from './render';
-import { addZoomListener, addMouseOverListener, addDragListener, 
-    addClickListener, addDblClickListener, onBackgroundClick, addKeyListeners} from './listeners'
+import { createSimulation, updateSimulationElements, initializeSimulation } from './simulation';
+import { addContainer, renderLinks, renderNodes, addNodes, addLinks } from './render';
+import {
+    addZoomListener, addMouseOverListener, addDragListener,
+    addClickListener, addDblClickListener, onBackgroundClick, addKeyListeners
+} from './listeners'
 
-    const selectGraph = state => state.graph;
+const selectGraph = state => state.graph;
 
 declare interface D3NodeConfig extends AppNode {
     key: String,
@@ -25,6 +27,7 @@ export class GraphController {
     $graph;
     $ui;
     dragging = false;
+    simulate = false;
     ui;
     graph;
     containerRef;
@@ -32,22 +35,15 @@ export class GraphController {
     container;
     simulation;
     settings;
+    onBackgroundClick = onBackgroundClick.bind(this);
     newGraph: BehaviorSubject<any> = new BehaviorSubject(null);
+
+    edges = [];
+    nodes = [];
 
     constructor(private ea: EventAggregator, private store: Store) {
         let previousValue;
         let self = this;
-        this.renderLinks = renderLinks.bind(this);
-        this.renderNodes = renderNodes.bind(this);
-        this.addNodes = addNodes.bind(this);
-        this.addLinks = addLinks.bind(this);
-        this.addZoomListener = addZoomListener.bind(this); 
-        this.addMouseOverListener = addMouseOverListener.bind(this);
-        this.addDragListener = addDragListener.bind(this);
-        this.addClickListener = addClickListener.bind(this);
-        this.addDblClickListener = addDblClickListener.bind(this);
-        this.onBackgroundClick = onBackgroundClick.bind(this);
-        this.addKeyListeners = addKeyListeners.bind(this);
 
         this.store.select('graph', { bind: [this, 'graph'] }).subscribe(d => {
             this.refresh(d);
@@ -60,64 +56,43 @@ export class GraphController {
     }
 
     attached() {
-        this.addKeyListeners()
-        this.svg = this.d3.select('svg');
-        this.svg
-            .attr("width", 1200)
-            .attr("height", 800);
-
-        if (!this.container) {
-            this.svg = this.d3.select('svg');
-            this.container = this.svg.append('g');
-            this.addZoomListener();
-        }
-        this.container.append("g").attr("id", "linklayer")
-        this.container.append("g").attr("id", "nodelayer")
-
-        this.container.append("svg:defs").selectAll("marker")
-            .data(["end"])      // Different link/path types can be defined here
-            .enter().append("svg:marker")    // This section adds in the arrows
-            .attr("id", String)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 25)
-            .attr("refY", 0)
-            .attr("markerWidth", 2)
-            .attr("markerHeight", 2)
-            .attr("orient", "auto")
-            .append("svg:path")
-            .attr("d", "M0,-5L10,0L0,5");
+        addKeyListeners.call(this)
+        addContainer.call(this);
     }
 
     /* refresh */
 
     refresh(graph: Graph) {
-        let d3NodesArray, d3EdgesArray;
 
         /* state -> d3 data join */
-        d3NodesArray = this.convertNodesToArray(graph);
-        d3EdgesArray = this.convertEdgesToArray(graph);
+        this.nodes = this.convertNodesToArray(graph);
+        this.edges = this.convertEdgesToArray(graph);
 
         if (this.simulation) {
-            d3NodesArray = this.extendNodesWithLayoutProperties(d3NodesArray); /* extend nodes with existing simulation properties */
+            this.nodes = this.extendNodesWithLayoutProperties(this.nodes); /* extend nodes with existing simulation properties */
         }
 
         /* d3 -> dom data join */
-        this.addLinks(d3EdgesArray, graph);
-        this.renderLinks(graph)
-        this.addNodes(d3NodesArray, graph);
-        this.renderNodes();
+        addLinks.call(this, this.edges, graph);
+        renderLinks.call(this, graph)
+        addNodes.call(this, this.nodes, graph);
+        renderNodes.call(this);
 
         // /* adding d3 data to simulation, associates links to nodes */
         if (this.simulation) {
-            this.simulation.nodes(d3NodesArray);
-            this.simulation.force("link").links(d3EdgesArray);
-            let alpha = this.paused? -1 : 1
-            this.simulation.alphaTarget(alpha).restart();
+            this.simulation.nodes(this.nodes);
+            
+            if(this.simulate) {
+                // this.simulation.force('link').links(this.edges);
+                // this.simulation.restart();
+            } else {
+                // this.simulation.force('link', null)
+            }
         } else {
-             this.simulation = createSimulation(d3NodesArray, d3EdgesArray);
+            this.simulation = createSimulation.call(this);
         }
-        this.addKeyListeners();
-         this.addDragListener();
+        addKeyListeners.call(this);
+        addDragListener.call(this);
         // this.addMouseOverListener();
         // this.addClickListener();
         // this.addDblClickListener();

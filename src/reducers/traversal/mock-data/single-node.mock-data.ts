@@ -12,6 +12,8 @@ let singleNode: Graph = {
             id: 'n0',
             outEdges: [],
             inEdges: [],
+            x: 1000,
+            y: 1000
         },
     },
     nodesData: <NodesData>{

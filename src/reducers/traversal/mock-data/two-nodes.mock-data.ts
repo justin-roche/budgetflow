@@ -13,11 +13,15 @@ let twoNodes: Graph = {
             id: 'n0',
             outEdges: ['e0'],
             inEdges: [],
+            x: 500,
+            y: 500,
         },
         'n1': {
             id: 'n1',
             inEdges: ['e0'],
             outEdges: [],
+            x: 600,
+            y: 600
         },
     },
     nodesData: <NodesData>{

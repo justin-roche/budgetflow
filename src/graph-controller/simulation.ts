@@ -1,20 +1,26 @@
 /* simuluation */
 
-function createSimulation(_nodes, _links) {
-    let d3 = window['d3'];
+function createSimulation() {
+    let d3 = this.d3;
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
     let labels = svg.selectAll('.label');
+   
 
-    let simulation = d3.forceSimulation(_nodes)
-        .force("link", d3.forceLink(_links).id(function (d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-1000))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .velocityDecay(0.9)
-        .alphaTarget(1)
-        .on("tick", ticked);
+    let simulation = this.d3.forceSimulation(this.nodes)
+       
+    /* initialize the edges for link simulation so they appear */
+
+    let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
+    f.strength(function(d) { return 0});   
+    
+    simulation.force("link", f);
+        // .force("charge", d3.forceManyBody().strength(1))
+        // .alphaTarget(1)
+      
+    simulation.on("tick", ticked);
 
     function ticked() {
         if (!this.paused) {
@@ -42,7 +48,7 @@ function createSimulation(_nodes, _links) {
                     d3.select(this)
                         .attr("x", function (d) { return d.x; })
                         .attr("y", function (d) {
-                            return d.y - Number(d3.select(this).attr('height') / 2);
+                            return d.y - Number(this.d3.select(this).attr('height') / 2);
                         })
                     // .attr("rx", function (d) { return d.x; })
                     // .attr("ry", function (d) { return d.y; });
@@ -66,4 +72,41 @@ function createSimulation(_nodes, _links) {
     return simulation;
 }
 
-export { createSimulation }
+function updateSimulationElements(d3NodesArray, d3EdgesArray) {
+    
+   // 
+}
+
+function startSimulation() {
+    var svg = this.d3.select("svg"),
+        width = +svg.attr("width"),
+        height = +svg.attr("height");
+
+    //this.simulation.force("center", this.d3.forceCenter(width / 2, height / 2))
+    //this.simulation.force('link', this.d3.forceLink)
+    //this.simulation.velocityDecay(0.9)
+    // this.simulation.force('charge', this.d3.forceManyBody)
+
+    let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
+    f.strength(function(d) { return 1});
+    
+    this.simulation.force("link", f);
+
+    this.simulation
+    //.alphaTarget(1)
+    .restart();
+}
+
+function stopSimulation() {
+    //this.simulation.alphaTarget(0)
+    //this.simulation.force('charge', null)
+    this.simulation.force('link', null)
+    //this.simulation.force('center', null)
+    // this.simulation.stop();
+}
+
+function initializeSimulation() {
+    // this.simulation.force('link', null)
+}
+
+export { createSimulation, initializeSimulation, updateSimulationElements, startSimulation, stopSimulation }

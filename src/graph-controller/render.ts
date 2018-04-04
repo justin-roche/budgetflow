@@ -1,3 +1,31 @@
+function addContainer() {
+    this.svg = this.d3.select('svg');
+        this.svg
+            .attr("width", 1200)
+            .attr("height", 800);
+
+        if (!this.container) {
+            this.svg = this.d3.select('svg');
+            this.container = this.svg.append('g');
+            // addZoomListener.call(this);
+        }
+        this.container.append("g").attr("id", "linklayer")
+        this.container.append("g").attr("id", "nodelayer")
+
+        this.container.append("svg:defs").selectAll("marker")
+            .data(["end"])      // Different link/path types can be defined here
+            .enter().append("svg:marker")    // This section adds in the arrows
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 25)
+            .attr("refY", 0)
+            .attr("markerWidth", 2)
+            .attr("markerHeight", 2)
+            .attr("orient", "auto")
+            .append("svg:path")
+            .attr("d", "M0,-5L10,0L0,5");
+}
+
 function addLinks(edgesArray, data) {
     let linkGroups = this.container.select('#linklayer')
         .selectAll(".linkGroup")
@@ -70,7 +98,6 @@ function renderNodes() {
                 selected.classed('selected-node', false);
             }
 
-
             if (dd.shape === 'square') {
                 selected
                     .attr("x", d.x)
@@ -125,4 +152,4 @@ function renderLinks(data) {
         })
 }
 
-export { renderLinks, renderNodes, addLinks, addNodes };
+export { addContainer, renderLinks, renderNodes, addLinks, addNodes };

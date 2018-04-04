@@ -1,3 +1,61 @@
+import { startSimulation, stopSimulation } from './simulation';
+
+function addDragListener() {
+    let d3 = this.d3;
+    let self: any = this;
+    let circles = this.svg.selectAll('.node');
+
+    circles.on('mousedown.drag', null);
+
+    circles.call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
+
+    function dragstarted(d, a) {
+        console.log(d, this.className);
+        self.simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+        /* classing fails on svg */
+        d3.select(this).attr('style', "stroke-width: 5")
+    }
+
+    function dragged(d) {
+        d.fx = d3.event.x;
+        d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+        self.simulation.alphaTarget(1);
+        d.fx = null;
+        d.fy = null;
+        d3.select(this).attr('style', "stroke-width: 2")    }
+}
+
+function addKeyListeners() {
+    let self = this;
+    document.onkeydown = function (e) {
+        if (e.key === 's') {
+            if(this.simulate) {
+                this.simulate = false;
+                stopSimulation.call(this);
+            } else {
+                this.simulate = true;
+                startSimulation.call(this)
+            }
+            console.log('simulate:', this.simulate)
+           
+        }
+        // if(e.key === "Backspace") {
+        //     if(this.ui.selectedNodeId) {
+        //         this.store.dispatch({ type: 'DELETE_NODE', payload: { id: this.ui.selectedNodeId } });
+        //         this.store.dispatch({ type: 'SELECT_NODE', payload: null });
+        //     }
+        // }
+    }.bind(this)
+}
+
 function addZoomListener() {
     let self = this;
     let d3 = this.d3;
@@ -27,38 +85,7 @@ function addMouseOverListener() {
         });
 }
 
-function addDragListener() {
-    let d3 = this.d3;
-    let self: any = this;
-    let circles = this.svg.selectAll('.node');
 
-    circles.on('mousedown.drag', null);
-
-    circles.call(d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended));
-
-    function dragstarted(d, a) {
-        console.log(d, this.className);
-        self.simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-        /* classing fails on svg, stroke does not update */
-        d3.select(this).attr('style', "stroke-width: 5")
-    }
-
-    function dragged(d) {
-        d.fx = d3.event.x;
-        d.fy = d3.event.y;
-    }
-
-    function dragended(d) {
-        self.simulation.alphaTarget(1);
-        d.fx = null;
-        d.fy = null;
-        d3.select(this).attr('style', "stroke-width: 2")    }
-}
 
 function addClickListener() {
     let d3 = this.d3;
@@ -119,22 +146,6 @@ function onBackgroundClick(e) {
     this.store.dispatch({ type: 'ADD_NODE', payload: { node: { x: e.offsetX, y: e.offsetY } } });
 }
 
-function addKeyListeners() {
-    document.onkeydown = function (e) {
-        console.log(e);
-        if (e.key === 's') {
-            this.paused = !this.paused;
-            this.simulation.stop();
-            this.refresh(this.graph)
-            console.log('paused', this.paused)
-        }
-        // if(e.key === "Backspace") {
-        //     if(this.ui.selectedNodeId) {
-        //         this.store.dispatch({ type: 'DELETE_NODE', payload: { id: this.ui.selectedNodeId } });
-        //         this.store.dispatch({ type: 'SELECT_NODE', payload: null });
-        //     }
-        // }
-    }.bind(this)
-}
+
 
 export { addZoomListener, addMouseOverListener, addDragListener, addClickListener, addDblClickListener, onBackgroundClick, addKeyListeners }
