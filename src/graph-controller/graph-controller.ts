@@ -80,22 +80,15 @@ export class GraphController {
 
         // /* adding d3 data to simulation, associates links to nodes */
         if (this.simulation) {
-            this.simulation.nodes(this.nodes);
-            
-            if(this.simulate) {
-                // this.simulation.force('link').links(this.edges);
-                // this.simulation.restart();
-            } else {
-                // this.simulation.force('link', null)
-            }
+            updateSimulationElements.call(this);
         } else {
             this.simulation = createSimulation.call(this);
         }
         addKeyListeners.call(this);
         addDragListener.call(this);
         // this.addMouseOverListener();
-        // this.addClickListener();
-        // this.addDblClickListener();
+        addClickListener.call(this);
+        addDblClickListener.call(this);
     }
 
     /* state join- joines the d3 config data to redux */

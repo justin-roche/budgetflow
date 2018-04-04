@@ -7,19 +7,19 @@ function createSimulation() {
         height = +svg.attr("height");
 
     let labels = svg.selectAll('.label');
-   
+
 
     let simulation = this.d3.forceSimulation(this.nodes)
-       
+
     /* initialize the edges for link simulation so they appear */
 
     let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
-    f.strength(function(d) { return 0});   
-    
+    f.strength(function (d) { return 0 });
+
     simulation.force("link", f);
-        // .force("charge", d3.forceManyBody().strength(1))
-        // .alphaTarget(1)
-      
+    // .force("charge", d3.forceManyBody().strength(1))
+    // .alphaTarget(1)
+
     simulation.on("tick", ticked);
 
     function ticked() {
@@ -72,9 +72,15 @@ function createSimulation() {
     return simulation;
 }
 
-function updateSimulationElements(d3NodesArray, d3EdgesArray) {
-    
-   // 
+function updateSimulationElements() {
+    this.simulation.nodes(this.nodes);
+
+    let forceStrength = this.simulate ? 1 : 0;
+    let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
+    f.strength(function (d) { return forceStrength });
+
+    this.simulation.force("link", f);
+    this.simulation.restart();
 }
 
 function startSimulation() {
@@ -82,27 +88,20 @@ function startSimulation() {
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
-    //this.simulation.force("center", this.d3.forceCenter(width / 2, height / 2))
-    //this.simulation.force('link', this.d3.forceLink)
-    //this.simulation.velocityDecay(0.9)
-    // this.simulation.force('charge', this.d3.forceManyBody)
-
     let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
-    f.strength(function(d) { return 1});
-    
+    f.strength(function (d) { return 1 });
+
     this.simulation.force("link", f);
 
     this.simulation
-    //.alphaTarget(1)
-    .restart();
+        //.alphaTarget(1)
+        .restart();
 }
 
 function stopSimulation() {
-    //this.simulation.alphaTarget(0)
-    //this.simulation.force('charge', null)
+
     this.simulation.force('link', null)
-    //this.simulation.force('center', null)
-    // this.simulation.stop();
+
 }
 
 function initializeSimulation() {
@@ -110,3 +109,12 @@ function initializeSimulation() {
 }
 
 export { createSimulation, initializeSimulation, updateSimulationElements, startSimulation, stopSimulation }
+
+ //this.simulation.alphaTarget(0)
+    //this.simulation.force('charge', null)
+ //this.simulation.force("center", this.d3.forceCenter(width / 2, height / 2))
+    //this.simulation.force('link', this.d3.forceLink)
+    //this.simulation.velocityDecay(0.9)
+    // this.simulation.force('charge', this.d3.forceManyBody)
+     //this.simulation.force('center', null)
+    // this.simulation.stop();
