@@ -1,20 +1,43 @@
 <template>
-        <require from="./../common/IterableConverter"></require>
+    <require from="./../common/IterableConverter"></require>
     <div>
-        <aubs-accordion show.bind="settings.currentFunctions" >
-            <aubs-accordion-group repeat.for="fn of settings.currentFunctions" title="${fn.name}">
-                <div>
+        <aubs-accordion show.bind="nodeFunctions">
+            <aubs-accordion-group repeat.for="fn of nodeFunctions" title="${fn.name || 'no name'}">
+                <div if.bind="!fn._editing">
                     <table class="table">
                         <thead>
                             <tr>
-                                <td repeat.for="arg of fn.arguments | iterable">
-                                    ${fn.arguments[arg.prop]}
-                                </td>
+                                <td>Operator</td>
+                                <td>Object</td>
+                                <td></td>
                             </tr>
                         </thead>
                         <tbody>
-                            <td repeat.for="arg of fn.arguments | iterable">
-                                <input class="form-control" type="text" value.bind="fn.arguments[arg.prop]" placeholder="name">                                        
+                            <td>${fn.operator.value}</td>
+                            <td>${fn.object.value}</td>
+                            <td>
+                                <button click.trigger="fn._editing = true" class="fa fa-pencil"></button>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+                <div if.bind="fn._editing">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td>Operator</td>
+                                <td>Object</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td>
+                                <input type="text" value.bind="fn.operator.value">
+                            </td>
+                            <td>
+                                <input type="text" value.bind="fn.object.value">
+                            </td>
+                            <td>
+                                <button click.trigger="fn._editing = false" class="fa fa-check"></button>
                             </td>
                         </tbody>
                     </table>

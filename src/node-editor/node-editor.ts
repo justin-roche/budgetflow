@@ -14,8 +14,6 @@ export class NodeEditor {
     tm;
     selectedNodeType;
    
-    functionEditorSettings;
-
     constructor(private store: Store) {
         this.tm = new TemplateModel();
         this.store.mapStateToMethods(this, sm);
@@ -25,9 +23,13 @@ export class NodeEditor {
         if(nodeData) {
             this.nodeData = JSON.parse(JSON.stringify(nodeData));
         } else {
-            this.nodeData = null;
+            this.nodeData = null;  
         }
         this.tm.compute();
+    }
+
+    selectedNodeDataUpdated({nodeData}) {
+        console.warn('nd updated', nodeData);
     }
 
     selectNodeType(type) {

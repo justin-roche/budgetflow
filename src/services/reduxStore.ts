@@ -125,26 +125,31 @@ export class Store {
         }
         selectorsModel.selectors.forEach(selectorModel => {
             this.select(selectorModel.path)
-                .map(d => {
-                    let computedValues;
-                    if (typeof selectorModel.compute === 'function') {
-                        computedValues = selectorModel.compute(d, this.getPresentState())
+                .map(update => {
+                    if (selectorModel.skip === null && update === null) {
+
+                    } else {
+                        this.computeSelection(update, selectorModel, component);
                     }
-                    let methodStem = this.getMethodStem(selectorModel);
-                    let methodName = selectorModel.handler || methodStem + 'Updated';
-                    // try {
-                        component[methodName].call(component,
-                            Object.assign(
-                                {
-                                    [methodStem]: d,
-                                    state: this.getPresentState(),
-                                }, computedValues));
-                    // } catch (e) {
-                    //     throw new Error('no handler for state update: ' + methodName)
-                    // }
                 })
                 .subscribe();
         })
+    }
+
+    computeSelection(update, selectorModel, component) {
+        let computedValues;
+        if (typeof selectorModel.compute === 'function') {
+            computedValues = selectorModel.compute(update, this.getPresentState())
+        }
+        let methodStem = this.getMethodStem(selectorModel);
+        let methodName = selectorModel.handler || methodStem + 'Updated';
+        let result = Object.assign(
+            {
+                [methodStem]: update,
+                state: this.getPresentState(),
+            }, computedValues);
+
+        component[methodName].call(component, result);
     }
 
     getMethodStem(selectorModel) {

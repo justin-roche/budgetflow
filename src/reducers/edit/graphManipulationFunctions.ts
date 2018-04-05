@@ -106,22 +106,33 @@ function extendNodeData(baseNodeData, newNodeData) {
     return 
 }
 
+function updateNodeFunctions(_g: Graph, nodeFunctions) {
+    debugger;
+    let nfs = JSON.parse(JSON.stringify(nodeFunctions))
+    let g = JSON.parse(JSON.stringify(_g));
+    nfs.forEach((nf) => {
+        g.nodeFunctions[nf.id] = nf;
+    });
+    return g;
+}
+
 function updateNodeData(_g: Graph, _nd) {
     let g = JSON.parse(JSON.stringify(_g));
     let _new = JSON.parse(JSON.stringify(_nd));
     let id = _new.id;
 
     let old = _g.nodesData[id];
-    if(_new.type) copyNodeFunctions(g, _new);
+    if(_new.type) addNodeFunctionsToGraphNodeFunctions(g, _new);
 
     g.nodesData[id] = _new;
     return g;
 
 }
 
-function copyNodeFunctions(g, nodeData) {
+function addNodeFunctionsToGraphNodeFunctions(g, nodeData) {
         nodeData.type.nodeFunctions.forEach((fn, i) => {
             let id = getNewNodeFunctionId(g);
+            fn.id = id;
             g.nodeFunctions[id] = fn;
             nodeData.nodeFunctions[i] = id;
         });
@@ -210,11 +221,6 @@ function updateEdgeData(g: Graph, edgeData: EdgeData) {
     return extend(g).select(`edgesData.${edgeData.id}`).data((obj: any) => {
         return { ...obj, ...edgeData };
     });
-
-
-
-
-
 }
 
 function toggleEdgeActivation(g, eid) {
@@ -223,4 +229,4 @@ function toggleEdgeActivation(g, eid) {
     });
 }
 
-export { addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge }
+export { updateNodeFunctions, addNewNode, addEdge, updateEdgeData, updateNodeData, toggleEdgeActivation, deleteNode, deleteEdge }

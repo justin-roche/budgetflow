@@ -3,7 +3,7 @@
 import {
     addNewNode, addEdge, updateEdgeData, deleteNode,
     deleteEdge, toggleEdgeActivation,
-    updateNodeData
+    updateNodeData, updateNodeFunctions
 } from './edit/graphManipulationFunctions';
 import { resetTime, incrementCurrentTime, incrementTargetTime, decrementTargetTime, setTargetTime, simulate } from './simulation/simulationFunctions'
 import { displayUpdate } from './display/displayUpdate'
@@ -44,6 +44,9 @@ let graphActions = function (store) {
             },
             updateNodeData: function (nd: NodeData) {
                 store.dispatch({ type: 'GRAPH_NODE_DATA_UPDATE', payload: updateNodeData(store.getPresentState().graph, nd) });
+            },
+            updateNodeFunctions: function(nfs) {
+                store.dispatch({ type: 'GRAPH_SET', payload: updateNodeFunctions(store.getPresentState().graph, nfs) });
             },
             toggleEdgeActivation: function (id: String) {
                 store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id) });

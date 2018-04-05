@@ -1,5 +1,6 @@
 
 let ADD_ONE = {
+    name: 'salary',
     operator: {
         value: '+',
     },

@@ -8,5 +8,7 @@
                 on-select.call="selectNodeType(item)"
                 value.bind="selectedNodeType" placeholder="Node Type"></aubs-typeahead>
         </div>
+        <button type="button" class="btn btn-default" click.trigger="close()">Cancel</button>
+        <button type="button" click.trigger="submit()" class="btn btn-primary">Save</button>
 
 </template>

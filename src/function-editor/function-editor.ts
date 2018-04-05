@@ -5,23 +5,37 @@ import { _ } from 'underscore';
 
 import $ from 'jquery'
 import * as Rx from 'rxjs'; 
+import { sm } from './state-model';
 
+@inject(Store)
 export class FunctionEditor {
-    @bindable settings;
     newFunction;
+    nodeData = null;
+    nodeFunctions = null;
     // currentFunctions
     // newFunction;
     // selectableFunctions;
     
 
-    constructor() {
+    constructor(private store: Store) {
+        this.store.mapStateToMethods(this, sm);
+    }
+
+    selectedNodeDataUpdated({nodeData, nodeFunctions, state}) {
+        this.nodeData = nodeData;
+        this.nodeFunctions = nodeFunctions;
+    }
+
+    newFunctionSelected(item) {
 
     }
 
-
-    newFunctionSelected(item) {
-        this.settings.newFunction = item;
-       
+    submit() {
+        this.nodeFunctions.forEach(fn => {
+            debugger;
+            fn.object.value = Number(fn.object.value);
+        })
+        this.store.actions.graph.updateNodeFunctions(this.nodeFunctions);
     }
 
 }
