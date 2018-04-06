@@ -91,7 +91,7 @@ export class Store {
         this.store.subscribe(() => {
             let state = this.store.getState();
             let slice = selector.split('.').reduce((acc, prop) => {
-                if (acc === undefined) {
+                if (acc === undefined || acc === null) {
                     console.log('selector', selector, 'state', state)
                     debugger;
                 }

@@ -37,23 +37,28 @@ function addKeyListeners() {
     let self = this;
     document.onkeydown = function (e) {
         if (e.key === 's') {
-            if(this.simulate) {
-                this.simulate = false;
-                stopSimulation.call(this);
-            } else {
-                this.simulate = true;
-                startSimulation.call(this)
-            }
-            console.log('simulate:', this.simulate)
-           
+            reforceGraph.call(this);
+            console.log('reforced')
         }
-        // if(e.key === "Backspace") {
-        //     if(this.ui.selectedNodeId) {
-        //         this.store.dispatch({ type: 'DELETE_NODE', payload: { id: this.ui.selectedNodeId } });
-        //         this.store.dispatch({ type: 'SELECT_NODE', payload: null });
-        //     }
-        // }
+        console.log('key', e.key)
+        if(e.key === "Backspace") {
+            if(this.store.getPresentState().ui.graphContainer.selectedNodeId) {
+                this.store.dispatch({ type: 'DELETE_NODE', payload: { id: this.ui.selectedNodeId } });
+                this.store.actions.ui.selectNode(null)
+            }
+        }
     }.bind(this)
+}
+
+function reforceGraph() {
+    if(this.simulate) {
+        this.simulate = false;
+        stopSimulation.call(this);
+    } else {
+        this.simulate = true;
+        startSimulation.call(this)
+    }
+    console.log('simulate:', this.simulate)
 }
 
 function addZoomListener() {

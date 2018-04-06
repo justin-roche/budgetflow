@@ -10,7 +10,7 @@ const { TsConfigPathsPlugin, CheckerPlugin } = require('awesome-typescript-loade
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || []
 const when = (condition, config, negativeConfig) =>
   condition ? ensureArray(config) : ensureArray(negativeConfig)
-
+console.log('DIRNAME', __dirname)
 // primary config:
 const title = 'Aurelia Navigation Skeleton';
 const outDir = path.resolve(__dirname, 'dist');
@@ -35,7 +35,7 @@ module.exports = ({ production, server, extractCss, coverage } = {}) => ({
     modules: [srcDir, 'node_modules'],
   },
 
-  devtool: production ? 'source-map' : 'cheap-module-eval-source-map',
+  devtool: production ? 'source-map' : 'cheap-source-map',
   entry: {
     app: ['aurelia-bootstrapper'],
     // vendor: ['bluebird', 'jquery'],

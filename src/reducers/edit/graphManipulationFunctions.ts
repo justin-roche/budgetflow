@@ -4,7 +4,10 @@ import { extend, ArrayToObject, ArrayById } from '../utilities/utilities';
 
 /* NODE */
 
-function deleteNode(g, nid) {
+function deleteNode(_g, nd) {
+    let g = JSON.parse(JSON.stringify(_g));
+    let nid = nd.id;
+
     let [retainedNodes, excludedNodes] = _.partition(g.nodes, nd => nd.id !== nid);
     let [retainedNodesData, exludedNodesData] = _.partition(g.nodesData, nd => nd.id !== nid);
     let [retainedEdges, exludedEdges] = _.partition(g.edges, ed => (ed.source !== nid && ed.target !== nid));
@@ -12,22 +15,45 @@ function deleteNode(g, nid) {
 
     let updatedNodesArray = removeEdgeAssociations(retainedNodes, exludedEdges);
 
-    let nodes = ArrayToObject(updatedNodesArray);
-    let nodesData = ArrayToObject(retainedNodesData);
+   
+    g.nodes = ArrayToObject(updatedNodesArray);
+    g.nodesData = ArrayToObject(retainedNodesData);
 
-    let edges = ArrayToObject(retainedEdges);
-    let edgesData = ArrayToObject(retainedEdgesData);
+    g.edges = ArrayToObject(retainedEdges);
+    g.edgesData = ArrayToObject(retainedEdgesData);
+    reindexNodes(g);
+    g.nodesIds = g.nodesIds.filter(id => id !== nid);
 
-    let nodesIds = g.nodesIds.filter(id => id !== nid);
+    return g;
+}
 
-    return {
-        ...g,
-        nodes: nodes,
-        nodesData: nodesData,
-        edges: edges,
-        edgesData: edgesData,
-        nodesIds: nodesIds,
-    };
+function reindexNodes(g) {
+    let priors = ArrayById(g.nodes).map((node, i) => node.id); // 'n2'
+    let updates = ArrayById(g.nodes).map((node, i) => 'n'+i);  // 'n1'
+    
+    ArrayById(g.edges).forEach(e => {
+        e.outNodes = e.OutNodes.map(id => {
+            let updateIndex = priors.indexOf(id);
+            return updates[updateIndex];
+        })
+        e.inNodes = e.inNodes.map(id => {
+            let updateIndex = priors.indexOf(id);
+            return updates[updateIndex];
+        })
+    });
+    Object.keys(g.nodesData).forEach((key,i) => {
+        let x = g.nodesData[key];
+        x.id = 'n'+i;
+        delete g.nodesData[key];
+        g.nodesData['n'+i] = x;
+    })
+    Object.keys(g.nodes).forEach((key,i) => {
+        let x = g.nodes[key];
+        x.id = 'n'+i;
+        delete g.nodes[key];
+        g.nodes['n'+i] = x;
+    });
+    
 }
 
 function deleteEdge(g: Graph, eid) {
@@ -107,7 +133,6 @@ function extendNodeData(baseNodeData, newNodeData) {
 }
 
 function updateNodeFunctions(_g: Graph, nodeFunctions) {
-    debugger;
     let nfs = JSON.parse(JSON.stringify(nodeFunctions))
     let g = JSON.parse(JSON.stringify(_g));
     nfs.forEach((nf) => {

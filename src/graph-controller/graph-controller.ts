@@ -77,7 +77,7 @@ export class GraphController {
         renderLinks.call(this, graph)
         addNodes.call(this, this.nodes, graph);
         renderNodes.call(this);
-
+        
         // /* adding d3 data to simulation, associates links to nodes */
         if (this.simulation) {
             updateSimulationElements.call(this);
@@ -106,6 +106,8 @@ export class GraphController {
             return { ...graph.edges[edgeName], key: graph.id + graph.edges[edgeName].id }
         });
     }
+
+  
 
     /* copy the input nodes state to the existing layout nodes array */
     extendNodesWithLayoutProperties(nodesArr) {

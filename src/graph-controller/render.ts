@@ -1,3 +1,5 @@
+let CIRCLE_RADIUS = 20;
+
 function addContainer() {
     this.svg = this.d3.select('svg');
         this.svg
@@ -61,6 +63,7 @@ function addNodes(nodesArray, data) {
         })
 
     newGroups.append("text").attr('class', 'icon')
+       
         .style('font-family', 'FontAwesome')
         .style('font-size', function (d) { return 1 + 'em' })
 
@@ -73,12 +76,7 @@ function renderNodes() {
     let selectedNodeId = this.ui.selectedNodeId;
     let data = this.graph;
 
-    this.svg.
-        selectAll(".label")
-        .text(function (d) {
-            let dd = data.nodesData[d.id].displayData;
-            return dd.label;
-        })
+    configureLabels.call(this, data)
 
     this.svg
         .selectAll(".icon")
@@ -110,7 +108,7 @@ function renderNodes() {
                     .attr("y", d.y)
                     .attr("cx", d.x)
                     .attr("cy", d.y)
-                    .attr("r", 20)
+                    .attr("r", CIRCLE_RADIUS)
             }
 
             if (nd.displayData.active === false) {
@@ -131,6 +129,24 @@ function renderNodes() {
         })
 
 
+}
+
+function configureLabels(data) {
+    this.svg.
+        selectAll(".label")
+        .text(function (d) {
+            let dd = data.nodesData[d.id].displayData;
+            return dd.label;
+        })
+        .attr('x',function(d){
+            let dd = data.nodesData[d.id].displayData;
+            return -(this.getBBox().width/2)-(CIRCLE_RADIUS/2);
+        })
+        .attr('y',function(d){
+            let dd = data.nodesData[d.id].displayData;
+            return 20;
+        })
+       
 }
 
 function renderLinks(data) {
