@@ -3,10 +3,12 @@
         <label>name</label>
         <input class="form-control" type="text" blur.trigger="submit()" value.bind="form.name" placeholder="name">
         <label>type</label>
-        <div if.bind="tm.computed.availableNodeTypes">
-                <aubs-typeahead data.bind="tm.computed.availableNodeTypes" 
+        <div if.bind="nodeData && tm.computed.availableNodeTypes">
+                <aubs-typeahead 
+                data.bind="tm.computed.availableNodeTypes" 
+                
                 on-select.call="selectNodeType(item)"
-                value.bind="selectedNodeType" placeholder="Node Type"></aubs-typeahead>
+                value.bind="selectedNodeType" placeholder.bind="selectedNodeType.name"></aubs-typeahead>
         </div>
         <input type="text" value.bind="nodeData.name">
         <button type="button" class="btn btn-default" click.trigger="close()">Cancel</button>

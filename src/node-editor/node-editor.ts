@@ -21,7 +21,9 @@ export class NodeEditor {
 
     selectedNodeUpdated({state, id, nodeData}) {
         if(nodeData) {
+            console.log('selected node', nodeData)
             this.nodeData = JSON.parse(JSON.stringify(nodeData));
+            this.selectedNodeType = this.nodeData.type;
         } else {
             this.nodeData = null;  
         }

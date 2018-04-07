@@ -4,7 +4,7 @@ import {
     addNewNode, addEdge, updateEdgeData, deleteNode,
     deleteEdge, toggleEdgeActivation,
     updateNodeData, updateNodeFunctions
-} from './edit/graphManipulationFunctions';
+} from './edit/graph-edit.functions';
 import { resetTime, incrementCurrentTime, incrementTargetTime, decrementTargetTime, setTargetTime, simulate } from './simulation/simulationFunctions'
 import { displayUpdate } from './display/displayUpdate'
 import { applyEdgesConditions } from './conditions/conditionsApply';

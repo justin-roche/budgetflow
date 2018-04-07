@@ -4,7 +4,8 @@ import { timeConditional } from '../reducers/conditions/mock-data/time-condition
 import { timeEdgeConditional } from '../reducers/conditions/mock-data/time-conditional-edge';
 import { singleNode } from '../reducers/traversal/mock-data/single-node.mock-data';
 import { cycle } from '../reducers/traversal/mock-data/cycle.mock-data';
-import { BLANK_GRAPH } from '../reducers/traversal/mock-data/blank.mock-data';
+import { BLANK_GRAPH } from '../reducers/mock-data/blank-graph'; 
+import { SALARY_NODE_GRAPH } from '../reducers/mock-data/salary-node';
 
 import { twoNodes } from '../reducers/traversal/mock-data/two-nodes.mock-data';
 import { tree } from '../reducers/simulation/tree';
@@ -82,6 +83,7 @@ let state = {
     graph: null,
     graphs: <Array<Graph>>[
         BLANK_GRAPH,
+        SALARY_NODE_GRAPH,
         conditionalGraph, 
         timeConditional, 
         timeEdgeConditional, 

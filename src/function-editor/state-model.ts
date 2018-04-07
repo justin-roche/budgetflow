@@ -9,7 +9,7 @@ let sm = {
                 if(selectedNodeData) {
                     return {
                         nodeData: selectedNodeData,
-                        nodeFunctions: selectedNodeData.nodeFunctions.map(id => s.graph.nodeFunctions[id]),
+                        nodeFunctions: selectedNodeData.nodeFunctions,
                     };
                 } else {
                     return {

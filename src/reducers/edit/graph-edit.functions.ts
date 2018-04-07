@@ -22,7 +22,6 @@ function deleteNode(_g, nd) {
     g.edges = ArrayToObject(retainedEdges);
     g.edgesData = ArrayToObject(retainedEdgesData);
     reindexNodes(g);
-    g.nodesIds = g.nodesIds.filter(id => id !== nid);
 
     return g;
 }
@@ -88,7 +87,6 @@ function addNewNode(_g, arg) {
     let appliedNode = JSON.parse(JSON.stringify(arg.node || {}));
 
     let id = getNewNodeId(g);
-    g.nodesIds = g.nodesIds.concat(id);
 
     let newNode = createBaseNode(g, id)
     let newNodeData = createBaseNodeData(g, id);
@@ -119,7 +117,7 @@ function createBaseNodeData(g, id): NodeData {
         displayFunctions: [],
         nodeFunctions: [],
         displayData: {},
-        value: 0
+        value: 0,
     }
 }
 
@@ -185,19 +183,17 @@ function addEdge(g, source, target) {
     };
 
     updateEdgeReferences(g, edge, data);
-    
-    transferLinkFunctions(g, edge, data, source, target);
+    addEdgesData(g, edge, data);
+    addLinkFunctionsByType(g, edge, data, source, target);
 
     return g;
 }
 
-function transferLinkFunctions(g, edge, edgeData, source, target) {
+function addLinkFunctionsByType(g, edge, edgeData, source, target) {
     let out = g.nodesData[source];
     if(out.type && out.type.direction === 'out') {
         out.type.linkFunctions.forEach((fn, i) => {
-            let id = getNewLinkFunctionId(g);
-            g.linkFunctions[id] = fn;
-            edgeData.linkFunctions[i] = id;
+            edgeData.linkFunctions.push(fn);
         });
     }
 
@@ -213,29 +209,34 @@ function transferLinkFunctions(g, edge, edgeData, source, target) {
 }
 
 function getNewNodeId(g) {
-    return 'n' + g.nodesIds.length;
+    return String(g.nodes.length);
 }
 
 function getNewEdgeId(g) {
-    return 'e' + g.edgesIds.length;
+    return String(g.edges.length);
 }
 
 function getNewLinkFunctionId(g) {
-    return 'f' + g.linkFunctions.length;
+    let l = _.size(g.linkFunctions) - 1;
+    return 'f' + l;
 }
 
 function updateEdgeReferences(g, e, ed) {
     g.edges[e.id] = e;
-    g.edgesData[e.id] = ed;
-    g.edgesIds.push(e.id);
     g.nodes[e.source].outEdges.push(e.id);
     g.nodes[e.target].inEdges.push(e.id);
 }
 
+function addEdgesData(g, e, ed) {
+    g.edgesData[e.source] = g.edgesData[e.source] || [];
+    g.edgesData[e.source][e.target] = ed;
+    debugger;
+}
+
 function shareEdge(g, source, target) {
-    return g.edgesIds.some(test => {
-        let ts = g.edges[test].source;
-        let tt = g.edges[test].target;
+    return g.edges.some(test => {
+        let ts = test.source;
+        let tt = test.target;
         if (tt === source && ts === target || tt === target && ts === source) {
             return true;
         }

@@ -28,8 +28,7 @@ function breadthTraverse(state: Graph) {
 }
 
 function applyNodeFunctions(graph, source) {
-    source.nodeFunctions.forEach(fnId => {
-        let config: any = graph.nodeFunctions[fnId];
+    source.nodeFunctions.forEach(config => {
         applyNodeFunction({config, graph, source});
     });
 }
@@ -39,8 +38,7 @@ function reduceTarget(graph: Graph, source: NodeData, target: NodeData) {
     let edge: EdgeData = getEdge(graph, source, target);
     if(edge.active === false) return;
     if(target.active === false) return;
-        edge.linkFunctions.forEach(fnId => {
-            let config = getLinkFunction(graph, fnId)
+        edge.linkFunctions.forEach(config => {
             applyLinkFunction({
                 graph,
                 target,
@@ -78,12 +76,8 @@ function getOutNodes(nodeData, g: Graph) {
         });
 }
 
-/* add cache removed on certain graph changes */
 function getEdge(state: Graph, source, target) {
-    return state.nodes[source.id].outEdges.map(edge => state.edges[edge])
-        .filter(g => g.target === target.id)
-        .map(edgeDescription => state.edgesData[edgeDescription.id])
-        .pop();
+    return state.edgesData[source.id][target.id];
 }
 
 export { traverseGraph };

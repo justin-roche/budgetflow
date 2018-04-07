@@ -3,7 +3,6 @@ import $ from 'jquery'
 import * as Rx from 'rxjs';
 import { Store } from '../services/reduxStore';
 import { _ } from 'underscore';
-import { linkFunctions } from 'reducers/traversal/linkFunctions';
 
 @inject(Store)
 export class EdgeEditor {
@@ -27,7 +26,6 @@ export class EdgeEditor {
             } else {
                 this.edgeData = false;
                 //this.edgeData = null;
-                alert('edge data null')
             }
         })
     }

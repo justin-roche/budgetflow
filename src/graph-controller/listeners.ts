@@ -46,6 +46,10 @@ function addKeyListeners() {
                 this.store.dispatch({ type: 'DELETE_NODE', payload: { id: this.ui.selectedNodeId } });
                 this.store.actions.ui.selectNode(null)
             }
+            if(this.store.getPresentState().ui.graphContainer.selectedEdgeId) {
+                this.store.actions.graph.deleteEdge(this.ui.selectedEdgeId);
+                this.store.actions.ui.selectEdge(null)
+            }
         }
     }.bind(this)
 }
@@ -140,7 +144,6 @@ function addDblClickListener() {
         d3.event.preventDefault();
         d3.event.stopPropagation();
         let previous = self.ui.selectedNodeId;
-        alert(previous)
         self.store.actions.ui.selectNode(d.id);
     })
 

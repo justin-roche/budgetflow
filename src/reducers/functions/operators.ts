@@ -21,6 +21,7 @@ let linkOperators = {
         arg3.value = arg3.value - arg2;
     },
     'sum': function(arg1, arg2, arg3) {
+        debugger;
         arg1.value =arg1.value + arg2;
     }
     // '-': function (arg1, arg2) {
