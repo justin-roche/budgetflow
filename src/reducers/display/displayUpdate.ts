@@ -1,25 +1,17 @@
 import { ArrayById, ArrayToObject } from '../utilities/utilities';
 import { displayFunctions } from '../../reducers/display/displayFunctions';
 
-function displayUpdate(state: Graph): Graph {
-    state = Object.freeze(state);
-    let nodesArr: Array<NodeData> = ArrayById(state.nodesData);
-    let displayFns = state.data.displayFunctions.nodes;
+function displayUpdate(_g: Graph) {
+    let g = JSON.parse(JSON.stringify(_g))
+    let displayFns = g.data.displayFunctions.nodes;
 
     /* reduce the nodesArray */
-    let updatedNodesArr = nodesArr.reduce((acc, nodeData) => {
-
-        let appliedNodeData = displayFns.reduce((acc, fn) => {
-            let newDisplayData = displayFunctions[fn.name](state, acc, fn.arguments);
-            return { ...acc, displayData: { ...acc.displayData, ...newDisplayData } };
-        }, nodeData);
-
-        return acc.concat(appliedNodeData);
-
-    }, []);
-
-    /* convert back to object type */
-    return { ...state, nodesData: ArrayToObject(updatedNodesArr) };
+    g.nodesData.forEach((nodeData) => {
+        displayFns.forEach((fn) => {
+            displayFunctions[fn.name](g, nodeData, fn.arguments);
+        });
+    });
+    return g;
 }
 
 export { displayUpdate };

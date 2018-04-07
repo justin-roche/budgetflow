@@ -55,7 +55,7 @@ let nodesData = [
                 }
             ],
             "source": true,
-            "direction": "out"
+            "direction": "source"
         }
     }
 ];

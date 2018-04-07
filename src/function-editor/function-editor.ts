@@ -32,10 +32,11 @@ export class FunctionEditor {
 
     submit() {
         this.nodeFunctions.forEach(fn => {
-            debugger;
             fn.object.value = Number(fn.object.value);
         })
-        this.store.actions.graph.updateNodeFunctions(this.nodeFunctions);
+        this.nodeData.nodeFunctions = this.nodeFunctions;
+        this.store.actions.graph.updateNodeData(this.nodeData);
+
     }
 
 }

@@ -6,13 +6,14 @@ let nodeTypes = [
     nodeFunctions: [nodeFunctionTemplates.ADD_ONE],
     linkFunctions: [linkFunctionTemplates.TRANSFER_ONE],
     source: true,
-    direction: 'out'
+    direction: 'source'
     },
     {name: 'sum',
     linkFunctions: [linkFunctionTemplates.SUM],
+    nodeFunctions: [nodeFunctionTemplates.SET_ZERO],
     source: false,
-    direction: 'in',
-    nodeFunctions: [],
+    direction: 'target',
+    value: 0
     }
 ]
 

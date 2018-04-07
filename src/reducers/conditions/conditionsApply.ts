@@ -11,9 +11,9 @@ function updateAllConditions(state, conditions) {
 function applyEdgesConditions(state: Graph) : Graph {
     let graph = JSON.parse(JSON.stringify(state))
 
-
     /* reduce state and edges data for all edges */
-    ArrayById(state.edgesData)
+    graph.edgesData
+    .filter(d => d) // skip null elements
     .forEach((ed) => {
         let configs: Array<Condition> = getEdgeConditions(state, ed);
         if(configs.length > 0) {

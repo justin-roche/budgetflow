@@ -6,7 +6,7 @@ import { singleNode } from '../reducers/traversal/mock-data/single-node.mock-dat
 import { cycle } from '../reducers/traversal/mock-data/cycle.mock-data';
 import { BLANK_GRAPH } from '../reducers/mock-data/blank-graph'; 
 import { SALARY_NODE_GRAPH } from '../reducers/mock-data/salary-node';
-
+import { SUM_NODE_GRAPH } from '../reducers/mock-data/sum-node';
 import { twoNodes } from '../reducers/traversal/mock-data/two-nodes.mock-data';
 import { tree } from '../reducers/simulation/tree';
 
@@ -84,6 +84,7 @@ let state = {
     graphs: <Array<Graph>>[
         BLANK_GRAPH,
         SALARY_NODE_GRAPH,
+        SUM_NODE_GRAPH,
         conditionalGraph, 
         timeConditional, 
         timeEdgeConditional, 

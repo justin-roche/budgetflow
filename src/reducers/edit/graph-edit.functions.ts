@@ -58,7 +58,7 @@ function reindexNodes(g) {
 function deleteEdge(g: Graph, eid) {
     let edgesData = { ...g.edgesData };
     let edges = { ...g.edges };
-
+    debugger;
     let removedEdges = edgesData[eid];
     delete edges[eid];
     delete edgesData[eid];
@@ -66,9 +66,8 @@ function deleteEdge(g: Graph, eid) {
     let nodes = _.toArray(g.nodes);
     nodes = removeEdgeAssociations(nodes, [removedEdges])
     nodes = ArrayToObject(nodes);
-    let edgesIds = g.edgesIds.filter(id => id !== eid);
 
-    return { ...g, edgesData: edgesData, edges: edges, nodes: nodes, edgesIds: edgesIds };
+    return { ...g, edgesData: edgesData, edges: edges, nodes: nodes};
 }
 
 function removeEdgeAssociations(retainedNodes, removedEdges): Nodes {
@@ -130,14 +129,14 @@ function extendNodeData(baseNodeData, newNodeData) {
     return 
 }
 
-function updateNodeFunctions(_g: Graph, nodeFunctions) {
-    let nfs = JSON.parse(JSON.stringify(nodeFunctions))
-    let g = JSON.parse(JSON.stringify(_g));
-    nfs.forEach((nf) => {
-        g.nodeFunctions[nf.id] = nf;
-    });
-    return g;
-}
+// function updateNodeFunctions(_g: Graph, nodeFunctions) {
+//     let nfs = JSON.parse(JSON.stringify(nodeFunctions))
+//     let g = JSON.parse(JSON.stringify(_g));
+//     nfs.forEach((nf) => {
+//         g.nodeFunctions[nf.id] = nf;
+//     });
+//     return g;
+// }
 
 function updateNodeData(_g: Graph, _nd) {
     let g = JSON.parse(JSON.stringify(_g));
@@ -145,21 +144,19 @@ function updateNodeData(_g: Graph, _nd) {
     let id = _new.id;
 
     let old = _g.nodesData[id];
-    if(_new.type) addNodeFunctionsToGraphNodeFunctions(g, _new);
 
     g.nodesData[id] = _new;
     return g;
 
 }
 
-function addNodeFunctionsToGraphNodeFunctions(g, nodeData) {
-        nodeData.type.nodeFunctions.forEach((fn, i) => {
-            let id = getNewNodeFunctionId(g);
-            fn.id = id;
-            g.nodeFunctions[id] = fn;
-            nodeData.nodeFunctions[i] = id;
-        });
-}
+// function addNodeFunctionsToGraphNodeFunctions(g, nodeData) {
+//         nodeData.type.nodeFunctions.forEach((fn, i) => {
+//             let id = getNewNodeFunctionId(g);
+//             fn.id = id;
+//             nodeData.nodeFunctions[i] = id;
+//         });
+// }
 
 /* EDGE */
 
@@ -189,20 +186,20 @@ function addEdge(g, source, target) {
     return g;
 }
 
-function addLinkFunctionsByType(g, edge, edgeData, source, target) {
-    let out = g.nodesData[source];
-    if(out.type && out.type.direction === 'out') {
-        out.type.linkFunctions.forEach((fn, i) => {
+function addLinkFunctionsByType(g, edge, edgeData, sourceId, targetId) {
+    let source = g.nodesData[sourceId];
+    if(source.type && source.type.direction === 'source') {
+        source.type.linkFunctions.forEach((fn, i) => {
+            edgeData.linkFunctions = [];
             edgeData.linkFunctions.push(fn);
         });
     }
 
-    let _in = g.nodesData[target];
-    if(_in.type && _in.type.direction === 'in') {
-        _in.type.linkFunctions.forEach((fn, i) => {
-            let id = getNewLinkFunctionId(g);
-            g.linkFunctions[id] = fn;
-            edgeData.linkFunctions[i] = id;
+    let target = g.nodesData[targetId];
+    if(target.type && target.type.direction === 'target') {
+        target.type.linkFunctions.forEach((fn, i) => {
+            edgeData.linkFunctions = [];
+            edgeData.linkFunctions.push(fn);
         });
     }
     

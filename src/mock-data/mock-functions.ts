@@ -19,8 +19,14 @@ let SUM = {
     object: {}
 }
 
+let SET_ZERO = {
+    operator: {value: '='},
+    object: {value: 0}
+}
+
 let nodeFunctionTemplates = {
-    ADD_ONE
+    ADD_ONE,
+    SET_ZERO
 }
 
 let linkFunctionTemplates = {

@@ -5,9 +5,8 @@ let displayFunctions = {
         return {...nodeData.displayData, label: nodeData.id + ':' + nodeData.value};
     },
 
-    labelByName: function(s: Graph, nodeData, args) : NodeDisplayData {
-        let newNodeData = {...nodeData }
-        return {...nodeData.displayData, label: nodeData.name + ':' + nodeData.value};
+    labelByName: function(s: Graph, nodeData, args) {
+        nodeData.displayData.label = nodeData.name + ':' + nodeData.value;
     },
     
     inactivateByLinks: function(s: Graph, nodeData) : NodeDisplayData {
