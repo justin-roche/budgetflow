@@ -12,9 +12,20 @@ function traverseGraph(s: Graph) {
 }
 
 function breadthTraverse(state: Graph) {
+    let gId = 0;
+    if (!state.nodeGroups) {
+        breadthTraverseGroup(state, undefined);
+    }
+    else {
+        while (gId < state.nodeGroups.length) {
+            breadthTraverseGroup(state, gId)
+            gId++
+        }
+    }
+}
 
-    // g = iterateLevel(g);
-    let q = getSources(state.nodesData);
+function breadthTraverseGroup(state, groupId) {
+    let q = getSources(state.nodesData, groupId);
 
     while (q.length > 0) {
         let source = q.shift();
@@ -22,23 +33,25 @@ function breadthTraverse(state: Graph) {
         let forwardNodes = getOutNodes(source, state);
         forwardNodes.forEach(target => {
             reduceTarget(state, source, target);
-            q.push(target);
+            if (target.groupId == groupId) q.push(target);
         });
     }
 }
 
 function applyNodeFunctions(graph, source) {
     source.nodeFunctions.forEach(config => {
-        applyNodeFunction({config, graph, source});
+        applyNodeFunction({ config, graph, source });
     });
 }
 /* apply link function from source node to target node  */
 
 function reduceTarget(graph: Graph, source: NodeData, target: NodeData) {
     let edge: EdgeData = getEdge(graph, source, target);
-    if(edge.active === false) return;
-    if(target.active === false) return;
-        edge.linkFunctions.forEach(config => {
+    if (edge.active === false) return;
+    if (target.active === false) return;
+
+    edge.linkFunctions
+        .forEach(config => {
             applyLinkFunction({
                 graph,
                 target,
@@ -58,8 +71,8 @@ function getLinkFunction(state, id) {
 
 /* helper functions */
 
-function getSources(g) {
-    return _.filter(g, n => n.source);
+function getSources(g, groupId) {
+    return _.filter(g, n => n.source && n.groupId === groupId);
 }
 
 /* add cache removed on certain graph changes */

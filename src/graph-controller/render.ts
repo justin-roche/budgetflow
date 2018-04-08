@@ -14,28 +14,59 @@ function addContainer() {
         this.container.append("g").attr("id", "linklayer")
         this.container.append("g").attr("id", "nodelayer")
 
-        this.container.append("svg:defs").selectAll("marker")
-            .data(["end"])      // Different link/path types can be defined here
-            .enter().append("svg:marker")    // This section adds in the arrows
-            .attr("id", String)
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 25)
-            .attr("refY", 0)
-            .attr("markerWidth", 2)
-            .attr("markerHeight", 2)
-            .attr("orient", "auto")
-            .append("svg:path")
-            .attr("d", "M0,-5L10,0L0,5");
+        defineLinkDefs.call(this);
+       
+}
+
+function defineLinkDefs() {
+    let markers = this.container.append("svg:defs")
+    .selectAll("marker")
+    
+    markers.data(["end"])      // Different link/path types can be defined here
+    .enter().append("svg:marker")    // This section adds in the arrows
+    .attr("id", String)
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 25)
+    .attr("refY", 0)
+    .attr("markerWidth", 2)
+    .attr("markerHeight", 2)
+    .attr("orient", "auto")
+    .append("svg:path")
+    .attr("d", "M0,-5L10,0L0,5");
+
+    markers.data(["sum"])      // Different link/path types can be defined here
+    .enter().append("svg:marker")    // This section adds in the arrows
+    .attr("id", String)
+    .attr("viewBox", "0 -5 10 10")
+    .attr("refX", 25)
+    .attr("refY", 0)
+    .attr("markerWidth", 2)
+    .attr("markerHeight", 2)
+    .attr("orient", "auto")
+    .append("svg:path")
+    //.attr("d", "M0,-5L10,0L0,5");
 }
 
 function addLinks(edgesArray, data) {
+    let d3 = this.d3;
     let linkGroups = this.container.select('#linklayer')
         .selectAll(".linkGroup")
         .data(edgesArray, function (d) {
             return d.key;
         })
     linkGroups.exit().remove();
-    linkGroups.enter().append("g").attr("class", "linkGroup").append("line").attr("marker-end", "url(#end)");
+    
+    let newGroups = linkGroups.enter().append("g").attr("class", "linkGroup");
+
+    newGroups.each(function (d, i, groups) {
+        d3.select(this).append("line");
+        if(d.svg) {
+            d3.select(this).attr("marker-end", `url(#${d.svg})`);
+        } else {
+            d3.select(this).attr("marker-end", "url(#end)");
+        }
+    })
+
 }
 
 function addNodes(nodesArray, data) {

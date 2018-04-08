@@ -111,7 +111,7 @@ function addClickListener() {
             }
             if (previous !== d.id) {
                 self.store.actions.graph.addEdge(previous, d.id);
-                self.store.actions.ui.selectNode(d.id)
+                self.store.actions.ui.selectNode(null)
             }
         }
         else {

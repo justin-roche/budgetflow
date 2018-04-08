@@ -9,6 +9,7 @@ import { SALARY_NODE_GRAPH } from '../reducers/mock-data/salary-node';
 import { SUM_NODE_GRAPH } from '../reducers/mock-data/sum-node';
 import { twoNodes } from '../reducers/traversal/mock-data/two-nodes.mock-data';
 import { tree } from '../reducers/simulation/tree';
+import { THREE_NODES_SUM } from '../reducers/mock-data/3-nodes-sum';
 
 let state = {
 
@@ -85,6 +86,7 @@ let state = {
         BLANK_GRAPH,
         SALARY_NODE_GRAPH,
         SUM_NODE_GRAPH,
+        THREE_NODES_SUM,
         conditionalGraph, 
         timeConditional, 
         timeEdgeConditional, 

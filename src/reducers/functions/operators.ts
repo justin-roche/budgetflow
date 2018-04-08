@@ -23,7 +23,7 @@ let linkOperators = {
         source.value = source.value - amt;
     },
     'sum': function(target, arg2, source) {
-        target.value =target.value + source.value;
+        source.value = target.value + source.value;
     }
     
     // '-': function (arg1, arg2) {

@@ -111,6 +111,7 @@ function createBaseNodeData(g, id): NodeData {
     return {
         active: true,
         id: id,
+        groupId: 0,
         name: null,
         source: false,
         displayFunctions: [],
@@ -227,7 +228,6 @@ function updateEdgeReferences(g, e, ed) {
 function addEdgesData(g, e, ed) {
     g.edgesData[e.source] = g.edgesData[e.source] || [];
     g.edgesData[e.source][e.target] = ed;
-    debugger;
 }
 
 function shareEdge(g, source, target) {

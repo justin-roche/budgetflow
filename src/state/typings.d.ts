@@ -10,6 +10,7 @@ declare interface Graph {
     nodesIds: Array<string>
     nodes: Nodes
     nodesData: NodesData,
+    nodeGroups: Array<any>,
     edgesIds: Array<string>
     edges: Edges
     edgesData: EdgesData,
@@ -60,6 +61,7 @@ declare interface AppNode {
 
 declare interface NodeData {
     id: string,
+    groupId: string,
     //type: string,
     source: Boolean,
     active: Boolean,

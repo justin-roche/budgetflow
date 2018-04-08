@@ -11,8 +11,8 @@ let nodeTypes = [
     {name: 'sum',
     linkFunctions: [linkFunctionTemplates.SUM],
     nodeFunctions: [nodeFunctionTemplates.SET_ZERO],
-    source: false,
-    direction: 'target',
+    source: true,
+    direction: 'source',
     value: 0
     }
 ]
