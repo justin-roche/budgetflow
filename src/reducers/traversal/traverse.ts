@@ -77,16 +77,19 @@ function getSources(g, groupId) {
 
 /* add cache removed on certain graph changes */
 function getOutNodes(nodeData, g: Graph) {
-    return g.nodes[nodeData.id].outEdges
-        .map(edgeName => {
-            return g.edges[edgeName]
-        })
-        .map(edge => {
-            return g.nodes[edge.target]
-        })
-        .map(outNode => {
-            return g.nodesData[outNode.id]
-        });
+    if(g.edgesData[nodeData.id]){
+        return g.edgesData[nodeData.id]
+        .reduce((acc, edgeData, i) => {
+            if(edgeData) {
+                let nodeData = g.nodesData[i]
+                return acc.concat([nodeData]);
+            } 
+            return acc;
+            
+        },[])
+    }
+    return [];
+   
 }
 
 function getEdge(state: Graph, source, target) {

@@ -5,21 +5,24 @@
         <aubs-accordion is-open="true">
             <aubs-accordion-group title="${newFunction.name || 'new function'}" is-open.bind="true">
                 <div>
-                    <aubs-typeahead if.bind="settings.selectableFunctions" data.bind="settings.selectableFunctions" on-select.call="newFunctionSelected(item)"
+                    <aubs-typeahead if.bind="availableFunctions" data.bind="availableFunctions" on-select.call="newFunctionSelected(item)"
                         placeholder="Search for functions"></aubs-typeahead>
-                    <div if.bind="settings.newFunction">
-                        <table if.bind="settings.newFunction.arguments" class="table">
+                    <div if.bind="newFunction">
+                        <table class="table">
                             <thead>
                                 <tr>
-                                    <td repeat.for="arg of settings.newFunction.arguments | iterable">
-                                        ${arg.prop}
-                                    </td>
+                                    <td>Subject</td>
+                                    <td>Operator</td>
+                                    <td>Object</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <td repeat.for="arg of settings.newFunction.arguments | iterable">
-                                    <input class="form-control" type="text" value.bind="settings.newFunction.arguments[arg.prop]" placeholder="name">
-                                </td>
+                                <td>${newFunction.subject.value}</td>
+                                <td>${newFunction.operator.value}</td>
+                                <td>${newFunction.object.value}</td>
+                                <!-- <td>
+                                    <button click.trigger="fn._editing = true" class="fa fa-pencil"></button>
+                                </td> -->
                             </tbody>
                         </table>
                     </div>

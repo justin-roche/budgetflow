@@ -1,8 +1,8 @@
 <template>
     <require from="./../common/IterableConverter"></require>
     <div>
-        <aubs-accordion show.bind="nodeFunctions">
-            <aubs-accordion-group repeat.for="fn of nodeFunctions" title="${fn.name || 'no name'}">
+        <aubs-accordion show.bind="functions">
+            <aubs-accordion-group repeat.for="fn of functions" title="${fn.name || 'no name'}">
                 <div if.bind="!fn._editing">
                     <table class="table">
                         <thead>
@@ -17,6 +17,9 @@
                             <td>${fn.object.value}</td>
                             <td>
                                 <button click.trigger="fn._editing = true" class="fa fa-pencil"></button>
+                            </td>
+                            <td>
+                                <button click.trigger="removeFunction(fn)" class="fa fa-trash"></button>
                             </td>
                         </tbody>
                     </table>

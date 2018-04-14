@@ -1,10 +1,18 @@
 
 
 import {
-    addNewNode, addEdge, updateEdgeData, deleteNode,
-    deleteEdge, toggleEdgeActivation,
-    updateNodeData, updateNodeFunctions
-} from './edit/graph-edit.functions';
+    addNewNode, 
+    deleteNode,
+    
+    updateNodeData, 
+} from './edit/node-edit.functions';
+
+import { addEdge, 
+    updateEdgeData, 
+    toggleEdgeActivation,
+    deleteEdge
+} from './edit/edge-edit.functions';
+
 import { resetTime, incrementCurrentTime, incrementTargetTime, decrementTargetTime, setTargetTime, simulate } from './simulation/simulationFunctions'
 import { displayUpdate } from './display/displayUpdate'
 import { applyEdgesConditions } from './conditions/conditionsApply';
@@ -45,9 +53,9 @@ let graphActions = function (store) {
             updateNodeData: function (nd: NodeData) {
                 store.dispatch({ type: 'GRAPH_NODE_DATA_UPDATE', payload: updateNodeData(store.getPresentState().graph, nd) });
             },
-            updateNodeFunctions: function(nfs) {
-                store.dispatch({ type: 'GRAPH_SET', payload: updateNodeFunctions(store.getPresentState().graph, nfs) });
-            },
+            // updateNodeFunctions: function(nfs) {
+            //     store.dispatch({ type: 'GRAPH_SET', payload: updateNodeFunctions(store.getPresentState().graph, nfs) });
+            // },
             toggleEdgeActivation: function (id: String) {
                 store.dispatch({ type: 'EDGE_DATA_UPDATE', payload: toggleEdgeActivation(store.getPresentState().graph, id) });
             },
