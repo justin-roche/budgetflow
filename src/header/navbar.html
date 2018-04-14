@@ -1,20 +1,40 @@
 <template>
+    <require from="../search-bar/search-bar"></require>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="top-menu">
             <span repeat.for="row of router.navigation">
                 <a class="btn btn-default ${row.isActive ? 'btn-primary' : ''}" href.bind="row.href">${row.title}</a>
             </span>
-            <span class="pull-right">
-                <button class="btn btn-default" click.trigger="test()">Test</button>
-                <button class="btn btn-default" click.trigger="updateDisplay()">update Display</button>
-                <button class="btn btn-default" click.trigger="evaluateConditions()">eval conditions</button>
-                <button class="btn btn-default" click.trigger="downloadGraph()">Download</button>
-                <button class="btn btn-default" click.trigger="toggleScenarioEditor()">Scenario Editor</button>
-                <button class="btn btn-default" click.trigger="toggleNodeEditor()">Node Editor</button>
-                <button class="btn btn-default" click.trigger="toggleEdgeEditor()">Link Editor</button>
-            </span>
+            
+            
+            <!-- <span class="pull-right"> -->
+                <div class="btn-group dropdown" aubs-dropdown="auto-close.bind: autoClose">
+                    <button class="btn btn-primary dropdown-toggle" aubs-dropdown-toggle>
+                        File
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li>
+                            <a class="dropdown-item" click.trigger="toggleScenarioEditor()" href="javascript:void(0)">Scenario Editor</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" click.trigger="toggleNodeEditor()" href="javascript:void(0)">Node Editor</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" click.trigger="toggleEdgeEditor()" href="javascript:void(0)">Link Editor</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" click.trigger="downloadGraph()" href="javascript:void(0)">Download</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" click.trigger="test()" href="javascript:void(0)">Test</a>
+                        </li>
+                    </ul>
+                </div>
+                <div style="display: inline-block">
+                        <search-bar></search-bar>
+                </div>
+            <!-- </span> -->
         </div>
-        <span class="fa fa-arrow-up"></span>
-        <span>&#xf26e;</span>
     </nav>
 </template>

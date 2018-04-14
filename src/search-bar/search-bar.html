@@ -1,0 +1,9 @@
+<template>
+        <div style="display: inline-block">
+                <aubs-typeahead class="width: 25%; display: inline-block"
+                data.bind="searchTerms" 
+                on-select.call="onSearch(item)"
+                ></aubs-typeahead>
+        </div>
+        <span class="fa fa-binoculars"></span>
+    </template>
