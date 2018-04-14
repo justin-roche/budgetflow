@@ -11,6 +11,7 @@ export class NodeEditor {
     collapsed = false;
     nodeId;
     nodeData;
+    graph;
     tm;
     selectedNodeType;
    
@@ -24,6 +25,7 @@ export class NodeEditor {
             console.log('selected node', nodeData)
             this.nodeData = JSON.parse(JSON.stringify(nodeData));
             this.selectedNodeType = this.nodeData.type;
+            this.graph = state.graph;
         } else {
             this.nodeData = null;  
         }
@@ -44,6 +46,15 @@ export class NodeEditor {
         console.log('sending nd', this.nodeData)
         this.store.actions.graph.updateNodeData(this.nodeData);
         this.store.actions.graph.applyDisplayFunctions();
+    }
+
+    groupMatcher(a, b) {
+        debugger;
+        return a === b;
+    }
+
+    updateNodeGroups(i) {
+        console.log('change', i)
     }
 
     save() {

@@ -14,7 +14,7 @@ let nodes = [
 let nodesData = [
        { "active": true,
         "id": "0",
-        groupId: 0,
+        groupIds: [0],
         "name": null,
         "source": true,
         "displayFunctions": [],

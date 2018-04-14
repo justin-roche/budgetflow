@@ -101,7 +101,7 @@ let g = {
         {
             "active": true,
             "id": "0",
-            "groupId": 0,
+            "groupIds": [0],
             "name": null,
             "source": true,
             "displayFunctions": [],
@@ -153,7 +153,7 @@ let g = {
             "id": "1",
             "name": null,
             "source": true,
-            "groupId": 1,
+            "groupIds": [1],
             "displayFunctions": [],
             "nodeFunctions": [
                 {
@@ -197,7 +197,7 @@ let g = {
         {
             "active": true,
             "id": "2",
-            "groupId": 0,
+            "groupIds": [0],
             "name": null,
             "source": true,
             "displayFunctions": [],
@@ -246,7 +246,7 @@ let g = {
         {
             "active": true,
             "id": "3",
-            "groupId": 0,
+            "groupIds": [0],
             "name": null,
             "source": false,
             "displayFunctions": [],

@@ -33,7 +33,7 @@ function breadthTraverseGroup(state, groupId) {
         let forwardNodes = getOutNodes(source, state);
         forwardNodes.forEach(target => {
             reduceTarget(state, source, target);
-            if (target.groupId == groupId) q.push(target);
+            if (target.groupIds.includes(groupId)) q.push(target);
         });
     }
 }
@@ -72,7 +72,7 @@ function getLinkFunction(state, id) {
 /* helper functions */
 
 function getSources(g, groupId) {
-    return _.filter(g, n => n.source && n.groupId === groupId);
+    return _.filter(g, n => n.source && n.groupIds.includes(groupId));
 }
 
 /* add cache removed on certain graph changes */

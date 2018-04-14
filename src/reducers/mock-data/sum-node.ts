@@ -16,7 +16,7 @@ let nodesData = [
         "id": "0",
         "name": null,
         "source": true,
-        groupId: 1,
+        groupIds: [1],
         "displayFunctions": [],
         "nodeFunctions": [
             {

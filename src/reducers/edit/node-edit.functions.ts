@@ -87,7 +87,7 @@ function createBaseNodeData(g, id): any {
     return {
         active: true,
         id: id,
-        groupId: 0,
+        groupIds: [0],
         name: null,
         source: false,
         displayFunctions: [],
