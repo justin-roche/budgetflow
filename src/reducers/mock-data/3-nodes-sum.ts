@@ -13,51 +13,7 @@ let g = {
             ]
         }
     },
-    "edgesData": [
-        null,
-        [
-            {
-                "id": "1-0",
-                "active": true,
-                "linkFunctions": [
-                    {
-                        "phase": "post",
-                        "operator": {
-                            "value": "sum"
-                        },
-                        "object": {}
-                    }
-                ]
-            },
-            null,
-            {
-                "id": "1-2",
-                "active": true,
-                "linkFunctions": [
-                    {
-                        "phase": "post",
-                        "operator": {
-                            "value": "sum"
-                        },
-                        "object": {}
-                    }
-                ]
-            },
-            {
-                "id": "1-3",
-                "active": true,
-                "linkFunctions": [
-                    {
-                        "phase": "post",
-                        "operator": {
-                            "value": "sum"
-                        },
-                        "object": {}
-                    }
-                ]
-            }
-        ]
-    ],
+    
     "nodesData": [
         {
             "active": true,
@@ -241,25 +197,68 @@ let g = {
             "value": 0
         }
     ],
-    "edges": [
-        {
-            "source": "1",
-            "target": "0",
-            "id": "1-0",
-            "svg": "sum"
-        },
-        {
-            "source": "1",
-            "target": "2",
-            "id": "1-2",
-            "svg": "sum"
-        },
-        {
-            "source": "1",
-            "target": "3",
-            "id": "1-3",
-            "svg": "sum"
-        }
+    "edgesData": [
+        null,
+        [
+            {
+                "id": "1-0",
+                "active": true,
+                "linkFunctions": [
+                    {
+                        "phase": "post",
+                        "operator": {
+                            "value": "sum"
+                        },
+                        "object": {}
+                    }
+                ],
+                d3:  {
+                    "source": "1",
+                    "target": "0",
+                    "id": "1-0",
+                    "svg": "sum"
+                },
+            },
+            null,
+            {
+                "id": "1-2",
+                "active": true,
+                "linkFunctions": [
+                    {
+                        "phase": "post",
+                        "operator": {
+                            "value": "sum"
+                        },
+                        "object": {}
+                    }
+                ],
+                d3:  {
+                    "source": "1",
+                    "target": "2",
+                    "id": "1-2",
+                    "svg": "sum"
+                },
+            },
+            {
+                "id": "1-3",
+                "active": true,
+                "linkFunctions": [
+                    {
+                        "phase": "post",
+                        "operator": {
+                            "value": "sum"
+                        },
+                        "object": {}
+                    }
+                ],
+                d3:  {
+                    "source": "1",
+                    "target": "3",
+                    "id": "1-3",
+                    "svg": "sum"
+                }
+            }
+        ]
     ],
     "conditions": [],
     "simulation": {

@@ -9,6 +9,7 @@ import {
     addZoomListener, addMouseOverListener, addDragListener,
     addClickListener, addDblClickListener, onBackgroundClick, addKeyListeners
 } from './listeners'
+import { _ } from 'underscore';
 
 const selectGraph = state => state.graph;
 
@@ -102,8 +103,11 @@ export class GraphController {
 
     /* convert graph.edges object to array with unique keys */
     convertEdgesToArray(graph: Graph): Array<D3EdgeConfig> {
-        return Object.keys(graph.edges).map(edgeName => {
-            return { ...graph.edges[edgeName], key: graph.id + graph.edges[edgeName].id }
+        let edgeList = _.flatten(graph.edgesData)
+        .filter(ed => Boolean(ed));
+        
+        return edgeList.map(edgeData => {
+            return { ...edgeData.d3, key: graph.id + edgeData.id }
         });
     }
 

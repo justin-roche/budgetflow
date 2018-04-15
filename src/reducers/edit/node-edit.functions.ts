@@ -8,15 +8,11 @@ function deleteNode(_g, nd) {
     let g = JSON.parse(JSON.stringify(_g));
     let nid = nd.id;
 
-    let [retainedNodes, excludedNodes] = _.partition(g.nodes, nd => nd.id !== nid);
     let [retainedNodesData, exludedNodesData] = _.partition(g.nodesData, nd => nd.id !== nid);
     let [retainedEdges, exludedEdges] = _.partition(g.edges, ed => (ed.source !== nid && ed.target !== nid));
     let [retainedEdgesData, exludedEdgesData] = _.partition(g.edges, edata => retainedEdges.some(ed => ed.id === edata.id));
 
-    let updatedNodesArray = removeEdgeAssociations(retainedNodes, exludedEdges);
-
-    g.nodes = ArrayToObject(updatedNodesArray);
-    g.nodesData = ArrayToObject(retainedNodesData);
+    g.nodesData = retainedNodesData;
 
     g.edges = ArrayToObject(retainedEdges);
     g.edgesData = ArrayToObject(retainedEdgesData);
