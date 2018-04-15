@@ -8,12 +8,13 @@ function createSimulation() {
 
     let labels = svg.selectAll('.label');
 
-
     let simulation = this.d3.forceSimulation(this.nodes)
 
     /* initialize the edges for link simulation so they appear */
 
-    let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
+    let f = this.d3.forceLink(this.edges).id(function (d) { 
+        return d.key; 
+    })
     f.strength(function (d) { return 0 });
 
     simulation.force("link", f);
@@ -76,7 +77,7 @@ function updateSimulationElements() {
     this.simulation.nodes(this.nodes);
 
     let forceStrength = this.simulate ? 1 : 0;
-    let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
+    let f = this.d3.forceLink(this.edges).id(function (d) { return d.key; })
     f.strength(function (d) { return forceStrength });
 
     this.simulation.force("link", f);
@@ -88,7 +89,7 @@ function startSimulation() {
         width = +svg.attr("width"),
         height = +svg.attr("height");
 
-    let f = this.d3.forceLink(this.edges).id(function (d) { return d.id; })
+    let f = this.d3.forceLink(this.edges).id(function (d) { return d.key; })
     f.strength(function (d) { return 1 });
 
     this.simulation.force("link", f);

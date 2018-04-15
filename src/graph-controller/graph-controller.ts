@@ -4,7 +4,7 @@ import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { Store } from '../services/reduxStore';
 import { createSimulation, updateSimulationElements, initializeSimulation } from './simulation';
-import { addContainer, renderLinks, renderNodes, addNodes, addLinks } from './render';
+import { addContainer, updateLinks, renderNodes, addNodes, addLinks } from './render';
 import {
     addZoomListener, addMouseOverListener, addDragListener,
     addClickListener, addDblClickListener, onBackgroundClick, addKeyListeners
@@ -66,8 +66,8 @@ export class GraphController {
     refresh(graph: Graph) {
 
         /* state -> d3 data join */
-        this.nodes = this.convertNodesToArray(graph);
-        this.edges = this.convertEdgesToArray(graph);
+        this.nodes = this.getKeyedNodes(graph);
+        this.edges = this.getKeyedEdges(graph);
 
         if (this.simulation) {
             this.nodes = this.extendNodesWithLayoutProperties(this.nodes); /* extend nodes with existing simulation properties */
@@ -75,7 +75,7 @@ export class GraphController {
 
         /* d3 -> dom data join */
         addLinks.call(this, this.edges, graph);
-        renderLinks.call(this, graph)
+        updateLinks.call(this, graph)
         addNodes.call(this, this.nodes, graph);
         renderNodes.call(this);
         
@@ -92,26 +92,24 @@ export class GraphController {
         addDblClickListener.call(this);
     }
 
-    /* state join- joines the d3 config data to redux */
+    /* state join- joins the d3 data to redux */
 
     /* convert graph.nodes object to array with unique keys */
-    convertNodesToArray(graph: Graph): Array<D3NodeConfig> {
-        return Object.keys(graph.nodesData).map(key => {
-            return { ...graph.nodesData[key].d3, key: graph.id + graph.nodesData[key].d3.id }
+    getKeyedNodes(graph: Graph): Array<D3NodeConfig> {
+        return graph.nodesData.map((nd, i) => {
+            return { ...nd.d3, key: nd.id }
         });
     }
 
     /* convert graph.edges object to array with unique keys */
-    convertEdgesToArray(graph: Graph): Array<D3EdgeConfig> {
+    getKeyedEdges(graph: Graph): Array<D3EdgeConfig> {
         let edgeList = _.flatten(graph.edgesData)
         .filter(ed => Boolean(ed));
         
-        return edgeList.map(edgeData => {
-            return { ...edgeData.d3, key: graph.id + edgeData.id }
+        return edgeList.map((edgeData, i) => {
+            return { ...edgeData.d3, key: edgeData.id }
         });
     }
-
-  
 
     /* copy the input nodes state to the existing layout nodes array */
     extendNodesWithLayoutProperties(nodesArr) {

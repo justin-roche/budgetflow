@@ -3,60 +3,61 @@ import { extend, ArrayToObject, ArrayById } from '../utilities/utilities';
 
 /* EDGE */
 
-function addEdge(g, source, target) {
-    if (shareEdge(g, source, target)) return g;
+function addEdge(g, sourceId, targetId) {
+    if (shareEdge(g, sourceId, targetId)) return g;
 
     let graph = JSON.parse(JSON.stringify(g));
 
-    let id = source + '-' + target
+    let id = new Date().getTime();
 
-    let edge = {
-        source: source,
-        target: target,
-        id: id
-    };
-
-    let data: EdgeData = {
+    let edgeData = {
         id: id,
         active: true,
-        linkFunctions: []
+        linkFunctions: [],
+        d3: {
+            source: sourceId,
+            target: targetId,
+            id: id
+        }
     };
 
-    updateEdgeReferences(g, edge, data);
-    addEdgesData(g, edge, data);
-    addLinkFunctionsByType(g, edge, data, source, target);
-    console.log('edge added', 'edge', edge, 'data', data, 'source', source, 'graph', g)
+    let sourceIndex = _.findIndex(g.nodesData, (nd) =>  nd.id === sourceId );
+    let targetIndex = _.findIndex(g.nodesData, (nd) =>  nd.id === targetId );
+    let source = g.nodesData[sourceIndex];
+    let target = g.nodesData[targetIndex];
+    if(!g.edgesData[sourceIndex]) g.edgesData[sourceIndex] = [];
+    g.edgesData[sourceIndex][targetIndex] = edgeData;
+    addLinkFunctionsByType(g, edgeData, source, target);
+    console.log('edge added', 'edge', edgeData, 'source', source, 'graph', g)
     return g;
 }
 
-function addLinkFunctionsByType(g, edge, edgeData, sourceId, targetId) {
-    let source = g.nodesData[sourceId];
-    if(source.type && source.type.direction === 'source') {
+function addLinkFunctionsByType(g, edgeData, source, target) {
+    if (source.type && source.type.direction === 'source') {
         source.type.linkFunctions.forEach((fn, i) => {
             edgeData.linkFunctions = [];
             edgeData.linkFunctions.push(fn);
             console.log('adding edge linkfunction from source', fn);
-            addEdgeDisplayDataByType(edge, source);
+            addEdgeDisplayDataByType(edgeData, source);
         });
     }
 
-    let target = g.nodesData[targetId];
-    if(target.type && target.type.direction === 'target') {
+    if (target.type && target.type.direction === 'target') {
         target.type.linkFunctions.forEach((fn, i) => {
             edgeData.linkFunctions = [];
             edgeData.linkFunctions.push(fn);
             console.log('adding edge linkfunction from target', fn)
-            addEdgeDisplayDataByType(edge, target);
+            addEdgeDisplayDataByType(edgeData, target);
         });
     }
-    
+
 }
 
-function addEdgeDisplayDataByType(edge, node) {
-    if(node.type.edge) {
-        for(let prop in node.type.edge) {
+function addEdgeDisplayDataByType(edgeData, node) {
+    if (node.type.edge) {
+        for (let prop in node.type.edge) {
             console.log('adding edge property', prop, node.type.edge[prop])
-            edge[prop] = node.type.edge[prop];
+            edgeData.d3[prop] = node.type.edge[prop];
         }
     }
 }
@@ -76,15 +77,16 @@ function getNewLinkFunctionId(g) {
 //     g.nodes[e.target].inEdges.push(e.id);
 // }
 
-function addEdgesData(g, e, ed) {
-    g.edgesData[e.source] = g.edgesData[e.source] || [];
-    g.edgesData[e.source][e.target] = ed;
-}
+// function addEdgesData(g, e, ed) {
+//     g.edgesData[e.source] = g.edgesData[e.source] || [];
+//     g.edgesData[e.source][e.target] = ed;
+// }
 
 function shareEdge(g, source, target) {
-    return g.edges.some(test => {
-        let ts = test.source;
-        let tt = test.target;
+    let edgesList = _.flatten(g.edgesData).filter(ed => Boolean(ed))
+    return edgesList.some(test => {
+        let ts = test.d3.source;
+        let tt = test.d3.target;
         if (tt === source && ts === target || tt === target && ts === source) {
             return true;
         }
@@ -103,7 +105,7 @@ function deleteEdge(g: Graph, eid) {
     // nodes = removeEdgeAssociations(nodes, [removedEdges])
     nodes = ArrayToObject(nodes);
 
-    return { ...g, edgesData: edgesData, edges: edges, nodes: nodes};
+    return { ...g, edgesData: edgesData, edges: edges, nodes: nodes };
 }
 
 // function removeEdgeAssociations(retainedNodes, removedEdges): Nodes {
@@ -118,15 +120,15 @@ function deleteEdge(g: Graph, eid) {
 
 
 function updateEdgeData(_g: Graph, edgeData: EdgeData) {
-   let g = JSON.parse(JSON.stringify(_g));
-   let [x,y] = edgeData.id.split('-');
-   g.edgesData[x][y] = edgeData;
-   updateEdgeDisplayData(edgeData, g.edges.filter(e => e.id === edgeData.id)[0]);
-   return g;
+    let g = JSON.parse(JSON.stringify(_g));
+    let [x, y] = edgeData.id.split('-');
+    g.edgesData[x][y] = edgeData;
+    updateEdgeDisplayData(edgeData, g.edges.filter(e => e.id === edgeData.id)[0]);
+    return g;
 }
 
 function updateEdgeDisplayData(ed, edge) {
-    if(ed.linkFunctions.length === 0) {
+    if (ed.linkFunctions.length === 0) {
         edge.stroke = 'diagonalHatch';
     }
 }

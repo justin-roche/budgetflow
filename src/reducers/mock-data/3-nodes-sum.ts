@@ -17,7 +17,7 @@ let g = {
     "nodesData": [
         {
             "active": true,
-            "id": "0",
+            "id": 1523814619712,
             "groupIds": [
                 0
             ],
@@ -37,7 +37,6 @@ let g = {
             ],
             "d3": {
                 "label": "null:9",
-                "id": "0",
                 "x": 449,
                 "y": 372
             },
@@ -72,7 +71,7 @@ let g = {
         },
         {
             "active": true,
-            "id": "1",
+            "id": 1523814687379,
             "name": "sum",
             "source": true,
             "groupIds": [
@@ -91,7 +90,6 @@ let g = {
             ],
             "d3": {
                 "label": "sum:18",
-                "id": "1",
                 "x": 725,
                 "y": 284
             },
@@ -126,7 +124,7 @@ let g = {
         },
         {
             "active": true,
-            "id": "2",
+            "id": 1523814702352,
             "groupIds": [
                 0
             ],
@@ -146,7 +144,6 @@ let g = {
             ],
             "d3": {
                 "label": "null:9",
-                "id": "2",
                 "x": 850,
                 "y": 444
             },
@@ -180,7 +177,7 @@ let g = {
         },
         {
             "active": true,
-            "id": "3",
+            "id": 1523814728319,
             "groupIds": [
                 1
             ],
@@ -190,7 +187,6 @@ let g = {
             "nodeFunctions": [],
             "d3": {
                 "label": "null:0",
-                "id": "3",
                 "x": 967,
                 "y": 224
             },
@@ -201,7 +197,7 @@ let g = {
         null,
         [
             {
-                "id": "1-0",
+                "id": 1523817171522,
                 "active": true,
                 "linkFunctions": [
                     {
@@ -213,15 +209,14 @@ let g = {
                     }
                 ],
                 d3:  {
-                    "source": "1",
-                    "target": "0",
-                    "id": "1-0",
+                    "source": 1523814687379,
+                    "target": 1523814619712,
                     "svg": "sum"
                 },
             },
             null,
             {
-                "id": "1-2",
+                "id": 1523817200305,
                 "active": true,
                 "linkFunctions": [
                     {
@@ -233,14 +228,13 @@ let g = {
                     }
                 ],
                 d3:  {
-                    "source": "1",
-                    "target": "2",
-                    "id": "1-2",
+                    "source": 1523814687379,
+                    "target": 1523814702352,
                     "svg": "sum"
                 },
             },
             {
-                "id": "1-3",
+                "id": 1523817212507,
                 "active": true,
                 "linkFunctions": [
                     {
@@ -252,9 +246,8 @@ let g = {
                     }
                 ],
                 d3:  {
-                    "source": "1",
-                    "target": "3",
-                    "id": "1-3",
+                    "source": 1523814687379,
+                    "target": 1523814728319,
                     "svg": "sum"
                 }
             }

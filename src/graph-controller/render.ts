@@ -120,13 +120,13 @@ function renderNodes() {
         //.text(function(d) { return '\uf118' }); //smiley
         .text(function (d) { return '\uf155' }); //dollar
 
-
     this.svg
         .selectAll(".node")
         .each(function (d) {
             let selected = d3.select(this);
-            let dd = data.nodesData[d.id].d3;
-            if (selectedNodeId === d.id) {
+            let dd = data.nodesData.filter(nd => nd.id === d.key)[0].d3;
+
+            if (selectedNodeId === d.key) {
                 selected.classed('selected-node', true);
             } else {
                 selected.classed('selected-node', false);
@@ -168,25 +168,32 @@ function renderNodes() {
 }
 
 function configureLabels(data) {
+    let d3 = this.d3;
     this.svg.
         selectAll(".label")
-        .text(function (d) {
-            let dd = data.nodesData[d.id].d3;
-            return dd.label;
-        })
-        .attr('x',function(d){
-            let dd = data.nodesData[d.id].d3;
-            return -(this.getBBox().width/2)-(CIRCLE_RADIUS/2);
-        })
-        .attr('y',function(d){
-            let dd = data.nodesData[d.id].d3;
-            return 20;
-        })
+        .each(function(l){
+            let dd = data.nodesData.filter(nd => nd.id === l.key)[0].d3;
+            let d3el = d3.select(this);
+            let el = this;
+
+            d3el.text(function (d) {
+                return dd.label;
+            })
+            
+            d3el.attr('x',function(d){
+                // let dd = data.nodesData[d.id].d3;
+                return -(el.getBBox().width/2)-(CIRCLE_RADIUS/2);
+            })
+            
+            d3el.attr('y',function(d){
+                // let dd = data.nodesData[d.id].d3;
+                return 20;
+            })
+        });
        
 }
 
-/* performs the update */
-function renderLinks(data) {
+function updateLinks(data) {
     let selectedEdgeId = this.ui.selectedEdgeId;
     let d3 = this.d3;
 
@@ -200,11 +207,11 @@ function renderLinks(data) {
         })
         .attr("class", "link")
         .attr('id', function (d) {
-            return d.id;
+            return d.key;
         })
         .each(function (d) {
             let selected = d3.select(this);
-            if (selectedEdgeId === d.id) {
+            if (selectedEdgeId === d.key) {
                 selected.classed('selected-edge', true);
             } else {
                 selected.classed('selected-edge', false);
@@ -212,4 +219,4 @@ function renderLinks(data) {
         })
 }
 
-export { addContainer, renderLinks, renderNodes, addLinks, addNodes };
+export { addContainer, updateLinks, renderNodes, addLinks, addNodes };

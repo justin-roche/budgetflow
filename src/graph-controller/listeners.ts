@@ -104,19 +104,17 @@ function addClickListener() {
         let previous = self.ui.selectedNodeId;
 
         if (previous) {
-            if (previous === d.id) {
+            if (previous === d.key) {
                 self.store.actions.ui.selectNode(null)
             }
-            if (previous !== d.id) {
-                self.store.actions.graph.addEdge(previous, d.id);
+            if (previous !== d.key) {
+                self.store.actions.graph.addEdge(previous, d.key);
                 self.store.actions.ui.selectNode(null)
             }
         }
         else {
-            self.store.actions.ui.selectNode(d.id)
+            self.store.actions.ui.selectNode(d.key)
         }
-
-
     })
 
     let links = this.container.selectAll('.link')
@@ -125,10 +123,10 @@ function addClickListener() {
         d3.event.preventDefault();
         d3.event.stopPropagation();
         let previous = self.ui.selectedEdgeId;
-        if (previous === d.id) {
+        if (previous === d.key) {
             self.store.actions.ui.selectEdge(null);
         } else {
-            self.store.actions.ui.selectEdge(d.id);
+            self.store.actions.ui.selectEdge(d.key);
         }
     })
 
@@ -142,7 +140,7 @@ function addDblClickListener() {
         d3.event.preventDefault();
         d3.event.stopPropagation();
         let previous = self.ui.selectedNodeId;
-        self.store.actions.ui.selectNode(d.id);
+        self.store.actions.ui.selectNode(d.key);
     })
 
 }

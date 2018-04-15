@@ -7,36 +7,25 @@ import { removeEdgeAssociations } from './edge-edit.functions';
 function deleteNode(_g, nd) {
     let g = JSON.parse(JSON.stringify(_g));
     let nid = nd.id;
-
+    debugger;
     let [retainedNodesData, exludedNodesData] = _.partition(g.nodesData, nd => nd.id !== nid);
-    let [retainedEdges, exludedEdges] = _.partition(g.edges, ed => (ed.source !== nid && ed.target !== nid));
     let [retainedEdgesData, exludedEdgesData] = _.partition(g.edges, edata => retainedEdges.some(ed => ed.id === edata.id));
 
     g.nodesData = retainedNodesData;
+    g.edgesData = retainedEdgesData;
 
-    g.edges = ArrayToObject(retainedEdges);
-    g.edgesData = ArrayToObject(retainedEdgesData);
-    reindexNodes(g);
-
+    // reindexNodes(g);
+    console.log('reindexed nodes', g.nodesData)
     return g;
 }
 
 function reindexNodes(g) {
-    let priors = ArrayById(g.nodes).map((node, i) => node.id); // 'n2'
-    let updates = ArrayById(g.nodes).map((node, i) => 'n'+i);  // 'n1'
+    let priors = g.nodesData.map((node, i) => node.id); // 'n2'
+    let updates = g.nodesData.map((node, i) => 'n'+i);  // 'n1'
     
-    
-    Object.keys(g.nodesData).forEach((key,i) => {
-        let x = g.nodesData[key];
-        x.id = 'n'+i;
-        delete g.nodesData[key];
-        g.nodesData['n'+i] = x;
-    })
-    Object.keys(g.nodes).forEach((key,i) => {
-        let x = g.nodes[key];
-        x.id = 'n'+i;
-        delete g.nodes[key];
-        g.nodes['n'+i] = x;
+    /* assign updated ids */
+    g.nodesData.forEach((nd,i) => {
+        nd.id = 'n'+i;
     });
     
 }
@@ -45,29 +34,21 @@ function reindexNodes(g) {
 function addNewNode(_g, arg) {
     let g = JSON.parse(JSON.stringify(_g));
     let appliedNodeData = JSON.parse(JSON.stringify(arg.nodeData || {}));
-    let appliedNode = JSON.parse(JSON.stringify(arg.node || {}));
+    let d3Data = JSON.parse(JSON.stringify(arg.node || {}));
 
     let id = getNewNodeId(g);
 
-    let newNode = createBaseNode(g, id)
     let newNodeData = createBaseNodeData(g, id);
+    newNodeData.d3 = d3Data;
 
-    newNode = Object.assign({}, newNode, appliedNode);
-    newNodeData = Object.assign({}, newNodeData, appliedNodeData);
+    newNodeData = Object.assign({}, newNodeData);
     
-    g.nodes[id] = newNode;
-    g.nodesData[id] = newNodeData;
-
+    g.nodesData.push(newNodeData);
+    console.log('node data added', g.nodesData)
     return g;
 }
 
-function createBaseNode(g, id) {
-    let node: any = {};
-    node.id = id;
-    node.outEdges = [];
-    node.inEdges = [];
-    return node;
-}
+
 
 function createBaseNodeData(g, id): any {
     return {
@@ -80,7 +61,13 @@ function createBaseNodeData(g, id): any {
         nodeFunctions: [],
         displayData: {},
         value: 0,
+        d3: createBaseNode(g, id)
     }
+}
+
+function createBaseNode(g, id) {
+    let node: any = {};
+    return node;
 }
 
 function getNewNodeFunctionId(g) {
@@ -122,7 +109,7 @@ function updateNodeData(_g: Graph, _nd) {
 // }
 
 function getNewNodeId(g) {
-    return String(g.nodesData.length);
+    return new Date().getTime();
 }
 
 
