@@ -77,23 +77,25 @@ function getSources(g, groupId) {
 
 /* add cache removed on certain graph changes */
 function getOutNodes(nodeData, g: Graph) {
-    if(g.edgesData[nodeData.id]){
-        return g.edgesData[nodeData.id]
+    if(g.edgesData[nodeData.index]){
+        return g.edgesData[nodeData.index]
         .reduce((acc, edgeData, i) => {
-            if(edgeData) {
+            if(Boolean(edgeData)) {
                 let nodeData = g.nodesData[i]
                 return acc.concat([nodeData]);
             } 
             return acc;
-            
-        },[])
+        },[]);
     }
     return [];
    
 }
 
-function getEdge(state: Graph, source, target) {
-    return state.edgesData[source.id][target.id];
+function getEdge(g: Graph, source, target) {
+    let sourceIndex = _.findIndex(g.nodesData, nd => nd.id === source.id);
+    let targetIndex = _.findIndex(g.nodesData, nd => nd.id === target.id)
+
+    return g.edgesData[sourceIndex][targetIndex];
 }
 
 export { traverseGraph };

@@ -36,6 +36,10 @@ export class NavBar {
         this.store.actions.graph.conditionsApply();
     }
 
+    state() {
+        console.log('state', this.store.getPresentState())
+    }
+
     test() {
         // let s = this.store.getPresentState();
         // this.store.actions.ui.updateSliderRange({max: s.ui.timeSlider.range.max + 1000000000})

@@ -139,4 +139,4 @@ function toggleEdgeActivation(g, eid) {
     });
 }
 
-export { addEdge, updateEdgeData, toggleEdgeActivation, deleteEdge, removeEdgeAssociations }
+export { addEdge, updateEdgeData, toggleEdgeActivation, deleteEdge }

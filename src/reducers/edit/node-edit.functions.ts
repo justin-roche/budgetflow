@@ -1,35 +1,7 @@
 import { _ } from 'underscore';
 import { extend, ArrayToObject, ArrayById } from '../utilities/utilities';
 import { removeEdgeAssociations } from './edge-edit.functions';
-
-/* NODE */
-
-function deleteNode(_g, nd) {
-    let g = JSON.parse(JSON.stringify(_g));
-    let nid = nd.id;
-    debugger;
-    let [retainedNodesData, exludedNodesData] = _.partition(g.nodesData, nd => nd.id !== nid);
-    let [retainedEdgesData, exludedEdgesData] = _.partition(g.edges, edata => retainedEdges.some(ed => ed.id === edata.id));
-
-    g.nodesData = retainedNodesData;
-    g.edgesData = retainedEdgesData;
-
-    // reindexNodes(g);
-    console.log('reindexed nodes', g.nodesData)
-    return g;
-}
-
-function reindexNodes(g) {
-    let priors = g.nodesData.map((node, i) => node.id); // 'n2'
-    let updates = g.nodesData.map((node, i) => 'n'+i);  // 'n1'
-    
-    /* assign updated ids */
-    g.nodesData.forEach((nd,i) => {
-        nd.id = 'n'+i;
-    });
-    
-}
-
+import { deleteNode } from './delete-node.function'
 
 function addNewNode(_g, arg) {
     let g = JSON.parse(JSON.stringify(_g));
@@ -47,8 +19,6 @@ function addNewNode(_g, arg) {
     console.log('node data added', g.nodesData)
     return g;
 }
-
-
 
 function createBaseNodeData(g, id): any {
     return {
@@ -111,10 +81,5 @@ function updateNodeData(_g: Graph, _nd) {
 function getNewNodeId(g) {
     return new Date().getTime();
 }
-
-
-
-
-
 
 export { addNewNode,updateNodeData, deleteNode }

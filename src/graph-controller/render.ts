@@ -201,7 +201,6 @@ function updateLinks(data) {
         .attr('stroke', function(d) {
             let p = d3.select(this.parentNode);
             let updatedParentGroupData = p.data()[0];
-            console.log('updating on', d)
             if(updatedParentGroupData.stroke) return `url(#${updatedParentGroupData.stroke})`;
             return '#999';
         })

@@ -1,9 +1,9 @@
 let displayFunctions = {
 
-    labelById: function(s: Graph, nodeData) : NodeDisplayData {
-        let newNodeData = {...nodeData }
-        return {...nodeData.displayData, label: nodeData.id + ':' + nodeData.value};
-    },
+    // labelById: function(s: Graph, nodeData) : NodeDisplayData {
+    //     let newNodeData = {...nodeData }
+    //     return {...nodeData.displayData, label: nodeData.id + ':' + nodeData.value};
+    // },
 
     labelByName: function(s: Graph, nodeData, args) {
         nodeData.d3.label = nodeData.name + ':' + nodeData.value;

@@ -18,6 +18,7 @@ let g = {
         {
             "active": true,
             "id": 1523814619712,
+            index: 0,
             "groupIds": [
                 0
             ],
@@ -72,6 +73,7 @@ let g = {
         {
             "active": true,
             "id": 1523814687379,
+            index: 1,
             "name": "sum",
             "source": true,
             "groupIds": [
@@ -125,6 +127,7 @@ let g = {
         {
             "active": true,
             "id": 1523814702352,
+            index: 2,
             "groupIds": [
                 0
             ],
@@ -178,6 +181,7 @@ let g = {
         {
             "active": true,
             "id": 1523814728319,
+            index: 3,
             "groupIds": [
                 1
             ],
