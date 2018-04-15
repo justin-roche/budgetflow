@@ -27,10 +27,10 @@ export class App {
     
     this.store.dispatch({ type: 'UI_SET', payload: state.ui });
     setTimeout(function(){
-      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'sum-node').pop());
+      this.store.actions.graph.setGraph(state.graphs.filter(g => g.data.name === 'sum-nodes').pop());
       this.store.actions.graph.applyDisplayFunctions();
       // this.store.actions.ui.selectEdge('e0');
-      // this.store.dispatch({ type: 'UI_EDGE_EDITOR_TOGGLE' });
+      this.store.dispatch({ type: 'UI_NODE_EDITOR_TOGGLE' });
     }.bind(this),0);
   }
 

@@ -1,3 +1,4 @@
+import { linkFunctions } from 'reducers/traversal/linkFunctions';
 import { _ } from 'underscore';
 import { extend, ArrayToObject, ArrayById } from '../utilities/utilities';
 
@@ -25,7 +26,7 @@ function addEdge(g, source, target) {
     updateEdgeReferences(g, edge, data);
     addEdgesData(g, edge, data);
     addLinkFunctionsByType(g, edge, data, source, target);
-
+    console.log('edge added', 'edge', edge, 'data', data, 'source', source, 'graph', g)
     return g;
 }
 
@@ -35,6 +36,8 @@ function addLinkFunctionsByType(g, edge, edgeData, sourceId, targetId) {
         source.type.linkFunctions.forEach((fn, i) => {
             edgeData.linkFunctions = [];
             edgeData.linkFunctions.push(fn);
+            console.log('adding edge linkfunction from source', fn);
+            addEdgeDisplayDataByType(edge, source);
         });
     }
 
@@ -43,9 +46,20 @@ function addLinkFunctionsByType(g, edge, edgeData, sourceId, targetId) {
         target.type.linkFunctions.forEach((fn, i) => {
             edgeData.linkFunctions = [];
             edgeData.linkFunctions.push(fn);
+            console.log('adding edge linkfunction from target', fn)
+            addEdgeDisplayDataByType(edge, target);
         });
     }
     
+}
+
+function addEdgeDisplayDataByType(edge, node) {
+    if(node.type.edge) {
+        for(let prop in node.type.edge) {
+            console.log('adding edge property', prop, node.type.edge[prop])
+            edge[prop] = node.type.edge[prop];
+        }
+    }
 }
 
 function getNewEdgeId(g) {
@@ -106,10 +120,16 @@ function removeEdgeAssociations(retainedNodes, removedEdges): Nodes {
 
 function updateEdgeData(_g: Graph, edgeData: EdgeData) {
    let g = JSON.parse(JSON.stringify(_g));
-   debugger;
    let [x,y] = edgeData.id.split('-');
    g.edgesData[x][y] = edgeData;
+   updateEdgeDisplayData(edgeData, g.edges.filter(e => e.id === edgeData.id)[0]);
    return g;
+}
+
+function updateEdgeDisplayData(ed, edge) {
+    if(ed.linkFunctions.length === 0) {
+        edge.stroke = 'diagonalHatch';
+    }
 }
 
 function toggleEdgeActivation(g, eid) {

@@ -1,8 +1,15 @@
 <template class="graph-container">
         <svg class="graph-svg" dblclick.trigger="onBackgroundClick($event)">
-            <marker id="arrow" markerWidth="20" markerHeight="20" refX="25" refY="3" orient="auto" markerUnits="strokeWidth">
+            <!-- <marker id="arrow" markerWidth="20" markerHeight="20" refX="25" refY="3" orient="auto" markerUnits="strokeWidth">
                 <path d="M0,0 L0,6 L9,3 z" fill="white" />
-            </marker>
+            </marker> -->
+            <pattern id="diagonalHatch" patternUnits="userSpaceOnUse" width="8" height="8">
+                    <path d="M-1,1 l2,-2
+                             M0,4 l4,-4
+                             M3,5 l2,-2" 
+                          style="stroke:black; stroke-width:1" />
+                  </pattern>
         </svg>
     <!-- <button click.trigger="addEdge()"> add edge </button> -->
+  
 </template>

@@ -45,7 +45,11 @@ function defineLinkDefs() {
     .attr("orient", "auto")
     .append("svg:path")
     //.attr("d", "M0,-5L10,0L0,5");
+
+    
 }
+
+/* does not perform anything on existing links */
 
 function addLinks(edgesArray, data) {
     let d3 = this.d3;
@@ -57,14 +61,16 @@ function addLinks(edgesArray, data) {
     linkGroups.exit().remove();
     
     let newGroups = linkGroups.enter().append("g").attr("class", "linkGroup");
-
-    newGroups.each(function (d, i, groups) {
-        d3.select(this).append("line");
-        if(d.svg) {
-            d3.select(this).attr("marker-end", `url(#${d.svg})`);
-        } else {
+    newGroups.each(function (edge, i, groups) {
+        d3.select(this)
+        .append("line")
+       
+         if(edge.svg) {
+            d3.select(this).attr("marker-end", `url(#${edge.svg})`);
+            // d3.select(this).attr('stroke', 'url(#diagonalHatch)')
+         } else {
             d3.select(this).attr("marker-end", "url(#end)");
-        }
+         }
     })
 
 }
@@ -180,11 +186,19 @@ function configureLabels(data) {
        
 }
 
+/* performs the update */
 function renderLinks(data) {
     let selectedEdgeId = this.ui.selectedEdgeId;
     let d3 = this.d3;
 
     this.container.selectAll('line')
+        .attr('stroke', function(d) {
+            let p = d3.select(this.parentNode);
+            let updatedParentGroupData = p.data()[0];
+            console.log('updating on', d)
+            if(updatedParentGroupData.stroke) return `url(#${updatedParentGroupData.stroke})`;
+            return '#999';
+        })
         .attr("class", "link")
         .attr('id', function (d) {
             return d.id;

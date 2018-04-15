@@ -37,9 +37,11 @@ export class NavBar {
     }
 
     test() {
-        let s = this.store.getPresentState();
-        this.store.actions.ui.updateSliderRange({max: s.ui.timeSlider.range.max + 1000000000})
-
+        // let s = this.store.getPresentState();
+        // this.store.actions.ui.updateSliderRange({max: s.ui.timeSlider.range.max + 1000000000})
+        let edgeData = JSON.parse('{"id":"1-2","active":true,"linkFunctions":[]}');
+        this.store.actions.graph.updateEdgeData(edgeData);
+        // 
     }
 
     // test() {

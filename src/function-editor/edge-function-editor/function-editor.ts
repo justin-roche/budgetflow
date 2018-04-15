@@ -35,11 +35,16 @@ export class FunctionEditor {
         this.newFunction = item;
     }
 
+    removeFunction(fn) {
+        this.functions = this.functions.filter(f => f !== f);
+    }
+
     submit() {
         this.functions.forEach(fn => {
             fn.object.value = Number(fn.object.value);
         })
         this.edgeData.linkFunctions = this.functions;
+        console.log('sumitting edge data', JSON.stringify(this.edgeData))
         this.store.actions.graph.updateEdgeData(this.edgeData);
 
     }

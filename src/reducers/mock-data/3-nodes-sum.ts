@@ -1,3 +1,4 @@
+// 
 let g = {
     "id": "g0",
     "data": {
@@ -26,7 +27,8 @@ let g = {
             "id": "1",
             "outEdges": [
                 "0",
-                "1"
+                "1",
+                "1-3"
             ],
             "inEdges": [],
             "x": 725,
@@ -40,13 +42,22 @@ let g = {
             ],
             "x": 850,
             "y": 444
+        },
+        {
+            "id": "3",
+            "outEdges": [],
+            "inEdges": [
+                "1-3"
+            ],
+            "x": 967,
+            "y": 224
         }
     ],
     "edgesData": [
         null,
         [
             {
-                "id": "0",
+                "id": "1-0",
                 "active": true,
                 "linkFunctions": [
                     {
@@ -60,7 +71,20 @@ let g = {
             },
             null,
             {
-                "id": "1",
+                "id": "1-2",
+                "active": true,
+                "linkFunctions": [
+                    {
+                        "phase": "post",
+                        "operator": {
+                            "value": "sum"
+                        },
+                        "object": {}
+                    }
+                ]
+            },
+            {
+                "id": "1-3",
                 "active": true,
                 "linkFunctions": [
                     {
@@ -78,7 +102,9 @@ let g = {
         {
             "active": true,
             "id": "0",
-            "groupIds": [0],
+            "groupIds": [
+                0
+            ],
             "name": null,
             "source": true,
             "displayFunctions": [],
@@ -94,9 +120,9 @@ let g = {
                 }
             ],
             "displayData": {
-                "label": "null:14"
+                "label": "null:9"
             },
-            "value": 14,
+            "value": 9,
             "type": {
                 "name": "salary",
                 "nodeFunctions": [
@@ -128,9 +154,11 @@ let g = {
         {
             "active": true,
             "id": "1",
-            "name": null,
+            "name": "sum",
             "source": true,
-            "groupIds": [1],
+            "groupIds": [
+                1
+            ],
             "displayFunctions": [],
             "nodeFunctions": [
                 {
@@ -143,9 +171,9 @@ let g = {
                 }
             ],
             "displayData": {
-                "label": "null:28"
+                "label": "sum:18"
             },
-            "value": 28,
+            "value": 18,
             "type": {
                 "name": "sum",
                 "linkFunctions": [
@@ -157,6 +185,9 @@ let g = {
                         "object": {}
                     }
                 ],
+                "edge": {
+                    "svg": "sum"
+                },
                 "source": true,
                 "direction": "source",
                 "nodeFunctions": [
@@ -174,7 +205,9 @@ let g = {
         {
             "active": true,
             "id": "2",
-            "groupIds": [0],
+            "groupIds": [
+                0
+            ],
             "name": null,
             "source": true,
             "displayFunctions": [],
@@ -190,9 +223,9 @@ let g = {
                 }
             ],
             "displayData": {
-                "label": "null:14"
+                "label": "null:9"
             },
-            "value": 14,
+            "value": 9,
             "type": {
                 "name": "salary",
                 "nodeFunctions": [
@@ -219,19 +252,41 @@ let g = {
                 "source": true,
                 "direction": "source"
             }
+        },
+        {
+            "active": true,
+            "id": "3",
+            "groupIds": [
+                1
+            ],
+            "name": null,
+            "source": false,
+            "displayFunctions": [],
+            "nodeFunctions": [],
+            "displayData": {
+                "label": "null:0"
+            },
+            "value": 0
         }
     ],
     "edges": [
         {
             "source": "1",
             "target": "0",
-            "id": "0",
-            "svg": 'sum',
+            "id": "1-0",
+            "svg": "sum"
         },
         {
             "source": "1",
             "target": "2",
-            "id": "1"
+            "id": "1-2",
+            "svg": "sum"
+        },
+        {
+            "source": "1",
+            "target": "3",
+            "id": "1-3",
+            "svg": "sum"
         }
     ],
     "conditions": [],
@@ -240,11 +295,11 @@ let g = {
         "cycleTime": 86400000,
         "beginRangeTime": 1523119053444,
         "endRangeTime": 1546300800000,
-        "currentTime": 1524328653444,
+        "currentTime": 1525106253444,
         "targetTime": null,
         "remainingCycles": null,
         "forward": null,
-        "currentTimeFormatted": "04/21/2018",
+        "currentTimeFormatted": "04/30/2018",
         "targetTimeFormatted": null
     },
     "nodeGroups": [
@@ -253,4 +308,5 @@ let g = {
     ]
 }
 let THREE_NODES_SUM = g;
-export {THREE_NODES_SUM};
+export {THREE_NODES_SUM
+};
