@@ -15,7 +15,6 @@ function deleteNode(_g, nd) {
 
     let updatedNodesArray = removeEdgeAssociations(retainedNodes, exludedEdges);
 
-   
     g.nodes = ArrayToObject(updatedNodesArray);
     g.nodesData = ArrayToObject(retainedNodesData);
 
@@ -30,16 +29,7 @@ function reindexNodes(g) {
     let priors = ArrayById(g.nodes).map((node, i) => node.id); // 'n2'
     let updates = ArrayById(g.nodes).map((node, i) => 'n'+i);  // 'n1'
     
-    ArrayById(g.edges).forEach(e => {
-        e.outNodes = e.OutNodes.map(id => {
-            let updateIndex = priors.indexOf(id);
-            return updates[updateIndex];
-        })
-        e.inNodes = e.inNodes.map(id => {
-            let updateIndex = priors.indexOf(id);
-            return updates[updateIndex];
-        })
-    });
+    
     Object.keys(g.nodesData).forEach((key,i) => {
         let x = g.nodesData[key];
         x.id = 'n'+i;
@@ -136,7 +126,7 @@ function updateNodeData(_g: Graph, _nd) {
 // }
 
 function getNewNodeId(g) {
-    return String(g.nodes.length);
+    return String(g.nodesData.length);
 }
 
 

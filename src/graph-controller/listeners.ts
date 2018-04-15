@@ -94,8 +94,6 @@ function addMouseOverListener() {
         });
 }
 
-
-
 function addClickListener() {
     let d3 = this.d3;
     let nodes = this.container.selectAll('.node')

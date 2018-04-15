@@ -13,46 +13,6 @@ let g = {
             ]
         }
     },
-    "nodes": [
-        {
-            "id": "0",
-            "outEdges": [],
-            "inEdges": [
-                "0"
-            ],
-            "x": 449,
-            "y": 372
-        },
-        {
-            "id": "1",
-            "outEdges": [
-                "0",
-                "1",
-                "1-3"
-            ],
-            "inEdges": [],
-            "x": 725,
-            "y": 284
-        },
-        {
-            "id": "2",
-            "outEdges": [],
-            "inEdges": [
-                "1"
-            ],
-            "x": 850,
-            "y": 444
-        },
-        {
-            "id": "3",
-            "outEdges": [],
-            "inEdges": [
-                "1-3"
-            ],
-            "x": 967,
-            "y": 224
-        }
-    ],
     "edgesData": [
         null,
         [
@@ -119,8 +79,11 @@ let g = {
                     }
                 }
             ],
-            "displayData": {
-                "label": "null:9"
+            "d3": {
+                "label": "null:9",
+                "id": "0",
+                "x": 449,
+                "y": 372
             },
             "value": 9,
             "type": {
@@ -170,8 +133,11 @@ let g = {
                     }
                 }
             ],
-            "displayData": {
-                "label": "sum:18"
+            "d3": {
+                "label": "sum:18",
+                "id": "1",
+                "x": 725,
+                "y": 284
             },
             "value": 18,
             "type": {
@@ -222,8 +188,11 @@ let g = {
                     }
                 }
             ],
-            "displayData": {
-                "label": "null:9"
+            "d3": {
+                "label": "null:9",
+                "id": "2",
+                "x": 850,
+                "y": 444
             },
             "value": 9,
             "type": {
@@ -263,8 +232,11 @@ let g = {
             "source": false,
             "displayFunctions": [],
             "nodeFunctions": [],
-            "displayData": {
-                "label": "null:0"
+            "d3": {
+                "label": "null:0",
+                "id": "3",
+                "x": 967,
+                "y": 224
             },
             "value": 0
         }

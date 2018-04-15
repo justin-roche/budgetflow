@@ -46,6 +46,7 @@ export class FunctionEditor {
         this.edgeData.linkFunctions = this.functions;
         console.log('sumitting edge data', JSON.stringify(this.edgeData))
         this.store.actions.graph.updateEdgeData(this.edgeData);
+       // {"id":"1-2","active":true,"linkFunctions":[]}
 
     }
 

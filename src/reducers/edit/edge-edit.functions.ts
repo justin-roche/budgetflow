@@ -1,4 +1,3 @@
-import { linkFunctions } from 'reducers/traversal/linkFunctions';
 import { _ } from 'underscore';
 import { extend, ArrayToObject, ArrayById } from '../utilities/utilities';
 
@@ -71,11 +70,11 @@ function getNewLinkFunctionId(g) {
     return 'f' + l;
 }
 
-function updateEdgeReferences(g, e, ed) {
-    g.edges.push(e);
-    g.nodes[e.source].outEdges.push(e.id);
-    g.nodes[e.target].inEdges.push(e.id);
-}
+// function updateEdgeReferences(g, e, ed) {
+//     g.edges.push(e);
+//     g.nodes[e.source].outEdges.push(e.id);
+//     g.nodes[e.target].inEdges.push(e.id);
+// }
 
 function addEdgesData(g, e, ed) {
     g.edgesData[e.source] = g.edgesData[e.source] || [];
@@ -101,21 +100,21 @@ function deleteEdge(g: Graph, eid) {
     delete edgesData[eid];
 
     let nodes = _.toArray(g.nodes);
-    nodes = removeEdgeAssociations(nodes, [removedEdges])
+    // nodes = removeEdgeAssociations(nodes, [removedEdges])
     nodes = ArrayToObject(nodes);
 
     return { ...g, edgesData: edgesData, edges: edges, nodes: nodes};
 }
 
-function removeEdgeAssociations(retainedNodes, removedEdges): Nodes {
-    let nodes = _.map(retainedNodes, node => {
-        node = { ...node }
-        node.inEdges = node.inEdges.filter(id => removedEdges.every(edge => edge.id !== id));
-        node.outEdges = node.outEdges.filter(id => removedEdges.every(edge => edge.id !== id));
-        return node;
-    });
-    return nodes;
-}
+// function removeEdgeAssociations(retainedNodes, removedEdges): Nodes {
+//     let nodes = retainedNodes.map(node => {
+//         node = { ...node }
+//         node.inEdges = node.inEdges.filter(id => removedEdges.every(edge => edge.id !== id));
+//         node.outEdges = node.outEdges.filter(id => removedEdges.every(edge => edge.id !== id));
+//         return node;
+//     });
+//     return nodes;
+// }
 
 
 function updateEdgeData(_g: Graph, edgeData: EdgeData) {

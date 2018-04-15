@@ -95,8 +95,8 @@ export class GraphController {
 
     /* convert graph.nodes object to array with unique keys */
     convertNodesToArray(graph: Graph): Array<D3NodeConfig> {
-        return Object.keys(graph.nodes).map(key => {
-            return { ...graph.nodes[key], key: graph.id + graph.nodes[key].id }
+        return Object.keys(graph.nodesData).map(key => {
+            return { ...graph.nodesData[key].d3, key: graph.id + graph.nodesData[key].d3.id }
         });
     }
 

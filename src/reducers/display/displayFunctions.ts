@@ -6,7 +6,7 @@ let displayFunctions = {
     },
 
     labelByName: function(s: Graph, nodeData, args) {
-        nodeData.displayData.label = nodeData.name + ':' + nodeData.value;
+        nodeData.d3.label = nodeData.name + ':' + nodeData.value;
     },
     
     inactivateByLinks: function(s: Graph, nodeData) : NodeDisplayData {

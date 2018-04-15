@@ -54,14 +54,10 @@ let nodesData = [
 let g = JSON.parse(JSON.stringify(SALARY_NODE_GRAPH));
 
 g.data.name = 'sum-node'
-g.nodes = g.nodes.concat(nodes);
 g.nodesData = g.nodesData.concat(nodesData);
 g.nodeGroups = [{},{}]
 
 g.nodesData.forEach((nd, i) => {
-    nd.id = String(i);
-})
-g.nodes.forEach((nd, i) => {
     nd.id = String(i);
 })
 let SUM_NODE_GRAPH = g;

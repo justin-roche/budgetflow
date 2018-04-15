@@ -125,8 +125,7 @@ function renderNodes() {
         .selectAll(".node")
         .each(function (d) {
             let selected = d3.select(this);
-            let nd = data.nodesData[d.id];
-            let dd = nd.displayData;
+            let dd = data.nodesData[d.id].d3;
             if (selectedNodeId === d.id) {
                 selected.classed('selected-node', true);
             } else {
@@ -148,7 +147,7 @@ function renderNodes() {
                     .attr("r", CIRCLE_RADIUS)
             }
 
-            if (nd.displayData.active === false) {
+            if (dd.active === false) {
                 selected.attr('fill', 'gray')
                 // selected.classed('inactive-node', true);
             } else {
@@ -172,15 +171,15 @@ function configureLabels(data) {
     this.svg.
         selectAll(".label")
         .text(function (d) {
-            let dd = data.nodesData[d.id].displayData;
+            let dd = data.nodesData[d.id].d3;
             return dd.label;
         })
         .attr('x',function(d){
-            let dd = data.nodesData[d.id].displayData;
+            let dd = data.nodesData[d.id].d3;
             return -(this.getBBox().width/2)-(CIRCLE_RADIUS/2);
         })
         .attr('y',function(d){
-            let dd = data.nodesData[d.id].displayData;
+            let dd = data.nodesData[d.id].d3;
             return 20;
         })
        
